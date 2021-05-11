@@ -1,0 +1,61 @@
+---
+title: "Introduction and Population Statistics"
+output: 
+  prettydoc::html_pretty:
+    theme: cayman
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+```{r yield_dataset, message=FALSE, warning=FALSE}
+library(sf)
+library(tidyverse)
+library(rcompanion)
+
+
+yield = st_read("data/merriweather_yield_map/merriweather_yield_map.shp")
+
+  
+```
+
+
+Varying the bin width provides us with different perspectives on our distribution.  Use the application below to explore how increasing and decreasing bin width changes your impression of the population distribution
+
+```{r}
+library(shiny)
+
+ui = fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("bins", "Select number of bins", min = 1, max = 30, step = 1, value = 6)
+    ),
+    mainPanel(
+      plotOutput("histogram")
+    )
+  )
+)
+
+server = function(input,output){
+  output$histogram = renderPlot({
+    ggplot(data=yield, aes(x=yield_bu)) +
+      geom_histogram(bins = input$bins, fill="tomato", color="black")
+  })
+}
+
+shinyApp(ui, server)
+```
+
+
+
+
+
+
+
+
+
+
+
+
