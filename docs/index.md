@@ -1,7 +1,7 @@
 --- 
-title: "A Minimal Bookdown Book"
-author: "Sean Kross"
-date: "2016-12-09"
+title: "Data Science for Agricultural Professionals"
+author: "Marin L. Harbur"
+date: "2021-05-11"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib]
@@ -12,6 +12,4 @@ url: 'http\://seankross.com/bookdown-start/'
 description: "Everything you need (and nothing more) to start a bookdown book."
 ---
 
-# Preface {-}
-
-This is the very first part of the book.
+# Preface{-}
