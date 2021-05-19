@@ -1,7 +1,5 @@
 # Introduction and Population Statistics
-Some text.
 
-## Welcome
 Welcome to Data Science for Agricultural Professionals.  I have written these course materials for a few reasons.  First, it is my job.  More inspirationally, however, I wanted to write a guide that satistfied the following criteria:
 - covers basic statistics used in reporting results from hybrid trials and other controlled experiments
 - also addresses data science tools used to group environments and make predictions
