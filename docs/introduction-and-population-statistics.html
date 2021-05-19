@@ -146,7 +146,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#r-language"><i class="fa fa-check"></i><b>1.1</b> R-language</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#populations"><i class="fa fa-check"></i><b>1.2</b> Populations</a></li>
 <li class="chapter" data-level="1.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#case-study-yield-map"><i class="fa fa-check"></i><b>1.3</b> Case Study: Yield Map</a></li>
-<li class="chapter" data-level="1.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#distributions"><i class="fa fa-check"></i><b>1.4</b> Distributions</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#distributions"><i class="fa fa-check"></i><b>1.4</b> Distributions</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#histograms"><i class="fa fa-check"></i><b>1.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#percentiles"><i class="fa fa-check"></i><b>1.4.2</b> Percentiles</a></li>
+<li class="chapter" data-level="1.4.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#normal-distribution-model"><i class="fa fa-check"></i><b>1.4.3</b> Normal Distribution Model</a></li>
+<li class="chapter" data-level="1.4.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#measures-of-center"><i class="fa fa-check"></i><b>1.4.4</b> Measures of Center</a></li>
+<li class="chapter" data-level="1.4.5" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#measures-of-dispersion"><i class="fa fa-check"></i><b>1.4.5</b> Measures of Dispersion</a></li>
+</ul></li>
 <li class="chapter" data-level="1.5" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#exercise-introduction-to-r"><i class="fa fa-check"></i><b>1.5</b> Exercise: Introduction to R</a><ul>
 <li class="chapter" data-level="1.5.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#your-very-first-code"><i class="fa fa-check"></i><b>1.5.1</b> Your Very First Code</a></li>
 <li class="chapter" data-level="1.5.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#reading-and-working-with-data-frames"><i class="fa fa-check"></i><b>1.5.2</b> Reading and Working with Data Frames</a></li>
@@ -166,10 +172,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.7.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#basic-histogram"><i class="fa fa-check"></i><b>1.7.2</b> Basic Histogram</a></li>
 <li class="chapter" data-level="1.7.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#histograms-with-ggplot"><i class="fa fa-check"></i><b>1.7.3</b> Histograms with ggplot</a></li>
 <li class="chapter" data-level="1.7.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#practice-1"><i class="fa fa-check"></i><b>1.7.4</b> Practice</a></li>
-<li class="chapter" data-level="1.7.5" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#percentile-mean-median-maximum-and-minimum"><i class="fa fa-check"></i><b>1.7.5</b> Percentile, Mean, Median, Maximum, and Minimum</a></li>
-<li class="chapter" data-level="1.7.6" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#variance-and-standard-deviation"><i class="fa fa-check"></i><b>1.7.6</b> Variance and Standard Deviation</a></li>
-<li class="chapter" data-level="1.7.7" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#sum-of-squares-1"><i class="fa fa-check"></i><b>1.7.7</b> Sum of Squares</a></li>
-<li class="chapter" data-level="1.7.8" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#practice-2"><i class="fa fa-check"></i><b>1.7.8</b> Practice</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html"><i class="fa fa-check"></i><b>2</b> Distributions and Probability</a><ul>
@@ -313,8 +315,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="distributions" class="section level2">
 <h2><span class="header-section-number">1.4</span> Distributions</h2>
 <p>At this point, we have two options any time we want to know about soybean yield in this field. We can pull out this map or the complete dataset (which has over 6,500 observations) and look at try to intuitively understand the data. Or we can use statistics which, in a sense, provide us a formula for regenerating our dataset with just a few numbers.</p>
-<div id="histograms" class="section level4">
-<h4><span class="header-section-number">1.4.0.1</span> Histograms</h4>
+<div id="histograms" class="section level3">
+<h3><span class="header-section-number">1.4.1</span> Histograms</h3>
 <p>Before we get into the math required to generate these statistics, however, we should look at the “shape” of our data. One of the easiest and most informative things for us to do is to create a particular bar chart known as a histogram.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="introduction-and-population-statistics.html#cb6-1"></a>histogram =<span class="st"> </span><span class="kw">hist</span>(yield<span class="op">$</span>yield_bu, <span class="dt">breaks =</span> <span class="dv">12</span>)</span></code></pre></div>
 <p><img src="01-Introduction-and-Population-Statistics_files/figure-html/histogram1-1.png" width="672" /></p>
@@ -329,8 +331,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="01-Introduction-and-Population-Statistics_files/figure-html/ggplot_histogram-1.png" width="672" /></p>
 <p>Varying the bin width provides us with different perspectives on our distribution. Please click on the link below to open an application where you can vary the bin width and see how it changes your perspective.</p>
 </div>
-<div id="percentiles" class="section level4">
-<h4><span class="header-section-number">1.4.0.2</span> Percentiles</h4>
+<div id="percentiles" class="section level3">
+<h3><span class="header-section-number">1.4.2</span> Percentiles</h3>
 <p>We can also use percentiles to help us describe the data even more numerically. To identify percentiles, the data are numerically ordered (ranked) from lowest to highest. Each percentile is associated with a number; the percentile is the percentage of all data equal to or less than that number. We can quicly generate the 0th, 25th, 50th, and 75th, and 100th percentile in R using the summary command.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="introduction-and-population-statistics.html#cb9-1"></a><span class="kw">summary</span>(yield<span class="op">$</span>yield_bu)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
@@ -338,8 +340,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This returns six numbers. The 0th percentile (alternatively referred to as the minimum) is 0.00 – this is the lowest yield measured in the field. The 25th percentile (also called the 1st Quartile) is 87.16. This means that 25% of all observations were equal to 86.55 bushels or less. The 50th percentile (also known as the median) was 97.91, meaning half of all observations were equal to 97.91 bushels or less. 75% of observations were less than 111.13, the 75th percentile (or 3rd quartile). Finally, the 100th percentile (or maximum yield) recorded for this field was 199.60.</p>
 <p>We are now gaining a better sense of the range of observations that were most common. But we can do even better and describe this distribution with even fewer numbers.</p>
 </div>
-<div id="normal-distribution-model" class="section level4">
-<h4><span class="header-section-number">1.4.0.3</span> Normal Distribution Model</h4>
+<div id="normal-distribution-model" class="section level3">
+<h3><span class="header-section-number">1.4.3</span> Normal Distribution Model</h3>
 <p>Let’s overlay a curve, representing the normal distribution model, on our histogram with the following function, plotNormalHistogram.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="introduction-and-population-statistics.html#cb11-1"></a><span class="kw">plotNormalHistogram</span>(yield<span class="op">$</span>yield_bu, <span class="dt">breaks =</span> <span class="dv">10</span>)</span></code></pre></div>
 <p><img src="01-Introduction-and-Population-Statistics_files/figure-html/hist_normal_curve-1.png" width="672" /></p>
@@ -348,8 +350,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>No problem. We can – and should – conclude it is appropriate to fit these data with a normal distribution. If we had even more data, the curve would likely fit them even better.</p>
 <p>Many populations can be handily summarized with the normal distribution curve, but we need to know a couple of statistics about the data. First, we need to know where the <em>center</em> of the curve should be. Second, we need to know the width or <em>dispersion</em> of the curve.</p>
 </div>
-<div id="measures-of-center" class="section level4">
-<h4><span class="header-section-number">1.4.0.4</span> Measures of Center</h4>
+<div id="measures-of-center" class="section level3">
+<h3><span class="header-section-number">1.4.4</span> Measures of Center</h3>
 <p>To better describe our distribution, we will use the arithematic mean and median. The mean is the sum of all observations divided by the number of observations.</p>
 <p><span class="math display">\[\displaystyle \mu = \frac{\sum x_i}{n}\]</span>
 The <span class="math inline">\(\mu\)</span> symbol (a u with a tail) signifies the true mean of a population. The <span class="math inline">\(\sum\)</span> symbol (the character next to <span class="math inline">\(x_i\)</span> which looks like an angry insect) means “sum”. Thus, anytime you see the <span class="math inline">\(\sum\)</span> symbol, we are summing the variable(s) to its right. <span class="math inline">\(x_i\)</span> is the value <span class="math inline">\(x\)</span> of the ith individual in the population. Finally, n is the number of individuals in the population.</p>
@@ -383,11 +385,11 @@ The <span class="math inline">\(\mu\)</span> symbol (a u with a tail) signifies 
 <p>As you can see, they are practically identical. When the mean and median are similar, the number of individuals measuring greater and less than the mean are roughly equivalent. In this case, our data can be represented using a model called the normal distribution.</p>
 <p>We also need a statistic that tells us how wide to draw the curve. That statistic is called a measure of dispersion, and we will learn about it next.</p>
 </div>
-<div id="measures-of-dispersion" class="section level4">
-<h4><span class="header-section-number">1.4.0.5</span> Measures of Dispersion</h4>
+<div id="measures-of-dispersion" class="section level3">
+<h3><span class="header-section-number">1.4.5</span> Measures of Dispersion</h3>
 <p>To describe the spread of a population, we use three related statistics, which describe the summed difference of all from the mean (sum of squares), the average difference from the mean (variance) and, finally, the difference from the mean in our original units of measurement (standard deviation). Although there is a little math involved in these three statistics, please make yourself comfortable with their concepts because they are <em>very</em> important in this course. Almost every statistical test we will learn during the next 14 weeks is rooted in these measures of population width.</p>
-<div id="sum-of-squares" class="section level5">
-<h5><span class="header-section-number">1.4.0.5.1</span> Sum of Squares</h5>
+<div id="sum-of-squares" class="section level4">
+<h4><span class="header-section-number">1.4.5.1</span> Sum of Squares</h4>
 <p>The first measure of population width is the Sum of Squares. This is, simply, the sum of the squared differences between each observation and the mean. The sum of squares of a measurement x is:</p>
 <p><span class="math display">\[\displaystyle S_{xx} = (x_i - \mu)^2\]</span></p>
 <p>Where again <span class="math inline">\(x_i\)</span> is the value <span class="math inline">\(x\)</span> of the <span class="math inline">\(ith\)</span> individual in the population and <span class="math inline">\(\mu\)</span> is the true mean of a population.</p>
@@ -403,10 +405,10 @@ The <span class="math inline">\(\mu\)</span> symbol (a u with a tail) signifies 
 <p>Let’s now do this with our field data. The number of residuals (almost 6800) is too many to visualize at once, so we can use the sample function to pick 20 at random.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="introduction-and-population-statistics.html#cb28-1"></a>yield_residuals =<span class="st"> </span>yield<span class="op">$</span>yield_bu <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(yield<span class="op">$</span>yield_bu)</span>
 <span id="cb28-2"><a href="introduction-and-population-statistics.html#cb28-2"></a><span class="kw">sample</span>(yield_residuals, <span class="dv">20</span>)</span></code></pre></div>
-<pre><code>##  [1]  -6.2569555   6.2292278   4.7762265  -0.9398415  -1.6881004  -2.2855369
-##  [7]   1.3312401   8.2668291   3.8669182   8.2254801   7.7004253   5.9373886
-## [13]   1.7402892  -5.1199080 -10.8408435  -1.1833003   1.5085750  -4.5961640
-## [19]  -8.4444411   4.0732412</code></pre>
+<pre><code>##  [1] -23.026735  23.173035  -1.259206   2.702897  15.892629   6.335793
+##  [7]   5.498338  10.777729   5.272398 -13.651589  14.502714  -4.339746
+## [13]  -6.388711   2.399971   7.580671   3.253625   5.139901  -4.913792
+## [19]   1.525283   1.252156</code></pre>
 <p>If we sum up all the yield residuals, what number do we get? Any guesses before you click “Run Code”?</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="introduction-and-population-statistics.html#cb30-1"></a><span class="kw">sum</span>(yield_residuals)</span></code></pre></div>
 <pre><code>## [1] 1.139e-11</code></pre>
@@ -424,8 +426,8 @@ The <span class="math inline">\(\mu\)</span> symbol (a u with a tail) signifies 
 <span id="cb34-4"><a href="introduction-and-population-statistics.html#cb34-4"></a>yield_sum_of_squared_residuals</span></code></pre></div>
 <pre><code>## [1] 461211.3</code></pre>
 </div>
-<div id="variance" class="section level5">
-<h5><span class="header-section-number">1.4.0.5.2</span> Variance</h5>
+<div id="variance" class="section level4">
+<h4><span class="header-section-number">1.4.5.2</span> Variance</h4>
 <p>The sum of squares helps quantify spread: the larger the sum of squares, the greater the spread of observations around the population mean. There is one issue with the sum of squares, though: since the sum of square is derived from the differences between each observation and the mean, it is also related to the number of individuals overall in our population. In our example above, the sum of squares was 10:</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="introduction-and-population-statistics.html#cb36-1"></a>individuals =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
 <span id="cb36-2"><a href="introduction-and-population-statistics.html#cb36-2"></a>residuals =<span class="st"> </span>individuals <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(individuals)</span>
@@ -449,8 +451,8 @@ We can calculate the variance as follows.</p>
 <p>Our yield variance is:</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="introduction-and-population-statistics.html#cb40-1"></a>yield_variance =<span class="st"> </span>yield_sum_of_squared_residuals<span class="op">/</span><span class="kw">length</span>(yield_residuals)</span></code></pre></div>
 </div>
-<div id="standard-deviation" class="section level5">
-<h5><span class="header-section-number">1.4.0.5.3</span> Standard Deviation</h5>
+<div id="standard-deviation" class="section level4">
+<h4><span class="header-section-number">1.4.5.3</span> Standard Deviation</h4>
 <p>Our challenge in using the variance to describe population spread is it’s units are not intuitive. When we square the measure we also square the units of measure. For example the variance of our yield is measured in units of bushels<sup>2</sup>. Wrap your head around that one. Our solution is to report our final estimate of population spread in the original units of measure. To do this, we calculate the square root of the variance. This statistic is called the standard deviation, <span class="math inline">\(\sigma\)</span>.</p>
 <p><span class="math display">\[\sigma = \sqrt{(\sigma^2)}\]</span></p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="introduction-and-population-statistics.html#cb41-1"></a><span class="kw">sqrt</span>(variance)</span></code></pre></div>
@@ -459,7 +461,6 @@ We can calculate the variance as follows.</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="introduction-and-population-statistics.html#cb43-1"></a><span class="kw">sqrt</span>(yield_variance)</span></code></pre></div>
 <pre><code>## [1] 8.72324</code></pre>
 <p>That is enough theory for this first week of class. The remainder of this lesson will focus on introducing you to RStudioCloud.</p>
-
 </div>
 </div>
 </div>
@@ -542,7 +543,6 @@ We can calculate the variance as follows.</p>
 <div id="practice" class="section level3">
 <h3><span class="header-section-number">1.5.5</span> Practice</h3>
 <p>Now you try. There are four practice sets, labelled intro_to_r_practice_set_1.csv through intro_to_r_practice_set_4.csv. Practice reading in the .csv file and calculating summary statistics as shown above.</p>
-
 </div>
 </div>
 <div id="exercise-introduction-to-shapefiles" class="section level2">
@@ -554,13 +554,11 @@ We can calculate the variance as follows.</p>
 <p>If R tells us that a package is not installed, we can install it using the “install.packages(’’) command”, where the package name is included between the quotes. This code is shown below, but it is preceded by a hashtag, so that line of code will not be executed by R. The hashtag can be used to “comment” code or coding notes/explanations to that they can remain inline with the code we want to run, but not be run themselves.</p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="introduction-and-population-statistics.html#cb61-1"></a><span class="co"># install.packages(&#39;sf&#39;, repos=&#39;http://cran.us.r-project.org&#39;)</span></span>
 <span id="cb61-2"><a href="introduction-and-population-statistics.html#cb61-2"></a><span class="kw">library</span>(sf)</span></code></pre></div>
-<pre><code>## Warning: package &#39;sf&#39; was built under R version 4.0.5</code></pre>
-<pre><code>## Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1</code></pre>
 </div>
 <div id="reading-shapefiles" class="section level3">
 <h3><span class="header-section-number">1.6.2</span> Reading Shapefiles</h3>
 <p>To read in a shapefile, we use the “st_read” command. Reading in a shapefile is identical to how we read in a .csv file in the previous exercise. We simply follow st_read with the path to the shapefile, which has a .shp suffix. We will read in a shapefile from Indiana that includes county summaries for a couple of dozen agricultural statistics.</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="introduction-and-population-statistics.html#cb64-1"></a>indiana =<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;data-unit-1/exercise_data/Agriculture_Census-shp/Agriculture_Census.shp&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="introduction-and-population-statistics.html#cb62-1"></a>indiana =<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;data-unit-1/exercise_data/Agriculture_Census-shp/Agriculture_Census.shp&quot;</span>)</span></code></pre></div>
 <pre><code>## Reading layer `Agriculture_Census&#39; from data source `C:\Users\559069\OneDrive - Land O&#39;Lakes, Inc\Documents\data-science-for-agricultural-professionals_3\data-unit-1\exercise_data\Agriculture_Census-shp\Agriculture_Census.shp&#39; using driver `ESRI Shapefile&#39;
 ## Simple feature collection with 92 features and 31 fields
 ## Geometry type: POLYGON
@@ -571,7 +569,7 @@ We can calculate the variance as follows.</p>
 <div id="examining-spatial-feature-data-frames" class="section level3">
 <h3><span class="header-section-number">1.6.3</span> Examining Spatial Feature Data Frames</h3>
 <p>Let’s inspect the first six rows of the spatial feature data frame using the “head()” command, where the name of the data frame is given between the parentheses.</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="introduction-and-population-statistics.html#cb66-1"></a><span class="kw">head</span>(indiana)</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="introduction-and-population-statistics.html#cb64-1"></a><span class="kw">head</span>(indiana)</span></code></pre></div>
 <pre><code>## Simple feature collection with 6 features and 31 fields
 ## Geometry type: POLYGON
 ## Dimension:     XY
@@ -620,21 +618,21 @@ We can calculate the variance as follows.</p>
 <div id="visualizing-data" class="section level3">
 <h3><span class="header-section-number">1.6.4</span> Visualizing Data</h3>
 <p>To visualize the data, we can use the “plot” function from the sf package. You might assume we could map a column of data the same way we visualized its contents earlier, by indicating the data frame and column name, separated by the dollar sign. We will try that with TOTCROP_AC, the total number of acres per county in crop production.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="introduction-and-population-statistics.html#cb68-1"></a><span class="kw">plot</span>(indiana<span class="op">$</span>TOTCROP_AC)</span></code></pre></div>
-<p><img src="01-Exercise-Intro-to-Shapefiles_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="introduction-and-population-statistics.html#cb66-1"></a><span class="kw">plot</span>(indiana<span class="op">$</span>TOTCROP_AC)</span></code></pre></div>
+<p><img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Instead of a map, however, this shows us the range of values for TOTCROP_AC in the dataset. To view a map, we need to first subset the data so it only has two columns: the TOTCROP_AC data and geometry columns. We can then map these data:</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="introduction-and-population-statistics.html#cb69-1"></a>tot_crop =<span class="st"> </span>indiana[<span class="st">&quot;TOTCROP_AC&quot;</span>]</span>
-<span id="cb69-2"><a href="introduction-and-population-statistics.html#cb69-2"></a><span class="kw">plot</span>(tot_crop)</span></code></pre></div>
-<p><img src="01-Exercise-Intro-to-Shapefiles_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="introduction-and-population-statistics.html#cb67-1"></a>tot_crop =<span class="st"> </span>indiana[<span class="st">&quot;TOTCROP_AC&quot;</span>]</span>
+<span id="cb67-2"><a href="introduction-and-population-statistics.html#cb67-2"></a><span class="kw">plot</span>(tot_crop)</span></code></pre></div>
+<p><img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>No one can resist a pretty map. The technical name for a map like this, where you color-code political shapes like counties, is “chloropleth.” We are seeing plenty of these in 2020, between the pandemic and the election year.</p>
 <p>Back to happier thoughts. Let’s look at the mean farm income per county. This is indicated by the “DOL_FARM” column. Again, we first subset the data and then plot it.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="introduction-and-population-statistics.html#cb70-1"></a>farm_income =<span class="st"> </span>indiana[<span class="st">&quot;DOL_FARM&quot;</span>]</span>
-<span id="cb70-2"><a href="introduction-and-population-statistics.html#cb70-2"></a><span class="kw">plot</span>(farm_income)</span></code></pre></div>
-<p><img src="01-Exercise-Intro-to-Shapefiles_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="introduction-and-population-statistics.html#cb68-1"></a>farm_income =<span class="st"> </span>indiana[<span class="st">&quot;DOL_FARM&quot;</span>]</span>
+<span id="cb68-2"><a href="introduction-and-population-statistics.html#cb68-2"></a><span class="kw">plot</span>(farm_income)</span></code></pre></div>
+<p><img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>Where are the chickens in Indiana? Let’s find out:</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="introduction-and-population-statistics.html#cb71-1"></a>chickens =<span class="st"> </span>indiana[<span class="st">&quot;N_CHICKENS&quot;</span>]</span>
-<span id="cb71-2"><a href="introduction-and-population-statistics.html#cb71-2"></a><span class="kw">plot</span>(chickens)</span></code></pre></div>
-<p><img src="01-Exercise-Intro-to-Shapefiles_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="introduction-and-population-statistics.html#cb69-1"></a>chickens =<span class="st"> </span>indiana[<span class="st">&quot;N_CHICKENS&quot;</span>]</span>
+<span id="cb69-2"><a href="introduction-and-population-statistics.html#cb69-2"></a><span class="kw">plot</span>(chickens)</span></code></pre></div>
+<p><img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>It would appear the most finger-lickin’ good county is Elkart County, in the far north. Appropriately, there are also a couple of counties near Kentucky!</p>
 </div>
 <div id="create-your-own-maps" class="section level3">
@@ -642,7 +640,6 @@ We can calculate the variance as follows.</p>
 <p>Where are the hogs in Indiana? Create a map for “N_PIGS”.</p>
 <p>Where are most of the wheat acres? Create a map for “WHEAT_AC”.</p>
 <p>Which counties have greater farm ownership by minorities? Create a map for “MINORTY_OP” (note the mispelling).</p>
-
 </div>
 </div>
 <div id="exercise-histograms" class="section level2">
@@ -653,27 +650,27 @@ We can calculate the variance as follows.</p>
 <p>The first example we will use is a cotton uniformity trial conducted in Greece in 1938. Yes, I realize it is a bit dated, but the concept is one we deal with every day in agricultural research – how consistent are our plots. In other words, what is the variance among plots?</p>
 <p>In a uniformity trial, a series of plots are managed identically so that the distribution of their yields can be measured. These data can be used to determine whether that field is a good site for a research trial.</p>
 <p>Our first step is to load the data, which is in a .csv file.</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="introduction-and-population-statistics.html#cb72-1"></a>cotton =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-1/exercise_data/cotton_uniformity.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="introduction-and-population-statistics.html#cb70-1"></a>cotton =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-1/exercise_data/cotton_uniformity.csv&quot;</span>)</span></code></pre></div>
 </div>
 <div id="basic-histogram" class="section level3">
 <h3><span class="header-section-number">1.7.2</span> Basic Histogram</h3>
 <p>Drawing a simple histogram in R requires two steps. First, we need to define the column in which we are interested. Then we create the histogram. Since we are using a data frame, we need to tell R which column to plot. We will, unimaginedly, call this column “yield”. With our second line of code we will create the histogram. In the third line, we tell R to plot the histogram</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="introduction-and-population-statistics.html#cb73-1"></a>yield =<span class="st"> </span>cotton<span class="op">$</span>yield</span>
-<span id="cb73-2"><a href="introduction-and-population-statistics.html#cb73-2"></a>histogram =<span class="st"> </span><span class="kw">hist</span>(yield)</span></code></pre></div>
-<p><img src="01-Exercise-Histograms_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="introduction-and-population-statistics.html#cb74-1"></a><span class="kw">plot</span>(histogram)</span></code></pre></div>
-<p><img src="01-Exercise-Histograms_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="introduction-and-population-statistics.html#cb71-1"></a>yield =<span class="st"> </span>cotton<span class="op">$</span>yield</span>
+<span id="cb71-2"><a href="introduction-and-population-statistics.html#cb71-2"></a>histogram =<span class="st"> </span><span class="kw">hist</span>(yield)</span></code></pre></div>
+<p><img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="introduction-and-population-statistics.html#cb72-1"></a><span class="kw">plot</span>(histogram)</span></code></pre></div>
+<p><img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-19-2.png" width="672" /></p>
 <p>And, voila, we have a plot of our histogram. Each bar represents a range in values, or a “bin”. We can see the upper and lower yield limits of each bins using the “histogram$breaks” command.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="introduction-and-population-statistics.html#cb75-1"></a>histogram<span class="op">$</span>breaks</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="introduction-and-population-statistics.html#cb73-1"></a>histogram<span class="op">$</span>breaks</span></code></pre></div>
 <pre><code>##  [1] 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7</code></pre>
 <p>Alternatively, we could see the midpoints, or yield values that define the middle of each bin, using the “histogram$mids” command.</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="introduction-and-population-statistics.html#cb77-1"></a>histogram<span class="op">$</span>mids</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="introduction-and-population-statistics.html#cb75-1"></a>histogram<span class="op">$</span>mids</span></code></pre></div>
 <pre><code>##  [1] 0.35 0.45 0.55 0.65 0.75 0.85 0.95 1.05 1.15 1.25 1.35 1.45 1.55 1.65</code></pre>
 <p>As we saw in the lesson, varying the number of columns can affect how we see patterns in the data. In the plot above, we have 14 bars. Each bar represents a bin width of 0.1. What if we tell R to use 28 bins to draw the histogram? We can do that by telling R to use about 28 breaks (divisions between bins).</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="introduction-and-population-statistics.html#cb79-1"></a>histogram =<span class="st"> </span><span class="kw">hist</span>(yield, <span class="dt">breaks =</span> <span class="dv">28</span>)</span></code></pre></div>
-<p><img src="01-Exercise-Histograms_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="introduction-and-population-statistics.html#cb77-1"></a>histogram =<span class="st"> </span><span class="kw">hist</span>(yield, <span class="dt">breaks =</span> <span class="dv">28</span>)</span></code></pre></div>
+<p><img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>Note that we ended up with 27, not 28 bins, but that each now has a bin width that is 0.05 kg. We can verify this by again inspecting the data with “histogram$breaks”.</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="introduction-and-population-statistics.html#cb80-1"></a>histogram<span class="op">$</span>breaks</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="introduction-and-population-statistics.html#cb78-1"></a>histogram<span class="op">$</span>breaks</span></code></pre></div>
 <pre><code>##  [1] 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.75 0.80 0.85 0.90 0.95 1.00 1.05
 ## [16] 1.10 1.15 1.20 1.25 1.30 1.35 1.40 1.45 1.50 1.55 1.60 1.65 1.70</code></pre>
 </div>
@@ -684,94 +681,35 @@ We can calculate the variance as follows.</p>
 <p>The first line of code calls ggplot(). We use “data=cotton” to tell R we are drawing data from the “cotton” data frame.</p>
 <p>We then need to specify an “aesthetic”. An aesthetic is any property of the plot that relates to a variable, that is, a column in our data frame. In this case, we use aes(x=yield) to tell R that our aesthetic is positioned horizontally according to the value of yield.</p>
 <p>In the second line, we use geom_histogram to tell R we are drawing a histogram. Knowing this, R will automatically assign bins and count the number of observations in each bin.</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="introduction-and-population-statistics.html#cb82-1"></a><span class="co"># install.packages(&quot;ggplot2&quot;)</span></span>
-<span id="cb82-2"><a href="introduction-and-population-statistics.html#cb82-2"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb82-3"><a href="introduction-and-population-statistics.html#cb82-3"></a></span>
-<span id="cb82-4"><a href="introduction-and-population-statistics.html#cb82-4"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>cotton, <span class="kw">aes</span>(<span class="dt">x=</span>yield)) <span class="op">+</span></span>
-<span id="cb82-5"><a href="introduction-and-population-statistics.html#cb82-5"></a><span class="st">  </span><span class="kw">geom_histogram</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="introduction-and-population-statistics.html#cb80-1"></a><span class="co"># install.packages(&quot;ggplot2&quot;)</span></span>
+<span id="cb80-2"><a href="introduction-and-population-statistics.html#cb80-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb80-3"><a href="introduction-and-population-statistics.html#cb80-3"></a></span>
+<span id="cb80-4"><a href="introduction-and-population-statistics.html#cb80-4"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>cotton, <span class="kw">aes</span>(<span class="dt">x=</span>yield)) <span class="op">+</span></span>
+<span id="cb80-5"><a href="introduction-and-population-statistics.html#cb80-5"></a><span class="st">  </span><span class="kw">geom_histogram</span>()</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="01-Exercise-Histograms_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 <p>By default, R chooses to create 30 bins. We can easily specify a different number of bins using the “bins=” argument.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="introduction-and-population-statistics.html#cb84-1"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>cotton, <span class="kw">aes</span>(<span class="dt">x=</span>yield)) <span class="op">+</span></span>
-<span id="cb84-2"><a href="introduction-and-population-statistics.html#cb84-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">15</span>)</span></code></pre></div>
-<p><img src="01-Exercise-Histograms_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="introduction-and-population-statistics.html#cb82-1"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>cotton, <span class="kw">aes</span>(<span class="dt">x=</span>yield)) <span class="op">+</span></span>
+<span id="cb82-2"><a href="introduction-and-population-statistics.html#cb82-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">15</span>)</span></code></pre></div>
+<p><img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <p>Alternatively, we can set a particular binwidth using the “binwidth =” argument.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="introduction-and-population-statistics.html#cb85-1"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>cotton, <span class="kw">aes</span>(<span class="dt">x=</span>yield)) <span class="op">+</span></span>
-<span id="cb85-2"><a href="introduction-and-population-statistics.html#cb85-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="fl">0.05</span>)</span></code></pre></div>
-<p><img src="01-Exercise-Histograms_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="introduction-and-population-statistics.html#cb83-1"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>cotton, <span class="kw">aes</span>(<span class="dt">x=</span>yield)) <span class="op">+</span></span>
+<span id="cb83-2"><a href="introduction-and-population-statistics.html#cb83-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="fl">0.05</span>)</span></code></pre></div>
+<p><img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 <p>If we want to make our plot a little less bland, we can tell ggplot to use a different color to fill the bars using the “fill =” argument</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="introduction-and-population-statistics.html#cb86-1"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>cotton, <span class="kw">aes</span>(<span class="dt">x=</span>yield)) <span class="op">+</span></span>
-<span id="cb86-2"><a href="introduction-and-population-statistics.html#cb86-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="fl">0.05</span>, <span class="dt">fill=</span><span class="st">&quot;darkolivegreen&quot;</span>)</span></code></pre></div>
-<p><img src="01-Exercise-Histograms_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="introduction-and-population-statistics.html#cb84-1"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>cotton, <span class="kw">aes</span>(<span class="dt">x=</span>yield)) <span class="op">+</span></span>
+<span id="cb84-2"><a href="introduction-and-population-statistics.html#cb84-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="fl">0.05</span>, <span class="dt">fill=</span><span class="st">&quot;darkolivegreen&quot;</span>)</span></code></pre></div>
+<p><img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <p>Finally, we can outline the bars using the “color =” argument.</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="introduction-and-population-statistics.html#cb87-1"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>cotton, <span class="kw">aes</span>(<span class="dt">x=</span>yield)) <span class="op">+</span></span>
-<span id="cb87-2"><a href="introduction-and-population-statistics.html#cb87-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="fl">0.05</span>, <span class="dt">fill=</span><span class="st">&quot;darkolivegreen&quot;</span>, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>)</span></code></pre></div>
-<p><img src="01-Exercise-Histograms_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="introduction-and-population-statistics.html#cb85-1"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>cotton, <span class="kw">aes</span>(<span class="dt">x=</span>yield)) <span class="op">+</span></span>
+<span id="cb85-2"><a href="introduction-and-population-statistics.html#cb85-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="fl">0.05</span>, <span class="dt">fill=</span><span class="st">&quot;darkolivegreen&quot;</span>, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<p><img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <p>We will introduce more ways to fine tune our plots as the course goes on.</p>
 </div>
 <div id="practice-1" class="section level3">
 <h3><span class="header-section-number">1.7.4</span> Practice</h3>
 <p>In the data folder there are three practice files: barley_uniformity.csv, peanut_uniformity.csv, and tomato_uniformity.csv. Practice creating histograms using both the basic and ggplot methods. To start you off, here is the command to load the barley file.</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="introduction-and-population-statistics.html#cb88-1"></a>barley =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-1/exercise_data/barley_uniformity.csv&quot;</span>)</span></code></pre></div>
-
-<p>##Exercise: Population Summary Statistics
-So far, we have learned two ways to visualize population data. First, if it is spatial data, we can draw a map that shows where each individual was measured. Second, with any continuous data (e.g. data that can be measured with a ruler, a balance, a moisture sensor, or a graduated cylinder), we can use a histogram to visualize the relative frequency with which different ranges of values occur in a population.</p>
-<p>In this exercise, we are going to learn how to apply summary statistics to the datasets we worked with earlier to quantify aspects of their distributions.</p>
-<p>####Case Study
-For this example, let’s return to the cotton dataset from the previous exercise.</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="introduction-and-population-statistics.html#cb89-1"></a>cotton =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-1/exercise_data/cotton_uniformity.csv&quot;</span>)</span></code></pre></div>
-<p>The cotton was grown in 1024 plots and sampled for biomass. We can create a map of sorts for this data with ggplot.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="introduction-and-population-statistics.html#cb90-1"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb90-2"><a href="introduction-and-population-statistics.html#cb90-2"></a></span>
-<span id="cb90-3"><a href="introduction-and-population-statistics.html#cb90-3"></a><span class="kw">ggplot</span>(cotton, <span class="kw">aes</span>(<span class="dt">x=</span>col, <span class="dt">y=</span>row, <span class="dt">fill=</span>yield)) <span class="op">+</span></span>
-<span id="cb90-4"><a href="introduction-and-population-statistics.html#cb90-4"></a><span class="st">  </span><span class="kw">geom_tile</span>() <span class="op">+</span></span>
-<span id="cb90-5"><a href="introduction-and-population-statistics.html#cb90-5"></a><span class="st">  </span><span class="kw">scale_fill_gradientn</span>(<span class="dt">colors=</span><span class="kw">terrain.colors</span>(<span class="dv">5</span>))</span></code></pre></div>
-<p><img src="01-Exercise-Summary-Statistics_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-</div>
-<div id="percentile-mean-median-maximum-and-minimum" class="section level3">
-<h3><span class="header-section-number">1.7.5</span> Percentile, Mean, Median, Maximum, and Minimum</h3>
-<p>We can also use percentiles to help us describe the data even more numerically. To identify percentiles, the data are numerically ordered (ranked) from lowest to highest. Each percentile is associated with a number; the percentile is the percentage of all data equal to or less than that number. We can quicly generate the 0th, 25th, 50th, and 75th, and 100th percentile in R using the summary command.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="introduction-and-population-statistics.html#cb91-1"></a>yield =<span class="st"> </span>cotton<span class="op">$</span>yield</span>
-<span id="cb91-2"><a href="introduction-and-population-statistics.html#cb91-2"></a><span class="kw">summary</span>(yield)</span></code></pre></div>
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.3600  0.8375  1.0300  1.0013  1.1700  1.6600</code></pre>
-<p>This returns six numbers. The 0th percentile (alternatively referred to as the minimum) is 0.36 – this is the lowest yield measured in the field. The 25th percentile (also called the 1st Quartile) is 0.8375. This means that 25% of all observations were equal to o.8375 or less. The 50th percentile (also known as the median) was 1.03, meaning half of all observations were equal to 1.03 or less. 75% of observations were less than 1.17, the 75th percentile (or 3rd quartile). Finally, the 100th percentile (or maximum) recorded for this field was 1.66.</p>
-<p>We can also directly calculate the mean, median, max, and min.</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="introduction-and-population-statistics.html#cb93-1"></a><span class="kw">mean</span>(yield) <span class="co"># mean yield</span></span></code></pre></div>
-<pre><code>## [1] 1.001309</code></pre>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="introduction-and-population-statistics.html#cb95-1"></a><span class="kw">median</span>(yield) <span class="co"># median yield</span></span></code></pre></div>
-<pre><code>## [1] 1.03</code></pre>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="introduction-and-population-statistics.html#cb97-1"></a><span class="kw">max</span>(yield) <span class="co"># maximum yield</span></span></code></pre></div>
-<pre><code>## [1] 1.66</code></pre>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="introduction-and-population-statistics.html#cb99-1"></a><span class="kw">min</span>(yield) <span class="co"># minimum yield</span></span></code></pre></div>
-<pre><code>## [1] 0.36</code></pre>
-</div>
-<div id="variance-and-standard-deviation" class="section level3">
-<h3><span class="header-section-number">1.7.6</span> Variance and Standard Deviation</h3>
-<p>It is also simple to calculate variance and standard deviation in R.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="introduction-and-population-statistics.html#cb101-1"></a><span class="kw">var</span>(yield) <span class="co"># variance</span></span></code></pre></div>
-<pre><code>## [1] 0.0523064</code></pre>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="introduction-and-population-statistics.html#cb103-1"></a><span class="kw">sd</span>(yield)</span></code></pre></div>
-<pre><code>## [1] 0.2287059</code></pre>
-</div>
-<div id="sum-of-squares-1" class="section level3">
-<h3><span class="header-section-number">1.7.7</span> Sum of Squares</h3>
-<p>While it is rare that we summarise a population with the sum of squares, on occasion we may want to calculate it. R does not have a direct function to calculate the sum of squares, but we can calculate it using the variance and degrees of freedom.</p>
-<p>In the lecture portion of this unit, we learned the relation ship between variance and sum of squares was as follows:</p>
-<p><span class="math display">\[\sigma^2 = \frac{S_{xx}}{n}\]</span></p>
-<p>Where the left side of the equation (sigma squared) was the variance, Sxx was the sum of squares, and n was the number of individuals in the population. If we rearrange this equation, we can see that the sum of squares is the product of the variance and n.</p>
-<p><span class="math display">\[S_{xx} = \sigma^2 \cdot n\]</span></p>
-<p>We calculated our variance above usinging var(). We can count the number of individuals in the population using the “length()” function. By multiplying these two statistics together, we can calculate the sum of squares.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="introduction-and-population-statistics.html#cb105-1"></a>variance =<span class="st"> </span><span class="kw">var</span>(yield)</span>
-<span id="cb105-2"><a href="introduction-and-population-statistics.html#cb105-2"></a>N =<span class="st"> </span><span class="kw">length</span>(yield)</span>
-<span id="cb105-3"><a href="introduction-and-population-statistics.html#cb105-3"></a></span>
-<span id="cb105-4"><a href="introduction-and-population-statistics.html#cb105-4"></a>variance<span class="op">*</span>N</span></code></pre></div>
-<pre><code>## [1] 53.56175</code></pre>
-<p>In the above code, we assigned the population variance to a the variable “variance”. We assigned the population size to the variable N. Finally, we multiplied these two new variables to calculate the sum of squares.</p>
-</div>
-<div id="practice-2" class="section level3">
-<h3><span class="header-section-number">1.7.8</span> Practice</h3>
-<p>Practice calculating the summary statistics for the barley_uniformity.csv, peanut_uniformity, and tomato uniformity datasets.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="introduction-and-population-statistics.html#cb86-1"></a>barley =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-1/exercise_data/barley_uniformity.csv&quot;</span>)</span></code></pre></div>
 
 </div>
 </div>

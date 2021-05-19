@@ -28,10 +28,6 @@ case-study
 basic-histogram
 histograms-with-ggplot
 practice-1
-percentile-mean-median-maximum-and-minimum
-variance-and-standard-deviation
-sum-of-squares-1
-practice-2
 distributions-and-probability
 case-study-1
 the-normal-distribution-model
