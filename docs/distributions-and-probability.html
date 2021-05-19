@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Distributions and Probability" | Data Science for Agricultural Professionals</title>
+  <title>Chapter 2 Distributions and Probability | Data Science for Agricultural Professionals</title>
   <meta name="description" content="Everything you need (and nothing more) to start a bookdown book." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Distributions and Probability" | Data Science for Agricultural Professionals" />
+  <meta property="og:title" content="Chapter 2 Distributions and Probability | Data Science for Agricultural Professionals" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="http://seankross.com/bookdown-start/" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="seankross/bookdown-start" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Distributions and Probability" | Data Science for Agricultural Professionals" />
+  <meta name="twitter:title" content="Chapter 2 Distributions and Probability | Data Science for Agricultural Professionals" />
   
   <meta name="twitter:description" content="Everything you need (and nothing more) to start a bookdown book." />
   
@@ -24,16 +24,16 @@
 <meta name="author" content="Marin L. Harbur" />
 
 
-<meta name="date" content="2021-05-11" />
+<meta name="date" content="2021-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="introduction.html"/>
-
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link rel="prev" href="introduction-and-population-statistics.html"/>
+<link rel="next" href="sample-statistics.html"/>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -51,6 +51,13 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -135,24 +142,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#welcome"><i class="fa fa-check"></i><b>1.1</b> Welcome</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#r-language"><i class="fa fa-check"></i><b>1.2</b> R-language</a></li>
-<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#populations"><i class="fa fa-check"></i><b>1.3</b> Populations</a></li>
-<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#case-study-yield-map"><i class="fa fa-check"></i><b>1.4</b> Case Study: Yield Map</a></li>
-<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#distributions"><i class="fa fa-check"></i><b>1.5</b> Distributions</a></li>
+<li class="chapter" data-level="1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html"><i class="fa fa-check"></i><b>1</b> Introduction and Population Statistics</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#r-language"><i class="fa fa-check"></i><b>1.1</b> R-language</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#populations"><i class="fa fa-check"></i><b>1.2</b> Populations</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#case-study-yield-map"><i class="fa fa-check"></i><b>1.3</b> Case Study: Yield Map</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#distributions"><i class="fa fa-check"></i><b>1.4</b> Distributions</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#exercise-introduction-to-r"><i class="fa fa-check"></i><b>1.5</b> Exercise: Introduction to R</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#your-very-first-code"><i class="fa fa-check"></i><b>1.5.1</b> Your Very First Code</a></li>
+<li class="chapter" data-level="1.5.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#reading-and-working-with-data-frames"><i class="fa fa-check"></i><b>1.5.2</b> Reading and Working with Data Frames</a></li>
+<li class="chapter" data-level="1.5.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#basic-operations-on-columns"><i class="fa fa-check"></i><b>1.5.3</b> Basic Operations on Columns</a></li>
+<li class="chapter" data-level="1.5.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#knitting-your-results-into-a-document"><i class="fa fa-check"></i><b>1.5.4</b> Knitting Your Results into a Document</a></li>
+<li class="chapter" data-level="1.5.5" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#practice"><i class="fa fa-check"></i><b>1.5.5</b> Practice</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html"><i class="fa fa-check"></i><b>2</b> Distributions and Probability"</a><ul>
-<li class="chapter" data-level="2.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#review"><i class="fa fa-check"></i><b>2.1</b> Review</a></li>
-<li class="chapter" data-level="2.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#case-study"><i class="fa fa-check"></i><b>2.2</b> Case Study</a></li>
-<li class="chapter" data-level="2.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-normal-distribution-model"><i class="fa fa-check"></i><b>2.3</b> The Normal Distribution Model</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-bell-curve"><i class="fa fa-check"></i><b>2.3.1</b> The Bell Curve</a></li>
-<li class="chapter" data-level="2.3.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#distribution-and-probability"><i class="fa fa-check"></i><b>2.3.2</b> Distribution and Probability</a></li>
-<li class="chapter" data-level="2.3.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probability-and-the-normal-distribution-curve"><i class="fa fa-check"></i><b>2.3.3</b> Probability and the Normal Distribution Curve</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#exercise-introduction-to-shapefiles"><i class="fa fa-check"></i><b>1.6</b> Exercise: Introduction to Shapefiles</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#r-packages"><i class="fa fa-check"></i><b>1.6.1</b> R Packages</a></li>
+<li class="chapter" data-level="1.6.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#reading-shapefiles"><i class="fa fa-check"></i><b>1.6.2</b> Reading Shapefiles</a></li>
+<li class="chapter" data-level="1.6.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#examining-spatial-feature-data-frames"><i class="fa fa-check"></i><b>1.6.3</b> Examining Spatial Feature Data Frames</a></li>
+<li class="chapter" data-level="1.6.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#visualizing-data"><i class="fa fa-check"></i><b>1.6.4</b> Visualizing Data</a></li>
+<li class="chapter" data-level="1.6.5" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#create-your-own-maps"><i class="fa fa-check"></i><b>1.6.5</b> Create Your Own Maps</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-z-distribution"><i class="fa fa-check"></i><b>2.4</b> The Z-Distribution</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#important-numbers-95-and-5"><i class="fa fa-check"></i><b>2.4.1</b> Important Numbers: 95% and 5%</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#exercise-histograms"><i class="fa fa-check"></i><b>1.7</b> Exercise: Histograms</a><ul>
+<li class="chapter" data-level="1.7.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#case-study"><i class="fa fa-check"></i><b>1.7.1</b> Case Study</a></li>
+<li class="chapter" data-level="1.7.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#basic-histogram"><i class="fa fa-check"></i><b>1.7.2</b> Basic Histogram</a></li>
+<li class="chapter" data-level="1.7.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#histograms-with-ggplot"><i class="fa fa-check"></i><b>1.7.3</b> Histograms with ggplot</a></li>
+<li class="chapter" data-level="1.7.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#practice-1"><i class="fa fa-check"></i><b>1.7.4</b> Practice</a></li>
+<li class="chapter" data-level="1.7.5" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#percentile-mean-median-maximum-and-minimum"><i class="fa fa-check"></i><b>1.7.5</b> Percentile, Mean, Median, Maximum, and Minimum</a></li>
+<li class="chapter" data-level="1.7.6" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#variance-and-standard-deviation"><i class="fa fa-check"></i><b>1.7.6</b> Variance and Standard Deviation</a></li>
+<li class="chapter" data-level="1.7.7" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#sum-of-squares-1"><i class="fa fa-check"></i><b>1.7.7</b> Sum of Squares</a></li>
+<li class="chapter" data-level="1.7.8" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#practice-2"><i class="fa fa-check"></i><b>1.7.8</b> Practice</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html"><i class="fa fa-check"></i><b>2</b> Distributions and Probability</a><ul>
+<li class="chapter" data-level="2.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#case-study-1"><i class="fa fa-check"></i><b>2.1</b> Case Study</a></li>
+<li class="chapter" data-level="2.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-normal-distribution-model"><i class="fa fa-check"></i><b>2.2</b> The Normal Distribution Model</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-bell-curve"><i class="fa fa-check"></i><b>2.2.1</b> The Bell Curve</a></li>
+<li class="chapter" data-level="2.2.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#distribution-and-probability"><i class="fa fa-check"></i><b>2.2.2</b> Distribution and Probability</a></li>
+<li class="chapter" data-level="2.2.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probability-and-the-normal-distribution-curve"><i class="fa fa-check"></i><b>2.2.3</b> Probability and the Normal Distribution Curve</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-z-distribution"><i class="fa fa-check"></i><b>2.3</b> The Z-Distribution</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#important-numbers-95-and-5"><i class="fa fa-check"></i><b>2.3.1</b> Important Numbers: 95% and 5%</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="sample-statistics.html"><a href="sample-statistics.html"><i class="fa fa-check"></i><b>3</b> Sample Statistics</a><ul>
+<li class="chapter" data-level="3.1" data-path="sample-statistics.html"><a href="sample-statistics.html#samples"><i class="fa fa-check"></i><b>3.1</b> Samples</a></li>
+<li class="chapter" data-level="3.2" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-2"><i class="fa fa-check"></i><b>3.2</b> Case Study</a></li>
+<li class="chapter" data-level="3.3" data-path="sample-statistics.html"><a href="sample-statistics.html#distribution-of-sample-means"><i class="fa fa-check"></i><b>3.3</b> Distribution of Sample Means</a></li>
+<li class="chapter" data-level="3.4" data-path="sample-statistics.html"><a href="sample-statistics.html#central-limit-theorem"><i class="fa fa-check"></i><b>3.4</b> Central Limit Theorem</a></li>
+<li class="chapter" data-level="3.5" data-path="sample-statistics.html"><a href="sample-statistics.html#standard-error"><i class="fa fa-check"></i><b>3.5</b> Standard Error</a></li>
+<li class="chapter" data-level="3.6" data-path="sample-statistics.html"><a href="sample-statistics.html#degrees-of-freedom"><i class="fa fa-check"></i><b>3.6</b> Degrees of Freedom</a></li>
+<li class="chapter" data-level="3.7" data-path="sample-statistics.html"><a href="sample-statistics.html#the-t-distribution"><i class="fa fa-check"></i><b>3.7</b> The t-Distribution</a></li>
+<li class="chapter" data-level="3.8" data-path="sample-statistics.html"><a href="sample-statistics.html#confidence-interval"><i class="fa fa-check"></i><b>3.8</b> Confidence Interval</a></li>
+<li class="chapter" data-level="3.9" data-path="sample-statistics.html"><a href="sample-statistics.html#confidence-interval-and-probability"><i class="fa fa-check"></i><b>3.9</b> Confidence Interval and Probability</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html"><i class="fa fa-check"></i><b>4</b> Two-Treatment Comparisons</a><ul>
+<li class="chapter" data-level="4.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#side-by-side-trials"><i class="fa fa-check"></i><b>4.1</b> Side-by-Side Trials</a></li>
+<li class="chapter" data-level="4.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#blocked-design"><i class="fa fa-check"></i><b>4.2</b> Blocked Design</a></li>
+<li class="chapter" data-level="4.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-3"><i class="fa fa-check"></i><b>4.3</b> Case Study</a></li>
+<li class="chapter" data-level="4.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#confidence-interval-1"><i class="fa fa-check"></i><b>4.4</b> Confidence Interval</a></li>
+<li class="chapter" data-level="4.5" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#t-test"><i class="fa fa-check"></i><b>4.5</b> T-Test</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -175,22 +222,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="distributions-and-probability" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Distributions and Probability"</h1>
-<div id="review" class="section level2">
-<h2><span class="header-section-number">2.1</span> Review</h2>
+<h1><span class="header-section-number">Chapter 2</span> Distributions and Probability</h1>
 <p>In this unit we will continue with normal distribution model introduced in the previous unit. As you will recall, the normal distribution is a symmetrical curve that represents the frequency with which individuals with different particular measured values occur in a population.</p>
 <p>The peak of the curve is located at the population mean, <span class="math inline">\(\mu\)</span>. The width of the curve reflects how spread out other individuals are from the mean. We learned three ways to measure this spread: the sum of squares, the variance, and the standard deviation. These statistics can roughly be thought of as representing the sums of the squared differences, the average of the squared distances, and the distances presented in the original units of measure. These four statistics – mean, sum of squares, variance, and standard deviation – are among the most important you will learn in this course.</p>
-</div>
-<div id="case-study" class="section level2">
-<h2><span class="header-section-number">2.2</span> Case Study</h2>
+<div id="case-study-1" class="section level2">
+<h2><span class="header-section-number">2.1</span> Case Study</h2>
 <p>This week, we will continue to work with the Iowa soybean yield dataset introduced to us in Unit 1.</p>
 <p>Let’s review the structure of this dataset:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="distributions-and-probability.html#cb45-1"></a><span class="kw">head</span>(yield)</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="distributions-and-probability.html#cb107-1"></a><span class="kw">head</span>(yield)</span></code></pre></div>
 <pre><code>## Simple feature collection with 6 features and 12 fields
-## geometry type:  POINT
-## dimension:      XY
-## bbox:           xmin: -93.15033 ymin: 41.66641 xmax: -93.15026 ymax: 41.66644
-## geographic CRS: WGS 84
+## Geometry type: POINT
+## Dimension:     XY
+## Bounding box:  xmin: -93.15033 ymin: 41.66641 xmax: -93.15026 ymax: 41.66644
+## Geodetic CRS:  WGS 84
 ##    DISTANCE SWATHWIDTH VRYIELDVOL Crop  WetMass Moisture                 Time
 ## 1 0.9202733          5   57.38461  174 3443.652     0.00 9/19/2016 4:45:46 PM
 ## 2 2.6919269          5   55.88097  174 3353.411     0.00 9/19/2016 4:45:48 PM
@@ -213,23 +257,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 POINT (-93.15032 41.66644)
 ## 6 POINT (-93.15033 41.66644)</code></pre>
 <p>And map the field:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="distributions-and-probability.html#cb47-1"></a><span class="kw">library</span>(sf)</span>
-<span id="cb47-2"><a href="distributions-and-probability.html#cb47-2"></a><span class="kw">plot</span>(yield[<span class="st">&quot;yield_bu&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="distributions-and-probability.html#cb109-1"></a><span class="kw">library</span>(sf)</span>
+<span id="cb109-2"><a href="distributions-and-probability.html#cb109-2"></a><span class="kw">plot</span>(yield[<span class="st">&quot;yield_bu&quot;</span>])</span></code></pre></div>
 <p><img src="02-Distributions-and-Probability_files/figure-html/plot_field-1.png" width="672" /></p>
 </div>
 <div id="the-normal-distribution-model" class="section level2">
-<h2><span class="header-section-number">2.3</span> The Normal Distribution Model</h2>
+<h2><span class="header-section-number">2.2</span> The Normal Distribution Model</h2>
 <p>Mean, sum of squares, variance, and standard deviation are so important because they allow us to reconstruct the normal distribution model. Before we go further, what is a model? Is it frightening we are using that term in the second week of class?</p>
 <p>A model is a simplified representation of reality. No, that doesn’t mean that models are “fake” (SMH). It means that they summarize aspects of data, both measured and predicted. The normal distribution model describes the relationship between the values of individuals and how frequently they appear in the population. It’s value is it can be reconstructed by knowing just two things about the original dataset – its mean and its standard deviation.</p>
 <div id="the-bell-curve" class="section level3">
-<h3><span class="header-section-number">2.3.1</span> The Bell Curve</h3>
+<h3><span class="header-section-number">2.2.1</span> The Bell Curve</h3>
 <p>The normal distribution is also referred to as the “bell curve”, since it is taller in the middle and flared on either side. This shape reflects the tendency of measures within many populations to occur more frequently near the population mean than far from it. Why does this occur and how do we know this?</p>
 <p>As agronomists, we can reflect on what it takes to produce a very good – or very bad crop. For a very good crop, many factors need to coincide: temperature, precipitation, soil texture, nitrogen mineralization, proper seed singulation (spacing), pest control, and hybrid or variety selection, to name a few. We may, in a typical season or within a field, optimize one or two of these conditions, but the possibility of optimizing every one is exceedingly rare. Thus, if we are measuring yield, measures near the mean yield will occur more frequently. Extremely high yields will occur less frequently.</p>
 <p>Conversely, very low yields require we manage a crop very badly or that catastrophic weather conditions occur: a hailstorm, flood, or tornado. A frost at exactly the wrong time during seed germination or a drought. A planter box running out of seed or a fertilizer nozzle jamming. These things do occur, but less frequently.</p>
 <p>The distribution of individuals around the mean is also a the result of measurement inaccuracies. Carl Friedrich Gauss, who introduced the normal distribution model, showed that it explained the variation in his repeated measurements of the position of stars in the sky. All measurements of continuous data (those that can be measured with a ruler, a scale, a gradated cylinder, or machine) have variation – we use the term “accuracy” to explain their variation around the population mean.</p>
 </div>
 <div id="distribution-and-probability" class="section level3">
-<h3><span class="header-section-number">2.3.2</span> Distribution and Probability</h3>
+<h3><span class="header-section-number">2.2.2</span> Distribution and Probability</h3>
 <p>Some areas of mathematics like geometry and algebra produce proven concepts (ie theorems), the product of statistics are almost always probabilities. To be more specific, most of the statistical tests we will learn can be reduced to the probability that a particular value is observed in a population. These probabilities include:
 - the probability an individual measurement or population mean is observed (normal distribution)
 - the difference between two treatments is not zero (t-test and least-significant difference)
@@ -242,24 +286,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 - the proportion of observations in which the actual crop yield is greater than that predicted from a regression model</p>
 </div>
 <div id="probability-and-the-normal-distribution-curve" class="section level3">
-<h3><span class="header-section-number">2.3.3</span> Probability and the Normal Distribution Curve</h3>
+<h3><span class="header-section-number">2.2.3</span> Probability and the Normal Distribution Curve</h3>
 <p>Probability can be calculated as the proportion of the area underneath the normal distribution that corresponds to a particular range of values. We can visualize this, but first we need to construct the normal distribution curve for our soybean field.</p>
 <p>We need just two data to construct our curve: the mean and standard deviation of our yield. These are both easily calculated in R.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="distributions-and-probability.html#cb48-1"></a><span class="kw">library</span>(muStat)</span>
-<span id="cb48-2"><a href="distributions-and-probability.html#cb48-2"></a>yield_mean =<span class="st"> </span><span class="kw">mean</span>(yield<span class="op">$</span>yield_bu)</span>
-<span id="cb48-3"><a href="distributions-and-probability.html#cb48-3"></a>yield_sd =<span class="st"> </span><span class="kw">stdev</span>(yield<span class="op">$</span>yield_bu, <span class="dt">unbiased =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb48-4"><a href="distributions-and-probability.html#cb48-4"></a></span>
-<span id="cb48-5"><a href="distributions-and-probability.html#cb48-5"></a><span class="co"># to see the value of yield_mean and yield_sd, we just type their names and run the code.</span></span>
-<span id="cb48-6"><a href="distributions-and-probability.html#cb48-6"></a>yield_mean</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="distributions-and-probability.html#cb110-1"></a><span class="kw">library</span>(muStat)</span>
+<span id="cb110-2"><a href="distributions-and-probability.html#cb110-2"></a>yield_mean =<span class="st"> </span><span class="kw">mean</span>(yield<span class="op">$</span>yield_bu)</span>
+<span id="cb110-3"><a href="distributions-and-probability.html#cb110-3"></a>yield_sd =<span class="st"> </span><span class="kw">stdev</span>(yield<span class="op">$</span>yield_bu, <span class="dt">unbiased =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb110-4"><a href="distributions-and-probability.html#cb110-4"></a></span>
+<span id="cb110-5"><a href="distributions-and-probability.html#cb110-5"></a><span class="co"># to see the value of yield_mean and yield_sd, we just type their names and run the code.</span></span>
+<span id="cb110-6"><a href="distributions-and-probability.html#cb110-6"></a>yield_mean</span></code></pre></div>
 <pre><code>## [1] 80.09084</code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="distributions-and-probability.html#cb50-1"></a>yield_sd</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="distributions-and-probability.html#cb112-1"></a>yield_sd</span></code></pre></div>
 <pre><code>## [1] 8.72252</code></pre>
 <p>Now we can build our curve with a single line of code. The plotDist function in R will reconstruct the distribution curve for any population, given three arguments, in the following order: what kind of curve to draw, the population mean, and population standard deviation.<br />
 - <em>dnorm</em> tells plotDist to draw a normal distribution curve. This needs to enclosed in quotes
 - <em>yield_mean</em> tells plotDist to use the mean we calculated in the previous chunk as the population mean
 - <em>yield_sd</em> tells plotDist to use the standard deviation we calculated in the previous chunk as the standard deviation</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="distributions-and-probability.html#cb52-1"></a><span class="kw">library</span>(fastGraph)</span>
-<span id="cb52-2"><a href="distributions-and-probability.html#cb52-2"></a><span class="kw">plotDist</span>(<span class="st">&quot;dnorm&quot;</span>, yield_mean, yield_sd)</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="distributions-and-probability.html#cb114-1"></a><span class="kw">library</span>(fastGraph)</span>
+<span id="cb114-2"><a href="distributions-and-probability.html#cb114-2"></a><span class="kw">plotDist</span>(<span class="st">&quot;dnorm&quot;</span>, yield_mean, yield_sd)</span></code></pre></div>
 <p><img src="02-Distributions-and-Probability_files/figure-html/plot_distribution-1.png" width="672" /></p>
 <p>Let’s now shade the area underneath the normal curve corresponding to X values from 70 - 80. This area will represent the proportion of the population Where individuals were measured to have values between 70 and 80 bushels.</p>
 <p>The shade.norm function makes effort painless. There are five arguments in this function:
@@ -268,7 +312,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 - the third value we include (and it must be in this order), is the population mean. In this case, we pass the variable yield_mean whose value we calculated in the previously
 - the fourth value is the population standard deviation, which we have already calculated and assigned to the variable yield_sd
 - <em>lower.tail=FALSE</em> tells shade.norm to shade the area under the curve between 70 and 80 bushels and to calculate its area.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="distributions-and-probability.html#cb53-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span><span class="kw">c</span>(<span class="dv">70</span>,<span class="dv">80</span>), <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, yield_mean, yield_sd, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="distributions-and-probability.html#cb115-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span><span class="kw">c</span>(<span class="dv">70</span>,<span class="dv">80</span>), <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, yield_mean, yield_sd, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <p><img src="02-Distributions-and-Probability_files/figure-html/shade_range-1.png" width="672" /></p>
 <p>Pretty cool, huh? The red area is the proportion of the soybean yield population that was between 70 and 80 bushels. shadeDist has also presented us with the proportion of the curve represented by that area, which it has labelled “Probability”. The probabiliity in this case is 0.3722. What does that number mean?</p>
 <p>The total area of the curve is 1. The proportion of the area under the curve that corresponds with yields from 70 to 80 bushels, then, is 3.967 percent of the area. This means that 37.22 percent of the individuals in our yield population had values from 70 and 80 bushels</p>
@@ -277,54 +321,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 - we will use the “sample” function to randomly sample our population and return a vector of those numbers
 - we will use the “subset” function to subset our data into those that meet logical conditions and return a dataframe or vector. We provide two arguments: first, the name of the dataset or vector, and second the conditions.
 - we will use the “length” function to count the number of observations</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="distributions-and-probability.html#cb54-1"></a>yield_sample =<span class="st"> </span><span class="kw">sample</span>(yield<span class="op">$</span>yield_bu, <span class="dv">1000</span>)</span>
-<span id="cb54-2"><a href="distributions-and-probability.html#cb54-2"></a></span>
-<span id="cb54-3"><a href="distributions-and-probability.html#cb54-3"></a><span class="co"># &quot;yield_sample &gt;=70 &amp; yield_sample &lt;=80 tells it to only include measures from 70 to 80 in the subset</span></span>
-<span id="cb54-4"><a href="distributions-and-probability.html#cb54-4"></a>yield_subset =<span class="st"> </span><span class="kw">subset</span>(yield_sample, yield_sample <span class="op">&gt;=</span><span class="dv">70</span> <span class="op">&amp;</span><span class="st"> </span>yield_sample <span class="op">&lt;=</span><span class="dv">80</span>)</span>
-<span id="cb54-5"><a href="distributions-and-probability.html#cb54-5"></a></span>
-<span id="cb54-6"><a href="distributions-and-probability.html#cb54-6"></a><span class="kw">length</span>(yield_subset)</span></code></pre></div>
-<pre><code>## [1] 390</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="distributions-and-probability.html#cb116-1"></a>yield_sample =<span class="st"> </span><span class="kw">sample</span>(yield<span class="op">$</span>yield_bu, <span class="dv">1000</span>)</span>
+<span id="cb116-2"><a href="distributions-and-probability.html#cb116-2"></a></span>
+<span id="cb116-3"><a href="distributions-and-probability.html#cb116-3"></a><span class="co"># &quot;yield_sample &gt;=70 &amp; yield_sample &lt;=80 tells it to only include measures from 70 to 80 in the subset</span></span>
+<span id="cb116-4"><a href="distributions-and-probability.html#cb116-4"></a>yield_subset =<span class="st"> </span><span class="kw">subset</span>(yield_sample, yield_sample <span class="op">&gt;=</span><span class="dv">70</span> <span class="op">&amp;</span><span class="st"> </span>yield_sample <span class="op">&lt;=</span><span class="dv">80</span>)</span>
+<span id="cb116-5"><a href="distributions-and-probability.html#cb116-5"></a></span>
+<span id="cb116-6"><a href="distributions-and-probability.html#cb116-6"></a><span class="kw">length</span>(yield_subset)</span></code></pre></div>
+<pre><code>## [1] 349</code></pre>
 <p>Is the proportion predicted by the normal distribution curve exactly that of the actual population? Probably not. The normal distribution curve is, after all, a model – it is an approximation of the actual population.</p>
 <p>Run the code above multiple times and observe how the percentages change. The proportions will vary slightly but generall stay in a range from about 0.32 to 0.37.</p>
 <p>We will talk more about sampling in the next unit.</p>
 </div>
 </div>
 <div id="the-z-distribution" class="section level2">
-<h2><span class="header-section-number">2.4</span> The Z-Distribution</h2>
+<h2><span class="header-section-number">2.3</span> The Z-Distribution</h2>
 <p>The relationship between probability and the normal distribution curve is based on the concept of the Z-distribution. In essence, Z-distribution describes a normal distribution curve with a population mean of 0 and a standard deviation of 1.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="distributions-and-probability.html#cb56-1"></a><span class="kw">plotDist</span>(<span class="st">&quot;dnorm&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="distributions-and-probability.html#cb118-1"></a><span class="kw">plotDist</span>(<span class="st">&quot;dnorm&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="02-Distributions-and-Probability_files/figure-html/normal_distribution-1.png" width="672" /></p>
 <p>The Z-distribution helps us understand how probability relates to standard deviation, regardless of the nature of a study or its measurement units.</p>
 <p>For example, the proportion of a population within one standard deviation of the mean is about 68 percent:</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="distributions-and-probability.html#cb57-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="distributions-and-probability.html#cb119-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <p><img src="02-Distributions-and-Probability_files/figure-html/one_sd_shaded-1.png" width="672" /></p>
 <p>Similarly, the proportion of a population within 1.96 standard deviations of the mean is about 95 percent:</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="distributions-and-probability.html#cb58-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">1.96</span>, <span class="fl">1.96</span>), <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="distributions-and-probability.html#cb120-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">1.96</span>, <span class="fl">1.96</span>), <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <p><img src="02-Distributions-and-Probability_files/figure-html/two_sd_shaded-1.png" width="672" /></p>
 <p>Conversely, the proportion of a population beyond 1.96 standard deviations from the mean is about 5 percent. We can visualize this by changing the last argument of our code to “lower.tail = TRUE”.</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="distributions-and-probability.html#cb59-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">1.96</span>, <span class="fl">1.96</span>), <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="distributions-and-probability.html#cb121-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">1.96</span>, <span class="fl">1.96</span>), <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p><img src="02-Distributions-and-Probability_files/figure-html/outside_two_sd_shaded-1.png" width="672" /></p>
 <p>We refer to the upper and lower ends of the distribution as tails. In a normal distribution we would expect about 2.5% of observations to less than -1.96 standard deviations of the mean. We can measure the proportion in one tail by changing our argument in the shadeDist command to “xshade = -1.96”.</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="distributions-and-probability.html#cb60-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span><span class="op">-</span><span class="fl">1.96</span>, <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="distributions-and-probability.html#cb122-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span><span class="op">-</span><span class="fl">1.96</span>, <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p><img src="02-Distributions-and-Probability_files/figure-html/lower_tail-1.png" width="672" /></p>
 <p>And 2.5% of the population to be more than +1.96 above the mean:</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="distributions-and-probability.html#cb61-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span><span class="fl">1.96</span>, <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="distributions-and-probability.html#cb123-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span><span class="fl">1.96</span>, <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <p><img src="02-Distributions-and-Probability_files/figure-html/upper_tail-1.png" width="672" />
 Notice we changed the last argument back to “lower.tail = TRUE”. The causes R to shade the area above 1.96 standard deviations of the mean.</p>
 <div id="important-numbers-95-and-5" class="section level3">
-<h3><span class="header-section-number">2.4.1</span> Important Numbers: 95% and 5%</h3>
+<h3><span class="header-section-number">2.3.1</span> Important Numbers: 95% and 5%</h3>
 <p>Above we learned that 95% of a normal distribution is between 1.96 standard deviations of the mean, and that 5% of a normal distribution is outside this range. Perhaps these numbers sound familiar to you. Have you ever seen results presented with a 95% confidence interval? Have you ever read that two treatments were significantly different at the P=0.05 level?</p>
 <p>For population statistics, the normal distribution is the origin of those numbers. As we get further into this course, we will learn about additional distributions – binomial, chi-square, and F – and the unique statistical tests they allow. But the concept will stay the same: identifying whether observed statistical values are more likely to occur (i.e., within the central 95% of values expected in a distribution), or whether the values are unusual (occurring in the remaining 5%).</p>
-<p>[insert shiny app where they can sample multiple times and see results]</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="distributions-and-probability.html#cb62-1"></a><span class="kw">set.seed</span>(<span class="dv">051520</span>)</span>
-<span id="cb62-2"><a href="distributions-and-probability.html#cb62-2"></a></span>
-<span id="cb62-3"><a href="distributions-and-probability.html#cb62-3"></a>output =<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">1</span>, <span class="dt">nrow=</span><span class="dv">100</span>)</span>
-<span id="cb62-4"><a href="distributions-and-probability.html#cb62-4"></a></span>
-<span id="cb62-5"><a href="distributions-and-probability.html#cb62-5"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>)){</span>
-<span id="cb62-6"><a href="distributions-and-probability.html#cb62-6"></a>  yield_sample =<span class="st"> </span><span class="kw">sample</span>(yield<span class="op">$</span>yield_bu, <span class="dv">1000</span>)</span>
-<span id="cb62-7"><a href="distributions-and-probability.html#cb62-7"></a>  N =<span class="st"> </span><span class="kw">length</span>(yield_sample[yield_sample <span class="op">&gt;=</span><span class="dv">80</span> <span class="op">&amp;</span><span class="st"> </span>yield_sample <span class="op">&lt;=</span><span class="dv">100</span>])</span>
-<span id="cb62-8"><a href="distributions-and-probability.html#cb62-8"></a>  output[i] =<span class="st"> </span>N</span>
-<span id="cb62-9"><a href="distributions-and-probability.html#cb62-9"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="distributions-and-probability.html#cb124-1"></a><span class="kw">set.seed</span>(<span class="dv">051520</span>)</span>
+<span id="cb124-2"><a href="distributions-and-probability.html#cb124-2"></a></span>
+<span id="cb124-3"><a href="distributions-and-probability.html#cb124-3"></a>output =<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">1</span>, <span class="dt">nrow=</span><span class="dv">100</span>)</span>
+<span id="cb124-4"><a href="distributions-and-probability.html#cb124-4"></a></span>
+<span id="cb124-5"><a href="distributions-and-probability.html#cb124-5"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>)){</span>
+<span id="cb124-6"><a href="distributions-and-probability.html#cb124-6"></a>  yield_sample =<span class="st"> </span><span class="kw">sample</span>(yield<span class="op">$</span>yield_bu, <span class="dv">1000</span>)</span>
+<span id="cb124-7"><a href="distributions-and-probability.html#cb124-7"></a>  N =<span class="st"> </span><span class="kw">length</span>(yield_sample[yield_sample <span class="op">&gt;=</span><span class="dv">80</span> <span class="op">&amp;</span><span class="st"> </span>yield_sample <span class="op">&lt;=</span><span class="dv">100</span>])</span>
+<span id="cb124-8"><a href="distributions-and-probability.html#cb124-8"></a>  output[i] =<span class="st"> </span>N</span>
+<span id="cb124-9"><a href="distributions-and-probability.html#cb124-9"></a>}</span></code></pre></div>
 
 </div>
 </div>
@@ -334,8 +377,8 @@ Notice we changed the last argument back to “lower.tail = TRUE”. The causes 
           </div>
         </div>
       </div>
-<a href="introduction.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="introduction-and-population-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sample-statistics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

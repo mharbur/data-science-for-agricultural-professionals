@@ -1,6 +1,4 @@
-# Distributions and Probability"
-
-## Review
+# Distributions and Probability
 In this unit we will continue with normal distribution model introduced in the previous unit.  As you will recall, the normal distribution is a symmetrical curve that represents the frequency with which individuals with different particular measured values occur in a population.
 
 The peak of the curve is located at the population mean, $\mu$.  The width of the curve reflects how spread out other individuals are from the mean.  We learned three ways to measure this spread: the sum of squares, the variance, and the standard deviation. These statistics can roughly be thought of as representing the sums of the squared differences, the average of the squared distances, and the distances presented in the original units of measure.  These four statistics -- mean, sum of squares, variance, and standard deviation -- are among the most important you will learn in this course.
@@ -18,10 +16,10 @@ head(yield)
 
 ```
 ## Simple feature collection with 6 features and 12 fields
-## geometry type:  POINT
-## dimension:      XY
-## bbox:           xmin: -93.15033 ymin: 41.66641 xmax: -93.15026 ymax: 41.66644
-## geographic CRS: WGS 84
+## Geometry type: POINT
+## Dimension:     XY
+## Bounding box:  xmin: -93.15033 ymin: 41.66641 xmax: -93.15026 ymax: 41.66644
+## Geodetic CRS:  WGS 84
 ##    DISTANCE SWATHWIDTH VRYIELDVOL Crop  WetMass Moisture                 Time
 ## 1 0.9202733          5   57.38461  174 3443.652     0.00 9/19/2016 4:45:46 PM
 ## 2 2.6919269          5   55.88097  174 3353.411     0.00 9/19/2016 4:45:48 PM
@@ -166,7 +164,7 @@ length(yield_subset)
 ```
 
 ```
-## [1] 342
+## [1] 349
 ```
 
 Is the proportion predicted by the normal distribution curve exactly that of the actual population?  Probably not.  The normal distribution curve is, after all, a model -- it is an approximation of the actual population.
@@ -238,21 +236,6 @@ Notice we changed the last argument back to "lower.tail = TRUE".  The causes R t
 Above we learned that 95% of a normal distribution is between 1.96 standard deviations of the mean, and that 5% of a normal distribution is outside this range.  Perhaps these numbers sound familiar to you.  Have you ever seen results presented with a 95% confidence interval?  Have you ever read that two treatments were significantly different at the P=0.05 level?
 
 For population statistics, the normal distribution is the origin of those numbers.  As we get further into this course, we will learn about additional distributions -- binomial, chi-square, and F -- and the unique statistical tests they allow.  But the concept will stay the same: identifying whether observed statistical values are more likely to occur (i.e., within the central 95% of values expected in a distribution), or whether the values are unusual (occurring in the remaining 5%).
-
-
-
-
-
-
-
-
-
-
-[insert shiny app where they can sample multiple times and see results]
-
-
-
-
 
 
 ```r

@@ -1,0 +1,97 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r, yield_dataset, include=FALSE}
+library(sf)
+library(tidyverse)
+library(rcompanion)
+library(plotly)
+
+yield = st_read("data/merriweather_yield_map/merriweather_yield_map.shp")
+```
+
+
+This annimation is similar to those for the central limit theorem, except we have replaced the histogram with the sample distribution curve.  The animation shows how the distribution curve changes as the number of samples (n in the equation above) increases.  The sample distribution curve is plotted in black.  The population mean is plotted as a vertical blue line.
+
+You should take away two important observations from this.  First, as the number of samples increases, the distribution curve narrows in width and increases in height.  Second, the sample distribtuion curve always includes the true population mean.  As a bonus, not that the curve in this animation is first centered about 15 bushels below the population mean and then approaches it as the sample number increases.    
+
+It matters that the distribution curve narrows as the number of samples increases.  Why?  Because the narrower curve describes a narrower range of possible values for the population mean.  It increases our confidence that the population mean is close to the sample mean.
+
+Also note as the number of samples increases from 2 to 10, the shape and location of the distribution curve changes more profoundly than it does as the number of samples increases, say, from 51 to 60.  
+
+
+```{r}
+library(shiny)
+
+  hist_list = list()
+  for(i in c(2:100)){
+    set.seed(1776)
+    yield_sample = sample(yield$yield_bu, i) %>%
+        as.data.frame()
+    hist_data = hist(yield_sample$., breaks = seq(from=55, to=105, by=5), plot = FALSE)
+    plot_data = cbind(hist_data$mids, hist_data$density) %>%
+      as.data.frame()
+    names(plot_data) = c("midpoints", "density")
+    plot_data$no_of_samples = i
+    plot_data$sample_mean = mean(yield_sample$.)
+    plot_data$std_dev = sd(yield_sample$.)
+    plot_data$std_err = plot_data$std_dev/sqrt(i)
+    plot_data$pop_mean = mean(yield$yield_bu)
+    hist_list[[i]] = plot_data
+    i = i+1
+  }
+
+
+  hist_df = do.call(rbind.data.frame, hist_list) %>%
+  group_by(no_of_samples) %>%
+  summarise(sample_mean = mean(sample_mean),
+            std_err = mean(std_err))
+
+
+x = seq(from=50, to=110, length=1000)
+
+y_values = hist_df %>%
+  group_by(no_of_samples) %>%
+  do(y_val = dnorm(x, mean = .$sample_mean, sd = .$std_err)) %>%
+  ungroup() %>%
+  select(-no_of_samples) %>%
+  unnest(cols=c(y_val))
+
+
+x_values = hist_df %>%
+  group_by(no_of_samples) %>%
+  do(x_val = x) %>%
+  unnest(cols=c(x_val))
+
+plot_data = cbind(x_values, y_values) %>%
+  as.data.frame()
+
+
+ui = fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("no_samples", "Select number of samples", min = 2, max = 100, step=1, value = 2, 
+                  animate = animationOptions(interval = 200))
+    ),
+    mainPanel(
+      plotOutput("plot", height="300px")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  output$plot = renderPlot({
+    plot_data %>%
+      filter(no_of_samples==input$no_samples) %>%
+      ggplot(aes(x=x_val, y=y_val)) +
+      geom_point(color="black") +
+      geom_vline(aes(xintercept=mean(yield$yield_bu)), color = "blue") +
+      lims(y=c(0,0.5))
+  })
+
+}
+
+shinyApp(ui, server)
+```

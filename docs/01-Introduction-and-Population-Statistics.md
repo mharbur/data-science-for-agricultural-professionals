@@ -1,7 +1,5 @@
-# Introduction
-Some text.
+# Introduction and Population Statistics
 
-## Welcome
 Welcome to Data Science for Agricultural Professionals.  I have written these course materials for a few reasons.  First, it is my job.  More inspirationally, however, I wanted to write a guide that satistfied the following criteria:
 - covers basic statistics used in reporting results from hybrid trials and other controlled experiments
 - also addresses data science tools used to group environments and make predictions
@@ -74,10 +72,10 @@ yield = st_read("data-unit-1/merriweather_yield_map/merriweather_yield_map.shp")
 ```
 ## Reading layer `merriweather_yield_map' from data source `C:\Users\559069\OneDrive - Land O'Lakes, Inc\Documents\data-science-for-agricultural-professionals_3\data-unit-1\merriweather_yield_map\merriweather_yield_map.shp' using driver `ESRI Shapefile'
 ## Simple feature collection with 6061 features and 12 fields
-## geometry type:  POINT
-## dimension:      XY
-## bbox:           xmin: -93.15474 ymin: 41.66619 xmax: -93.15026 ymax: 41.66945
-## geographic CRS: WGS 84
+## Geometry type: POINT
+## Dimension:     XY
+## Bounding box:  xmin: -93.15474 ymin: 41.66619 xmax: -93.15026 ymax: 41.66945
+## Geodetic CRS:  WGS 84
 ```
 
 Let's start tearing this dataset apart, using our very first chunk of code.  We can examine the first 6 rows of the dataset using R.  Our data are in a shapefile named "yield".  To view the top six rows of any dataset in R, we use the command "head".
@@ -91,10 +89,10 @@ head(yield)
 
 ```
 ## Simple feature collection with 6 features and 12 fields
-## geometry type:  POINT
-## dimension:      XY
-## bbox:           xmin: -93.15033 ymin: 41.66641 xmax: -93.15026 ymax: 41.66644
-## geographic CRS: WGS 84
+## Geometry type: POINT
+## Dimension:     XY
+## Bounding box:  xmin: -93.15033 ymin: 41.66641 xmax: -93.15026 ymax: 41.66644
+## Geodetic CRS:  WGS 84
 ##    DISTANCE SWATHWIDTH VRYIELDVOL Crop  WetMass Moisture                 Time
 ## 1 0.9202733          5   57.38461  174 3443.652     0.00 9/19/2016 4:45:46 PM
 ## 2 2.6919269          5   55.88097  174 3353.411     0.00 9/19/2016 4:45:48 PM
@@ -352,10 +350,10 @@ sample(yield_residuals, 20)
 ```
 
 ```
-##  [1]  -0.5864955  -8.7760062   0.3029242   5.4257377  12.6856543  -1.8034616
-##  [7]   5.3323387   2.3102258   5.5342624  13.0506101   0.8904880   5.0530533
-## [13]  -0.7260311   4.2416925   8.1157034 -12.2187341  16.5239825  -4.9297730
-## [19]  -4.7560694   7.9985521
+##  [1]  -6.2569555   6.2292278   4.7762265  -0.9398415  -1.6881004  -2.2855369
+##  [7]   1.3312401   8.2668291   3.8669182   8.2254801   7.7004253   5.9373886
+## [13]   1.7402892  -5.1199080 -10.8408435  -1.1833003   1.5085750  -4.5961640
+## [19]  -8.4444411   4.0732412
 ```
 
 If we sum up all the yield residuals, what number do we get?  Any guesses before you click "Run Code"?
