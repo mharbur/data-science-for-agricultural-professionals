@@ -1,0 +1,82 @@
+---
+title: "Confidence Interval"
+output: 
+  prettydoc::html_pretty:
+    theme: default
+runtime: shiny
+---
+
+```{r, message=FALSE, include=FALSE, echo=FALSE}
+library(sf)
+library(tidyverse)
+library(rcompanion)
+library(plotly)
+
+yield = st_read("data/merriweather_yield_map/merriweather_yield_map.shp", quiet=TRUE)
+```
+
+
+Below is a plot of 20 random sample means and their confidence intervals, based on sets of 4 samples.  Confidence intervals that include the population mean are colored black; those that don't are colored red.  Press the "Click to Sample" several times and observe how many intervals include the population mean (the blue horizontal line).  Note: the plot may take a few seconds to render.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(shiny)
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      actionButton("resample", "Click to Sample")
+    ),
+    mainPanel(
+      plotOutput("plot")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  observeEvent(input$resample, {
+    output$plot = renderPlot({
+      hist_list = list()
+      for(i in c(1:20)){
+        yield_sample = sample(yield$yield_bu, 4) %>%
+            as.data.frame()
+        plot_data = data.frame(sample_no = i)
+        plot_data$no_of_samples = 4
+        plot_data$sample_mean = mean(yield_sample$.)
+        plot_data$std_dev = sd(yield_sample$.)
+        plot_data$std_err = plot_data$std_dev/sqrt(4)
+        plot_data$pop_mean = mean(yield$yield_bu)
+        hist_list[[i]] = plot_data
+        i = i+1
+      }
+      
+      hist_df = do.call(rbind.data.frame, hist_list) %>%
+        group_by(sample_no) %>%
+        summarise(sample_mean = mean(sample_mean),
+                  std_err = mean(std_err),
+                  no_of_samples = mean(no_of_samples)) %>%
+        ungroup() %>% 
+        mutate(t_value = qt(0.975,3)) %>%
+        mutate(upper_limit = sample_mean + t_value*std_err) %>%
+        mutate(lower_limit = sample_mean - t_value*std_err) %>%
+        mutate(error_bar_length = t_value*std_err) %>%
+        mutate(pop_mean = mean(yield$yield_bu)) %>%
+        mutate(color_name = if_else(upper_limit<pop_mean | lower_limit>pop_mean, "red", "black"))
+      
+      
+      hist_df %>%
+        ggplot(aes(x=sample_no, y=sample_mean, group=color_name)) +
+        geom_point() +
+        geom_errorbar(aes(x=sample_no, ymin=lower_limit, ymax=upper_limit, color=color_name)) +
+        geom_hline(aes(yintercept=mean(yield$yield_bu)), color="blue") +
+        # scale_color_manual(values = c("red", "black")) +
+        scale_color_identity()
+    })
+  })
+}
+
+shinyApp(ui, server)
+
+
+```
+
+Again, both the standard error and the t-value we use for calculating the confidence interval decrease as the number of samples decrease, so the confidence interval itself will decrease as well.
