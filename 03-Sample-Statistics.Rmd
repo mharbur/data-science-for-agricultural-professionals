@@ -400,3 +400,357 @@ shinyApp(ui, server)
 As the number of samples increases, the confidence interval shrinks.  95 out of 100 times, however, the confidence interval will still include the true population mean.  In other words, as our sample size increases, our sample mean becomes less biased (far to either side of the population mean), and it's accuracy (the proximity of the sample mean and  population mean) increases.  In conclusion, the greater the number of samples, the better our estimate of the population mean.
 
 In the next unit, we will use these concepts to analyze our first experimental data: a side by side trial where we will us the confidence interval for the difference between two treatments to test whether they are different.
+
+
+
+## Exercise: Standard Error
+Just as the standard deviation describes the distribution of individuals around a population mean, so the standard error of the mean describes the distribution of samples around their sample mean.  In fact, the standard error of the mean is simply the standard deviation of the samples around the sample mean.
+
+### Case Study: Tomatoes
+Once again, we will work with the tomato, barley, cotton, and peanut datasets.  Let's load the tomato dataset and look at its top six rows of data.
+
+```{r}
+tomato = read.csv("data-unit-3/exercise_data/tomato_uniformity.csv")
+head(tomato)
+```
+
+### Calculating Standard Error
+The standard error of the mean is equal to the population standard deviation, divided by the square root of the number of samples.  We can calculate these as follows.  To get the standard deviation, use the sd() function. 
+
+```{r}
+yield = tomato$yield  # define the column of interest
+
+tomato_sd = sd(yield)
+```
+
+Then we can divide the standard deviation by the square root of n to get the standard error of the mean.  What would be the standard error of our sample mean, if we took 4 samples?
+
+```{r}
+tomato_se = tomato_sd / sqrt(4)
+tomato_se
+```
+
+We will talk more about the t-distribution in the next exercise, but for now lets assume about 95% of the sample means should be within about two standard errors of the mean of their distribution.  Two times the standard error is about 10.6, so we would expect 95% of sample means to be within 50.3 +/-10.6, or (39.7, 60.9).  
+
+Don't worry about understanding the code below.  Just run it and observe the plot.  In the plot below, we have simulated 1000 sample means, each based on four samples, from the tomato yield population.  We can see the range (39.7, 60.9) does include most of the population, with the exception of the tails.  
+
+```{r}
+library(tidyverse)
+set.seed(2003)
+sample_list = list()
+for(i in c(1:1000)){
+  samples = mean(sample(yield, 4))%>%
+    as.data.frame() 
+  sample_list[[i]] = samples
+}
+sample_list_df = do.call(rbind.data.frame, sample_list)
+names(sample_list_df) = "yield"
+pop_mean = mean(yield)
+ggplot(sample_list_df, aes(x=yield)) +
+  geom_histogram(fill="white", color="black") +
+  geom_vline(xintercept = pop_mean, color = "red") 
+
+```
+
+What would be the standard error of our sample mean if we took 7 samples?
+```{r}
+tomato_se = tomato_sd / sqrt(7)
+tomato_se
+```
+
+
+
+### Practice: Barley
+Now let's practice calculating the standard error.  What would be the standard error of our sample mean if we took 8 samples?  I'll get you started.  First, let's load the "barley_uniformity.csv" data and inspect the first six rows.
+
+```{r}
+barley = read.csv("data-unit-3/exercise_data/barley_uniformity.csv")
+head(barley)
+```
+
+Next lets define the column of interest and create a histograma of its distribution.
+```{r}
+barley_yield = barley$yield
+hist(barley_yield)
+```
+
+Remember, we need to know the standard deviation in order to calculate the standard error of the sample mean.
+
+```{r}
+barley_sd = sd(barley_yield)
+
+```
+
+What would the standard error of the sample mean be if we took two samples?
+
+```{r}
+barley_se = barley_sd/sqrt(2)
+barley_se
+```
+
+The standard error woud be about 22.0.
+
+Try calculating additional standard errors.  Here are some of the values you should get.
+
+4 samples, se=15.6
+5 samples, se=13.9
+7 samples, se=11.8
+
+
+### Practice: Cotton
+
+Calculate the standard errors of sample means from the "cotton_uniformity.csv" dataset, for sets of 3, 4, and 6 samples.  You should get:
+
+3 samples = 0.13
+4 samples = 0.11
+6 samples = 0.09
+
+
+
+## Exercise: t-Distribution
+This week, we are introduced to the t-distribution.  The t-distribution describes the distribution of sample means around their mean value.  Contrast this with the Z-distribution, which describes the distribution of individuals around the population mean.
+
+The most critical way in which the t-distribution is different from the Z-distribution is the shape of the t-distribution changes shape with the number of samples used to calculate the sample mean.  As the number of samples increases, the t-distribution narrows in width, and expands in height.
+
+
+### Plotting the Distribution
+In the lecture, we once again used the "shadeDist" function from the fastGraph package.  Use install.packages("fastGraph") to install fastGraph in your account if you did not do so in the last unit.  Then use library(fastgraph) to tell R to run that package in the current section.
+
+We can use the shadeDist function to observe how the difference of the t-Distribution changes with the number of samples taken.  Say we want to see the t-distribution for a sample size of 2.  We will shade the area from t=-1 to t=1 for reference.
+
+```{r}
+library(fastGraph)
+shadeDist(c(-1,1), "dt", 1, lower.tail=FALSE ) # t with 15 d.f. and non-centrality parameter=3
+```
+
+Remember, we must provide four arguments to the shadeDist function.  The first, "c(-1,1)", is the range of t-values.  The second, "dt", tells R we are modeling the t-distribution.  The third, 3 is the degrees of freedom associated with t, which is always one less than the number of samples.  the final argument, "lower.tail=FALSE", tells R to shade the middle of the plot.
+
+Now lets change the number of samples to 4.
+```{r}
+shadeDist(c(-1,1), "dt", 3, lower.tail=FALSE ) # t with 15 d.f. and non-centrality parameter=3
+```
+
+We can see the shaded area gets wider, meaning the distribution is getting narrower.  In we increase to 6, the shape doesn't seem to change much, yet the proportion of the curve that is between t=-1 and t=1 increases.
+```{r}
+shadeDist(c(-1,1), "dt", 5, lower.tail=FALSE ) # t with 15 d.f. and non-centrality parameter=3
+```
+
+If we increase to n=20, the curve continues to narrow.
+```{r}
+shadeDist(c(-1,1), "dt", 19, lower.tail=FALSE ) # t with 15 d.f. and non-centrality parameter=3
+```
+
+### Calculating T
+To create the plot above, we entered t-values, and the degree of freedom.  R not only drew the plot, but calculate the probability of observing sample means within the given range.
+
+To calculate t, we need to supply the degrees of freedom and the target probability to which t should respond.  We will use the "qt" function in R to do this.
+
+Let's say we want to know the t-values that, given four samples per mean, would be expected to include 50% of potential sample means?  In that case, we are interested in the middle 50% of the distribution.  There will be 25% of the distribution below this range, and 25% above.  So, for the lower t-value, we will tell R to calculate the t-value below which 25% of sample means are expected to occur.
+
+```{r}
+qt(0.25,3)
+```
+
+In the argument above, we told R to calculate the t-value associated with the lower 0.25 of the population, and 3 degrees of freedom (for 4 samples).  For the upper t-value, we want the value where 75% of the distribution is lower.
+
+
+```{r}
+qt(0.75,3)
+
+```
+
+As you can see, the upper and lower limit are symmetrical -- they only differ in sign.  We can use the shadeDist from above to check our work, by plugging in the t-values we just calculated.
+
+```{r}
+shadeDist(c(-0.7649,0.7649), "dt", 3, lower.tail=FALSE ) # t with 15 d.f. and non-centrality parameter=3
+
+```
+
+As we can see, the defined proportion equals our target.
+
+What if we want the t-values that bind the middle 68% of potential sample means?  Then we would have 32% of the distribution outside this range.  16% of sample means would be expected to be below the range, and 16% percent above.
+
+The t-value associated with the lower range, again assuming 3 df, would be:
+```{r}
+qt(0.16,3)
+```
+And the t-value associated with the upper range would be:
+```{r}
+qt(0.84,3)
+```
+
+How about the t-values that would be expected to define the range where 90% of sample means would be expected?
+```{r}
+qt(0.05,3)
+qt(0.95,3)
+```
+
+And, finally, 95%?
+
+```{r}
+qt(0.025,3)
+qt(0.975,3)
+```
+
+### Practice
+Calculate the t-values that would define the middle 60% of potential sample means if there were 10 samples.
+
+The lower limit is:
+```{r}
+qt(0.2,9)
+```
+
+What is the upper limit?
+
+Q: What is the range of t-values associated with 70% of potential sample means, if the number of samples is 12?
+A: (-1.09, 1.09)
+
+Q: What is the range of t-values associated with 80% of potential sample means, if the number of samples is 14?
+A: (-1.35, 1.35)
+
+Q: What is the range of t-values associated with 90% of potential sample means, if the number of samples is 17?
+A: (-1.75, 1.75)
+
+Q: What is the range of t-values associated with 95% of potential sample means, if the number of samples is 20?
+A: (-2.09, 2.09)
+
+Q: What is the range of t-values associated with 95% of potential sample means, if the number of samples is 20?
+A: (-2.86, 2.86)
+
+
+
+## Exercise: Confidence Interval for Sample Mean
+In the last part of this lesson, we learned how the standard error and t-distribution can be combined to define a confidence interval: a range of values around the sample mean that we are confident will, in a given percentage of trials, include the true population mean.  The confidence interval is bound by upper and lower confidence limits that are the product of the t-value and standard error.  
+
+### Calculating the Confidence Interval
+Once we understand how to calculate the standard error and t-value, the confidence interval is easily constructed:
+
+1) multiply the standard error times the t-value
+2) find the lower confidence limit by subtracting the product from step 1 from the sample mean 
+3) find the upper confidence limit by adding the product from step 1 to the sample mean 
+4) report the confidence interval in parentheses, like this (lower confidence limit, upper confidence limit)
+
+### Case Study: Peanut Sample 1
+
+In the data folder there are nine sample sets, of different size from the peanut trial.  Let's load the first
+```{r}
+
+peanut = read.csv("data-unit-3/exercise_data/peanut_sample_1.csv")
+head(peanut)
+
+```
+
+Let's create a new variable, "yield", from the yield column in the peanut data frame.   
+```{r}
+yield = peanut$yield
+
+```
+
+First, lets calculate the sample mean and standard deviation.
+```{r}
+yield_mean = mean(yield)
+yield_sd = sd(yield)
+```
+
+Remember how to calculate the standard error?  Right, divide the standard deviation by the square root of the number of samples.  In this case, we know it is 2, but if we were dealing with a larger sample, it might be easier to let excel do the counting.  So lets use the "length()" argument to do that.
+
+```{r}
+no_samples = length(yield)
+```
+
+Finally, we can calculate the standard error.
+```{r}
+yield_se = yield_sd/sqrt(no_samples)
+```
+
+Now, we need to calculate the t-value to use in calculating the confidence interval.  For this first example, we want a 90% confidence interval.  So we need to tell R to calculate the value of t that leaves 5% of the distribution in each tail.  That means the upper tail will begin at 100% - 5, or 95%.  We can now use the "qt" function in R to calculate t.
+
+```{r}
+t_value = qt(0.95, 1)
+```
+
+Where did the 1 come from?  Remember, that is the degrees of freedom, which is equal to the number of samples minus 1.  We have two samples in this first example, thus we have 1 degree of freedom.  
+
+We now know that our standard error is 0.46 and our t_value is about 6.31.  The last step is to add and subtract the product of the standard error and t-value from the sample mean.
+
+```{r}
+lower_limit = yield_mean - (yield_se*t_value)
+upper_limit = yield_mean + (yield_se*t_value)
+
+lower_limit
+upper_limit
+```
+
+So our confidence interval is (-1.06, 4.74).  Now we know the yield cannot possibly be less than zero.  But because the sample mean is close to zero, and because our sample size is so small, the confidence interval is so wide that its lower limit is negative.  This illustrates an important part of statistics or data science -- never underestimate the importance of domain knowledge, that is, your knowledge of the science it is trying to represent.
+
+One last thing: whenever you report a confidence interval, you should report it's confidence level and degrees of freedom, too.  So we would report the above as:
+
+CI(0.90, 1) = (-1.06, 4.74)
+
+
+### Case Study: Peanut Sample 2
+Let's go through this one a little faster.
+
+```{r}
+peanut_2 = read.csv("data-unit-3/exercise_data/peanut_sample_2.csv")
+head(peanut_2)
+
+```
+
+First, lets calculate the sample mean, standard deviation, and standard error.
+```{r}
+yield_2 = peanut_2$yield
+yield_mean_2 = mean(yield_2)
+yield_sd_2 = sd(yield_2)
+no_samples_2 = length(yield_2)
+yield_se_2 = yield_sd_2/sqrt(no_samples_2)
+```
+
+This time we want a 95% confidence interval, so we want our distribution to have 2.5% in the top tail.  100% - 2.5% = 97.5%.  We have 5 samples - 1 = 4 degrees of freedom
+
+```{r}
+t_value_2 = qt(0.975, 4)
+```
+
+Finally, add and subtract the product of the standard error and t-value from the sample mean.
+
+```{r}
+lower_limit_2 = yield_mean_2 - (yield_se_2*t_value_2)
+upper_limit_2 = yield_mean_2 + (yield_se_2*t_value_2)
+
+lower_limit_2
+upper_limit_2
+```
+
+Our confidence interval is now CI(0.95, 4) = (1.50, 2.30)
+
+### Practice
+Datasets peanut_sample_3.csv through peanut_sample_9.csv are available for your practice.  The answers for the 95% confidence intervals are given below.
+
+
+```{r}
+
+# change the sample number in the code below to access datasets 3 through 9
+peanut = read.csv("data-unit-3/exercise_data/peanut_sample_3.csv")
+peanut_mu = mean(peanut$yield)
+peanut_sd = sd(peanut$yield)
+peanut_no_samples = length(peanut$yield)
+peanut_se = peanut_sd / sqrt(peanut_no_samples)
+df=peanut_no_samples-1
+
+peanut_t = qt(0.975, df=df)
+
+upper_conf_limit = peanut_mu + (peanut_se*peanut_t)
+lower_conf_limit = peanut_mu - (peanut_se*peanut_t)
+
+paste0("(", round(lower_conf_limit,2), ", ", round(upper_conf_limit,2), ")")
+```
+
+
+peanut_sample_3.csv: (1.95, 2.41)
+peanut_sample_4.csv: (1.98, 2.34)
+peanut_sample_5.csv: (1.86, 2.65)
+peanut_sample_6.csv: (1.98, 2.57)
+peanut_sample_7.csv: (2.09, 2.42)
+peanut_sample_8.csv: (2.12, 2.49)
+peanut_sample_9.csv: (1.42, 2.15)
