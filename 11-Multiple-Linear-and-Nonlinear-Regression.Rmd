@@ -1,0 +1,526 @@
+---
+title: "Nonlinear Relationships and Multiple Linear Regression"
+output: html_document
+runtime: shiny
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+# Introduction
+In the last unit, we learned how to describe linear relationships between two variables, X and Y.  *Correlation* was used when we wanted to measure the *association* between the two variables. This was appropriate when when, based on our "domain knowledge" (agronomy or our other specialty), we did not have insight into whether one variable affected the other, or whether a third, unknown variable affected the value of both.  *Simple Linear Regression* was used when we had insight into the *causation* that linked two variables: we knew or hypothesized that a single response variable, $Y$, was affected (and could be predicted) by a single predictor variable, $X$.  
+
+Simple linear regression, however, has its limitations.  First, simple linear regression is often too inadequate for modelling more complex systems.  For example, a simple linear regression model might fit the effect of rainfall on corn yield.  But we all realize that a prediction of corn yield based on rainfall alone will not be particularly accurate.  
+
+If we included additional predictor variables, such as a measure of heat (cumulative growing degree days) or soil texture (water holding capacity or clay content), we would likely predict yield more accurately.  *Multiple Linear Regression* allows us to build model the relationship between a response variable, $Y$, and multiple predictor variables, $X_1$, $X_2$, $X_3$, etc.
+
+Second, a linear model assumes the relationship between Y and X can be fit with a straight line.  If you have taken a soil science course, however, you learned about *Leibig's Law of the Minimum* and the *Mitscherlich Equation* that describe the relationship between nutrient availability and plant biomass.  These relationships are curved and need to be fit with *Nonlinear Regression* models.
+
+In this unit, we will learn how to use multiple linear regression to model yield responses to environment.  We will also learn how to model nonlinear relationships, such as fertilizer response and plant growth 
+
+
+# Multiplie Linear Regression
+In multiple linear regression, response variable Y is modeled as a function of multiple X variables:
+
+$$ Y = \mu + X_1 + X_2 + X_3 ... X_n$$
+
+## Case Study: Modelling Yield by County
+We are going to work with a county-level dataset from Purdue university that includes soil characteristics, precipitation, corn, and soybean yield.  I've become best-friends with this dataset during the past few years and have combined it with county-level weather data to build complex yield models.  The authors used land use maps to exclude any acres not in crop production.  Here is a little app with which to appreciate this dataset.
+```{r}
+library(tidyverse)
+library(urbnmapr)
+library(sf)
+library(leaflet)
+
+counties = read.csv("data/county_environments.csv")
+
+## get county shapes ##
+counties_sf = get_urbn_map("counties", sf = TRUE) %>%
+    rename(stco = county_fips) %>%
+    mutate(stco = as.numeric(stco))
+
+counties_w_env = counties_sf %>%
+  left_join(counties) %>%
+  st_as_sf() %>%
+  st_transform(4326) %>%
+  gather(feature, value, ppt:wheat)
+
+
+library(shiny)
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("feature", "Select feature:", choices = unique(counties_w_env$feature))
+    ),
+    mainPanel(
+      leafletOutput("map")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  filteredData = reactive({
+    out_data = counties_w_env %>%
+      filter(feature==input$feature)
+  })
+
+  output$map = renderLeaflet({
+    in_data = filteredData()
+    pal_lm <- colorNumeric(grDevices::rainbow(5), in_data$value, reverse = TRUE)
+    leaflet(in_data) %>%
+      addTiles() %>%
+      addPolygons(
+        weight = 0.3,
+        color = "black",
+        fillColor = ~pal_lm(value),
+        fillOpacity = 0.5, smoothFactor = 0.5,
+        popup = ~paste0(county_name, "<br>", value),
+        layerId = ~stco
+      ) %>%
+       addLegend("bottomright",
+                pal = pal_lm,
+                values=~value,
+                title="Values")
+  })  
+}
+
+shinyApp(ui, server)
+```
+
+Here is the top of the data.frame:
+
+```{r}
+head(counties)
+```
+
+How does corn yield respond to soil properties and precipitation in Minnesota and Wisconsin?  Let's say we want to model corn yield as a function of precipitation (ppt), percent sand (sand), percent clay (clay), percent organic matter (om) and soil pH (spH)?  Our linear additive model would be:
+
+$$ Y = \alpha + \beta _1 ppt + \beta _2 sand + \beta _3 clay + \beta _4 om + \beta _5 sph + \epsilon$$ 
+
+First, we need to filter the dataset to MN and WI
+```{r, echo=TRUE}
+counties_mn_wi = counties %>%
+  filter(state %in% c("MN", "WI"))
+```
+
+To fit our model, we use the linear model *lm()* function of R.  For multiple regression, we don't list any interactions between the terms.  
+
+```{r}
+model_mn_wi = lm(corn ~ ppt + sand + clay + om + sph, data=counties_mn_wi)
+summary(model_mn_wi)
+```
+
+Let's go through the results.  The first output item, the Call, is the linear model we gave to R.
+
+The second item, residuals, describes the distribution of residuals around the regression model.  We can see the minimum residual is 42 bu/acre below the predicted value.  The maximum residual is 23 bu/acre above the predicted value.  The middle 50% (between 1Q and 3Q) were between 4.3 below and 7.0 above the predicted values.
+
+The Coefficients table is the highlight of our output.  The table shows the estimated slopes $\beta_1, \beta_2, \beta_3...\beta_n$ associated with each environmental factor, plus the individual t-tests of their significance.  We can see that each factor of our model is significant.
+
+In the bottom, we see that three observations were deleted due to missingness (they didn't have a value for each factor).  Two $R^2$s are presented.  The multiple $R^2$ is the proportion of the total variance in the model explained by our regression model.  This is the same concept as for simple linear regression.  Our value is 0.77, which is pretty good for an environmental model like this, especially because we did not include any temperature data.
+
+
+## Beware of Bloated Models
+Multiple Linear Regression is a powerful tool, but it generally pays to be conservative in how many factors you include in a model.  The more terms you include, the more you are likely to encounter problems with overfitting, multicollinearity, and heteroscedasticity.
+
+### Overfitting 
+Every model contains fixed terms (which the model is meant to measure and predict) and random terms, such as error, which are beyond the scope of the model to predict.  Not only that: since the error effect is random, it would be wrong for a model to try to predict it.  If we add enough factors to a model, however, it will do exactly that.  It will *overfit* the data.  The problem with overfitting is that the model contorts itself to fit every nook and crany of one dataset -- but fails to accurately predict values for additional datasets that, randomly, have different error structures.
+
+Here is an analogy.  You let your spouse or best friend borrow your car.  When they return it, the seating settings are completely messed up.  The lumbar support is either poking you in your but or about to break your neck.  You either can't reach the pedals and the steering wheel, or the seat is up so far you cannot even get in the car.  In addition, the climate control is too hot or too cold.  And, seeing what they left on the radio, you start to rethink the whole relationship.
+
+This is exactly the problem with overfitting.  The more we perfect the fit of a model one dataset, the more unlikely it is to make accurate predictions for another dataset.
+
+Adding factors to a model will always increase the $R^2$ value, even if the new factor has nothing to do with what the model is predicting.  For fun, lets create a column that randomly assigns an average number of Grateful Dead concerts attended per person, from 1 to 40, to each county.
+
+```{r}
+set.seed(092220)
+counties_mn_wi_gd = counties_mn_wi %>%
+  mutate(gd_concerts = sample(c(1:40), 159, replace = TRUE))
+head(counties_mn_wi_gd)
+```
+
+And then let's check out our model:
+
+```{r}
+model_mn_wi_gd = lm(corn ~ ppt + sand + clay + om + sph + gd_concerts, data=counties_mn_wi_gd)
+summary(model_mn_wi_gd)
+```
+
+See? Our Multiple $R^2$ increased slightly from 0.765 to 0.766.  While this example is absurd, it points to a temptation for statisticians and data scientists: keep adding terms until the $Multiple R^2$ is an accepted value.  Less nefariously, the researcher may just thinK the more variables the researcher can add, the better.  We can now see this is wrong.
+
+### Multicollinearity
+Another problem that can occur as we add factors to our model is *multicollinearity*.  Our linear model assumes that each factor has an *independent* effect on the response variable.  We know, however, that is not always the case.  For example, all sorts of weather and soil factors in our model can be related.  Cloudy days associated with precipitation may decrease temperature.  Warm temperatures may reduce soil moisture.  Areas with greater precipitation will tend to have more woody vegetation, leading to lower soil pH and soil organic matter.  Coarser soils, which are better drained, will tend to have lower soil organic matter.
+
+Here is a hypothetical scenario: suppose we look at the regression of yield on precipitation and pH and conclude yield is significantly affected by both of them.  Do we know that soil pH caused the change in yield?  No, it's possible that precipitation affected both pH and yield so that they appeared to change together.  That's not to say we can't include all of these factors in our model.  But we need to make certain that they are directly causing changes *to* the response variable, rather than responding *with* the response variable to a third variable in the model.
+
+### Heteroscedasticity
+The third problem we can have with a multiple linear regression model is that it is *heteroscedastic*.  This indimidating term refers to unequal variances in our model.  That is, the variance of observed yields varies markedly with the value being predicted.  Multiple linear regression, like other linear models, assumes that the variance will be the same along all levels of the factors in the model.  When heteroscedasticity -- unequal variances -- occurs, it jeopardizes our ability to fit the that factor.  Our least squared estimate for that factor will be more influenced by factor levels with greater variances and less influences by levels with lesser variances.  
+
+One of the causes of heteroscedasticity is having many predictors -- each with their own scales of measure and magnitudes -- in a model.  Since linear regression relies on least squares -- that is, minimizing the differences between observed and predicted values -- it will be more includenced by factors with greater variances than factors with small variances, regardless of how strongly each factor is correlated with yield.
+
+The end result is that the regression model will fit the data more poorly.  Its error will be greater and, thus, its F-value and p-value will be reduced.  This may lead us to conclude a factor or the overall model does not explain a significant proportion of the variation in data, when in fact it does.  In other words, we may commit at Type II error.
+
+
+## Methods for Avoiding Bloated Models
+There are multiple approaches, and surely books written, about how to avoid overfitting and multicollinearity in models.  After all that, also, model tuning (selecting the factors to include) seems to be art as much as science.  This section provides an overview of methods used, which you might consider if presented with someone elses results, or if you are trying to construct a model with a few factors on your own.
+
+### Create a Covariance Matrix
+A matrix (not "the matrix") is a mathematical term that describes what you and I would call a table.  So a covariance matrix is a table composed of correlation plots that we can use to inspect the covariance (or relationship) between each possible pair of variables in our dataset.
+
+```{r}
+yield_predictors = counties_mn_wi %>%
+  dplyr::select(corn, ppt, sand, clay, sph, om) %>%
+  na.omit() %>%
+  as.data.frame()
+
+plot(yield_predictors)
+```
+
+To use the matrix, find the intersection between a column and a row containing two variables whose relationship you want to inspect.  For example, in the fourth column, clay is plotted in relationship to the four other predictor variables, plus the response corn, in our model.  In each plot, clay is on the X-axis, and the intersecting variable is on the Y-axis.  Looking at the matrix, we notice the relationship of clay with sand and soil pH (sph) is visible.  We may wonder, then, if the addition of clay to our model is improving our prediction.
+
+### Partial Correlation
+Another thing we can do to look for multicollinearity is to calculate the partial correlations.  This can also be done with a simple line of code.  Partial correlation shows the individual correlations between variables, with all other variables being held constant.  What this does is allow us to quantify the correlation between two variables without worrying that both may be affected by a third variable.  For example, we can look at the correlation between soil pH  and soil organic matter without worrying that precipitation might be driving changes in both we could mistake for a relationship. 
+```{r}
+library(psych)
+partial.r(yield_predictors)
+```
+
+The output of partial correlation is a matrix, which cross-tablulates the correlations among every predictor variables and reports their values in a table.  The output abov tells us that sand and clay are both negatively correlated with corn.  That's odd -- we would expect that as sand decreases, clay would increase, or vice versa -- unless, both are being impacted by a third value, silt, which is not in our model.
+
+
+### Cross Validation
+A third way to evaluate the performance of a model and to avoid mistaking over-prediction for true model performance is to use cross-validation.  I'll confess to graduating from Iowa State and making it another 15 years in academia and industry without having a clue about how important this is.  If you plan to use your model not only to test hypotheses about variable significance, but to make predictions, the cross-validation is critical.
+
+In cross-validation, the initial data are divided into *training* and *testing* groups.  The model parameters (coefficients for slopes) are solved for using the training dataset.  In general, all models will better fit the data used to train them.  Therefore, the predictive performance of the model is measured using the testing dataset.  In this way, the true performance of the model can be measured.  In addition, the effect of adding or removing factors may be measured.    
+
+We will use a technique that sounds vaguely like an adult-alternative music group -- Repeated 10-Fold Cross Validation.  While the name sounds scary as all get-out, how it works is (pretty) straight forward:
+
+1. Divide the data into 10 groups.
+2. Randomly select 9 groups and fit the regression model to them.  These groups are called the "training" dataset
+3. Predict the responses for each observation in the tenth dataset, using the model fit to the other 9 datasets.  This 10th dataset is called the "testing" dataset.
+4. Use linear regression to determine the strength of the relationship between the predicted value and the actual values.  Review summary statistics in comparing models.
+
+Here is the cross validation of our first yield model for Illinois and Ohio:
+
+```{r}
+library(caret)
+
+# Define training control
+set.seed(123)
+train.control <- trainControl(method = "repeatedcv", 
+                              number = 10, repeats = 3)
+# Train the model
+model <- train(corn ~ ppt + sand + clay + om + sph, data=yield_predictors, method = "lm",
+               trControl = train.control)
+# Summarize the results
+print(model)
+```
+
+We can see in the top of the output confirmation we are working with the original 5 predictors.  To measure model performance, let's look particularly at the MRSE and Rsquared statistics at the bottom.  RMSE is the Root Mean Square Error, which you earlier learned is the square root of the Mean Square Error, and equivalent to the standard deviation of our data.  This is expressed in our regression output above as residual standard error.  An RMSE of 10.7 means the distribution of residuals (observed values) around our model predictions has a standard deviation of about 10.7.  Thus 95% of our observed values would be expected to be within 21.4 bushels (2 * 10.7) of the predicted value.  
+
+The Rsquared statistic is the same as we have seen previously, and describes the amount of variation in the observed values explained by the predicted values.
+
+
+## Tunning and Comparing Models
+
+Here is our original model for reference.  Note that sand has a negative effect (-0.33075) on yield and that it is highly significant (p=0.00248).  
+```{r}
+full_model = lm(corn ~ ppt + sand + clay + om + sph, data=counties_mn_wi)
+summary(full_model)
+```
+
+We saw above that clay was strongly correlated with both sand and soil pH.  Let's drop clay from our model and see what happens:
+```{r}
+model_no_clay = lm(corn ~ ppt + sand + om + sph, data=counties_mn_wi)
+summary(model_no_clay)
+```
+First, let's look at the model fit.  The Multiple R-squared decreased from 0.7651 to 0.7299.  The residual standard error increased from 10.61 to 11.34.  These would suggest the fit of the model has decreased, although we also notice the F-statistic has increased from 97.7 to 102, which suggests the model itself is more strongly detecting the combined effects of the factors on yield,
+
+An additional statistic that we want to watch is the Adjusted R-Squared.  This statistic not only takes into effect the percentage of the variation explained by the model, but how many factors were used to explain that variance.  The model is penalized for according to the number of factors used: of two models that explained the same amount of variation, the one that used more factors would have a lower Adjusted R-square.  We see the adjusted R-square decreased from our first model to the second. 
+
+Now let's go back to sand.  In the first model, it had a negative effect of -0.33075 and was highly significant.  Now it has a positive effect of 5.577e-02 and an insignficant effect on corn yield.  Remember, each factor in a linear regression model should be independent of the other factors.  If we compare the other four factors, we will see their coefficients have changed slightly, but they have remained highly significant.  This suggests that clay was affecting both sand content (after all, if you have more clay, you are likely to have less sand) and yield.  
+
+Let's cross-validate the new model.
+```{r}
+library(caret)
+
+# Define training control
+set.seed(123)
+train.control <- trainControl(method = "repeatedcv", 
+                              number = 10, repeats = 3)
+# Train the model
+model <- train(corn ~ ppt + sand + om + sph, data=yield_predictors, method = "lm",
+               trControl = train.control)
+# Summarize the results
+print(model)
+```
+
+We see the Rsquared and RMSE (root mean square error) are statistics are slightly lower than the original model in the cross-validation, too.
+
+Since sand was insignificant in the second model, let's remove it and rerun our model.
+```{r}
+model_no_clay_sand = lm(corn ~ ppt + om + sph, data=counties_mn_wi)
+summary(model_no_clay_sand)
+```
+
+We see little change in the Multiple R-squared or Adjusted R-squared, but the F-statistic has again increased.  Let's cross-validate the model.
+```{r}
+library(caret)
+
+# Define training control
+set.seed(123)
+train.control <- trainControl(method = "repeatedcv", 
+                              number = 10, repeats = 3)
+# Train the model
+model <- train(corn ~ ppt + om + sph, data=yield_predictors, method = "lm",
+               trControl = train.control)
+# Summarize the results
+print(model)
+```
+
+We see the new model fits slightly better.
+
+We could go on and on with the process.  We might try adding silt into the model to replace the sand and clay we removed.  Water holding capacity was a factor in the original dataset -- we might try using that as a proxy, too.  But the interations we have gone through show us that bigger models are not necessarily better (not by much, in any case).  While we can build complex models with multiple linear regression, it is better not to when possible.
+
+# Nonlinear Relationships
+As mentioned in the introduction, there are many relationships between variables that are nonlinear -- that is, cannot be modelled with a straight line.  In reality, few relationships in agronomy are perfectly linear, so by nonlinear we mean relationships where a linear model would systematically over-predict or underpredict the response variable.  In the plot below, a disease population (infected plants per plot) is modeled as a function of days since infection.  
+As with many pest populations, the number of infections increases exponentially with time.  We can see how a linear model would underpredict the number of plants from 7 to 9 days after infection and again from 25 to 27 days after infection, while overpredicting the number of infected plants from 15 to 21 days after infection .  Systematic overpredictions or underpredictions are called *bias*. 
+
+```{r}
+library(tidyverse)
+exponential = data.frame(x = seq(from=7, to=28, by=2))
+exponential_final = exponential %>%
+  mutate(y = exp(x/7)) %>%
+  mutate(log_y = log(y)) 
+
+exponential_final %>%
+  ggplot(aes(x=x, y=y)) +
+  geom_point(size=2, color="blue") +
+  geom_smooth(method='lm', color = "tomato", se=FALSE) + 
+  labs(x = "Days after Infection", y = "Infected Plants per Plot") +
+  lims(x = c(7,28), y=c(0,50)) +
+  theme(axis.title = element_text(size=18),
+        axis.text = element_text(size=14))
+  
+```
+
+Instead, we can fit the data with an exponential model that reduces the bias and increases the precision of our model:
+
+```{r}
+exponential_final %>%
+  ggplot(aes(x=x, y=y)) +
+  geom_point(size=2, color="blue") +
+  geom_smooth(method='loess', color = "tomato", se=FALSE) + 
+  labs(x = "Days after Infection", y = "Infected Plants per Plot") +
+  lims(x = c(7,28), y=c(0,50)) +
+  theme(axis.title = element_text(size=18),
+        axis.text = element_text(size=14))
+```
+
+
+## Fitting Nonlinear Responses with Linear Regression
+Fitting a relationship with a simple linear regression model is simpler than fitting it with a nonlinear model, which we will soon see.  Exponential relationships, like the one above can be fit by *transforming* the data to a new scale.  This is the same concept as we used in an earlier unit to work with messy data.  
+
+### Exponential Model
+For example, the data above (and many exponential relationships in biology and other disciplines can be transformed using the natural log:
+
+$$ y = log(x)$$
+
+If our original dataset looks like:
+```{r}
+exponential_final %>%
+  dplyr::select(x, y)
+```
+
+Where x is the days since infection and y is the mean number of infections per plot.
+We can create a new column, log_y with the natural log of infected plants.
+```{r}
+exponential_final %>%
+  dplyr::select(x, y) %>%
+  mutate(log_y = log(y))
+```
+
+When we fit the log of the infected plants, we see the relationship between the number of infected plants and days since infection is now linear.
+
+```{r}
+
+exponential_final %>%
+  ggplot(aes(x=x, y=log_y)) +
+  geom_point(size=2, color="blue") +
+  geom_smooth(method='loess', color = "tomato", se=FALSE) + 
+  labs(x = "Days after Infection", y = "Infected Plants per Plot") +
+  lims(x = c(7,28), y=c(0,5)) +
+  theme(axis.title = element_text(size=18),
+        axis.text = element_text(size=14))
+```
+
+We can now fit a linear model to the relationship between infected plants and days after infection.
+```{r}
+names
+infection_linear_model = lm(log_y ~ x, exponential_final)
+summary(infection_linear_model)
+```
+
+Our linear model, from the equation above, is:
+
+$$ log_y = 0 + 0.1429 \times x$$
+
+Just to test the model, let's predict the number of infected plants when x = 15
+
+```{r}
+paste("log_y =", 0 + 0.1429*15)
+```
+
+We can see this value is approximately the number of infected plants 15 days after infection in the table above.  Any predicted value can be transformed from the logaritm back to the original scale using the *exp()* function.  Compare this with the original count, y, in the table above.
+
+```{r}
+paste("y =", exp(2.1435))
+```
+
+### Parabolic
+In nutrient availability and plant density models, we sometimes encounter data that are parabolic -- the relationship between Y and X resembles a $\bigcap$ or $\bigcup$ shape.  These data can be fit with a *quadratic model*.  Remember that beast from eighth grade algebra. Don't worry -- we don't have decompose it!
+
+Let's say we have data from a plant density study in corn:
+
+```{r}
+plant_density_data_pre = data.frame(pop = seq(28, 44, 4),
+                                yield = c(170, 200, 205, 200,170)) %>%
+  mutate(pop2 = pop^2) 
+  
+pop_model = lm(yield ~ pop + pop2, data = plant_density_data_pre)
+
+plant_density_data = data.frame(pop = seq(28, 44, 2)) %>%
+  mutate(pop2 = pop^2)
+
+plant_density_data$yield = predict(pop_model, plant_density_data)
+
+plant_density_data %>%
+  ggplot(aes(x = pop, y = yield)) +
+  geom_point()
+
+```
+
+The quadratic model is:
+
+$$ Y = \alpha + \beta X + \gamma X^2$$
+Where $\alpha$ is the Y-intercept, and $\beta$ and $\gamma$ are the coefficients associated with $X$ and $X^2$.  We can run this model the same as we would a simple regression.
+
+```{r}
+pop_model = lm(yield ~ pop + pop2, data = plant_density_data)
+summary(pop_model)
+```
+
+This output should look very similar to the simple linear regression output.  The only difference is that there are now three coefficients returned: the intercept ($\alpha$ above), the coefficient for pop ($\beta$ above), and the coefficent for pop2 ($\gamma$ above).
+
+
+## Fitting Nonlinear Responses with Nonlinear Regression
+Other nonlinear relationships must be fit with nonlinear regression.  Nonlinear regression differs from linear regression in a couple of ways.  First, a nonlinear regression model may include multiple coefficients, but only X as a predictor variable.  Second, models are not fit to nonlinear data using the same approach (using least square means to solve for slope) as with linear data.  Models are often to nonlinear data often do so using a "trial and error" approach, comparing multiple models before converging on the model that fits best.  To help this process along, data scientists must often "guestimate" the initial values of model parameters and include that in the code. 
+
+### Monomolecular
+In the Monomolecular growth model, the response variable Y initially increases rapidly with increases in X.  Then the rate of increase slows, until Y plateaus and does not increase further with X.  In the example below, the response of corn yield to nitrogen fertilization rate is modelled with the monomolecular (asymptotic) function.
+
+First, we load and plot the data.
+
+```{r}
+corn_n_mono = read.csv("data/corn_nrate_mono.csv")
+p = corn_n_mono %>%
+  ggplot(aes(x=n_rate, y=yield)) +
+  geom_point(color="blue")
+
+
+```
+
+Then we fit our nonlinear model.
+```{r}
+corn_n_mono_asym = stats::nls(yield ~ SSasymp(n_rate,init,m,plateau), data=corn_n_mono)
+summary(corn_n_mono_asym)
+```
+
+The most important part of this output is the bottom line, "Achieved convergence tolerance".  That means our model successfully fit the data.
+
+Finally, we can add our modelled curve to our initial plot:
+
+```{r}
+test_data = data.frame(n_rate = seq(0,240,1))
+test_data$pred = predict(corn_n_mono_asym, test_data)
+
+p + geom_line(data = test_data, aes(x=n_rate, y=pred), color="tomato")
+```
+
+In the plot above, the points represent observed values, while the red line represents the values predicted by the monomolecular model.  The monomolecular function is often used to represent fertilizer rate or soil nutrient content, since the response to many fertilizers plateaus or "maxes out".  Fertilizer rate recommendations are developed to increase fertilization up to the point where the cost of adding another unit of fertilizer exceeds the benefit of the increase in yield.  The monomolecular function can also measure other "diminishing returns" responses, such as the response of photosynthesis to increasing leaf area.
+
+
+### Logistic Model
+The *Logistic* and model is often used in "growth analysis", studies that highlight patterns of plant growth, particularly cumulative biomass accumulation over time.  Data generally follow a "sigmoidal", or S-shaped, pattern.  In early growth the rate of biomass accumulation slowly increases.  In the intermediate growth phase, biomass accumulation is rapid and linear.  In the final growth phase, the rate of growth decreases and, if the trial is long enough, may plateau.
+
+In the plot below, total dry matter accumulation (tdm) is shown in relation to days after emergence (dae).  
+```{r}
+
+soybean_tdm = read.csv("data/soybean_dae_tdm_logis.csv")
+
+p_soy = soybean_tdm %>%
+  ggplot(aes(x=dae, y=tdm)) +
+  geom_point(color="blue")
+
+p_soy
+```
+
+The "S" shape of the data is very pronounced.  Next, we fit a logistic growth curve to the data:
+
+```{r}
+soybean_tdm_model = stats::nls(tdm ~ SSlogis(dae, Asym, xmid, scal), data=soybean_tdm)
+summary(soybean_tdm_model)
+```
+
+We see again in the output that the model achieved convergence tolerance.  Another thing to note is the "Number of iterations to convergence".  It took this model 9 steps to fit the data.  The algorithm will typically quit after 50 unsuccessful attempts.  When that occurs, it may be an indication the data should be fit with a different model.
+
+Here is our data with the fitted prediction model:
+
+```{r}
+test_data_soy = data.frame(dae=seq(0,120,1))
+test_data_soy$pred = predict(soybean_tdm_model, test_data_soy)
+
+p_soy + geom_line(data = test_data_soy, aes(x=dae, y=pred), color="tomato")
+```
+
+We can see this again illustrated in the next plot, which illustrates the effect of wetting period on the intensity of wheat blast. 
+
+```{r}
+wheat_blast = read.csv("data/wheat_blast_wetting_intensity.csv")
+p_wheat = wheat_blast %>%
+  ggplot(aes(x=wetting_period, y=intensity)) +
+  geom_point(color="blue")
+
+p_wheat
+```  
+  
+We fit the data with the logistic model.
+```{r}
+wheat_blast_model_logist = stats::nls(intensity ~ SSlogis(wetting_period, Asym, xmid, scal), data=wheat_blast)
+summary(wheat_blast_model_logist)
+```
+
+Convergence criteria was met.  Here is the data plotted with the logistic model.
+
+```{r}
+test_data_wheat_log = data.frame(wetting_period = seq(1,40,1))
+test_data_wheat_log$pred = predict(wheat_blast_model_logist, test_data_wheat_log)
+
+p_wheat + geom_line(data=test_data_wheat_log, aes(x=wetting_period, y=pred), color="tomato")
+
+```
+
+
+### Starting Variable Values
+As mentioned earlier, nonlinear regression algorithms can be difficult to use in that they don't fit a regression model using the least squares approach.  Instead, nonlinear regression "nudges" the different coefficients in its equation until it zeros in on coefficient values that best fit the data.  Often, traditionally, algorithms have not been able to solve for these coefficients from scratch.  The user would have to provide initial coefficient values and hope they were close enough to true values that the nonlinear algorithm could then fit the curve.
+
+What a pain in the butt.  While some coefficients could be easily guessed, others required more complex calculations.  With R, some packages have introduced "self-starting" non-linear models that do not require the user to enter initial values for coefficients.  I have used those to create the examples above and we will cover them in the exercises.  Just be aware, were you to get into more intensive nonlinear modelling, that you may need to specify those variables.
+
+# Summary
+Multivariate models (those that model yield or another response to multiple variables) are very powerful tools for unlocking the mysteries of how changes in environment drive what we observe in our research.  However, they require skill to use.  Remember that more variables do not automatically make a better model.  Too many variables can cause our model to overfit our original data, but be less accurate or unbiased in fitting future datasets.  Ask yourself whether it makes sense to include each variable in a model.  Covariance matrixes and partial correlations can help us identify predictor variables that may be correlated with each other instead of the response variable.
+
+Cross validation is also an important tool in assessing how a model will work with future data.  In this unit, we learned a common practice, 10-fold cross validation, in which the data were divided into 10 groups.  Each group took turns being part of the datasets used to train the model, and the dataset used to test it.
+
+Finally, nonlinear regression is used to fit variables that have a nonlinear relationship.  Untlike multiple linear regression, there is usually only one predictor variable in non-linear regression.  In addition, nonlinear regression is often based on a theoretical relationship between the predictor and response variable.  In this unit, we focused on two models: the monomolecular model for relationships between yield and soil fertility, and the logistic model for predicting growth of plants and other organisms.

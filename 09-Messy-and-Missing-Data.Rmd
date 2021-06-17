@@ -1,0 +1,637 @@
+# Messy and Missing Data
+You have to love the nice, complete datasets I have served up to you in this and other statistics texts.  Indeed, some trials will work out this way – in general, the simpler the treatment (and the technology used to apply it) the greater your chances of a complete dataset. Planters will jam, nozzles will plug, and if a trial has 12 treatments a couple of them may end up in the wrong plot.  Best to avoid those if possible.  
+ 
+As well, the smaller the experiment, or the more controlled the environment, the greater your odds of a complete dataset.  For that reason, decades of university and industry research has been performed in 10- x 40- plots stacked closely together on manicured, table-top-flat ground.  If you were a seed-breeder, you had dibs on these fields.  If you were an ecologist like me, you might have to head to the back 40 (j/k).  
+  
+If you can farm in your head or your basement, drop me a note and I will exempt you, with envy from this unit.  For those of us who farm by the acre or section, however, the issue of data quality is an agonizing and sometimes subjective topic – but critical.  Remember, most of our statistics are models, and the saying goes: “junk in, junk out.”  Your models are only as good as the data you use to build them.
+
+Part of your job as a researcher or end-user of any data, before you conduct or read the results from any test, is to ask yourself – are the data reliable enough to support the inferences?  A trial with wildly-different experimental units may bias results – if all the replicates of one treatment end up in the better units and others are concentrated in the poorer ones.  You may falsely recommend a product if you don’t catch this.
+
+At the other extreme, the failure conduct research on similar experimental units will introduce background variance (or noise) that prevents a statistical test from concluding a difference is not the result of chance,  even though the treatments are, in fact, different.  In that case, you may fail to introduce – or adopt – a product or technology with real promise.
+
+In this unit, we will first learn ways to inspect datasets for extreme values which, even given the inherent variability of data, may be suspect.  Boxplots, histograms, and probability plots will be our tools for these exercises.
+
+We will then address the uncomfortable question of what to do when we have missing data, either because a plot was compromised during the trial, or because we rejected that plot because its extreme value.
+
+
+## Inspecting data for Normal Distributions
+I know, I know, it is so exciting to have data!  The hard physical work of the research is done, the data is painstakingly entered into Excel.  Let’s run the ANOVAs and regressions now – if we hurry we can still make it to happy hour!
+
+It is so tempting to jump right into deep analyses as the data roll in.  But it is important to realize these analyses are based on assumptions:
+
+* That the observations for each treatment level are normally distributed around the treatment mean
+* That the variance or spread of observations around each level of treatment is roughly equal.
+* That experimental units are comparable among treatment levels, so that the treatment and error effects are appropriately separated.
+
+It is very possible, based on the nature of trials, that one or more of these assumptions may be violated.  If you have ever counted weeds in a herbicide trial, you have noted that well-treated plots have weed counts that are consistently near zero – but that weedy checks have wildly variable counts (100, 200, 300 weeds).  Growth analysis (where plants of different sizes are measured) is also prone to messy data issues, because variance in measurements increases numerically as plants grow.  Experimental units (plots) in both commercial and research farm fields can vary because of prior management unknown to the researcher.
+
+### Histograms
+In the very first unit of this course Unit 2, you were introduced to the histogram.  Recall the histogram is a vertical bar chart in which the width of bars defines the different ranges into which observations are grouped, and the height represents the count or proportion of observations falling into each range. 
+
+In the data below, we have a dataset with 500 observations of corn yield.  The mean is approximately 180.  We can see the data distribution is approximately normal.  
+
+```{r}
+library(tidyverse)
+# library(fGarch)
+# 
+set.seed(082720)
+norm_data = data.frame(obs_value = rnorm(500, mean=180, sd=5)) %>%
+        mutate(dataset="normal")
+# set.seed(5)
+# skewed_data = data.frame(obs_value = rsnorm(1000, mean = 20, sd = 10, xi = 100)) %>%
+#         mutate(dataset="skewed")
+# 
+# norm_and_skewed = rbind(norm_data, skewed_data) %>%
+#   as.data.frame() %>%
+#   dplyr::filter(obs_value>0)
+# 
+# 
+# write.csv(norm_and_skewed, "data/norm_and_skewed.csv", row.names = FALSE)
+
+# norm_and_skewed = read.csv("data/norm_and_skewed.csv")
+
+norm_data %>%
+        # filter(dataset=="normal") %>%
+        ggplot(aes(x=obs_value)) +
+        geom_histogram(breaks = seq(160,200,2), fill="darkolivegreen", color="black")
+```
+
+The summary data are shown below.  We can see that the median and mean are both approximately 180 bushels per acre.  We can also see the 1st and 3rd quantiles (equal to the 25th and 75th percentiles) are a little over three bushels from the median.  The minimum and maximum observations are also similarly spaced from the median.
+
+```{r}
+summary(norm_data$obs_value)
+```
+
+When we are dealing with data such as pest counts, our data may be non-normal.  Rather than being symmetrical, the data may be skewed to one side or another.  For example, in the dataset below, total velvetleaf dry weight in grams per square meter was measured. If you have worked like me with weed populations, you realize weed competitiveness is all about outracing the crop to the sun.  If the weed loses, which it will in most cases, it will be small.  But the proud few weeds who beat the crop will be huge.  That is reflected in the data below.      
+
+```{r}
+library(fGarch)
+
+set.seed(5)
+velvetleaf_skewed = data.frame(obs_value = rsnorm(1000, mean = 6, sd = 4, xi = 50)) 
+
+velvetleaf_skewed %>%
+  ggplot(aes(x=obs_value)) +
+  geom_histogram(fill="darkolivegreen", color="black", binwidth = 1) 
+                        
+
+```
+
+When we look at the histogram, the data are skewed to the right.  The histogram is not symmetrical.  
+
+```{r}
+summary(velvetleaf_skewed$obs_value)
+```
+
+
+When we look at the summary data, we first notice the mean and median are different.  For a dataset this size (1000 observations, we would expect them to be more similar.)  We notice that the first quantile is closer to the median than the third quantile.  The greatest indication the data is skewed, however, is is that the minimum is about 4 plants less than the median, while the maximum is about 18 plants greater. 
+
+Data like this may be transformed (mathematically re-scaled) so that it is more normal for analyses.  We will cover this below.
+
+```{r eval=FALSE, include=FALSE}
+
+set.seed(082720)
+norm_data_means = data.frame()
+
+
+
+norm_data_1 = data.frame(yield = rnorm(10, mean=160, sd=5)) %>%
+        mutate(pop=1)
+set.seed(082721)
+norm_data_2 = data.frame(yield = rnorm(10, mean=170, sd=5)) %>%
+        mutate(pop=2)
+set.seed(082722)
+norm_data_3 = data.frame(yield = rnorm(10, mean=180, sd=5)) %>%
+        mutate(pop=3)
+set.seed(082723)
+norm_data_4 = data.frame(yield = rnorm(10, mean=190, sd=5)) %>%
+        mutate(pop=4)
+
+norm_data = rbind(norm_data_1, norm_data_2, norm_data_3, norm_data_4)
+
+ggplot(norm_data, aes(x=yield)) +
+        geom_histogram(fill="darkolivegreen", color="black", binwidth = 3) +
+        facet_wrap(~ pop, scales = "free")
+
+```
+
+### Rank Percentile Plots
+Another way to inspect the normality of datasets is to use a rank percentile plot.  This plot uses the percentile rank of each observation, from lowest to highest, as the x-value of each point.  The y-value of the point is its observed value.  
+
+The data for our normally-distributed corn yield dataset are plotted in the rank percentile plot below.  Normally-distributed data tend to be strongly linear in the middle of the plot.  If we draw a regression line through the plot, you can see most of the data are close to that line.  The lowest percentile points fall below the line.  That means they are a little lower in value than the normal distribution function might predict.  The opposite is true of the highest percentile points.  This indicates our distribution is a little bit wider than normal, but not enough that we cannot use it for analysis. 
+
+```{r}
+norm_data %>%
+  mutate(rank = percent_rank(obs_value)) %>%
+  ggplot(aes(x=rank, y=obs_value)) +
+  geom_point()
+
+```
+
+Our skewed data, however, shows up quite differently in the rank percentile plot.  We can see that most of the data closely fit a line.  But starting around the 75th percentile, the observed values are much greater than the predicted values -- almost twice as much.  This means the distribution is much wider to the right of the distribution curve than to the left, and that the data are non-normal 
+```{r}
+velvetleaf_skewed %>%
+        mutate(rank = percent_rank(obs_value)) %>%
+        ggplot(aes(x=rank, y=obs_value)) +
+        geom_point() 
+```
+
+
+### Box Plots
+The first two methods I have shown you, the histogram and rank percentile plots, are useful if you have a few treatments with a large number of replicates.  They are taught in every statistics course and you should know about them.  But, in my experience, they are not useful if you have a trial with fewer replications.  A normal distribution is not going to appear in a histogram if you only have four replicates -- instead you will just see the four individual measurements.  
+
+Box plots, on the other hand, are very useful for inspecting multiple treatments.  In the plot below, boxplots for four corn treatments are shown.  The treatments are labeled A, B, C, and D.  The data are plotted so their treatments are listed along the vertical axis, and their values are listed along the y-axis.
+
+
+```{r}
+
+norm_data_mult_trts = data.frame(trt = rep(c("A", "B", "C", "D"), each=4),
+                                 mean = rep(c(160,170,180,190), each=4)) 
+
+set.seed(082720)
+norm_data_mult_trts = norm_data_mult_trts %>%
+  mutate(error = rnorm(16, 0, 5)) %>%
+  mutate(yield = mean + error) %>%
+  # create outlier
+  mutate(yield = if_else(row_number()==8, 195, yield))
+
+norm_data_mult_trts %>%
+        ggplot(aes(x=trt, y=yield)) + 
+        geom_boxplot(outlier.colour="black", outlier.shape=16,
+             outlier.size=2, notch=FALSE, fill="lightblue") +
+        coord_flip() +
+        stat_summary(fun=mean, geom="point", shape=23, size=2)
+
+```
+
+The boxplots help us understand the distribution of the data.  Lets start with the box, which tells about the spread of the data.  The left side of the box is the 25th percentile, the line in the middle is the 50th percentile (or median), and the right side of the box is the 75th percentile.  So the box shows us the spread of the middle half of the observations for each treatment.
+
+The diamond shown within the box is the mean.  In a normal distribution, the median and mean should be close. 
+
+The lines extending from the left and right side of the box are called whiskers.  The whiskers extend to the lowest and highest observations for a treatment.  The whiskers extend no more more than 1.5 times the *inter-quartile range*, which for the lower whisker is the the difference between the 25th and 50th percentiles, and for the upper whisker is the difference between the 50th and 75th percentiles.
+
+In treatment B, we can see the upper whisker is missing, and instead there is a point to the right of the bar.  If an observation is beyond 1.5 times the interquartile range, the whisker is not shown and the observation is instead represented by a point.  This observation is called an *outlier*, meaning that it outside the range of values expected in a normal distribution.  We will talk more about outliers in the next section.
+
+The boxplot tells us something beyond the distribution of the individual treatments.  If the boxes are markedly different in their width, the data may have substantially different variances.  We should investigate these further using a *mean-variance plot*, and perhaps a statistical *test of heterogeneity*.
+
+
+## Inspecting Data for Equal Variances
+So far, we have learned to use the t-test and analysis of variance to test named treatments (that is, hybrids, management practices, and other products that can be described by name).  These tests generally assume not only that observed values are normally distributed, but that the variances are approximately equal among the different treatments in our experiment.  If the variances are unequal, we may calculate least significant differences (LSDs) or honest  significant differences (HSDs) that are inappropriate.  Among treatments that have smaller variances, our LSD or HSD may be overestimated; among treatments that have larger variances, the LSD or HSD may be underestimated. 
+
+The visual inspection of individual treatment distributions in the box plot above, followed by a scatter plot of the treatment variances versus their means, can give us a visual sense of unequal variances.  These suspicions can then be tested using a Test for Homogeneity that calculates the probability of differences in variances as greater as those observed.
+
+### Mean-Variance Plot
+In a mean-variance plot, the treatment means are plotted along the horizontal axis and the variances are plotted along the vertical axis.  The plot for the corn yield dataset we have used so far is shown below.
+
+```{r}
+norm_stats = norm_data_mult_trts %>%
+        group_by(trt) %>%
+        summarise(mean=mean(yield),
+                var=var(yield)) %>%
+        ungroup()
+
+
+ggplot(data=norm_stats, aes(x=mean, y=var)) +
+        geom_point(aes(color=trt), size=3)
+
+```
+
+We can see the variance of treatment B is many times greater than that of the other treatments.  In general, we like to see the variances differ by no more than a factor of 2.
+
+In cases where we are dealing with populations that either "thrive or die" based on environment -- particularly pest populations -- we may see relationships between the mean and variance.  Pest count data is often like this.  In our velvetleaf counts, for example, we might find that our greater treatment means are also associated with greater variations in counts between plots.
+
+```{r}
+
+rnorm2 <- function(n,mean,sd) { mean+sd*scale(rnorm(n)) }
+r <- rnorm2(100,4,1)
+mean(r)  ## 4
+sd(r)
+
+set.seed(3)
+norm_data_prop_var = data.frame(A = rnorm2(4, 5, sqrt(2)),
+                                B = rnorm2(4, 10, sqrt(6)),
+                                C = rnorm2(4, 15, sqrt(10)),
+                                D = rnorm2(4, 20, sqrt(14))) %>%
+  gather(trt, yield)
+  
+  
+  
+  
+
+
+
+norm_data_prop_var %>%
+        ggplot(aes(x=trt, y=yield)) + 
+        geom_boxplot(outlier.colour="black", outlier.shape=16,
+             outlier.size=2, notch=FALSE, fill="lightblue") +
+        coord_flip() +
+        stat_summary(fun=mean, geom="point", shape=23, size=2)
+
+```
+
+In this case, the mean-variance plot may show a linear relationship between variance and mean.  
+```{r}
+norm_data_prop_var_stats = norm_data_prop_var %>%
+        group_by(trt) %>%
+        summarise(mean=mean(yield),
+                var=var(yield)) %>%
+        ungroup()
+
+norm_data_prop_var_stats %>%
+  ggplot(aes(x=mean, y=var)) +
+        geom_point(aes(color=trt), size=3)
+
+```
+
+Finally, we may observe a dataset in which the distributions not only increase with means, but seem to do so exponentially.
+
+```{r}
+
+rnorm2 <- function(n,mean,sd) { mean+sd*scale(rnorm(n)) }
+r <- rnorm2(100,4,1)
+mean(r)  ## 4
+sd(r)
+
+set.seed(3)
+norm_data_prop_sd = data.frame(A = rnorm2(4, 5, 0.3),
+                                B = rnorm2(4, 10, 2.5),
+                                C = rnorm2(4, 15, 4.7),
+                                D = rnorm2(4, 20, 6.9)) %>%
+  gather(trt, yield)
+
+norm_data_prop_sd %>%
+        ggplot(aes(x=trt, y=yield)) + 
+        geom_boxplot(outlier.colour="black", outlier.shape=16,
+             outlier.size=2, notch=FALSE, fill="lightblue") +
+        coord_flip() +
+        stat_summary(fun=mean, geom="point", shape=23, size=2)
+
+```
+
+
+In this case, the mean-variance plot may show a curved relationship between variance and mean.  
+```{r}
+s_norm_stats = norm_data_prop_sd %>%
+        group_by(trt) %>%
+        summarise(mean=mean(yield),
+                var=var(yield),
+                sd=sd(yield)) %>%
+        ungroup()
+
+
+ggplot(data=s_norm_stats, aes(x=mean, y=var)) +
+        geom_point(aes(color=trt), size=3)
+
+```
+
+We may want to check whether the standard deviation has a more linear relationship to mean.
+
+```{r}
+
+ggplot(data=s_norm_stats, aes(x=mean, y=sd)) +
+        geom_point(aes(color=trt), size=3)
+
+```
+The largest mean has a significant difference of 6.9, while the smallest mean has a significant difference of 0.3.  In other words, the largest significant difference is 23 times the smallest significant difference.  
+
+
+
+### Homogeneity of Variance Tests
+In previous units, we learned how to compare two variances -- using the F-test.  In the Analysis of Variance, we tested whether the variance among treatment means was greater than the variance within treatments.  If the treatment variance was sufficiently greater than the error variance, we concluded the treatment effect explained a significant amount of the variation in observed values.
+
+In this unit, we want to do something similar -- we want to compare the variances associated with multiple treatments to see if they are significantly different.  When data are normally-distributed, the method for comparing multiple variances is *Bartlett's Test*.  (If you continue your statistical travels, you may come across Levene's Test, but that is for non-normal data.)  
+
+Bartlett's test, as best as I can tell (the formula is awful and no one seems willing to explain it), acts like a sum of squares for variances, comparing the variances of the individual treatments to their mean when pooled together.  This is an incomplete explanation, but I hope it will satisfy the curious.  Fortunately for us, the test is easy to implement in R and the output simple.
+
+If we run Bartlett's test on our corn data above, we get the following results.
+
+```{r}
+bartlett.test(yield~trt, norm_data_mult_trts)
+```
+
+Let's go through the output.  "Bartlett's K-squared" is the statistic produced by the nasty formula I referenced above.  Don't worry about that.  The degrees of freedom refers to the four treatments whose variances we are comparing.  Most important, of course, is our p-value.  There are many opinions on when to transform data -- but I would recommend against transforming data unless the --value is less than 0.01.  I would also recommend running your data on both the transformed and untransformed data and comparing results.  If transformation does not change your inferences, then skip it. 
+
+Here is the Bartlett's test on our velevleaf data where the mean and standard deviation were linearly related:
+
+```{r}
+bartlett.test(yield~trt, norm_data_prop_sd)
+```
+
+In this case, we will want to analyze both the transformed and untransformed data before deciding which to us for our final inferences.
+
+
+## Dealing with Messy Data
+Dealing with messy data is one of the more uncomfortable aspects of statistics, but also one of the most important.  Our tests and summary statistics are based on assumptions.  For tests, we assume the data are from a populations that have approximately normal distributions.  We also assume they have variances that are equal -- otherwise our mean separation tests will fail.  
+
+And finally, and this is a concept that I learned just while writing this: the validity of our inferences is based on the assumption that our samples represent the population that we are studying.  Which brings us back to outliers.   
+
+### Outliers
+Outliers can have a powerful effect in skewing data.  Particularly in smaller datasets (i.e. fewer than 10 replicates per treatment), an outlier can have noticeable effects on a distribution's normality and its variance.  In regression analyses, one outlier can significantly change the slope of the model.
+
+Does this mean that outliers should be omitted from the dataset?  Not necessarily -- first we should inspect the data more closely.  The outlier might be a mistake in recording a measurement.  It could be an inconsistent scale in a combine.  These would be experimental errors that mean the outlier is an *artifact* of our methods, rather than a representative sample from our population.  In that case, we may want to remove that observation from our dataset.
+
+But investigating the outlier may also include examining the location where it was taken.  This can be difficult if you are not the primary researcher and on-site where the data were gathered.  But if you can overlay your plot map with a soils map, or work with aerial imagery, or examine as-applied maps, you may be able to identify differences in environment or management that caused a dramatic difference in the observed value.  
+
+In such a case, you may decide that plot did not represent the environment about which you were trying to draw inferences, and choose to omit it from the dataset.  At the same time, however, knowing that the outlier's environment or management had a dramatic effect on its performance, you may generate new hypotheses about that product.  In fact, you may learn more from your outlier, through the new research it inspires, than you do from the original experiment.  
+
+Also, before removing an outlier, it is a good idea to run your tests with and without it to see whether it changes your conclusions.  When you run your model, look at the standardized residuals.  How many standard errors is the outlier from the predicted value?  As a rule, if an observed value is more than two standard deviations from the predicted value, I scrutinize it before allowing it into the final analysis.  
+
+If you are comparing different treatments, does it change the significance of tests or differences among treatments?  If you are generating a regression model, does the change in slope have a dramatic effect on the values you will predict?  Will the change in slope have a dramatic effect on grower inputs and cost, or will the effect be more modest?
+
+These are important questions, because as uncomfortable as it is to identify and/or remove outliers, working with incomplete datasets can be even nastier.  If the statistical significance of tests or means separations are not affected by the outlier, it is best to leave it in the dataset if possible, especially if treatment replications are limited.
+
+### Non-normal Data and Unequal Variances
+Above, we discussed two other problems with data: data that were skewed (or non-normal) and therefore could not be modelled based on the normal distribution, and data were treatment variances were not equal -- they were, in statistical terminology, they suffered from *heterogeneity of variances*.  
+
+Both issues can arise out of trials where observation values vary widely: counts that include rare events or where one treatment (like a check plot) can "blow up" and have a huge value.  Growth studies, where size increases occur at  exponential rates, are another.
+
+These two issues may be similarly addressed by transforming the data.  When we transform data, we use a different measuring system to rescale it.  The easiest example of rescaling data is pH.  Recall pH is the concentration of hydrogen atoms in a solution.  This concentration can range from $0$ to $10^{-14}$
+
+So when is the last time you read that your soil pH was $6.5 \times 10^{-6}$ ?  You wouldnt.  We commonly speak of pH as ranging from 1 (highly acidic) through 7 (neutral) to 14 (highly basic).  Your are used to using the logarithmic scale(10, 1, 0.10, 0.010), rather than the arithmatic scale (1,2,3,4,5).  The decibel scale for sound and the Richter scale for earthquakes also use the logarithmic scale.  
+
+#### Natural Logarithm
+There are several ways to transform data, but the one I have most-often used is the natural logarithm
+The natural logaritm transformation is often used when we are working with data that have a wide range of values.  What constitutes a wide range of values?  Think growth analysis, or counts of common events (for example, weed counts in a herbicide trial that includes treatments that vary widely in effectiveness).  In these trials, it is not uncommon for observed values to vary by two or more orders of magnitude (powers of 10).
+
+Our process for working with transformed data is as follows:
+
+* Transform the original observations to their natural logs.  
+* Calculate the ANOVA
+* Cacluate treatment means using transformed data
+* Back-transform the treatment means to the original measurement scale so they are more intuitive to users
+
+Lets work with our velvetleaf data above.  Below is the analysis of variance and means separation using the least significant difference test.
+
+```{r}
+library(agricolae)
+
+vleaf_model_before = aov(yield~trt, norm_data_prop_sd)
+summary(vleaf_model_before)
+
+lsd_before = LSD.test(vleaf_model_before, "trt")
+lsd_before$groups
+```
+
+The treatment effect is significant, and some of the treatments are significantly different from each other, but there are also noticeable overlaps.
+
+Now let's transform the data using the natural log.  The original and transformed data are show below.
+```{r}
+vleaf_log = norm_data_prop_sd %>%
+  mutate(log_yield = log(yield))
+vleaf_log
+
+```
+
+Now when we run our Bartlett's test, we see the p-value is 0.09 -- there is no longer a significant difference among the treatment variances.
+```{r}
+bartlett.test(log_yield~trt, vleaf_log)
+```
+
+
+The largest standard deviation is still 6.5 times the smallest standard deviation -- but the difference has decreased dramatically.  When we run our analysis of variance, we see that our p-value has decreased by several orders of magniture.   
+
+```{r}
+vleaf_model_after = aov(log_yield~trt, vleaf_log)
+summary(vleaf_model_after)
+```
+
+When we run our LSD test, we notice more significant differences among the means, especially treatments A and B, which were associated with lower treatment means.
+```{r}
+lsd_after = LSD.test(vleaf_model_after, "trt")
+lsd_after$groups
+
+```
+
+Our last step is to back-transform the means from our LSD test.
+
+```{r}
+back_transformed_means = lsd_after$groups %>%
+  rownames_to_column(var="treatment") %>%
+  mutate(yield = exp(log_yield))
+
+back_transformed_means %>%
+  select(treatment, yield, groups)
+```
+
+In the above table, we have back-transformed the means in our LSD table to their original scale. 
+
+
+## Dealing with Missing Data
+Missing data can be very problematic.  Whether missing data are the result of deleting outliers, or plots  lost to weather or human damage, there are three options:
+
+* Drop the treatment entirely from the dataset
+* Drop one observation from each of the other treatments; if a Randomized Complete Block Design was used, delete and entire block
+* Predict the value for the plot that was omitted or lost
+
+As you see, these are ugly choices to make.  If you drop the treatment entirely from the dataset, you lose all ability to test it agaist the other treatments.  If you drop other replicates or the remainder of a block, you retain all treatments but reduce the degrees of freedom for statistical tests, rendering them less sensitive.
+
+The third option, predicting the value that is missing, comes with its own challenges.  The missing value for a plot is generally calculated using the linear additive model.  For a completely randomized design, the linear model is:
+
+$$Y_{ij} = \mu + T_i + \epsilon_{(i)j} $$
+
+So the missing value would be equal to $\mu + Ti$, where $i$ would be whatever treatment level the missing plot received.
+
+In a randomized complete block design, the the linear additive model is: 
+
+$$Y_{ij} = \mu + B_i + T_j + BT_{ij} $$
+
+The missing value would be equal to $\mu + B_i + T_j$, where $i$ is the block to which the missing plot occurred, and $j$ is the treatment the treatment the missing plot received.
+
+Note that we did not include $\epsilon_{(i)j}$ or $BT_{ij}$ in estimating the missing values.  Although this approach is widely used, this is a shortcome.  When we predict a missing value from the effects of treatment or treatment within block, we are using *mean* effects.  So the predicted value will be exactly the mean for a given treatment or treatment within block.  Because the predicted value is closer to the treatment and block means than it would be otherwise, it will contribute less to the treatment variance than it would normally.  
+
+We can demonstrate this with a normally-distributed dataset.
+
+```{r}
+set.seed(083020)
+more_norm_data_1 = data.frame(yield = rnorm(4, mean=165, sd=5.2)) %>%
+        mutate(trt="A")
+set.seed(083021)
+more_norm_data_2 = data.frame(yield = rnorm(4, mean=169, sd=5.2)) %>%
+        mutate(trt="B")
+set.seed(083022)
+more_norm_data_3 = data.frame(yield = rnorm(4, mean=170, sd=5.2)) %>%
+        mutate(trt="C")
+set.seed(083023)
+more_norm_data_4 = data.frame(yield = rnorm(4, mean=172, sd=5.2)) %>%
+        mutate(trt="D")
+
+more_norm_data = rbind(more_norm_data_1, more_norm_data_2, more_norm_data_3, more_norm_data_4) %>%
+        mutate(trt = as.factor(trt)) %>%   
+  mutate(random_no = rnorm(16,0,1)) %>%
+  arrange(random_no) %>%
+  mutate(plot=row_number()) %>% 
+  select(plot, trt, yield) %>%
+  mutate(yield = round(yield,1))
+
+more_norm_data
+
+```
+
+Here is the anova for the original data:
+
+```{r}
+summary.aov(lm(yield~trt, data=more_norm_data))
+```
+
+And here is the boxplot:
+
+```{r}
+more_norm_data %>%
+        ggplot(aes(x=trt, y=yield)) + 
+        geom_boxplot(outlier.colour="black", outlier.shape=16,
+             outlier.size=2, notch=FALSE, fill="lightblue") +
+        coord_flip() +
+        stat_summary(fun=mean, geom="point", shape=23, size=2)
+```
+
+Here is the table with the treatment and error effects broken out.  Unlike previous effects tables, I have also added the within treatment variance.
+
+```{r}
+more_norm_data_effects = more_norm_data %>%
+  mutate(mu = mean(yield)) %>%
+  group_by(trt) %>%
+  mutate(trt_mean = mean(yield),
+         trt_var = var(yield)) %>%
+  ungroup() %>%
+  mutate(trt_effect = trt_mean - mu) %>%
+  mutate(error_effect = yield - trt_effect - mu) %>%
+  select(plot, trt, yield, mu, trt_var, trt_effect, error_effect)
+
+knitr::kable(more_norm_data_effects)
+  
+```
+
+Plot 8 has a greater error effect than most other plots.  Let's treat it as an outlier, delete it, and recalculate the treatment means.  Let's delete it and see how that changes the treatment effect for treatment C.
+
+```{r}
+
+plot_8 = data.frame(plot=8 ,trt="C", yield=NA)
+
+more_norm_data_interp = more_norm_data %>%
+  dplyr::filter(!plot==8) %>%
+  rbind(plot_8)  %>%
+  arrange(plot) %>%
+  mutate(mu = mean(yield, na.rm = TRUE)) %>%
+  group_by(trt) %>%
+  mutate(trt_mean = mean(yield, na.rm = TRUE),
+         trt_var = var(yield, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(trt_effect = trt_mean - mu) %>%
+  mutate(error_effect = yield - trt_effect - mu) %>%
+  select(plot, trt, yield, mu, trt_var, trt_effect, error_effect)
+
+knitr::kable(more_norm_data_interp)
+```
+
+We can see that removing the yield data from plot 4 causes the treatment effect of treatment C to change -- in fact, it has gone from negative to positive.  The other treatment effects have also changed.   The within-treatment variance for treatment C has also decreased by about one-third.  When we re-run our analysis of variance, we see the treatment effect is 0.062 -- almost significant at the P=0.05 level.
+
+```{r}
+summary.aov(lm(yield ~ trt, data=more_norm_data_interp))
+```
+
+What would happen if we estimated the yield for plot 8 using the population mean, mu, and the treatment effect?
+
+$$ Y_{3,4} = \mu + T_i = 168.96	+ 1.37 = 170.33 $$
+
+We see that mu, treatment variance, treatment effect, and error have again changed.  The variance within Treatment 3 has again decreased by about one-third.
+```{r}
+plot_8_interp = data.frame(plot=8 ,trt="C", yield=170.33)
+
+more_norm_data_interp_8 = more_norm_data %>%
+  dplyr::filter(!plot==8) %>%
+  rbind(plot_8_interp) %>%
+  arrange(plot) %>%
+  mutate(mu = mean(yield, na.rm = TRUE)) %>%
+  group_by(trt) %>%
+  mutate(trt_mean = mean(yield, na.rm = TRUE),
+         trt_var = var(yield, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(trt_effect = trt_mean - mu) %>%
+  mutate(error_effect = yield - trt_effect - mu) %>%
+  select(plot, trt, yield, mu, trt_var, trt_effect, error_effect)
+
+knitr::kable(more_norm_data_interp_8)
+```
+
+And here is the kicker, wait for it...
+```{r}
+summary.aov(lm(yield ~ trt, data=more_norm_data_interp_8))
+```
+
+Our treatment differences are now significant.  Why?  Because when we estimate a missing value using only the population mean and treatment effect, we decrease the overall variance.  And why does that happen?  Because we have now created that is almost exactly equal to the treatment mean.  Was there a change in the originally observed values associated with this change in significance?  No.  And this is problem.  But there is a way to reduce it.  
+
+
+The problem with the model we have used so far is we did not include the error effect in our yield estimate.  If we added it in, our yield estimate for plot 8 would be more appropriate.  Of course, we cannot calculate the error effect because it is random and changes among plots.  But, knowing that error effects are normally distributed around the treatment mean, we can model that distribution and draw an individual from it at random, to use as the error effect in our estimate.
+
+
+The error distribution has its own mean, which should be close to zero:
+```{r}
+err_mean = mean(more_norm_data_interp$error_effect, na.rm=TRUE)
+err_mean
+```
+
+And its own standard deviation:
+```{r}
+err_sd = sd(more_norm_data_interp$error_effect, na.rm=TRUE)
+err_sd
+
+```
+
+Knowing these two parameters, we can select a value for our error effect from that distribution.
+```{r}
+set.seed(12)
+err_pred = rnorm(1, err_mean, err_sd)
+err_pred
+```
+
+Let's plug that into our yield estimate and see how our statistics change.
+
+$$ Y_{3,4} = \mu + T_i = 168.96	+ 1.37 - 5.37 = 164.96 $$
+
+We see that mu, treatment variance, treatment effect, and error have again changed.  The variance within Treatment 3 has again decreased by about one-third.
+```{r}
+plot_8_interp_sd = data.frame(plot=8 ,trt="C", yield=164.96)
+
+more_norm_data_interp_8_sd = more_norm_data %>%
+  dplyr::filter(!plot==8) %>%
+  rbind(plot_8_interp_sd) %>%
+  arrange(plot) %>%
+  mutate(mu = mean(yield, na.rm = TRUE)) %>%
+  group_by(trt) %>%
+  mutate(trt_mean = mean(yield, na.rm = TRUE),
+         trt_var = var(yield, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(trt_effect = trt_mean - mu) %>%
+  mutate(error_effect = yield - trt_effect - mu) %>%
+  select(plot, trt, yield, mu, trt_var, trt_effect, error_effect)
+
+knitr::kable(more_norm_data_interp_8_sd)
+```
+
+When we looks at the ANOVA, we see that the mean square and p-value are approximately the same as they were before the missing value was interpolated.
+
+```{r}
+summary.aov(lm(yield ~ trt, data=more_norm_data_interp_8_sd))
+```
+
+In R, there is a nice package called *mice* that does this for us.  We will learn about it in an exercise this week.
+
+One final note, however: we should not interpolate missing values if 5% or more of the data are missing.  Why?  Because, as we have seen above, that interpolated value can markedly change our interpretation of the data.  Restricting interpolation to datasets where a small percentage of data are missing reduces the leverage one observation has on conclusions from the data.  It also increases the accuracy of the interpolated values.
+
+In smaller datasets, then, we may to use the approaches above.  How important is it to have that treatment in the trial, versus losing a replicaton of the other treatments?  For the latter option, you may want to test whether including or omitting that replicate changes your conclusion from the data.  If not, it may be easiest to drop the replication.
+
+
+## Summary
+Agronomic data are rarely nice and neat.  The scale in which we work (acres and hectares), plus the variations in soil types, equipment performance, weather, weeds and other pests, make it virtually impossible to ensure our experimental units are near-equivalent.  Above all, our subjects are alive and integrate every aspect of their environment into their growth.  Unlike human subjects, corn plants cannot answer a history questionnaire.  Months or years of a trial can be erased by one plugged nozzle, one broken singulator, one strong wind, one "white combine".  It's a nasty business.
+
+It is important that we inspect our data and consider its shortcomings.  We have ways to address these shortcomings.  Outliers may be trimmed, or we may use other techniques to overcome them.  We have also learned how to re-scale data (using logarithms or square roots) so that variances are closer to equal, and how to "fill in" missing values using imputation so that our datasets can be balanced.  
+
+If stuck, consult with other data scientists.  There are "robust" statistics that are based on using the median, rather than the mean, for summaries and tests.  There are also non-parametric tests, some of which we will be introduced to towards the end of this course.  Non-parametric methods don't use linear models -- therefore, they are more insulated from the problems discussed above.  We will learn about these in a future unit.
+
+
+
+
+
+
+
+

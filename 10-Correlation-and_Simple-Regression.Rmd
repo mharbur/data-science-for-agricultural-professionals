@@ -1,0 +1,599 @@
+---
+title: "Correlation and Regression"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+# Introduction
+Let's review our progress so far.
+
+In Units 1 to 3, we learned about populations, distributions, and samples.  A population was a group of individuals in which we were interested.  We use statistics to describe the spread or distribution of a population.  When it is not possible to measure every individual in a population, a sample or subset can be used to estimate the frequency with which different values would be observed were the whole population measured.
+
+In Units 4 and 5, we learned how to test whether two populations were different.  The t-distribution allowed us to calculate the probability the two populations were the same, in spite of a measured difference.  When the two populations were managed differently, the t-test could be used to test whether they, and therefore their management practices, caused different outcomes.
+
+In Units 6 and 7, we learned how to test differences among multiple qualitative treatments.  By qualitative, we mean there was no natural ranking of treatments: they were identified by name, and not a numeric value that occurred along a scale.  Different hybrids, herbicides, and cropping systems are all examples of qualitative treatments.  Different experimental designs allowed us to reduce error, or unexplained variation among experimental units in a trial.  Factorial trials allowed us to test multiple factors and once, as well as test for any interactions among factors.
+
+In Unit 8, we learned about to test for differences among multiple qualitative treatments.  The LSD and Tukey tests can be used to test the difference among treatments.  Contrasts can be used to compare intuitive groupings of treatments.  We learned how to report results in tables and plots.  
+
+In Units 9 and 10, we will learn to work with quantitative treatments.  Quantitative treatments can be ranked.  The most obvious example would be rate trials for fertilizers, crop protection products, or crop seeds.  What makes this situation different is that we are trying to describe a relationship between $x$ and $y$ along within a range of x values, rather at only at discrete values of x.
+
+
+# Correlation
+There are two ways of analyzing the relationship between two quantitative variables.  If our hypothesis is that an change in $x$, the independent variable (for example, pre-planting nitrogen fertilation rate), *causes* a change in $y$, the dependent variable (for example, yield), then we use a *regression model* to analyze the data.  Not only can the relationship between tested for significance -- the model itself can be used to predict $y$ for any value of $x$ within the range of those in the dataset.
+
+Sometimes, however, we don't know whether $x$ causes $y$, or $y$ causes $x$.  This is the chicken-and-egg scenario.  Outside animal science, however, we can run into this situation in crop development when we look at the allocation of biomass to different plant parts or different chemical components of tissue.
+
+## Case Study: Cucumber
+In this study, cucumbers were grown the their number of leaves, branches, early fruits, and total fruits were measured.  
+
+First, let's load the data and look at its structure.
+```{r}
+library(tidyverse)
+library(ggplot2)
+cucumber = read.csv("data/cucumber_traits.csv")
+head(cucumber)
+```
+
+What is the relationship between branches and leaves?  Let's plot the data.
+```{r}
+ggplot(cucumber, aes(x=branches, y = leaves)) +
+  geom_point()
+```
+
+We don't know whether leaves cause more branches.  You might argue that more branches provide more places for leaves to form.  But you could equally argue that the number of leaves affects the production of photosynthates for additional branching.
+
+Similarly, what is the relationship between earlyfruit and the number of branches?
+
+```{r}
+ggplot(cucumber, aes(x=branches, y=earlyfruit)) +
+  geom_point()
+```
+
+In both cases, we can see that as one variable increases, so does the other.  But we don't know whether the increase in one causes the increase in the other, or whether there is another variable (measured or unmeasured, that causes both to increase).`
+
+# Correlation
+
+Correlation doesn't measure *causation*.  Instead, it measures *association*. The first way to identify correlations is to plot variables as we have just done.  But, of course, it is hard for us to measure the strength of the association just by eye.  In addition, it is good to have a way of directly measuring the strengh of the correlation.  Our measure in this case is the *correlation coefficient*, $r$. r varies between –1 and 1.  Values near 0 indicate little or no association between Y and X.  Values close to 1 indicate a strong, positive relationship between Y and X.  A positive relationship means that as X increases, so does Y.  Conversely, values close to 1 indicate a strong, negative relationship between Y and X.  A negative relationship means that as X increases, Y decreases.  
+
+Experiment with the appliciation below.  What happens as you adjust the value of r using the slider control?
+
+```{r}
+library(plotly)
+
+library(shiny)
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("corrCoef", "Select R", min=-1, max = 1, step = 0.05, value = 0.8)
+    ),
+    mainPanel(
+      plotOutput("corrPlot", width = "600px", height="600px")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  output$corrPlot = renderPlot({
+    set.seed(1234)
+    n = 1000
+    r = input$corrCoef
+    x1 = rnorm(n)
+    x2 = rnorm(n)
+    y1 = scale(x2) * r  +  scale(residuals(lm(x1~x2))) * sqrt(1-r*r)
+    
+    r = cor(y1,x2)
+    
+    cor_data = cbind(y1, x2) %>%
+      as.data.frame() 
+    
+    cor_data %>%
+      rename(y=V1, 
+             x=x2) %>%
+      ggplot(aes(x=x, y=y)) +
+      geom_point() +
+      geom_text(x=3.5, y=3.5, label=paste0("r = " , r), color="blue", size=8) + 
+      lims(x=c(-4,4), y=c(-4,4)) +
+      coord_fixed()
+      })
+
+    
+}
+
+shinyApp(ui, server, options = list(height="800px"))
+
+
+```
+
+When r is close to zero, the “cloud” of data in the scatter plot will appear circular.  As r increases positively, the data will start to look like a football – with its nose pointed up and right and its tail pointed down and left.  As r gets closer to 1, the data may represent a cigar – or an under-inflated football (yes, I’m talking to you, Brady).  And as r gets very close to 1, the data cloud will resemble a straight line.  As r increases negatively, the same patterns occur, only with the data points converging on a diagonal line that slopes up and to the left.
+
+For the cucumber datasets above, the correlations are shown below:
+
+```{r}
+
+cor_branches_leaves = round(cor(cucumber$branches, cucumber$leaves),2)
+
+plot1 = ggplot(cucumber, aes(x=branches, y = leaves)) +
+  geom_point() +
+  geom_text(x=140, y=0.9*max(cucumber$leaves), label = paste0("r = ", cor_branches_leaves))
+
+cor_branches_earlyfruit = round(cor(cucumber$branches, cucumber$earlyfruit),2)
+max_earlyfruit = max(cucumber$earlyfruit)
+
+plot2 = ggplot(cucumber, aes(x=branches, y = earlyfruit)) +
+  geom_point() +
+  geom_text(data=cucumber, x=140, y=0.9*max(cucumber$earlyfruit), label = paste0("r = ", cor_branches_earlyfruit))
+
+require(gridExtra)
+grid.arrange(plot1, plot2, ncol=2)
+
+```
+
+
+## How Is r Calcuated (optional reading)
+
+Something that bothered me for years was understanding what r represented – how did we get from a cloud of data to that number?.  The formula is readily available, but how does it work?  To find the explanation in plain English is really hard to find, so I hope you enjoy this!
+
+To understand this, let's consider you are in Marshalltown, Iowa, waiting for the next Derecho.  You want to go visit your friends, however, who are similarly waiting in Des Moines for whatever doom 2020 will bring there.  How will you get there?
+
+![Iowa Map](data/marshalltown_dsm_euclidian.png)
+
+First, you could go "as the crow flies" on Routes 330 and 65.  This is the shortest distance between Marshalltown and Des Moines.  In mathematical terms this is know as the "Euclidian Distance".  Now you probably know the Eucidian Distance by a different name, the one you learned in eigth grade geometry.  Yes, it is the hypotenuse, the diagonal on a right triangle!
+
+Second, you might want to stop in Ames to take some barbecue or pizza to your friends in Des Moines.  In that case, you would travel a right angle, "horizontally" along US 30-and then "vertically" down I-35.  You might call this "going out of your way".  The mathematical term is "Manhattan Distance".  No, not Kansas.  The Manhattan distance is named for the grid system of streets in the upper two thirds of Manhattan.  The avenues for the vertical axes and the streets form the horizontal axes.
+
+As you might remember, the length of the hypotenuse of a right triangle is calculated as: 
+
+$$z^2 = x^2 + y^2$$
+
+Where $z$ is the distance as the crow flies, $x$ is the horizontal distance, and $y$ is the vertical distance.  This is the Euclidian Distance.  The Manhattan distance, by contrast, is simply $x + y$.
+
+Now what if we were simply driving from Marshalltown to Ames?  Would the Euclidian distance and the Manhattan distance be so different?  No, because both Marshalltown and Ames are roughly on the x-axis?  Similarly, what if we drove from Ames to Des Moines?  The Euclidian distance and Manhattan distance would again be similar, because we were travelling across the x-axis.
+
+The difference between the Euclidian distance and the Manhattan distance is greatest when we must travel at a 45 degree angle from the X axis.  We can demonstrate this with the following plot.  Every point below is four units from the origin ($x=0,y=0$).  Notice that when the point is on the x or y axis, the Euclidian distance and Manhattan distance are equal.  But as the angle increases to zero, the Euclidian distance decreases, reaching its lowest value when x=y and the angle from the axis is 45 degrees.
+
+In the plot below, each point has a Manhattan distance ($x+y$) of 4.  The Euclidian distance is shown beside each point.  We can see the Euclidian distance is least when $y=x=2$.  
+
+```{r}
+x = c(4,3,2,1,0)
+y = c(0,1,2,3,4)
+
+distance_example = cbind(x,y) %>%
+  as.data.frame() %>%
+  mutate(euclidian_distance = sqrt(x^2 + y^2),
+         manhattan_distance = x+y,
+         id = row_number(),
+         id = as.factor(id),
+         euclidian_distance = round(euclidian_distance, 1))
+
+ggplot(distance_example, aes(x=x, y=y, group=id, label = euclidian_distance)) +
+  geom_point(aes(color=id), size=5) +
+  geom_segment(aes(x = 0, y = 0, xend = x, yend = y, color=id), arrow = arrow(length = unit(7, "mm")), size=1) +
+  geom_text(aes(x = x + 0.3, y= y + 0.3, color = id), size=6) + 
+  coord_fixed() + 
+  lims(x=c(0,4.5), y=c(0, 4.5)) + 
+  theme(legend.position = "none")
+  
+
+```
+
+Conversely, in the plot below, each point is the same Euclidean distance (4 units) from the origin ($x=0,y=0$).  The Manhattan distance is shown beside each point.  We can see the Manhattan distance is greatest when the point is at a 45 degree angle from the origin.
+```{r}
+x = c(4,3.85,3.4, 2.83,2,1,0)
+z = 4
+
+distance_example_2 = cbind(x,z) %>%
+  as.data.frame() %>%
+  mutate(euclidian_distance = z,
+         y= sqrt(z^2 -  x^2),
+         manhattan_distance = x+y,
+         id = row_number(),
+         id = as.factor(id),
+         manhattan_distance = round(manhattan_distance, 1))
+
+ggplot(distance_example_2, aes(x=x, y=y, group=id, label = manhattan_distance)) +
+  geom_point(aes(color=id), size=5) +
+  geom_segment(aes(x = 0, y = 0, xend = x, yend = y, color=id), arrow = arrow(length = unit(7, "mm")), size=1) +
+  geom_text(aes(x = x + 0.3, y= y + 0.3, color = id), size=6) + 
+  coord_fixed() +
+  lims(x=c(0,4.5), y=c(0, 4.5)) + 
+  theme(legend.position = "none")
+  
+
+```
+
+The calculation of the correlation coefficient, $r$, depends on this concept of *covariance* between $x$ and $y$.  The covariance is calculated as:
+
+$$S_{xy} = \sum(x_i - \bar{x})(y_i-\bar{y}) $$
+
+Let's go back to our cucumber data.  We will calculate the difference of each point from the $\bar{x}$ and $\bar{y}$.  The points are plotted below.
+
+```{r}
+cucumber_cov = cucumber %>%
+  mutate(branches_delta = branches - mean(branches),
+         leaves_delta = leaves - mean(leaves),
+         cov = branches_delta * leaves_delta)
+
+ggplot(cucumber_cov, aes(x= branches_delta, y=leaves_delta)) +
+  geom_point() +
+  geom_vline(xintercept=0) +
+  geom_hline(yintercept=0) +
+  lims(x=c(-100, 100), y=c(-700, 700))
+  
+```
+
+What we have now are four quandrants.  The differences between them are important important because they affect the *sign* of the covariance.  Remember, the covariance of each point is the product of the x-distance and the y-distance of each point.  
+
+```{r}
+ggplot(cucumber_cov, aes(x= branches_delta, y=leaves_delta)) +
+  geom_point() +
+  geom_vline(xintercept=0) +
+  geom_hline(yintercept=0) +
+  geom_text(x=50, y=400, label="I", size = 20, color="darkgrey", ) +
+  geom_text(x=50, y=-400, label="II", size = 20, color="darkgrey") +
+  geom_text(x=-50, y=-400, label="III", size = 20, color="darkgrey") +
+  geom_text(x=-50, y=400, label="IV", size = 20, color="darkgrey") +
+  lims(x=c(-100, 100), y=c(-700, 700))
+```
+
+In quadrant I, both the x-distance and y-distance are positive, so their product will be positive.  In quadrant II, the x-distance is still positive but the y-distance is negative, so their product will be negative.  In quadrant III, both x-distance and y-distance are negative, so their negatives will cancel each other and the product will be positive.  Finally, quadrant IV, will have a positve x-distance and negative y-distance and have a negative sign.  
+
+```{r}
+ggplot(cucumber_cov, aes(x= branches_delta, y=leaves_delta)) +
+  geom_point() +
+  geom_vline(xintercept=0) +
+  geom_hline(yintercept=0) +
+  geom_text(x=50, y=400, label="+", size = 25, color="darkgrey", ) +
+  geom_text(x=50, y=-355, label="-", size = 25, color="darkgrey") +
+  geom_text(x=-50, y=-400, label="+", size = 25, color="darkgrey") +
+  geom_text(x=-50, y=445, label="-", size = 25, color="darkgrey") +
+  lims(x=c(-100, 100), y=c(-700, 700))
+```
+
+Enough already!  How does all this determine r?  It's simple -- the stronger the association between x and y, the more linear the arrangement of the observations in the plot above.  The more linear the arrangement, the more the points will be in diagonal quadrants.  In the plot above, any observations that fall in quadrant I or III will contribute to the positive value of r.  Any points that fall in quadrants II or IV will subtract from the value or r.
+
+In that way, a loose distribution of points around all four quadrants, which would indicate x and y are weakly associated, would be penalized with an r score close to zero.  A distribution concentrated in quadrants I and III would have a positive r value closer to 1, indicating a *positive* association between x and y.  Conversely, a distribution concentrated in quadrants II and IV would have a negative r value closer to -1, and a *negative* association between x and y.
+
+One last detail.  Why is r always between -1 and 1?  To understand that, we look at the complete calculation of r.
+
+$$r=\frac{S_{xy}}{\sqrt{S_{xx}}\cdot\sqrt{S_{yy}}} $$
+
+You don't need to memorize this equation.  Here is what it is doing, in plain English.  $S_{xy}$ is the covariance.  It tells us, for each point, how it's x and y value vary together.  $S_{xx}$ is the sum of squares of x.  It sums the distances of each point from the origin ($x=0,y=0$) along the x axis.  $S_{yy}$ is the sum of squares of y.  It is the total y distance of points from the origin.  By multiplying the square root of $S_{xx}$ and $S_{yy}$, we calculate the maximum theoretical covariance that the points in our measure could have. 
+
+r is, after all this, a proportion.  It is the measured covariance of the points, divided by the covariance they would have if they fell in a straight line.  
+
+I hope you enjoy this explanation.  I don't like to go into great detail about calculations, but one of my greatest hangups with  statistics is how little effort is often made to explain where the statistics actually come from.  If you look to Wikipedia for an explanation, you usually get a formula that assumes you have an advanced degree in calculus.  Why does this have to be so hard?
+
+Statistics is the end, about describing the *shape* of the data.  How widely are the observations distributed?  How far do they have to be from the mean to be too improbabe to be the result of chance?  Do the points fall in a line or not?  There is beauty in these shapes, as well as awe that persons, decades and even millenia before digital computers, discovered how to describe them with formulas.
+
+Then again, it's not like they had *Tiger King* to watch.
+
+
+# Regression
+Regression describes a relationship between an independent variable (usually represented by the letter $y$) and one or more dependent variables ($x_x$, $x_2$, etc).  Regression differs from correlation in that the model assumes that the value of $x$ is substantially determined by the value of $x$.  Instead of describing the *association* between $y$ and $x$, we now refer to causation – how $X$ determines the value of $Y$.
+
+Regression analysis may be conducted simply to test the hypothesis that a change in one variable drives a change in another, for example, that an increase in herbicide rate causes an increase in weed control.  Regression, however, can also be used to predict the value of y based on intermediate values of x, that is, values of x between those used to fit or "train" the regression model.
+
+The prediction of values of y for intermediate values of x is called *interpolation*.  In the word interpolation we see "inter", meaning between, and "pole", meaning end.  So interpolation is the prediction of values between actually sampled values.  If we try to make predictions for y outside of the range of values of x in which the model was trained , this is known as *extrapolation*, and should be approached very cautiously.
+
+If you hear a data scientist discuss a predictive model, it is this very concept to which they refer. To be fair, there are many tools besides regression that are used in predictive models.  We will discuss those toward the end of this course.  But the regression is commonly used and one of the more intuitive predictive tools in data science.
+
+In this lesson, we will learn about one common kind of regression, simple linear regression.  This means we will learn how to fit a cloud of data with a straight line that summarizes the relationship between $Y$ and $X$.  This assumes, of course, that it is appropriate to use a straight line to model that relationship, and there are ways for us to test that we will learn at the end of this lesson.
+
+
+## Case Study
+
+A trial was conducted in Waseca, Minnesota, to model corn response to nitrogen.  Yields are per plot, not per acre.
+```{r}
+nitrogen = read.csv("data/nitrogen_waseca.csv")
+head(nitrogen)
+```
+
+The first thing we should do with any data, but especially data we plan to fit with a linear regression model, is to visually examine the data. Here, we will create a scatterplot with yield on the Y-axis and nitro (the nitrogen rate) on the X-axis.  
+
+```{r}
+ggplot(data=nitrogen, aes(x=nitro, y=yield)) +
+  geom_point()
+```
+
+We can see that nitrogen waw applied at three rates.  It is easy to check these five rates using the unique command in R.
+```{r}
+unique(nitrogen$nitro)
+```
+
+We can see that the centers of the distribution appear to fall in a straight line, so we are confident we can model the data with simple linear regression.
+
+## Linear Equation
+Simple linear regression, unlike correlation, fits the data could with an equation.  In Unit 5, we revisited middle school, where you learned that a line can be defined by the following equation:
+$$ y = mx + b $$
+Where $y$ and $x$ define the coordinate of a point along that line, $m$ is equal to the slope or “rise” (the change in the value of y with each unit change in $x$, and $b$ is the $y$-intercept (where the line crosses the y-axis.  The y-intercept can be seen as the “anchor” of the line; the slope describes how the line is pivoted on that anchor.  
+
+In statistics we use a slightly different equation – same concept, different annotation
+
+$$\hat{y} = \hat{\alpha} + \hat{\beta} x$$
+
+The y intercept is represented by the greek letter $\alpha$, the slope is represented by the letter $\beta$.   $y$, α, and β all have hat-like symbols called carats ($\hat{}$) above them to signify they are estimates, not known population values.  This is because the regression line for the population is being estimated from a sample.  $\hat{y}$ is also an estimate, since it is calculated using the estimated values $\hat{\alpha}$ and $\hat{\beta}$.  Only x, which in experiments is manipulated, is a known value.
+
+## Calculating the Regression Equation
+We can easily add a regression line to our scatter plot.
+```{r}
+ggplot(data=nitrogen, aes(x=nitro, y=yield)) +
+  geom_point() +
+  geom_smooth(method=lm, se=FALSE)
+```
+
+The blue line represents the regression model for the relationship between yield and nitro.  Of course, it would be nice to see the linear equation as well, which we can estimate using the *lm()* function of R.
+
+```{r}
+
+regression_model = lm(yield~nitro, nitrogen)
+regression_model
+```
+The cofficients above define our regression model.  The number given under "(Intercept)" is the estimate of the y-intercept, or $\hat{\alpha}$.  The number under nitro is the estimate of the slope, or $\hat{\beta}$.  Knowing that, we can construct our regression equation:
+
+$$\hat{y} = \hat{\alpha} + \hat{\beta} x$$
+$$\hat{y} = 8.476 + 0.04903x$$
+
+This tells us that the yield with 0 units of n is about 8.5, and for each unit of nitrogen yield increases about 0.05 units.  If we had 50 units of nitrogen, our yield would be:
+
+$$\hat{y} = 8.476 + 0.04903(50) = 10.9275 $$
+
+Since nitrogen was only measured to three significant digits, we will round the predicted value to 10.9.
+
+If we had 15 units of nitrogen, our yield would be:
+$$\hat{y} = 8.476 + 0.04903(15) = 9.21145 $$
+
+Which rounds to 9.21.  So how is the regression line calculated?
+
+## Least-Squares Estimate
+The regression line is fit to the data using a method known as the least-squares estimate.  To understand this concept we must recognize the goal of a regression equation is to make the most precise estimate for Y as possible.  We are not estimating X, which is already known.  Thus, the regression line crosses the data cloud in a way that minimizes the vertical distance (Y-distance) of observations from the regression line.  The horizontal distance (X-distance) is not fit by the line.
+
+```{r eval=FALSE, include=FALSE}
+library(fitdistrplus)
+set.seed(0)
+dat <- nitrogen %>%
+  rename(x=nitro,
+         y=yield)
+
+## breaks: where you want to compute densities
+breaks <- c(-33.6, unique(nitrogen$nitro))
+dat$section <- cut(dat$x, breaks)
+
+## Get the residuals
+dat$res <- residuals(lm(y ~ x, data=dat))
+
+## Compute densities for each section, and flip the axes, and add means of sections
+## Note: the densities need to be scaled in relation to the section size (2000 here)
+dens <- do.call(rbind, lapply(split(dat, dat$section), function(x) {
+   d <- density(x$res, n=12)
+    res <- data.frame(x=max(x$x)- d$y*25, y=d$x+mean(x$y))
+    res <- res[order(res$y), ]
+    ## Get some data for normal lines as well
+    xs <- seq(min(x$res), max(x$res), len=12)
+    res <- rbind(res, data.frame(y=xs + mean(x$y),
+                                 x=max(x$x) - 25*dnorm(xs, 0, sd(x$res))))
+    res$type <- rep(c("empirical", "normal"), each=12)
+    res
+}))
+dens$section <- rep(levels(dat$section), each=24)
+
+## Plot both empirical and theoretical
+ggplot(dat, aes(x, y)) +
+  geom_point() +
+  geom_smooth(method="lm", fill=NA, lwd=2) +
+  geom_path(data=dens, aes(x, y, group=interaction(section,type), color=type), lwd=1.1) +
+  theme_bw() +
+  geom_vline(xintercept=breaks, lty=2)
+```
+
+```{r, fig.width=8, fig.height=8}
+## Sample data
+
+nitrogen$res <- residuals(lm(yield ~ nitro, data=nitrogen))
+nitrogen$pred = predict(lm(yield ~ nitro, data=nitrogen))
+nitrogen_final = nitrogen %>%
+  mutate(rep2 = gsub("R", "", rep)) %>%
+  mutate(rep2 = as.numeric(rep2)) %>%
+  mutate(xpos = nitro + ((rep2-2)*0.8))
+ggplot(data=nitrogen_final, aes(x=nitro, y=yield)) +
+  geom_point() +
+  geom_smooth(method=lm, se=FALSE) +
+  geom_segment(aes(x=xpos, xend=xpos, y=yield, yend=pred, color=rep), size=1.5, arrow = arrow(length = unit(0.01, "npc")))
+
+
+```
+
+In the plot above, the distances of each the four points to the regression line are highlighted by arrows.  The arrows are staggered ("jittered", in plot lingo) so you can see them more easily.  Note how the line falls closely to the middle of the points at each level of R.
+
+In the plot below, use the slider to the left to observe the change in the regression line and error sum of squares, which measures the sums of the differences between observed values and the value predicted by the regression line.  Try to minimize the sum of squares.
+
+```{r}
+library(shiny)
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("slope", "Select Slope of regression line", min=-0.05, max=0.15, step=0.01, value=0.0)
+    ),
+    mainPanel(
+      plotOutput("plot")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  nitrogenCustomModel = reactive({
+    nitrogen_custom_model = nitrogen %>%
+      dplyr::select(nitro, yield) %>%
+      mutate(slope = input$slope) %>%
+      mutate(pred = mean(yield) + (nitro -mean(nitro))*slope) %>%
+      mutate(ss_error = sum((yield-pred)^2))
+  })
+  
+  output$plot = renderPlot({
+    ggplot(data=nitrogenCustomModel(), aes(x=nitro, y=yield)) +
+      geom_point(size = 2) +
+      geom_line(aes(x=nitro, y=pred), color="blue", size=2) +
+      geom_text(aes(x=45, y=8, label=paste0("Error SS = ", round(mean(ss_error),2))), hjust=0, size=6)
+  })
+  
+}
+
+
+
+shinyApp(ui, server)
+
+```
+
+What you will observe is the position of the regression line that minimizes the sum of squares is identical to that fit using the least squares regression technique.  In addition 
+
+
+The line is fit using two steps.  First the slope is determined, in an approach that is laughably simple -- after you understand it.
+
+$$\hat{\beta} = \frac{S_{xy}}{S_{xx}}$$
+
+What is so simple about this?  Let’s remember what the covariance and sum of squares represents.  The covariance is the sum of the manhattan distances of each individual from the “center” of the sample, which is the point located at ($\bar{x}, \bar{y}$).  For each point, the Manhattan distance is the product of the horizontal distance of an individual from $\bar{x}$, multiplied by the sum of the vertical distance of an individual from $\bar{y}$. 
+
+The sum of squares for $x$, ($S_{xx}$) is the sum of the squared distances of each individual from the $\bar{x}$.
+
+We can re-write the fraction above as:
+
+$$\hat{\beta} = \frac{\sum{(x_i - \bar{x})(y_i - \bar{y})}}{\sum(x_i - \bar{x})(x_i - \bar{x})} $$
+
+In the equation above, we can cancel out $(x_i - \bar{x})$ from the numerator and denominator so that we are left with:
+
+$$\hat{\beta} = \frac{\sum{(y_i - \bar{y})}}{\sum(x_i - \bar{x})} $$
+)
+In other words, the change in y over the change in y.
+
+Once we solve for slope ($\hat{\beta}$) we can solve for the y-intercept ($\hat{\alpha}$).  Alpha-hat is equal to the 
+
+$$\hat{\alpha} = \hat{y} - \hat{\beta}\bar{x} $$
+
+This equation tells us how much the line descends (or ascends) from the point ($\bar{x}, \bar{y}$) to where x=0 (in other words, the Y axis).
+
+## Significance of Coefficients
+What else can we learn from our linear model?  We can use the *summary()* command in R to get additional information.
+
+```{r}
+summary(regression_model)
+
+```
+
+Of particular interest in this output is the "Coefficients:" section.  It shows the coefficient estimates, as we saw before.  But it also provides information on the standard error of these estimates and tests whether they are significantly different.
+
+Again, both $\hat{\beta}$ and the $\hat{\alpha}$ are estimates.  The slope of the least-squares line in the actual population may tilt a more downward or upward than this estimate.  Similarly, the line may be higher or lower in the actual population, depending on the actual Y axis.  We cannot know the actual slope and y-intercept of the population.  But from the sample we can define confidence intervals for both values, and calculate the probability that they differ from hypothetical values by chance.
+
+We forego the discussion how these values are calculated – most computer programs readily provide these -- and instead focus on what they represent.  The confidence interval for the Y-intercept represents a range of values that is likely (at the level we specify, often 95%) to contain the true Y-intercept for the true regression line through the population.  
+
+In some cases, we are interested if the estimated intercept differs from some hypothetical value – in that case we can simply check whether how the true population Y-intercept compares to a hypothetical value.  If the value falls outside the confidence interval, we conclude the values are significantly different.  In other words, there is low probability the true Y-intercept is equal to the hypothetical value.
+
+More often, we are interested in whether the slope is significantly different than zero.  This question can be represented by a pair of hypotheses:
+$$ H_o: \beta = 0$$
+$$ H_a: \beta \ne 0$$
+
+The null hypothesis, $H_o$, is the slope of the true regression line is equal to zero.  In other words, $y$ does not change in a consistent manner with changes in $x$.  Put more bluntly: there is no significant relationship between $y$ and $x$.  The alternative hypothesis, Ha, is the slope of the true regression line is *not* equal to zero.  Y *does* vary with X in a consistent way, so there is a significant relationship between Y and X in the population.
+
+The significance of the difference of the slope from zero may be tested two ways.  First, a t-test will directly test the probability that β≠0.  Second, the significance of the linear model may be tested using an Analysis of Variance, as we learned in Units 5 and 6.
+
+## Analysis of Variance
+Similarly, we can use the *summary.aov()* command in R to generate an analysis of variance of our results.
+
+```{r}
+summary.aov(regression_model)
+```
+
+This analysis of variance works the same as those you learned previously.  The variance described by the relationship between Y and X (in this example identified by the "nitro" term) is compared to the random variance among data points.  If the model describes substantially more variance than explained by the random location of the data points, the model can be judged to be significant.  
+
+For a linear regression model, the degree of freedom associated with the effect of $x$ on $y$ is always 1.  The concept behind this is that if you know the mean and one of the two endpoints, you can predict the other endpoint.  The residuals will have $n-1$ degrees of freedom, where $n$ is the total number of observations.  
+
+Notice that the F-value is the square of the calculated t-value for slope in the coefficients table.  This is always the case.
+
+## Measuring Model Fit with R-Square
+Let's return to the summary of the regression model.  
+
+```{r}
+summary(regression_model)
+```
+
+At the bottom is another important statistic, *Multiple R-squared*, or $R^2$.  How well the model fits the data can be measured with the statistic $R^2$.  Yes, this is the square of the correlation coefficient we learned earlier.  $R^2$ describes the proportion of the total sum of squares described by the regression model: it is calculated by dividing the model sum of squares. 
+
+The total sum of squares in the model above is $21.71 + 12.01 = 33.72$.  We can confirm the $R^2$ from the model summary by dividing the model sum of squares, $21.71$, by this total, $33.72$.  $21.71 \div 33.72 = 0.6439$.  This means that 64% of the variation between observed values can be explained by the relationship between yield and nitrogen rate. 
+
+$R^2$ has a minimum possible value of 0 (no relationship at all between y and x) and 1 (perfect linear relationship between y and x).  Along with the model coefficients and the analysis of variance, it is the most important measure of model fit.
+
+
+
+
+## Checking whether the Linear Model is Appropriate
+As stated earlier, the simple linear regression model is a predictive model – that is, it is not only useful for establishing a linear relationship between Y and X – it can also be used under the correct circumstances to predict Y given a known value of X.  But while a model can be generated in seconds, there are a couple of cautions we must observe.
+
+First, we must be sure it was appropriate to fit our data with a linear model.  We can do this by plotting the residuals around the regression line. The *ggResidpanel* package in R allows us to quickly inspect residuals.  All we do use run *resid_panel()* function with two arguments: the name of our model ("regression_model") and the plot we want (plots = "resid").  
+
+```{r}
+library(ggResidpanel)
+resid_panel(regression_model, plots = "resid")
+```
+
+In my mind, the residual plot is roughly equivalent to taking the regression plot above and shifting it so the regression line is horizontal.  There are a few more differences, however.  The horizontal axis is the y-value predicted by the model for each value of x.  The vertical axis is the standardized difference (the actual difference divided by the mean standard deviation across all observations) of each observed value from that predicted for it.  The better the regression model fits the observations the closer the points will fall to the blue line.   
+
+The key thing we are checking is whether there is any pattern to how the regression line fits the data.  Does it tend to overpredict or underpredict the observed values of x?  Are the points randomly scattered about the line, or do they seem to form a curve?
+
+In this example, we only modelled a subset of the nitrogen study data.  I intentionally left out the higher rates.  Why?  Let's plot the complete dataset.
+
+```{r}
+library(agridat)
+complete_nitrogen = hernandez.nitrogen
+ggplot(complete_nitrogen, aes(x=nitro, y=yield)) +
+  geom_point()
+
+```
+
+We can see the complete dataset does not follow a linear pattern.  What would a regression line, fit to this data, look like?
+
+```{r}
+ggplot(complete_nitrogen, aes(x=nitro, y=yield)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+```
+
+We can see how the regression line appears seems to overpredict the observed values for at low and high values of nitrogen and underpredict the intermediat values.
+
+What does our regression model look like?
+```{r}
+bad_model = lm(yield~nitro, data = complete_nitrogen)
+summary(bad_model)
+summary.aov(bad_model)
+```
+
+The model is still highly significant, even though it is obvious it doesn't fit the data!  Why?  Because the simple linear regression model only tests whether the slope is different from zero.  Let's look at the residuals:
+
+```{r}
+resid_panel(bad_model, plots="resid")
+```
+
+As we expect, there is a clear pattern to the data.  It curves over the regression line and back down again.  If we want to model the complete nitrogen response curve, we will need to use a nonlinear model, which we will learn in the next unit.  
+
+# Extrapolation
+The above example also illustrates why we should not extrapolate: because we do not know how the relationship between x and y may change. In addition, the accuracy of the regression model decreases as one moves away from the middle of the regression line.  
+
+Given the uncertainty of the estimated intercept, the entire true regression line may be higher or lower – i.e. every point on the line might be one unit higher or lower than estimated by our estimated regression model.  There is also uncertainty in our estimate of slope – the true regression line may have greater or less slope than our estimate.  When we combine the two sources of uncertainty, we end up with a plot like this:
+
+```{r}
+ggplot(regression_model, aes(x=nitro, y=yield)) +
+  geom_point() +
+  geom_smooth(method = "lm", se=TRUE)
+```
+
+The dark grey area around the line represents the standard error of the prediction.  The least error in our estimated regression line – and the error in any prediction made from it occurs closer at $\bar{x}$.  As the distance from $\bar{x}$ increases, so does the uncertainty of the Y-value predicted from it.  At first, that increase in uncertainty is small, but it increases rapidly as we approach the outer data points fit with the model.  
+
+We have greater certainty in our predictions when we predict y for values of x between the least and greatest x values used in fitting the model.  This method of prediction is called interpolation – we are estimating Y for X values within the range of values used to estimate the model.  
+
+Estimating Y for X values outside the range of values used to estimate the model is called extrapolation, and should be avoided.  Not only is our current model less reliable outside the data range used to fit the model – we should not even assume that the relationship between Y and X is linear outside the of the range of data we have analyzed.  For example, the middle a typical growth curve (often called “sigmoidal”, from sigma, the Greek word for “S”) is linear, but each end curves sharply.  
+
+When we make predictions outside of the range of x values used to fit our model, this is extrapolation.  We can now see why it should be avoided.
