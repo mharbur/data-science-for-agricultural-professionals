@@ -10,6 +10,7 @@ rmd_files: ["index.Rmd",
   "05-Understanding-Statistical-Tests.Rmd",
   "06-Multiple-Treatment-Trials.Rmd",
   "07-Multiple-Treatment-Designs.Rmd",
-  "08-Means-Separation-and-Presentation.Rmd"]
+  "08-Means-Separation-and-Presentation.Rmd",
+  "09-Messy-and-Missing-Data.Rmd"]
 clean: [packages.bib, bookdown.bbl]
 new_session: yes

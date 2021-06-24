@@ -630,8 +630,611 @@ If stuck, consult with other data scientists.  There are "robust" statistics tha
 
 
 
+## Exercise: Visual Data Inspection
+Never underestimate the power of data visualizations.  Our ability to see patterns in data is profound.  In this exercise, we will review how to create histograms and learn new tools, including the rank-percentile, box-plot, and mean-variance plot.
+
+### Case Study 1
+We will work with a wheat uniformity trial.  In uniformity trials, there are no treatments.  Instead, the wheat yield is measured in gridded plots within a location in order to get a sense of yield consistency (uniformity) or inconsistency (variance).
+```{r}
+library(tidyverse)
+wheat_uniformity = read.csv("data-unit-9/exercise_data/wheat_uniformity.csv")
+head(wheat_uniformity)
+```
+
+### Histogram
+At the beginning of this course, we learned how to use the histogram to quickly learn about the distribution of a dataset.  This is just a reminder how powerful a tool it is.  We will also relate this shape to that of the rank-percentile plot below.  note the data are skewed to the right, with wide tails at both the top and bottom of the distribution.
+
+
+```{r}
+wheat_uniformity %>%
+  ggplot(aes(x=yield)) +
+  geom_histogram(fill="darkolivegreen", color="black", binwidth = 5) 
+```
+
+
+### Rank-Percentile
+In a rank-percentile plot, data are sorted from least to greatest and then ranked.  This takes just one line of code in R.
+
+```{r}
+ranked_wheat = wheat_uniformity %>%
+  mutate(rank = percent_rank(yield))
+  
+head(ranked_wheat)
+  
+```
+
+After ranking the oberved values, we create a simple scatter plot of observed value (yield, in this case) and rank.  
+
+```{r}
+ranked_wheat %>%                             # this tells R what dataset to use
+  ggplot(aes(x=rank, y=yield)) +             # this creates a plot where rank and yield will determine the location of the points
+  geom_point()                               # this will draw the points
+
+```
+
+We notice two things about this curve.  First, it is not symmetric around the median, reflecting the skewed distribution we observed in the histogram above.  Second, if we were to fit a line to the lower two-thirds of the data, we would notice that the entire 75 - 100 percentile range would be above the line.  This suggests a long tail to the right (above the mean).  That the line dips down at the left side of the curve also suggests that tail is longer than normal. 
+
+
+### Case Study 2
+For the box plot, we will use a study of common bean genotypes.
+```{r}
+bean_genotypes = read.csv("data-unit-9/exercise_data/bean_genotypes.csv")
+```
+
+### Box Plot
+The basic box plot can be drawn using the *geom_boxplot()* function.
+```{r}
+bean_genotypes %>%                      # dataset to use
+  ggplot(aes(x=gen, y=yield)) +         # use gen and type to specify x and y positions
+  geom_boxplot()                        # draw box and whisker plots
+```
+
+Often a box plot includes the mean.  We can add this using the *stat_summary()* command and *fun=mean*.  The mean will be represented by a black dot.
+```{r}
+
+bean_genotypes %>%                      # dataset to use
+  ggplot(aes(x=gen, y=yield)) +         # use gen and type to specify x and y positions
+  geom_boxplot() +                      # draw box and whisker plots
+  stat_summary(fun=mean)                # draw the mean as a point on the plots
+```
+
+We can replicate the style from the lecture using the code below.  Just change out the variable names in the second line to use it with other datasets.
+```{r}
+
+bean_genotypes %>%
+  ggplot(aes(x=gen, y=yield)) +                                 # change out the variable names for "x" and "y"
+  geom_boxplot(outlier.colour="black", outlier.shape=16,
+       outlier.size=2, notch=FALSE, fill="lightblue") +
+  coord_flip() +
+  stat_summary(fun=mean, geom="point", shape=23, size=2)
+```
+
+
+### Practice
+
+#### Strawberry Uniformity
+Load the "data-unit-9/exercise_data/strawberry_uniformity.csv" dataset.  Create a rank probability plot.  Your plot should look like:
+
+![strawberry rank probability](data-unit-9/exercise_images/strawberry_rank_probability.png)
+
+
+
+## Exercise: Identifying Unequal Variances"
+Occassionally, we may encounter data that don't satisfy our assumptions about variance: that it is equal across the treatments in our experiment or, similarly, not correlated with treatment level.  In these cases, it may be useful to transform the data prior to analysis, by calculating and working with the natural logarithms of the original data.
+
+### Case Study: Grape Colapsis in Seed Corn
+In this case study, we will use data loosely inspired by graduate work by Benjamin Carl Kaeb at Iowa State University, where the researcher had to log-transform data prior to analyses.  The measurement is grape colapsis count per liter of soil, after being treated during the season with various numbers of insecticide application.
+
+First, lets load and inspect the data.
+```{r}
+library(tidyverse)
+colapsis = read.csv("data-unit-9/exercise_data/grape_colapsis.csv")
+head(colapsis)
+```
+
+Next, lets create a box plot of our data.
+```{r}
+colapsis %>%
+        ggplot(aes(x=applications, y=count)) + 
+        geom_boxplot(outlier.colour="black", outlier.shape=16,
+             outlier.size=2, notch=FALSE, fill="lightblue") +
+        coord_flip() +
+        stat_summary(fun=mean, geom="point", shape=23, size=2)
+```
+
+One thing we notice in the plot above is that our applications are not ordered from lowest (control) to highest (triple).  Lets fix that.  We can use the *factor()* function to rearrange the order of our levels.  We tell R to set the "applications" column of the colapsis dataset as the factor format of itself.  The *levels()* argument tells R the order in which the levels should be listed. 
+
+```{r}
+colapsis$applications = factor(colapsis$applications, levels=c("control", "single", "double", "triple"))
+
+colapsis %>%
+        ggplot(aes(x=applications, y=count)) + 
+        geom_boxplot(outlier.colour="black", outlier.shape=16,
+             outlier.size=2, notch=FALSE, fill="lightblue") +
+        coord_flip() +
+        stat_summary(fun=mean, geom="point", shape=23, size=2)
+```
+
+
+We can see that there is noticable variation in the spread of observed values among treatments, and that the spread of the observed values seems to increase with the mean number of counts.  
+
+Let's calculate our means and variances by number of applications.
+
+```{r}
+colapsis_mean_var = colapsis %>%    # base calculations on colapsis data frame
+  group_by(applications) %>%        # calculate summary by application level
+  summarise(mean = mean(count),     # create new variable, mean, which is the mean count per application
+            variance = var(count))  # create new variable, variance, which is the count variance per application
+
+colapsis_mean_var
+```
+
+Here is a simple scatter plot of variance as a function of mean.
+```{r}
+colapsis_mean_var %>%
+  ggplot(aes(x=mean, y=variance)) +
+  geom_point()
+```
+There is a clear trend that variance increases with mean.  We can also see the greatest variance is about 16 times greater than the least variance.  This is problematic -- when we have differences greater than 2X in variances, our analyses may not function properly.
+
+
+To test whether the variances are equal, we will use the *bartlett.test()* function.  The arguments to this function are the same as a model statement: the model, and the data frame
+
+```{r}
+bartlett.test(count ~ applications, data=colapsis)
+```
+
+We see that the p-value is less than 0.01.  We should consider transforming these data before running an analysis of variance and means separation on them.
+
+
+### Practice: Pigweed Height
+1. Load the data from "data-unit-9/exercise_data/soybean_pigweed_height.csv".  "trt" is the soybean seeding rate.  "height" is the height of pigweed species in inches.
+```{r}
+
+
+```
+
+2. Create a summary table of means and variances.  Your results should look like.
+```{r}
+
+```
+
+trt	mean	variance
+rate_100	13.5	5.76
+rate_173	12.0	2.89
+rate_322	10.5	1.00
+rate_470	9.0	0.09
+
+3.  Create a plot of variance as a function of mean.  It shold look like:
+```{r}
+
+```
+
+![](images/pigweed_height_mean_var.png)
+
+
+
+4. Create a boxplot of height grouped by trt.  It should look like this.
+
+![](images/pigweed_height_boxplot.png)
 
 
 
 
+5. Run the Bartlett's Test for Homogeneity of the variances by treatment.  Your output should look like:
+
+	Bartlett test of homogeneity of variances
+
+data:  height by trt
+Bartlett's K-squared = 14.564, df = 3, p-value = 0.00223
+
+
+
+###Practice: Pigweed Biomass
+Pigweed biomass was also measured in the above experiment.
+
+1. Load the dataset "data-unit-9/exercise_data/soybean_pigweed_biomass.csv"
+```{r}
+
+```
+
+
+2. Create a boxplot of biomass by seeding rate
+```{r}
+
+
+```
+
+![](images/pigweed_biomass_boxplot.png)
+
+
+
+3. Create a table of biomass means and variances by seeding rate.  Your table should look like:
+```{r}
+
+```
+
+rate	mean	variance
+rate_100	2.9	2.56
+rate_173	2.4	1.21
+rate_322	1.5	0.36
+rate_470	0.5	0.01
+
+4. Plot the variance of biomass as a function of seeding rate.  Your plot should look like:
+```{r}
+
+```
+
+![](images/pigweed_biomass_mean_var.png)
+
+
+5. Run a Bartlett Test of Homogeneity of Variances on the data.  Your results should look like:
+
+
+	Bartlett test of homogeneity of variances
+
+data:  biomass by rate
+Bartlett's K-squared = 21.387, df = 3, p-value = 8.749e-05
+
+
+## Exercise: Transforming and Analyzing Data
+In this exercise, we will work with the same three datasets in which we identified unequal variances.
+
+### Case Study: Grape Colapsis in Seed Corn
+
+First, lets load and inspect the data.
+```{r}
+library(tidyverse)
+colapsis = read.csv("data-unit-9/exercise_data/grape_colapsis.csv")
+```
+
+
+In the previous exercise, we determined the variances were unequal, so we will now create a new column in our colapsis dataset with the natural logarithm of the original counts.
+```{r}
+colapsis = colapsis %>%
+  mutate(log_count = log(count)) # create new variable count_log, based on natural logarithm of count
+```
+
+We can run an Analysis of Variance on the transformed data, the same as we would any other dataset.
+```{r}
+colapsis_model = aov(log_count ~ applications, data=colapsis)
+summary(colapsis_model)
+
+```
+
+Our applications effect is significant.  We will separate the means using the Least Significant Difference.
+
+```{r}
+library(agricolae)
+lsd = LSD.test(colapsis_model, "applications")
+
+lsd
+
+```
+
+At this point, we have all the data we need to evaluate whether the applications effect is significant, and whether the colapsis count differs with the number of applications per season.  Before we present our means and groupings above, however, we would like to "back-transform" them to our original scale of measurement.  
+
+Recall that we can quickly isolate the $groups table from our LSD.test output.  We will want to convert the rownames to a column before we work further with that data frame, however.  We can use the *rownames_to_columns()* function to create a new column, "applications", with the values from the row names.
+```{r}
+means_from_lsd = lsd$groups
+means_from_lsd = means_from_lsd %>%
+  rownames_to_column(var = "applications")
+```
+
+
+We will now back-transform the natural log by using *e*, Euler's constant (equal to about 2.78) to "cancel it out"  Specifically, we will tell R to calculate e^x, where x is each treatment mean in the transformed data.
+```{r}
+means_from_lsd = means_from_lsd %>% 
+  mutate(count = exp(log_count))
+
+means_from_lsd
+```
+
+Finally, let's get rid of the log_count column and move the groups column to the column furtherst ruight.  We will use the *select()* function.
+
+```{r}
+
+
+means_from_lsd = means_from_lsd %>%
+  select(applications, count, groups)
+
+means_from_lsd
+
+```
+
+
+
+### Practice: Pigweed Height
+
+1. Load the pigweed height data from the "data/soybean_pigweed_height.csv" file.
+```{r}
+pigweed = read.csv("data-unit-9/exercise_data/soybean_pigweed_height.csv")
+```
+
+2. Transform the data using the natural log transformation.  
+```{r}
+
+
+# The first few rows will look like:
+# trt	      height	log_height
+# rate_100	11.69514	2.459173
+# rate_100	16.06706	2.776771
+# rate_100	10.88049	2.386971
+# rate_100	13.48499	2.601577
+# rate_100	16.70968	2.815988
+# rate_100	12.16264	2.49836
+
+```
+
+
+3. Run the ANOVA.  
+```{r}
+
+
+# Your results should look like:
+#             Df Sum Sq Mean Sq F value   Pr(>F)    
+# trt          3 0.5162 0.17206    11.6 0.000127 ***
+# Residuals   20 0.2966 0.01483  
+  
+```
+
+
+
+
+4. Run the LSD test and extract the groups table.
+```{r}
+
+```
+
+5. Convert the rownames to a column.  
+```{r}
+
+# Your table should look like.
+# trt	log_height	groups
+# rate_100	2.589808	a
+# rate_173	2.477182	ab
+# rate_322	2.347396	b
+# rate_470	2.196758	c
+
+```
+
+
+
+6. Back-transform the means to the original scale.
+```{r}
+
+# Your results should look like:
+# trt	log_height	groups	height
+# rate_100	2.589808	a	13.327217
+# rate_173	2.477182	ab	11.907663
+# rate_322	2.347396	b	10.458302
+# rate_470	2.196758	c	8.995803
+
+```
+
+
+
+
+
+7. Use select() to arrange the table so the columns are: trt, height, groups.
+```{r}
+
+
+# Your results should look like:
+# trt	height	groups
+# rate_100	13.327217	a
+# rate_173	11.907663	ab
+# rate_322	10.458302	b
+# rate_470	8.995803	c
+
+```
+
+
+### Practice: Pigweed Biomass
+
+1. Load the pigweed biomass data from the "data/soybean_pigweed_biomass.csv" file.
+```{r}
+biomass = read.csv("data-unit-9/exercise_data/soybean_pigweed_biomass.csv")
+```
+
+2. Transform the data using the natural log transformation.  
+```{r}
+
+
+
+
+# The first few rows will look like:
+# rate	biomass	log_biomass
+# rate_100	6.096351	1.8076904
+# rate_100	1.828959	0.6037471
+# rate_100	2.444420	0.8938077
+# rate_100	2.789826	1.0259793
+# rate_100	2.105895	0.7447407
+# rate_100	2.134549	0.7582552
+```
+
+
+3. Run the ANOVA.  
+```{r}
+
+# Your results should look like:
+#             Df Sum Sq Mean Sq F value  Pr(>F)    
+# rate         3 10.280   3.427   22.45 1.3e-06 ***
+# Residuals   20  3.053   0.153 
+```
+
+                  
+
+4. Run the LSD test and extract the groups table.  Your results should look like:
+```{r}
+
+# Your results should look like:
+# log_biomass	groups
+# rate_100	0.9723701	a
+# rate_173	0.7920214	ab
+# rate_322	0.3350568	b
+# rate_470	-0.7132060	c
+```
+
+
+5. Convert the rownames to a column.  
+```{r}
+
+
+
+# Your table should look like:
+# rate	log_biomass	groups
+# rate_100	0.9723701	a
+# rate_173	0.7920214	ab
+# rate_322	0.3350568	b
+# rate_470	-0.7132060	c  
+```
+
+
+
+
+6. Back-transform the means to the original scale.  
+```{r}
+
+
+# Your results should look like:
+# rate	log_biomass	groups	biomass
+# rate_100	0.9723701	a	2.6442039
+# rate_173	0.7920214	ab	2.2078550
+# rate_322	0.3350568	b	1.3980198
+# rate_470	-0.7132060	c	0.4900705
+```
+
+
+
+
+
+
+7. Use select() to arrange the table so the columns are: trt, height, groups.  
+```{r}
+
+
+# Your results should look like:
+# rate	biomass	groups
+# rate_100	2.6442039	a
+# rate_173	2.2078550	ab
+# rate_322	1.3980198	b
+# rate_470	0.4900705	c
+
+```
+
+
+
+## Exercise: Imputing Missing Data
+Despite our best efforts, we occassionally encounter missing data.  In some cases, plots may be lost to inclement weather, equipment failures, or human error.  In other cases, we may fail to record values for every plot.  In some cases, we may delete an outlier.  In each of these cases, we may wish to replace the missing value in order to maintain a complete dataset.
+
+
+### Case Study: Wheat Genotype Trial
+For this example, we will use data from a wheat genotype trial.  
+```{r}
+library(tidyverse)
+wheat_missing = read.csv("data-unit-9/exercise_data/wheat_missing.csv")
+
+```
+
+```{r}
+wheat_missing %>%
+  mutate(missing = if_else(is.na(yield), "yes", "no")) %>%
+  mutate(missing = as.factor(missing)) %>%
+  ggplot(aes(x=col, y=row)) +
+  geom_tile(aes(fill=missing)) +
+  scale_fill_manual(values = c("grey", "tomato"))
+```
+
+#### Mean Imputation
+When we estimate the values of missing data, we *impute* those values.  The simplest way to impute a missing value is to use the mean for that treatment.  For example, we could calculate the mean for each treatment, as we have done below.
+
+```{r}
+genotype_means = wheat_missing %>%
+  group_by(gen) %>%
+  mutate(mean_yield = mean(yield, na.rm = TRUE)) %>%
+  ungroup()
+
+head(genotype_means)
+```
+
+The mean yield is shown in the far right column.  We will now use either the recorded value ("yield") or the mean yield (where "yield" is a missing value) for our final yield.  Don't worry about the code below (although conditional statements *are* cool) -- it is just to set up the rest of this example.
+```{r}
+
+mean_imputed_yields = genotype_means %>%
+  mutate(final_yield = if_else(is.na(yield), mean_yield, yield))
+
+```
+
+
+We now have a complete dataset.  But there is a problem.  Lets look at the variance before imputing the missing values.  We calculate variance using the *var()* function.  Whenever we are calculating a summary statistic -- mean, sd, variance, etc) -- we can add *na.rm = TRUE* to tell R to work around the missing values.  Otherwise, R will return "NA" instead of the statistic.
+
+Here is the variance before:
+```{r}
+var(wheat_missing$yield, na.rm = TRUE)
+```
+
+And after:
+```{r}
+var(mean_imputed_yields$final_yield)
+```
+
+What do you notice?  That's right, the variance is decreased between the original dataset and the imputed dataset.  When we use means imputation, we artificially lower the variance.  This increases the probability we will commit a Type I error: determining that two or more populations are significantly different when in fact they are not.  That is why it is better to use the next 
+
+#### Multivariate Imputation by Chained Equations (MICE)
+The MICE algorithm is complex and a detailed explanation is beyond the scope of this course.  What you need to know is that
+
+* Instead of estimating a missing value with its treatment mean MICE imputes the missing value using all other variables (hence "multivariate") in the dataset.  In other words, it builds a model and solves for thie missing value.
+* Missing values are imputed in a way that preserves the original variance of the dataset.
+
+Here is how we use MICE imputation.  The algorithm is from the package *mice*.  The function is also called *mice().  It takes two arguments.  First, the name of the dataset with missing values.  Second, since MICE works with random numbers, we should set a seed so that we can recreate the exact same imputed values in the future, if necessary.  The third argument, "printFlag = FALSE", tells R not to print a bunch extraneous information.
+
+
+```{r}
+library(mice)
+wheat_imputed = mice(wheat_missing, seed=1, printFlag = FALSE)   # arguments to mice: 1) name of dataset, 2) seed to use for random numbers, 3) don't print extra info.
+```
+
+The output of the *mice()* function is a list with a bunch of information about how the data were imputed: the original dataset, the models used, etc.  We just want the complete dataset, which we can get using the *complete()* function.
+
+```{r}
+wheat_complete = complete(wheat_imputed)
+
+```
+
+Finally, let's compare the variance of the MICE-imputed dataset to that of the original dataset:
+```{r}
+var(wheat_complete$yield)
+
+```
+
+We can see the variance is decreased slightly from the original dataset, but not as much as when we imputed the data using the treatment means.
+
+### Practice 1
+The yield is missing from row 31 in this dataset.  Fill in the code below Impute the missing value using MICE. If you use seed=3, your imputed value should be 1.402.
+```{r}
+library(mice)
+peanut = read.csv("data-unit-9/exercise_data/peanut_missing.csv")
+peanut_imputed = mice(peanut, seed=34, printFlag = FALSE)   # arguments to mice: 1) name of dataset, 2) seed 
+
+peanut_complete = complete(peanut_imputed)
+
+peanut[31,]
+peanut_complete[31,]
+
+```
+
+### Practice 2
+Impute the missing value in the "data/barley_missing.csv" dataset.  Observations 18 and 47 are missing their yield value.  Use seed=3.  Your imputed values should be obs 18 = 377.9 and obs 47 = 362.6
+```{r}
+barley_missing = read.csv("data-unit-9/exercise_data/barley_missing.csv")
+str(barley_missing)
+
+barley_imputed = mice(barley_missing, seed=3, printFlag = FALSE)   # arguments to mice: 1) name of dataset, 2) seed 
+
+barley_complete = complete(barley_imputed)
+
+barley_missing[18,]
+barley_complete[18,]
+```
 

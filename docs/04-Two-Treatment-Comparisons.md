@@ -254,7 +254,7 @@ plot_plan
 ## [1] 2
 ## 
 ## $parameters$seed
-## [1] -1586367598
+## [1] -1586761213
 ## 
 ## $parameters$kinds
 ## [1] "Super-Duper"
@@ -268,7 +268,7 @@ plot_plan
 ## [1,] "B"  "A" 
 ## [2,] "B"  "A" 
 ## [3,] "B"  "A" 
-## [4,] "B"  "A" 
+## [4,] "A"  "B" 
 ## 
 ## $book
 ##   plots block treatment_name
@@ -278,8 +278,8 @@ plot_plan
 ## 4   202     2              A
 ## 5   301     3              B
 ## 6   302     3              A
-## 7   401     4              B
-## 8   402     4              A
+## 7   401     4              A
+## 8   402     4              B
 ```
 
 We can access this information more directly.  If we type "plot_plan$sketch", we get a plot map of sorts.
@@ -294,7 +294,7 @@ plot_plan$sketch
 ## [1,] "B"  "A" 
 ## [2,] "B"  "A" 
 ## [3,] "B"  "A" 
-## [4,] "B"  "A"
+## [4,] "A"  "B"
 ```
 
 If we type "plot_plan$book", we get a data frame with the plots, block, and treatment_names.
@@ -312,8 +312,8 @@ plot_plan$book
 ## 4   202     2              A
 ## 5   301     3              B
 ## 6   302     3              A
-## 7   401     4              B
-## 8   402     4              A
+## 7   401     4              A
+## 8   402     4              B
 ```
 
 ### Example 2
@@ -335,7 +335,7 @@ hemp_plot_plan$sketch
 ```
 ##       [,1]    [,2]   
 ##  [1,] "Jerry" "Bob"  
-##  [2,] "Jerry" "Bob"  
+##  [2,] "Bob"   "Jerry"
 ##  [3,] "Bob"   "Jerry"
 ##  [4,] "Bob"   "Jerry"
 ##  [5,] "Jerry" "Bob"  
@@ -343,7 +343,7 @@ hemp_plot_plan$sketch
 ##  [7,] "Bob"   "Jerry"
 ##  [8,] "Jerry" "Bob"  
 ##  [9,] "Bob"   "Jerry"
-## [10,] "Jerry" "Bob"
+## [10,] "Bob"   "Jerry"
 ```
 
 And here is the table we can cut and paste into our spreadsheet:
@@ -356,8 +356,8 @@ hemp_plot_plan$book
 ##    plots block hemp_variety
 ## 1    101     1        Jerry
 ## 2    102     1          Bob
-## 3    201     2        Jerry
-## 4    202     2          Bob
+## 3    201     2          Bob
+## 4    202     2        Jerry
 ## 5    301     3          Bob
 ## 6    302     3        Jerry
 ## 7    401     4          Bob
@@ -372,8 +372,8 @@ hemp_plot_plan$book
 ## 16   802     8          Bob
 ## 17   901     9          Bob
 ## 18   902     9        Jerry
-## 19  1001    10        Jerry
-## 20  1002    10          Bob
+## 19  1001    10          Bob
+## 20  1002    10        Jerry
 ```
 
 

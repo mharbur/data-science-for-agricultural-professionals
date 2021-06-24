@@ -417,7 +417,13 @@ As we can see, our observed F of 38.4 is much greater than what we would need fo
 
 ```r
 library(sjPlot)
+```
 
+```
+## Learn more about sjPlot with 'browseVignettes("sjPlot")'.
+```
+
+```r
 dist_f(p = 0.01, deg.f1 = 3, deg.f2 = 12, xmax = 10)
 ```
 
