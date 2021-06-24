@@ -5,33 +5,33 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Distributions and Probability | Data Science for Agricultural Professionals</title>
-  <meta name="description" content="Everything you need (and nothing more) to start a bookdown book." />
+  <meta name="description" content="Practical statistics for those involved in agronomy and related agricultural sciences." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Distributions and Probability | Data Science for Agricultural Professionals" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="http://seankross.com/bookdown-start/" />
+  <meta property="og:url" content="https://mharbur.github.io/data-science-for-agricultural-professionals/" />
   
-  <meta property="og:description" content="Everything you need (and nothing more) to start a bookdown book." />
-  <meta name="github-repo" content="seankross/bookdown-start" />
+  <meta property="og:description" content="Practical statistics for those involved in agronomy and related agricultural sciences." />
+  <meta name="github-repo" content="https://github.com/mharbur/data-science-for-agricultural-professionals" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 2 Distributions and Probability | Data Science for Agricultural Professionals" />
   
-  <meta name="twitter:description" content="Everything you need (and nothing more) to start a bookdown book." />
+  <meta name="twitter:description" content="Practical statistics for those involved in agronomy and related agricultural sciences." />
   
 
 <meta name="author" content="Marin L. Harbur" />
 
 
-<meta name="date" content="2021-05-19" />
+<meta name="date" content="2021-06-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="introduction-and-population-statistics.html"/>
+<link rel="prev" href="population-statistics.html"/>
 <link rel="next" href="sample-statistics.html"/>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -141,37 +141,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">A Minimal Bookdown Book</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html"><i class="fa fa-check"></i><b>1</b> Introduction and Population Statistics</a><ul>
-<li class="chapter" data-level="1.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#r-language"><i class="fa fa-check"></i><b>1.1</b> R-language</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#populations"><i class="fa fa-check"></i><b>1.2</b> Populations</a></li>
-<li class="chapter" data-level="1.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#case-study-yield-map"><i class="fa fa-check"></i><b>1.3</b> Case Study: Yield Map</a></li>
-<li class="chapter" data-level="1.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#distributions"><i class="fa fa-check"></i><b>1.4</b> Distributions</a><ul>
-<li class="chapter" data-level="1.4.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#histograms"><i class="fa fa-check"></i><b>1.4.1</b> Histograms</a></li>
-<li class="chapter" data-level="1.4.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#percentiles"><i class="fa fa-check"></i><b>1.4.2</b> Percentiles</a></li>
-<li class="chapter" data-level="1.4.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#normal-distribution-model"><i class="fa fa-check"></i><b>1.4.3</b> Normal Distribution Model</a></li>
-<li class="chapter" data-level="1.4.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#measures-of-center"><i class="fa fa-check"></i><b>1.4.4</b> Measures of Center</a></li>
-<li class="chapter" data-level="1.4.5" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#measures-of-dispersion"><i class="fa fa-check"></i><b>1.4.5</b> Measures of Dispersion</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#welcome"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-language"><i class="fa fa-check"></i>R-language</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#exercise-introduction-to-r"><i class="fa fa-check"></i><b>1.5</b> Exercise: Introduction to R</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#your-very-first-code"><i class="fa fa-check"></i><b>1.5.1</b> Your Very First Code</a></li>
-<li class="chapter" data-level="1.5.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#reading-and-working-with-data-frames"><i class="fa fa-check"></i><b>1.5.2</b> Reading and Working with Data Frames</a></li>
-<li class="chapter" data-level="1.5.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#basic-operations-on-columns"><i class="fa fa-check"></i><b>1.5.3</b> Basic Operations on Columns</a></li>
-<li class="chapter" data-level="1.5.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#knitting-your-results-into-a-document"><i class="fa fa-check"></i><b>1.5.4</b> Knitting Your Results into a Document</a></li>
-<li class="chapter" data-level="1.5.5" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#practice"><i class="fa fa-check"></i><b>1.5.5</b> Practice</a></li>
+<li class="chapter" data-level="1" data-path="population-statistics.html"><a href="population-statistics.html"><i class="fa fa-check"></i><b>1</b> Population Statistics</a><ul>
+<li class="chapter" data-level="1.1" data-path="population-statistics.html"><a href="population-statistics.html#populations"><i class="fa fa-check"></i><b>1.1</b> Populations</a></li>
+<li class="chapter" data-level="1.2" data-path="population-statistics.html"><a href="population-statistics.html#case-study-yield-map"><i class="fa fa-check"></i><b>1.2</b> Case Study: Yield Map</a></li>
+<li class="chapter" data-level="1.3" data-path="population-statistics.html"><a href="population-statistics.html#distributions"><i class="fa fa-check"></i><b>1.3</b> Distributions</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="population-statistics.html"><a href="population-statistics.html#histograms"><i class="fa fa-check"></i><b>1.3.1</b> Histograms</a></li>
+<li class="chapter" data-level="1.3.2" data-path="population-statistics.html"><a href="population-statistics.html#percentiles"><i class="fa fa-check"></i><b>1.3.2</b> Percentiles</a></li>
+<li class="chapter" data-level="1.3.3" data-path="population-statistics.html"><a href="population-statistics.html#normal-distribution-model"><i class="fa fa-check"></i><b>1.3.3</b> Normal Distribution Model</a></li>
+<li class="chapter" data-level="1.3.4" data-path="population-statistics.html"><a href="population-statistics.html#measures-of-center"><i class="fa fa-check"></i><b>1.3.4</b> Measures of Center</a></li>
+<li class="chapter" data-level="1.3.5" data-path="population-statistics.html"><a href="population-statistics.html#measures-of-dispersion"><i class="fa fa-check"></i><b>1.3.5</b> Measures of Dispersion</a></li>
 </ul></li>
-<li class="chapter" data-level="1.6" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#exercise-introduction-to-shapefiles"><i class="fa fa-check"></i><b>1.6</b> Exercise: Introduction to Shapefiles</a><ul>
-<li class="chapter" data-level="1.6.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#r-packages"><i class="fa fa-check"></i><b>1.6.1</b> R Packages</a></li>
-<li class="chapter" data-level="1.6.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#reading-shapefiles"><i class="fa fa-check"></i><b>1.6.2</b> Reading Shapefiles</a></li>
-<li class="chapter" data-level="1.6.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#examining-spatial-feature-data-frames"><i class="fa fa-check"></i><b>1.6.3</b> Examining Spatial Feature Data Frames</a></li>
-<li class="chapter" data-level="1.6.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#visualizing-data"><i class="fa fa-check"></i><b>1.6.4</b> Visualizing Data</a></li>
-<li class="chapter" data-level="1.6.5" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#create-your-own-maps"><i class="fa fa-check"></i><b>1.6.5</b> Create Your Own Maps</a></li>
+<li class="chapter" data-level="1.4" data-path="population-statistics.html"><a href="population-statistics.html#exercise-introduction-to-r"><i class="fa fa-check"></i><b>1.4</b> Exercise: Introduction to R</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="population-statistics.html"><a href="population-statistics.html#your-very-first-code"><i class="fa fa-check"></i><b>1.4.1</b> Your Very First Code</a></li>
+<li class="chapter" data-level="1.4.2" data-path="population-statistics.html"><a href="population-statistics.html#reading-and-working-with-data-frames"><i class="fa fa-check"></i><b>1.4.2</b> Reading and Working with Data Frames</a></li>
+<li class="chapter" data-level="1.4.3" data-path="population-statistics.html"><a href="population-statistics.html#basic-operations-on-columns"><i class="fa fa-check"></i><b>1.4.3</b> Basic Operations on Columns</a></li>
+<li class="chapter" data-level="1.4.4" data-path="population-statistics.html"><a href="population-statistics.html#knitting-your-results-into-a-document"><i class="fa fa-check"></i><b>1.4.4</b> Knitting Your Results into a Document</a></li>
+<li class="chapter" data-level="1.4.5" data-path="population-statistics.html"><a href="population-statistics.html#practice"><i class="fa fa-check"></i><b>1.4.5</b> Practice</a></li>
 </ul></li>
-<li class="chapter" data-level="1.7" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#exercise-histograms"><i class="fa fa-check"></i><b>1.7</b> Exercise: Histograms</a><ul>
-<li class="chapter" data-level="1.7.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#case-study"><i class="fa fa-check"></i><b>1.7.1</b> Case Study</a></li>
-<li class="chapter" data-level="1.7.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#basic-histogram"><i class="fa fa-check"></i><b>1.7.2</b> Basic Histogram</a></li>
-<li class="chapter" data-level="1.7.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#histograms-with-ggplot"><i class="fa fa-check"></i><b>1.7.3</b> Histograms with ggplot</a></li>
-<li class="chapter" data-level="1.7.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#practice-1"><i class="fa fa-check"></i><b>1.7.4</b> Practice</a></li>
+<li class="chapter" data-level="1.5" data-path="population-statistics.html"><a href="population-statistics.html#exercise-introduction-to-shapefiles"><i class="fa fa-check"></i><b>1.5</b> Exercise: Introduction to Shapefiles</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="population-statistics.html"><a href="population-statistics.html#r-packages"><i class="fa fa-check"></i><b>1.5.1</b> R Packages</a></li>
+<li class="chapter" data-level="1.5.2" data-path="population-statistics.html"><a href="population-statistics.html#reading-shapefiles"><i class="fa fa-check"></i><b>1.5.2</b> Reading Shapefiles</a></li>
+<li class="chapter" data-level="1.5.3" data-path="population-statistics.html"><a href="population-statistics.html#examining-spatial-feature-data-frames"><i class="fa fa-check"></i><b>1.5.3</b> Examining Spatial Feature Data Frames</a></li>
+<li class="chapter" data-level="1.5.4" data-path="population-statistics.html"><a href="population-statistics.html#visualizing-data"><i class="fa fa-check"></i><b>1.5.4</b> Visualizing Data</a></li>
+<li class="chapter" data-level="1.5.5" data-path="population-statistics.html"><a href="population-statistics.html#create-your-own-maps"><i class="fa fa-check"></i><b>1.5.5</b> Create Your Own Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="population-statistics.html"><a href="population-statistics.html#exercise-histograms"><i class="fa fa-check"></i><b>1.6</b> Exercise: Histograms</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="population-statistics.html"><a href="population-statistics.html#case-study"><i class="fa fa-check"></i><b>1.6.1</b> Case Study</a></li>
+<li class="chapter" data-level="1.6.2" data-path="population-statistics.html"><a href="population-statistics.html#basic-histogram"><i class="fa fa-check"></i><b>1.6.2</b> Basic Histogram</a></li>
+<li class="chapter" data-level="1.6.3" data-path="population-statistics.html"><a href="population-statistics.html#histograms-with-ggplot"><i class="fa fa-check"></i><b>1.6.3</b> Histograms with ggplot</a></li>
+<li class="chapter" data-level="1.6.4" data-path="population-statistics.html"><a href="population-statistics.html#practice-1"><i class="fa fa-check"></i><b>1.6.4</b> Practice</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html"><i class="fa fa-check"></i><b>2</b> Distributions and Probability</a><ul>
@@ -184,6 +186,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-z-distribution"><i class="fa fa-check"></i><b>2.3</b> The Z-Distribution</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#important-numbers-95-and-5"><i class="fa fa-check"></i><b>2.3.1</b> Important Numbers: 95% and 5%</a></li>
 </ul></li>
+<li class="chapter" data-level="2.4" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#exercise-z-distribution-and-probability"><i class="fa fa-check"></i><b>2.4</b> Exercise: Z-Distribution and Probability</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#case-study-barley-data"><i class="fa fa-check"></i><b>2.4.1</b> Case Study: Barley Data</a></li>
+<li class="chapter" data-level="2.4.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#measuring-the-population-distribution-mean-and-standard-deviation"><i class="fa fa-check"></i><b>2.4.2</b> Measuring the Population Distribution: Mean and Standard Deviation</a></li>
+<li class="chapter" data-level="2.4.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-shadedist-function"><i class="fa fa-check"></i><b>2.4.3</b> The shadeDist Function</a></li>
+<li class="chapter" data-level="2.4.4" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-in-lower-tails"><i class="fa fa-check"></i><b>2.4.4</b> Probabilities in Lower Tails</a></li>
+<li class="chapter" data-level="2.4.5" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-in-upper-tails"><i class="fa fa-check"></i><b>2.4.5</b> Probabilities in Upper Tails</a></li>
+<li class="chapter" data-level="2.4.6" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-within-a-range"><i class="fa fa-check"></i><b>2.4.6</b> Probabilities Within A Range</a></li>
+<li class="chapter" data-level="2.4.7" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-outside-a-range"><i class="fa fa-check"></i><b>2.4.7</b> Probabilities Outside a Range</a></li>
+<li class="chapter" data-level="2.4.8" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probability-and-sd"><i class="fa fa-check"></i><b>2.4.8</b> Probability and SD</a></li>
+<li class="chapter" data-level="2.4.9" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#practice-cotton-dataset"><i class="fa fa-check"></i><b>2.4.9</b> Practice: Cotton Dataset</a></li>
+<li class="chapter" data-level="2.4.10" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#practice-tomato-dataset"><i class="fa fa-check"></i><b>2.4.10</b> Practice: Tomato Dataset</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="sample-statistics.html"><a href="sample-statistics.html"><i class="fa fa-check"></i><b>3</b> Sample Statistics</a><ul>
 <li class="chapter" data-level="3.1" data-path="sample-statistics.html"><a href="sample-statistics.html#samples"><i class="fa fa-check"></i><b>3.1</b> Samples</a></li>
@@ -195,6 +209,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.7" data-path="sample-statistics.html"><a href="sample-statistics.html#the-t-distribution"><i class="fa fa-check"></i><b>3.7</b> The t-Distribution</a></li>
 <li class="chapter" data-level="3.8" data-path="sample-statistics.html"><a href="sample-statistics.html#confidence-interval"><i class="fa fa-check"></i><b>3.8</b> Confidence Interval</a></li>
 <li class="chapter" data-level="3.9" data-path="sample-statistics.html"><a href="sample-statistics.html#confidence-interval-and-probability"><i class="fa fa-check"></i><b>3.9</b> Confidence Interval and Probability</a></li>
+<li class="chapter" data-level="3.10" data-path="sample-statistics.html"><a href="sample-statistics.html#exercise-standard-error"><i class="fa fa-check"></i><b>3.10</b> Exercise: Standard Error</a><ul>
+<li class="chapter" data-level="3.10.1" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-tomatoes"><i class="fa fa-check"></i><b>3.10.1</b> Case Study: Tomatoes</a></li>
+<li class="chapter" data-level="3.10.2" data-path="sample-statistics.html"><a href="sample-statistics.html#calculating-standard-error"><i class="fa fa-check"></i><b>3.10.2</b> Calculating Standard Error</a></li>
+<li class="chapter" data-level="3.10.3" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-barley"><i class="fa fa-check"></i><b>3.10.3</b> Practice: Barley</a></li>
+<li class="chapter" data-level="3.10.4" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-cotton"><i class="fa fa-check"></i><b>3.10.4</b> Practice: Cotton</a></li>
+</ul></li>
+<li class="chapter" data-level="3.11" data-path="sample-statistics.html"><a href="sample-statistics.html#exercise-t-distribution"><i class="fa fa-check"></i><b>3.11</b> Exercise: t-Distribution</a><ul>
+<li class="chapter" data-level="3.11.1" data-path="sample-statistics.html"><a href="sample-statistics.html#plotting-the-distribution"><i class="fa fa-check"></i><b>3.11.1</b> Plotting the Distribution</a></li>
+<li class="chapter" data-level="3.11.2" data-path="sample-statistics.html"><a href="sample-statistics.html#calculating-t"><i class="fa fa-check"></i><b>3.11.2</b> Calculating T</a></li>
+<li class="chapter" data-level="3.11.3" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-2"><i class="fa fa-check"></i><b>3.11.3</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="sample-statistics.html"><a href="sample-statistics.html#exercise-confidence-interval-for-sample-mean"><i class="fa fa-check"></i><b>3.12</b> Exercise: Confidence Interval for Sample Mean</a><ul>
+<li class="chapter" data-level="3.12.1" data-path="sample-statistics.html"><a href="sample-statistics.html#calculating-the-confidence-interval"><i class="fa fa-check"></i><b>3.12.1</b> Calculating the Confidence Interval</a></li>
+<li class="chapter" data-level="3.12.2" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-peanut-sample-1"><i class="fa fa-check"></i><b>3.12.2</b> Case Study: Peanut Sample 1</a></li>
+<li class="chapter" data-level="3.12.3" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-peanut-sample-2"><i class="fa fa-check"></i><b>3.12.3</b> Case Study: Peanut Sample 2</a></li>
+<li class="chapter" data-level="3.12.4" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-3"><i class="fa fa-check"></i><b>3.12.4</b> Practice</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html"><i class="fa fa-check"></i><b>4</b> Two-Treatment Comparisons</a><ul>
 <li class="chapter" data-level="4.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#side-by-side-trials"><i class="fa fa-check"></i><b>4.1</b> Side-by-Side Trials</a></li>
@@ -202,6 +233,161 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-3"><i class="fa fa-check"></i><b>4.3</b> Case Study</a></li>
 <li class="chapter" data-level="4.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#confidence-interval-1"><i class="fa fa-check"></i><b>4.4</b> Confidence Interval</a></li>
 <li class="chapter" data-level="4.5" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#t-test"><i class="fa fa-check"></i><b>4.5</b> T-Test</a></li>
+<li class="chapter" data-level="4.6" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-randomizing-plots"><i class="fa fa-check"></i><b>4.6</b> Exercise: Randomizing Plots</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-1"><i class="fa fa-check"></i><b>4.6.1</b> Example 1</a></li>
+<li class="chapter" data-level="4.6.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#the-agricolae-package"><i class="fa fa-check"></i><b>4.6.2</b> The Agricolae Package</a></li>
+<li class="chapter" data-level="4.6.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#randomizing-the-plot"><i class="fa fa-check"></i><b>4.6.3</b> Randomizing the Plot</a></li>
+<li class="chapter" data-level="4.6.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#working-with-lists"><i class="fa fa-check"></i><b>4.6.4</b> Working with Lists</a></li>
+<li class="chapter" data-level="4.6.5" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-2"><i class="fa fa-check"></i><b>4.6.5</b> Example 2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-restructuring-columns-and-rows"><i class="fa fa-check"></i><b>4.7</b> Exercise: Restructuring Columns and Rows</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#operations-on-data"><i class="fa fa-check"></i><b>4.7.1</b> Operations on Data</a></li>
+<li class="chapter" data-level="4.7.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-soybean-fungicide"><i class="fa fa-check"></i><b>4.7.2</b> Case Study: Soybean Fungicide</a></li>
+<li class="chapter" data-level="4.7.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-1-1"><i class="fa fa-check"></i><b>4.7.3</b> Practice 1</a></li>
+<li class="chapter" data-level="4.7.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-2-1"><i class="fa fa-check"></i><b>4.7.4</b> Practice 2</a></li>
+<li class="chapter" data-level="4.7.5" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-3-1"><i class="fa fa-check"></i><b>4.7.5</b> Practice 3</a></li>
+<li class="chapter" data-level="4.7.6" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-4"><i class="fa fa-check"></i><b>4.7.6</b> Practice 4</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-confidence-interval-of-difference"><i class="fa fa-check"></i><b>4.8</b> Exercise: Confidence Interval of Difference"</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-1-1"><i class="fa fa-check"></i><b>4.8.1</b> Example 1</a></li>
+<li class="chapter" data-level="4.8.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-2-1"><i class="fa fa-check"></i><b>4.8.2</b> Example 2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-t-test"><i class="fa fa-check"></i><b>4.9</b> Exercise: T-Test</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-1-wheat-fungicide"><i class="fa fa-check"></i><b>4.9.1</b> Case Study 1: Wheat Fungicide</a></li>
+<li class="chapter" data-level="4.9.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#t-test-1"><i class="fa fa-check"></i><b>4.9.2</b> T-Test</a></li>
+<li class="chapter" data-level="4.9.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-2-apple-variety"><i class="fa fa-check"></i><b>4.9.3</b> Case Study 2: Apple Variety</a></li>
+<li class="chapter" data-level="4.9.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-5"><i class="fa fa-check"></i><b>4.9.4</b> Practice</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html"><i class="fa fa-check"></i><b>5</b> Understanding Statistical Tests</a><ul>
+<li class="chapter" data-level="5.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#research-question"><i class="fa fa-check"></i><b>5.1</b> Research Question</a></li>
+<li class="chapter" data-level="5.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#the-model"><i class="fa fa-check"></i><b>5.2</b> The Model</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#treatment-effect"><i class="fa fa-check"></i><b>5.2.1</b> Treatment Effect</a></li>
+<li class="chapter" data-level="5.2.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#error-effect"><i class="fa fa-check"></i><b>5.2.2</b> Error Effect</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#hypotheses"><i class="fa fa-check"></i><b>5.3</b> Hypotheses</a></li>
+<li class="chapter" data-level="5.4" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#p-value"><i class="fa fa-check"></i><b>5.4</b> P-Value</a></li>
+<li class="chapter" data-level="5.5" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#the-p-value-and-errors"><i class="fa fa-check"></i><b>5.5</b> The P-Value and Errors</a></li>
+<li class="chapter" data-level="5.6" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#one-sided-vs-two-sided-hypotheses"><i class="fa fa-check"></i><b>5.6</b> One-Sided vs Two-Sided Hypotheses</a></li>
+<li class="chapter" data-level="5.7" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#exercise-linear-additive-model"><i class="fa fa-check"></i><b>5.7</b> Exercise: Linear Additive Model</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#case-study-barley-effects"><i class="fa fa-check"></i><b>5.7.1</b> Case Study: Barley Effects</a></li>
+<li class="chapter" data-level="5.7.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#plotting-the-effects"><i class="fa fa-check"></i><b>5.7.2</b> Plotting the Effects</a></li>
+<li class="chapter" data-level="5.7.3" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#examining-individual-plots"><i class="fa fa-check"></i><b>5.7.3</b> Examining Individual Plots</a></li>
+<li class="chapter" data-level="5.7.4" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#practice-groudnut"><i class="fa fa-check"></i><b>5.7.4</b> Practice: Groudnut</a></li>
+<li class="chapter" data-level="5.7.5" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#plotting-the-effects-1"><i class="fa fa-check"></i><b>5.7.5</b> Plotting the Effects</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#exercise-one-sided-hypotheses"><i class="fa fa-check"></i><b>5.8</b> Exercise: One-Sided Hypotheses</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#case-study-groundnut"><i class="fa fa-check"></i><b>5.8.1</b> Case Study: Groundnut</a></li>
+<li class="chapter" data-level="5.8.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#one-sided-t-test"><i class="fa fa-check"></i><b>5.8.2</b> One-Sided T-Test</a></li>
+<li class="chapter" data-level="5.8.3" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#practice-barley-1"><i class="fa fa-check"></i><b>5.8.3</b> Practice: Barley</a></li>
+<li class="chapter" data-level="5.8.4" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#practice-strawberry"><i class="fa fa-check"></i><b>5.8.4</b> Practice: Strawberry</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#exercise-type-i-and-type-ii-errors"><i class="fa fa-check"></i><b>5.9</b> Exercise: Type I and Type II Errors</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html"><i class="fa fa-check"></i><b>6</b> Multiple Treatment Trials</a><ul>
+<li class="chapter" data-level="6.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#case-study-4"><i class="fa fa-check"></i><b>6.1</b> Case Study</a></li>
+<li class="chapter" data-level="6.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#the-linear-additive-model"><i class="fa fa-check"></i><b>6.2</b> The Linear Additive Model</a></li>
+<li class="chapter" data-level="6.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#analysis-of-variance"><i class="fa fa-check"></i><b>6.3</b> Analysis of Variance</a></li>
+<li class="chapter" data-level="6.4" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#the-f-statistic"><i class="fa fa-check"></i><b>6.4</b> The F statistic</a></li>
+<li class="chapter" data-level="6.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#the-anova-table"><i class="fa fa-check"></i><b>6.5</b> The ANOVA Table</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#source-of-variation"><i class="fa fa-check"></i><b>6.5.1</b> Source of Variation</a></li>
+<li class="chapter" data-level="6.5.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#sum-of-squares-1"><i class="fa fa-check"></i><b>6.5.2</b> Sum of Squares</a></li>
+<li class="chapter" data-level="6.5.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#degrees-of-freedom-1"><i class="fa fa-check"></i><b>6.5.3</b> Degrees of Freedom</a></li>
+<li class="chapter" data-level="6.5.4" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#mean-square"><i class="fa fa-check"></i><b>6.5.4</b> Mean Square</a></li>
+<li class="chapter" data-level="6.5.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#f-value"><i class="fa fa-check"></i><b>6.5.5</b> F-Value</a></li>
+<li class="chapter" data-level="6.5.6" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#p-value-1"><i class="fa fa-check"></i><b>6.5.6</b> P-value</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#visualizing-how-the-anova-table-relates-to-variance"><i class="fa fa-check"></i><b>6.6</b> Visualizing How the Anova Table Relates to Variance</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#case-study-barley"><i class="fa fa-check"></i><b>6.6.1</b> Case Study: Barley</a></li>
+<li class="chapter" data-level="6.6.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#anova"><i class="fa fa-check"></i><b>6.6.2</b> ANOVA</a></li>
+<li class="chapter" data-level="6.6.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#calculating-the-coefficient-of-variation"><i class="fa fa-check"></i><b>6.6.3</b> Calculating the Coefficient of Variation</a></li>
+<li class="chapter" data-level="6.6.4" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#practice-beet-data"><i class="fa fa-check"></i><b>6.6.4</b> Practice: Beet Data</a></li>
+<li class="chapter" data-level="6.6.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#practice-potato-data"><i class="fa fa-check"></i><b>6.6.5</b> Practice: Potato Data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#exercise-treatment-means"><i class="fa fa-check"></i><b>6.7</b> Exercise: “Treatment Means”</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#case-study-barley-1"><i class="fa fa-check"></i><b>6.7.1</b> Case Study: Barley</a></li>
+<li class="chapter" data-level="6.7.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#calculating-treatment-means"><i class="fa fa-check"></i><b>6.7.2</b> Calculating Treatment Means</a></li>
+<li class="chapter" data-level="6.7.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#plotting-the-means"><i class="fa fa-check"></i><b>6.7.3</b> Plotting the Means</a></li>
+<li class="chapter" data-level="6.7.4" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#practice-beet-data-1"><i class="fa fa-check"></i><b>6.7.4</b> Practice: Beet Data</a></li>
+<li class="chapter" data-level="6.7.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#practice-potato-data-1"><i class="fa fa-check"></i><b>6.7.5</b> Practice: Potato Data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html"><i class="fa fa-check"></i><b>7</b> Multiple Treatment Designs</a><ul>
+<li class="chapter" data-level="7.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#randomized-complete-block-design"><i class="fa fa-check"></i><b>7.1</b> Randomized Complete Block Design</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-randomized-complete-block-design"><i class="fa fa-check"></i><b>7.1.1</b> Case Study: Randomized Complete Block Design</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#factorial-design"><i class="fa fa-check"></i><b>7.2</b> Factorial Design</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-1-1"><i class="fa fa-check"></i><b>7.2.1</b> Case Study 1</a></li>
+<li class="chapter" data-level="7.2.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-2-1"><i class="fa fa-check"></i><b>7.2.2</b> Case Study 2</a></li>
+<li class="chapter" data-level="7.2.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#discussing-interactions"><i class="fa fa-check"></i><b>7.2.3</b> Discussing Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#split-plot-design"><i class="fa fa-check"></i><b>7.3</b> Split-Plot Design</a></li>
+<li class="chapter" data-level="7.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#linear-additive-model-3"><i class="fa fa-check"></i><b>7.4</b> Linear Additive Model</a></li>
+<li class="chapter" data-level="7.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#conclusion"><i class="fa fa-check"></i><b>7.5</b> Conclusion</a></li>
+<li class="chapter" data-level="7.6" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-randomized-complete-block-design"><i class="fa fa-check"></i><b>7.6</b> Exercise: Randomized Complete Block Design</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-5"><i class="fa fa-check"></i><b>7.6.1</b> Case Study</a></li>
+<li class="chapter" data-level="7.6.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#anova-1"><i class="fa fa-check"></i><b>7.6.2</b> ANOVA</a></li>
+<li class="chapter" data-level="7.6.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#plotting-the-results"><i class="fa fa-check"></i><b>7.6.3</b> Plotting the Results</a></li>
+<li class="chapter" data-level="7.6.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-6"><i class="fa fa-check"></i><b>7.6.4</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-factorial-anova"><i class="fa fa-check"></i><b>7.7</b> Exercise: Factorial ANOVA</a><ul>
+<li class="chapter" data-level="7.7.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-biochar"><i class="fa fa-check"></i><b>7.7.1</b> Case Study: Biochar</a></li>
+<li class="chapter" data-level="7.7.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#anova-2"><i class="fa fa-check"></i><b>7.7.2</b> ANOVA</a></li>
+<li class="chapter" data-level="7.7.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#interaction-plots"><i class="fa fa-check"></i><b>7.7.3</b> Interaction Plots</a></li>
+<li class="chapter" data-level="7.7.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#testing-factors-individually"><i class="fa fa-check"></i><b>7.7.4</b> Testing Factors Individually</a></li>
+<li class="chapter" data-level="7.7.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#bar-plots"><i class="fa fa-check"></i><b>7.7.5</b> Bar Plots</a></li>
+<li class="chapter" data-level="7.7.6" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-7"><i class="fa fa-check"></i><b>7.7.6</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-split-plot-design"><i class="fa fa-check"></i><b>7.8</b> Exercise: Split-Plot Design</a><ul>
+<li class="chapter" data-level="7.8.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-corn-soybean-systems-trial"><i class="fa fa-check"></i><b>7.8.1</b> Case Study: Corn-Soybean Systems Trial</a></li>
+<li class="chapter" data-level="7.8.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#anova-4"><i class="fa fa-check"></i><b>7.8.2</b> ANOVA</a></li>
+<li class="chapter" data-level="7.8.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#interaction-plot"><i class="fa fa-check"></i><b>7.8.3</b> Interaction Plot</a></li>
+<li class="chapter" data-level="7.8.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#bar-plot"><i class="fa fa-check"></i><b>7.8.4</b> Bar plot</a></li>
+<li class="chapter" data-level="7.8.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-8"><i class="fa fa-check"></i><b>7.8.5</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-experimental-design"><i class="fa fa-check"></i><b>7.9</b> Exercise: Experimental Design</a><ul>
+<li class="chapter" data-level="7.9.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#completely-randomized-design"><i class="fa fa-check"></i><b>7.9.1</b> Completely Randomized Design</a></li>
+<li class="chapter" data-level="7.9.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#randomized-complete-block-design-1"><i class="fa fa-check"></i><b>7.9.2</b> Randomized Complete Block Design</a></li>
+<li class="chapter" data-level="7.9.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#factorial-design-1"><i class="fa fa-check"></i><b>7.9.3</b> Factorial Design</a></li>
+<li class="chapter" data-level="7.9.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#split-plot-design-1"><i class="fa fa-check"></i><b>7.9.4</b> Split-Plot Design</a></li>
+<li class="chapter" data-level="7.9.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-9"><i class="fa fa-check"></i><b>7.9.5</b> Practice</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html"><i class="fa fa-check"></i><b>8</b> Means Separation and Data Presentation</a><ul>
+<li class="chapter" data-level="8.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-6"><i class="fa fa-check"></i><b>8.1</b> Case Study</a></li>
+<li class="chapter" data-level="8.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#least-significant-difference"><i class="fa fa-check"></i><b>8.2</b> Least Significant Difference</a></li>
+<li class="chapter" data-level="8.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#lsd-output-in-r"><i class="fa fa-check"></i><b>8.3</b> LSD Output in R</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#statistics-table"><i class="fa fa-check"></i><b>8.3.1</b> Statistics Table</a></li>
+<li class="chapter" data-level="8.3.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#means-table"><i class="fa fa-check"></i><b>8.3.2</b> Means Table</a></li>
+<li class="chapter" data-level="8.3.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#groups-table"><i class="fa fa-check"></i><b>8.3.3</b> Groups Table</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#comparisonwise-versus-experimentwise-error"><i class="fa fa-check"></i><b>8.4</b> Comparisonwise versus Experimentwise Error</a></li>
+<li class="chapter" data-level="8.5" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#tukeys-honest-significant-difference"><i class="fa fa-check"></i><b>8.5</b> Tukey’s Honest Significant Difference</a></li>
+<li class="chapter" data-level="8.6" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#linear-contrast"><i class="fa fa-check"></i><b>8.6</b> Linear Contrast</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#coefficients"><i class="fa fa-check"></i><b>8.6.1</b> Coefficients</a></li>
+<li class="chapter" data-level="8.6.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#linear-contrasts-with-r"><i class="fa fa-check"></i><b>8.6.2</b> Linear Contrasts with R</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#means-presentation"><i class="fa fa-check"></i><b>8.7</b> Means Presentation</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#means-tables"><i class="fa fa-check"></i><b>8.7.1</b> Means Tables</a></li>
+<li class="chapter" data-level="8.7.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#plotting-means"><i class="fa fa-check"></i><b>8.7.2</b> Plotting Means</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#exercise-lsd-and-tukeys-hsd"><i class="fa fa-check"></i><b>8.8</b> Exercise: LSD and Tukey’s HSD</a><ul>
+<li class="chapter" data-level="8.8.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-common-bean"><i class="fa fa-check"></i><b>8.8.1</b> Case Study: Common Bean</a></li>
+<li class="chapter" data-level="8.8.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#least-significant-difference-1"><i class="fa fa-check"></i><b>8.8.2</b> Least Significant Difference</a></li>
+<li class="chapter" data-level="8.8.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#tukey-hsd"><i class="fa fa-check"></i><b>8.8.3</b> Tukey HSD</a></li>
+<li class="chapter" data-level="8.8.4" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-apple"><i class="fa fa-check"></i><b>8.8.4</b> Practice: Apple</a></li>
+<li class="chapter" data-level="8.8.5" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-wheat-treatment-with-mildew"><i class="fa fa-check"></i><b>8.8.5</b> Practice: Wheat Treatment with Mildew</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#exercise-linear-contrasts"><i class="fa fa-check"></i><b>8.9</b> Exercise: Linear Contrasts</a><ul>
+<li class="chapter" data-level="8.9.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-winter-canola-cultivar-trial."><i class="fa fa-check"></i><b>8.9.1</b> Case Study: Winter Canola Cultivar Trial.</a></li>
+<li class="chapter" data-level="8.9.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#running-the-contrast"><i class="fa fa-check"></i><b>8.9.2</b> Running the Contrast</a></li>
+<li class="chapter" data-level="8.9.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-corn-nitrogen-source-and-timing"><i class="fa fa-check"></i><b>8.9.3</b> Practice: Corn Nitrogen Source and Timing</a></li>
+</ul></li>
+<li class="chapter" data-level="8.10" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#exercise-means-tables"><i class="fa fa-check"></i><b>8.10</b> Exercise: Means Tables</a><ul>
+<li class="chapter" data-level="8.10.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-corn-nitrogen-source-and-timing"><i class="fa fa-check"></i><b>8.10.1</b> Case Study: Corn Nitrogen Source and Timing</a></li>
+<li class="chapter" data-level="8.10.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-canola"><i class="fa fa-check"></i><b>8.10.2</b> Practice: Canola</a></li>
+<li class="chapter" data-level="8.10.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-broccoli-lsd"><i class="fa fa-check"></i><b>8.10.3</b> Practice: Broccoli LSD</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -329,7 +515,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb96-4"><a href="distributions-and-probability.html#cb96-4"></a>yield_subset =<span class="st"> </span><span class="kw">subset</span>(yield_sample, yield_sample <span class="op">&gt;=</span><span class="dv">70</span> <span class="op">&amp;</span><span class="st"> </span>yield_sample <span class="op">&lt;=</span><span class="dv">80</span>)</span>
 <span id="cb96-5"><a href="distributions-and-probability.html#cb96-5"></a></span>
 <span id="cb96-6"><a href="distributions-and-probability.html#cb96-6"></a><span class="kw">length</span>(yield_subset)</span></code></pre></div>
-<pre><code>## [1] 336</code></pre>
+<pre><code>## [1] 346</code></pre>
 <p>Is the proportion predicted by the normal distribution curve exactly that of the actual population? Probably not. The normal distribution curve is, after all, a model – it is an approximation of the actual population.</p>
 <p>Run the code above multiple times and observe how the percentages change. The proportions will vary slightly but generall stay in a range from about 0.32 to 0.37.</p>
 <p>We will talk more about sampling in the next unit.</p>
@@ -370,6 +556,214 @@ Notice we changed the last argument back to “lower.tail = TRUE”. The causes 
 <span id="cb104-7"><a href="distributions-and-probability.html#cb104-7"></a>  N =<span class="st"> </span><span class="kw">length</span>(yield_sample[yield_sample <span class="op">&gt;=</span><span class="dv">80</span> <span class="op">&amp;</span><span class="st"> </span>yield_sample <span class="op">&lt;=</span><span class="dv">100</span>])</span>
 <span id="cb104-8"><a href="distributions-and-probability.html#cb104-8"></a>  output[i] =<span class="st"> </span>N</span>
 <span id="cb104-9"><a href="distributions-and-probability.html#cb104-9"></a>}</span></code></pre></div>
+</div>
+</div>
+<div id="exercise-z-distribution-and-probability" class="section level2">
+<h2><span class="header-section-number">2.4</span> Exercise: Z-Distribution and Probability</h2>
+<p>This week, we have just have one exercise. Its objective is for you gain comfort with the concept of distribution and probability by working with the Z-distribution. We will learn how to use the plot and probability function we used throughout the lesson.</p>
+<div id="case-study-barley-data" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Case Study: Barley Data</h3>
+<p>We were introduced to the barley dataset last week. These data are from a trial that was conducted to measure the uniformity of plots, that is, how consistent were yield measurements from plots that were treated identically.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="distributions-and-probability.html#cb105-1"></a>barley =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-2/exercise_data/barley_uniformity.csv&quot;</span>)</span></code></pre></div>
+<p>Let’s take a look at the top six rows of the dataset. We can see the plots are identified by their row nad column locations. The yields are not per acre, but per plot.</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="distributions-and-probability.html#cb106-1"></a><span class="kw">head</span>(barley)</span></code></pre></div>
+<pre><code>##   row col yield
+## 1  20   1   185
+## 2  19   1   169
+## 3  18   1   216
+## 4  17   1   165
+## 5  16   1   133
+## 6  15   1   195</code></pre>
+</div>
+<div id="measuring-the-population-distribution-mean-and-standard-deviation" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> Measuring the Population Distribution: Mean and Standard Deviation</h3>
+<p>Before we can calculate probability, we need to construct the normal distribution curve. And before we can do that, we need to measure the mean and standard deviation of the barley population.</p>
+<p>Let’s do a quick visual check to make sure it is approximately normally-distributed. We will define the column of interest from the dataset as yield and then plot it using the histogram (“hist”) function. Remember, we reference a column from the barley dataframe by typing “barley”, the dollar sign “$”, and then the name of the column of interest.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="distributions-and-probability.html#cb108-1"></a>yield =<span class="st"> </span>barley<span class="op">$</span>yield</span>
+<span id="cb108-2"><a href="distributions-and-probability.html#cb108-2"></a><span class="kw">hist</span>(yield)</span></code></pre></div>
+<p><img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>The histogram shows the barley distribution is approximately normal. No distribution is perfectly normal. Remember, when we fit the data with the normal distribution, we are using a model distribution, not the actual distribution. But the model tends to perform very, very well.</p>
+<p>We can quickly calculate the mean and standard deviation using the “mean” and “sd” functions on “yield”.</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="distributions-and-probability.html#cb109-1"></a><span class="kw">mean</span>(yield)</span></code></pre></div>
+<pre><code>## [1] 151.92</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="distributions-and-probability.html#cb111-1"></a><span class="kw">sd</span>(yield)</span></code></pre></div>
+<pre><code>## [1] 31.14029</code></pre>
+<p>We will assign these to variables we can reference later on, so we don’t have to re-enter these repeatedly in our analyses. Remember, the population mean is symbolized by the Greek letter “mu”, so we will call the mean “mu”. We will call the standard deviation “sigma”, which is the Greek letter used to symbolize it.</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="distributions-and-probability.html#cb113-1"></a>mu =<span class="st"> </span><span class="kw">mean</span>(yield)</span>
+<span id="cb113-2"><a href="distributions-and-probability.html#cb113-2"></a>sigma =<span class="st"> </span><span class="kw">sd</span>(yield)</span></code></pre></div>
+</div>
+<div id="the-shadedist-function" class="section level3">
+<h3><span class="header-section-number">2.4.3</span> The shadeDist Function</h3>
+<p>To calculate probabilities, we will use the “shadDist” function which is part of the “fastGraph” package in R. Remember, packages are groups of functions (calcluations and plots) beyond those in the base R software. The first time we use fastGraph, we must install it. (Note: if R asks you to restart dur the installation, go ahead and click “yes”.)</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="distributions-and-probability.html#cb114-1"></a><span class="co"># install.packages(&quot;fastGraph&quot;) #delete pound sign at far left to use this command</span></span></code></pre></div>
+<p>We can then load the package using the “library(fastGraph)” command.</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="distributions-and-probability.html#cb115-1"></a><span class="kw">library</span>(fastGraph)</span></code></pre></div>
+<p>Now we are ready to look at the barley distribution. We will define the column we are interested in as “an independent”yield" and then plot it’s distribution model using shadeDist. To plot the basic distribution, we have to enter four arguments into shadeDist:</p>
+<ul>
+<li>xshade = NULL : this tells R not to shade any part of the curve</li>
+<li>ddist = “dnorm”: this tells R we are working with the normal (Z) distribution</li>
+<li>parm1 = mu : “parm1” is used to pass the appropriate paramenter to R for the distribution we have chosen. For a normal distribution, the first parameter is the mean.</li>
+<li>parm2 = sigma: “parm2” passes the next appropriate parameter to R for the normal distribution, the standard deviation.</li>
+</ul>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="distributions-and-probability.html#cb116-1"></a>yield =<span class="st"> </span>barley<span class="op">$</span>yield</span>
+<span id="cb116-2"><a href="distributions-and-probability.html#cb116-2"></a><span class="kw">shadeDist</span>(<span class="dt">xshade =</span> <span class="ot">NULL</span>, </span>
+<span id="cb116-3"><a href="distributions-and-probability.html#cb116-3"></a>          <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, </span>
+<span id="cb116-4"><a href="distributions-and-probability.html#cb116-4"></a>          <span class="dt">parm1 =</span> mu, </span>
+<span id="cb116-5"><a href="distributions-and-probability.html#cb116-5"></a>          <span class="dt">parm2 =</span> sigma)</span></code></pre></div>
+<p><img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>And voila, we have our basic normal distribution curve. The horizontal (X) axis represents the range of observed values. The vertical axis, titled (probability density function), indicates the proportion of the population that would include a given range of X values.</p>
+</div>
+<div id="probabilities-in-lower-tails" class="section level3">
+<h3><span class="header-section-number">2.4.4</span> Probabilities in Lower Tails</h3>
+<p>Lets run our first calculation. What percentage of this population has a yield value less than 100? to answer this, we will pass the following two arguments to shadeDist:</p>
+<ul>
+<li>xshade = 100: This tells R we want to bisect the curve at X = 100</li>
+<li>lower.tail = TRUE: This tells R we want to measure the area of the curve where X&lt;100.</li>
+</ul>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="distributions-and-probability.html#cb117-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade =</span> <span class="dv">100</span>, </span>
+<span id="cb117-2"><a href="distributions-and-probability.html#cb117-2"></a>          <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, </span>
+<span id="cb117-3"><a href="distributions-and-probability.html#cb117-3"></a>          <span class="dt">parm1 =</span> mu, </span>
+<span id="cb117-4"><a href="distributions-and-probability.html#cb117-4"></a>          <span class="dt">parm2 =</span> sigma,</span>
+<span id="cb117-5"><a href="distributions-and-probability.html#cb117-5"></a>          <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>When we run the curve, we see that approximately 4.8 percent of the population has a yield value less than 100. If we were randomly subsets of this field, we would expect to measure a yield less than 100 in about 4.8 our of 100 samples. In other words, there is about a 4.8% probability our subset would have a value less than 100.</p>
+<p>What is the probability our subset would have a value less than 140?</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="distributions-and-probability.html#cb118-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade =</span> <span class="dv">140</span>, </span>
+<span id="cb118-2"><a href="distributions-and-probability.html#cb118-2"></a>          <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, </span>
+<span id="cb118-3"><a href="distributions-and-probability.html#cb118-3"></a>          <span class="dt">parm1 =</span> mu, </span>
+<span id="cb118-4"><a href="distributions-and-probability.html#cb118-4"></a>          <span class="dt">parm2 =</span> sigma,</span>
+<span id="cb118-5"><a href="distributions-and-probability.html#cb118-5"></a>          <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Our probability is about 35%.</p>
+</div>
+<div id="probabilities-in-upper-tails" class="section level3">
+<h3><span class="header-section-number">2.4.5</span> Probabilities in Upper Tails</h3>
+<p>If we want to measure the probability of higher values, we just need to change the lower.tail argument to “lower.tail = FALSE”. The probability of values gerter than 185 would be about 14%.</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="distributions-and-probability.html#cb119-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade =</span> <span class="dv">185</span>, </span>
+<span id="cb119-2"><a href="distributions-and-probability.html#cb119-2"></a>          <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, </span>
+<span id="cb119-3"><a href="distributions-and-probability.html#cb119-3"></a>          <span class="dt">parm1 =</span> mu, </span>
+<span id="cb119-4"><a href="distributions-and-probability.html#cb119-4"></a>          <span class="dt">parm2 =</span> sigma,</span>
+<span id="cb119-5"><a href="distributions-and-probability.html#cb119-5"></a>          <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p><img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>The probability greater than 170 would be about 28%.</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="distributions-and-probability.html#cb120-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade =</span> <span class="dv">170</span>, </span>
+<span id="cb120-2"><a href="distributions-and-probability.html#cb120-2"></a>          <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, </span>
+<span id="cb120-3"><a href="distributions-and-probability.html#cb120-3"></a>          <span class="dt">parm1 =</span> mu, </span>
+<span id="cb120-4"><a href="distributions-and-probability.html#cb120-4"></a>          <span class="dt">parm2 =</span> sigma,</span>
+<span id="cb120-5"><a href="distributions-and-probability.html#cb120-5"></a>          <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p><img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+<div id="probabilities-within-a-range" class="section level3">
+<h3><span class="header-section-number">2.4.6</span> Probabilities Within A Range</h3>
+<p>Sometimes we would like to measure the probability of a range of values in the middle of our distribution. To do this, we change our xshade argument to “xshade = c(120, 170)”. We use “c()” whenever we are giving R a set of values to work with. For xshade, this set only has two values: the lower and upper X values for our area.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="distributions-and-probability.html#cb121-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade =</span> <span class="kw">c</span>(<span class="dv">120</span>, <span class="dv">170</span>), </span>
+<span id="cb121-2"><a href="distributions-and-probability.html#cb121-2"></a>          <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, </span>
+<span id="cb121-3"><a href="distributions-and-probability.html#cb121-3"></a>          <span class="dt">parm1 =</span> mu, </span>
+<span id="cb121-4"><a href="distributions-and-probability.html#cb121-4"></a>          <span class="dt">parm2 =</span> sigma,</span>
+<span id="cb121-5"><a href="distributions-and-probability.html#cb121-5"></a>          <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p><img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>The probability of observing individuals with yields between 120 and 170 is about 57%. What about between 136 and 182?</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="distributions-and-probability.html#cb122-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade =</span> <span class="kw">c</span>(<span class="dv">136</span>, <span class="dv">182</span>), </span>
+<span id="cb122-2"><a href="distributions-and-probability.html#cb122-2"></a>          <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, </span>
+<span id="cb122-3"><a href="distributions-and-probability.html#cb122-3"></a>          <span class="dt">parm1 =</span> mu, </span>
+<span id="cb122-4"><a href="distributions-and-probability.html#cb122-4"></a>          <span class="dt">parm2 =</span> sigma,</span>
+<span id="cb122-5"><a href="distributions-and-probability.html#cb122-5"></a>          <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p><img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>The probability is about 53%.</p>
+</div>
+<div id="probabilities-outside-a-range" class="section level3">
+<h3><span class="header-section-number">2.4.7</span> Probabilities Outside a Range</h3>
+<p>Finally, what if we wanted to measure the probability of observing a value outside the ranges in the previous section. To do this, we use the “lower.tail=TRUE” argument to the shadeDist function.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="distributions-and-probability.html#cb123-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade =</span> <span class="kw">c</span>(<span class="dv">120</span>, <span class="dv">170</span>), </span>
+<span id="cb123-2"><a href="distributions-and-probability.html#cb123-2"></a>          <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, </span>
+<span id="cb123-3"><a href="distributions-and-probability.html#cb123-3"></a>          <span class="dt">parm1 =</span> mu, </span>
+<span id="cb123-4"><a href="distributions-and-probability.html#cb123-4"></a>          <span class="dt">parm2 =</span> sigma,</span>
+<span id="cb123-5"><a href="distributions-and-probability.html#cb123-5"></a>          <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>The probability of observing individuals with yields less than 120 or greater than 170 is about 43%. What about outside 136 and 182?</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="distributions-and-probability.html#cb124-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade =</span> <span class="kw">c</span>(<span class="dv">136</span>, <span class="dv">182</span>), </span>
+<span id="cb124-2"><a href="distributions-and-probability.html#cb124-2"></a>          <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, </span>
+<span id="cb124-3"><a href="distributions-and-probability.html#cb124-3"></a>          <span class="dt">parm1 =</span> mu, </span>
+<span id="cb124-4"><a href="distributions-and-probability.html#cb124-4"></a>          <span class="dt">parm2 =</span> sigma,</span>
+<span id="cb124-5"><a href="distributions-and-probability.html#cb124-5"></a>          <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>The probability of observing individuals with values less than 136 or greater than 182 is about 47%.</p>
+</div>
+<div id="probability-and-sd" class="section level3">
+<h3><span class="header-section-number">2.4.8</span> Probability and SD</h3>
+<p>We learned during the lesson that about 68% of individuals would be expected to have values with one standard deviation of the mean. We can use shadeDist to verify that. First we need to determine the values for the mean minus one standard deviation and the mean plus one standard deviation. Given that we assigned the mean and standard deviation to the variables mu and sigma above, this is easy.</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="distributions-and-probability.html#cb125-1"></a>mu_minus_sigma =<span class="st"> </span>mu<span class="op">-</span>sigma</span>
+<span id="cb125-2"><a href="distributions-and-probability.html#cb125-2"></a>mu_plus_sigma =<span class="st"> </span>mu<span class="op">+</span>sigma</span>
+<span id="cb125-3"><a href="distributions-and-probability.html#cb125-3"></a><span class="kw">print</span>(mu_minus_sigma)</span></code></pre></div>
+<pre><code>## [1] 120.7797</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="distributions-and-probability.html#cb127-1"></a><span class="kw">print</span>(mu_plus_sigma)</span></code></pre></div>
+<pre><code>## [1] 183.0603</code></pre>
+<p>We can see the population mean minus one standard deviation is about 120.8, and the mean plus one standard deviation is about 183.1 since we have assigned these variables to mu_minus_sigma, and mu_plus_sigma, we can pass them directly to the shadeDist function. Finally, we need to use “lower.tail=FALSE” to tell shadeDist to calculate the percentage of values between these two numbers.</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="distributions-and-probability.html#cb129-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade =</span> <span class="kw">c</span>(mu_minus_sigma, mu_plus_sigma), </span>
+<span id="cb129-2"><a href="distributions-and-probability.html#cb129-2"></a>          <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, </span>
+<span id="cb129-3"><a href="distributions-and-probability.html#cb129-3"></a>          <span class="dt">parm1 =</span> mu, </span>
+<span id="cb129-4"><a href="distributions-and-probability.html#cb129-4"></a>          <span class="dt">parm2 =</span> sigma,</span>
+<span id="cb129-5"><a href="distributions-and-probability.html#cb129-5"></a>          <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p><img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>We confirm the percentage of observations between the population mean minus one standard deviation and the population mean plus one standard deviation is about 68%.</p>
+<p>We also learned that about 95% of the population occurs between 1.96 standard deviations below the mean and 1.96 standard deviations above the mean. We can calculate these values as above.</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="distributions-and-probability.html#cb130-1"></a>mu_minus_<span class="fl">1.96</span>_sigma =<span class="st"> </span>mu<span class="op">-</span>(<span class="fl">1.96</span><span class="op">*</span>sigma)</span>
+<span id="cb130-2"><a href="distributions-and-probability.html#cb130-2"></a>mu_plus_<span class="fl">1.96</span>_sigma =<span class="st"> </span>mu<span class="op">+</span>(<span class="fl">1.96</span><span class="op">*</span>sigma)</span>
+<span id="cb130-3"><a href="distributions-and-probability.html#cb130-3"></a><span class="kw">print</span>(mu_minus_<span class="fl">1.96</span>_sigma)</span></code></pre></div>
+<pre><code>## [1] 90.88502</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="distributions-and-probability.html#cb132-1"></a><span class="kw">print</span>(mu_plus_<span class="fl">1.96</span>_sigma)</span></code></pre></div>
+<pre><code>## [1] 212.955</code></pre>
+<p>We can see the population mean minus one standard deviation is about 90.9, and the mean plus one standard deviation is about 213.0.</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="distributions-and-probability.html#cb134-1"></a><span class="kw">shadeDist</span>(<span class="dt">xshade =</span> <span class="kw">c</span>(mu_minus_<span class="fl">1.96</span>_sigma, mu_plus_<span class="fl">1.96</span>_sigma), </span>
+<span id="cb134-2"><a href="distributions-and-probability.html#cb134-2"></a>          <span class="dt">ddist =</span> <span class="st">&quot;dnorm&quot;</span>, </span>
+<span id="cb134-3"><a href="distributions-and-probability.html#cb134-3"></a>          <span class="dt">parm1 =</span> mu, </span>
+<span id="cb134-4"><a href="distributions-and-probability.html#cb134-4"></a>          <span class="dt">parm2 =</span> sigma,</span>
+<span id="cb134-5"><a href="distributions-and-probability.html#cb134-5"></a>          <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p><img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>We have confirmed 95% of individuals are between 1.96 standard deviations below and above the mean.</p>
+</div>
+<div id="practice-cotton-dataset" class="section level3">
+<h3><span class="header-section-number">2.4.9</span> Practice: Cotton Dataset</h3>
+<p>Let’s load the cotton data.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="distributions-and-probability.html#cb135-1"></a>cotton =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-2/exercise_data/cotton_uniformity.csv&quot;</span>)</span></code></pre></div>
+<p>And examine its top six rows.</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="distributions-and-probability.html#cb136-1"></a><span class="kw">head</span>(cotton)</span></code></pre></div>
+<pre><code>##   col row yield block
+## 1   1   1  1.23    B1
+## 2   2   1  0.90    B1
+## 3   3   1  0.97    B1
+## 4   4   1  1.10    B1
+## 5   5   1  0.99    B1
+## 6   6   1  1.43    B1</code></pre>
+<p>The data we want are in the yield column. Let’s isolate those and plot them in a histogram.</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="distributions-and-probability.html#cb138-1"></a>cotton_yield =<span class="st"> </span>cotton<span class="op">$</span>yield</span>
+<span id="cb138-2"><a href="distributions-and-probability.html#cb138-2"></a><span class="kw">hist</span>(cotton_yield)</span></code></pre></div>
+<p><img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>Let’s calculate our cotton mean and standard deviation.</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="distributions-and-probability.html#cb139-1"></a>cotton_mu =<span class="st"> </span><span class="kw">mean</span>(cotton_yield)</span>
+<span id="cb139-2"><a href="distributions-and-probability.html#cb139-2"></a>cotton_sigma =<span class="st"> </span><span class="kw">sd</span>(cotton_yield)</span>
+<span id="cb139-3"><a href="distributions-and-probability.html#cb139-3"></a><span class="kw">print</span>(cotton_mu)</span></code></pre></div>
+<pre><code>## [1] 1.001309</code></pre>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="distributions-and-probability.html#cb141-1"></a><span class="kw">print</span>(cotton_sigma)</span></code></pre></div>
+<pre><code>## [1] 0.2287059</code></pre>
+<p>Now let’s explore:</p>
+<ol style="list-style-type: decimal">
+<li><p>What is the probability an individual in the cotton popualation has a value less than 0.7? (You should get a value of about 0.09, or 9%.)</p></li>
+<li><p>What is the probability an individual has a value greater than 1.4? (You should get a value around 0.4, or 4%.)</p></li>
+<li><p>What is the probability of an individual having a value between 0.7 and 1.4? (Answer: about 13%)</p></li>
+<li><p>What is the probability of an individual having a value less than 0.7 or greater than 1.4? (Answer: about 87%)</p></li>
+</ol>
+</div>
+<div id="practice-tomato-dataset" class="section level3">
+<h3><span class="header-section-number">2.4.10</span> Practice: Tomato Dataset</h3>
+<p>Analyze the tomato_uniformity.csv dataset on your own. First, load the dataset:</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="distributions-and-probability.html#cb143-1"></a>tomato =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-2/exercise_data/tomato_uniformity.csv&quot;</span>)</span></code></pre></div>
+<ol style="list-style-type: decimal">
+<li><p>What is the probability an individual will have a value less than 40? (Answer: about 16%)</p></li>
+<li><p>What is the probability an individual will have a value greater than 60? (Answer: about 18%)</p></li>
+<li><p>What is the probability an individual will have a value greater than 40 but less than 60? (Answer: about 66%)</p></li>
+<li><p>What is the probability an individual will have a value less than 40 but greater than 60? (Answer: about 34%)</p></li>
+</ol>
 
 </div>
 </div>
@@ -379,7 +773,7 @@ Notice we changed the last argument back to “lower.tail = TRUE”. The causes 
           </div>
         </div>
       </div>
-<a href="introduction-and-population-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="population-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="sample-statistics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

@@ -1,36 +1,4 @@
-# Introduction and Population Statistics
-
-Welcome to Data Science for Agricultural Professionals.  I have written these course materials for a few reasons.  First, it is my job.  More inspirationally, however, I wanted to write a guide that satistfied the following criteria:
-- covers basic statistics used in reporting results from hybrid trials and other controlled experiments
-- also addresses data science tools used to group environments and make predictions
-- introduced students to R, an open-source statistical language that you can use after your studies at Iowa State University and can use without installing on your laptop, or using a VPN connection, which your work laptop may not allow.
-
-I also wanted to develop a text that presented statistics around the situations in which you are most likely to encounter data: 
-- yield maps used by farmers and agronomists
-- side-by-side or split-field trials used often at the retail level
-- smaller-plot controlled experiments used in seed breeding and other product development
-- rate recommendation trials for fertilizers and crop protection products
-- fertilizer prediction maps
-- decision support tools
-
-I began my career as an a university researcher and professor, but in 2010 entered the private sector, working first in retail as a technical agronomist for a regional cooperative and then as a data scientist for a major distributor, developing product data and insights for a team of researchers and agronomists.  In seeing how data were used at the retail and industry levels, I gained an appreciation for what areas of statistics were more often used than others.
-
-Finally, I wanted to develop a reference that appreciated not all of us are mathematical progedies, nor do we have flawless memories when it comes to formula.  At the risk of redudancy, I will re-explain formulas and concepts -- or at least provide links -- so you aren't forever flipping back and forth trying to remember sums of squares, standard  errors, etc.
-
-I hope you will find this guide practical and as painless as a statistics text can be.
-
-## R-language
-One of the most immediate this you will learn in this course is how to begin using R to summarise data, calculate statistics, and view trends and relationships in data.  R is open-source (free) and incredibly versatile.  I have used multiple languages, including SAS and SPSS, in my career; in my opinion, R is not only the cheapest, but the best, and I now use it exclusively and almost daily in my work.
-
-R also has personal connections to Iowa State: Hadley Wickam, Carson Seivert, and other data scientists were once students here at Iowa State !
-
-We will be using an application called R-Studio to work with R language.  R Studio allows you to write and save scripts (code) to generate analyses.  It also allows you to intersperse Markdown (html code) in between your statistical output so that you can explain and discuss your results.  The beauty of Markdown is your report and your  statistics are together in a single file; no cutting and pasting is needed between documents.
-
-R is all about having options, and so with R-Studio you have the option of installing it on your laptop or, in case you are using a work laptop without administrative priviledges, you can also use a cloud site, R-Studio Cloud, to work with R and save your work.
-
-R itself is not only open-source, but is supported by many great books which may be accessed for free online, or purchased online for very reasonable prices.
-
-
+# Population Statistics
 
 ## Populations
 Almost every statistics text begins with the concept of a population.  A population is the complete set of individuals to which you want to predict values.  Let's dwell on this concept, as it is something that did not hit home for me right away in my career.  Again, the population is all of the individuals for which you are interested in making a prediction. What do we mean by individuals? Not just people -- individuals can plants, insects, disease, livestock or, indeed, farmers.
@@ -70,7 +38,7 @@ yield = st_read("data-unit-1/merriweather_yield_map/merriweather_yield_map.shp")
 ```
 
 ```
-## Reading layer `merriweather_yield_map' from data source `C:\Users\559069\OneDrive - Land O'Lakes, Inc\Documents\data-science-for-agricultural-professionals_3\data-unit-1\merriweather_yield_map\merriweather_yield_map.shp' using driver `ESRI Shapefile'
+## Reading layer `merriweather_yield_map' from data source `C:\Users\559069\Documents\data-science-for-agricultural-professionals_3\data-unit-1\merriweather_yield_map\merriweather_yield_map.shp' using driver `ESRI Shapefile'
 ## Simple feature collection with 6061 features and 12 fields
 ## Geometry type: POINT
 ## Dimension:     XY
@@ -350,10 +318,10 @@ sample(yield_residuals, 20)
 ```
 
 ```
-##  [1] -23.026735  23.173035  -1.259206   2.702897  15.892629   6.335793
-##  [7]   5.498338  10.777729   5.272398 -13.651589  14.502714  -4.339746
-## [13]  -6.388711   2.399971   7.580671   3.253625   5.139901  -4.913792
-## [19]   1.525283   1.252156
+##  [1]   4.730451   8.266829  14.462321  -6.799431 -21.722742  -7.404110
+##  [7] -11.938173  -2.684276   2.887243  19.739052 -13.255220  -9.318519
+## [13]   2.589134  -7.475283 -20.710176  10.372908   7.134112  -6.178013
+## [19]  -8.967195 -11.957666
 ```
 
 If we sum up all the yield residuals, what number do we get?  Any guesses before you click "Run Code"?
@@ -656,7 +624,7 @@ indiana = st_read("data-unit-1/exercise_data/Agriculture_Census-shp/Agriculture_
 ```
 
 ```
-## Reading layer `Agriculture_Census' from data source `C:\Users\559069\OneDrive - Land O'Lakes, Inc\Documents\data-science-for-agricultural-professionals_3\data-unit-1\exercise_data\Agriculture_Census-shp\Agriculture_Census.shp' using driver `ESRI Shapefile'
+## Reading layer `Agriculture_Census' from data source `C:\Users\559069\Documents\data-science-for-agricultural-professionals_3\data-unit-1\exercise_data\Agriculture_Census-shp\Agriculture_Census.shp' using driver `ESRI Shapefile'
 ## Simple feature collection with 92 features and 31 fields
 ## Geometry type: POLYGON
 ## Dimension:     XY
