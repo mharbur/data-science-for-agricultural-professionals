@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>R-language | Data Science for Agricultural Professionals</title>
+  <meta name="description" content="Practical statistics for those involved in agronomy and related agricultural sciences." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="R-language | Data Science for Agricultural Professionals" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://mharbur.github.io/data-science-for-agricultural-professionals/" />
+  
+  <meta property="og:description" content="Practical statistics for those involved in agronomy and related agricultural sciences." />
+  <meta name="github-repo" content="https://github.com/mharbur/data-science-for-agricultural-professionals" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="R-language | Data Science for Agricultural Professionals" />
+  
+  <meta name="twitter:description" content="Practical statistics for those involved in agronomy and related agricultural sciences." />
+  
+
+<meta name="author" content="Marin L. Harbur" />
+
+
+<meta name="date" content="2021-05-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="introduction-and-population-statistics.html"/>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Bookdown Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="r-language.html"><a href="r-language.html"><i class="fa fa-check"></i>R-language</a></li>
+<li class="chapter" data-level="1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html"><i class="fa fa-check"></i><b>1</b> Introduction and Population Statistics</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#populations"><i class="fa fa-check"></i><b>1.1</b> Populations</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#case-study-yield-map"><i class="fa fa-check"></i><b>1.2</b> Case Study: Yield Map</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#distributions"><i class="fa fa-check"></i><b>1.3</b> Distributions</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#histograms"><i class="fa fa-check"></i><b>1.3.1</b> Histograms</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#percentiles"><i class="fa fa-check"></i><b>1.3.2</b> Percentiles</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#normal-distribution-model"><i class="fa fa-check"></i><b>1.3.3</b> Normal Distribution Model</a></li>
+<li class="chapter" data-level="1.3.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#measures-of-center"><i class="fa fa-check"></i><b>1.3.4</b> Measures of Center</a></li>
+<li class="chapter" data-level="1.3.5" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#measures-of-dispersion"><i class="fa fa-check"></i><b>1.3.5</b> Measures of Dispersion</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#exercise-introduction-to-r"><i class="fa fa-check"></i><b>1.4</b> Exercise: Introduction to R</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#your-very-first-code"><i class="fa fa-check"></i><b>1.4.1</b> Your Very First Code</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#reading-and-working-with-data-frames"><i class="fa fa-check"></i><b>1.4.2</b> Reading and Working with Data Frames</a></li>
+<li class="chapter" data-level="1.4.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#basic-operations-on-columns"><i class="fa fa-check"></i><b>1.4.3</b> Basic Operations on Columns</a></li>
+<li class="chapter" data-level="1.4.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#knitting-your-results-into-a-document"><i class="fa fa-check"></i><b>1.4.4</b> Knitting Your Results into a Document</a></li>
+<li class="chapter" data-level="1.4.5" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#practice"><i class="fa fa-check"></i><b>1.4.5</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#exercise-introduction-to-shapefiles"><i class="fa fa-check"></i><b>1.5</b> Exercise: Introduction to Shapefiles</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#r-packages"><i class="fa fa-check"></i><b>1.5.1</b> R Packages</a></li>
+<li class="chapter" data-level="1.5.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#reading-shapefiles"><i class="fa fa-check"></i><b>1.5.2</b> Reading Shapefiles</a></li>
+<li class="chapter" data-level="1.5.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#examining-spatial-feature-data-frames"><i class="fa fa-check"></i><b>1.5.3</b> Examining Spatial Feature Data Frames</a></li>
+<li class="chapter" data-level="1.5.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#visualizing-data"><i class="fa fa-check"></i><b>1.5.4</b> Visualizing Data</a></li>
+<li class="chapter" data-level="1.5.5" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#create-your-own-maps"><i class="fa fa-check"></i><b>1.5.5</b> Create Your Own Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#exercise-histograms"><i class="fa fa-check"></i><b>1.6</b> Exercise: Histograms</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#case-study"><i class="fa fa-check"></i><b>1.6.1</b> Case Study</a></li>
+<li class="chapter" data-level="1.6.2" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#basic-histogram"><i class="fa fa-check"></i><b>1.6.2</b> Basic Histogram</a></li>
+<li class="chapter" data-level="1.6.3" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#histograms-with-ggplot"><i class="fa fa-check"></i><b>1.6.3</b> Histograms with ggplot</a></li>
+<li class="chapter" data-level="1.6.4" data-path="introduction-and-population-statistics.html"><a href="introduction-and-population-statistics.html#practice-1"><i class="fa fa-check"></i><b>1.6.4</b> Practice</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html"><i class="fa fa-check"></i><b>2</b> Distributions and Probability</a><ul>
+<li class="chapter" data-level="2.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#case-study-1"><i class="fa fa-check"></i><b>2.1</b> Case Study</a></li>
+<li class="chapter" data-level="2.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-normal-distribution-model"><i class="fa fa-check"></i><b>2.2</b> The Normal Distribution Model</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-bell-curve"><i class="fa fa-check"></i><b>2.2.1</b> The Bell Curve</a></li>
+<li class="chapter" data-level="2.2.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#distribution-and-probability"><i class="fa fa-check"></i><b>2.2.2</b> Distribution and Probability</a></li>
+<li class="chapter" data-level="2.2.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probability-and-the-normal-distribution-curve"><i class="fa fa-check"></i><b>2.2.3</b> Probability and the Normal Distribution Curve</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-z-distribution"><i class="fa fa-check"></i><b>2.3</b> The Z-Distribution</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#important-numbers-95-and-5"><i class="fa fa-check"></i><b>2.3.1</b> Important Numbers: 95% and 5%</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#exercise-z-distribution-and-probability"><i class="fa fa-check"></i><b>2.4</b> Exercise: Z-Distribution and Probability</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#case-study-barley-data"><i class="fa fa-check"></i><b>2.4.1</b> Case Study: Barley Data</a></li>
+<li class="chapter" data-level="2.4.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#measuring-the-population-distribution-mean-and-standard-deviation"><i class="fa fa-check"></i><b>2.4.2</b> Measuring the Population Distribution: Mean and Standard Deviation</a></li>
+<li class="chapter" data-level="2.4.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-shadedist-function"><i class="fa fa-check"></i><b>2.4.3</b> The shadeDist Function</a></li>
+<li class="chapter" data-level="2.4.4" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-in-lower-tails"><i class="fa fa-check"></i><b>2.4.4</b> Probabilities in Lower Tails</a></li>
+<li class="chapter" data-level="2.4.5" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-in-upper-tails"><i class="fa fa-check"></i><b>2.4.5</b> Probabilities in Upper Tails</a></li>
+<li class="chapter" data-level="2.4.6" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-within-a-range"><i class="fa fa-check"></i><b>2.4.6</b> Probabilities Within A Range</a></li>
+<li class="chapter" data-level="2.4.7" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-outside-a-range"><i class="fa fa-check"></i><b>2.4.7</b> Probabilities Outside a Range</a></li>
+<li class="chapter" data-level="2.4.8" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probability-and-sd"><i class="fa fa-check"></i><b>2.4.8</b> Probability and SD</a></li>
+<li class="chapter" data-level="2.4.9" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#practice-cotton-dataset"><i class="fa fa-check"></i><b>2.4.9</b> Practice: Cotton Dataset</a></li>
+<li class="chapter" data-level="2.4.10" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#practice-tomato-dataset"><i class="fa fa-check"></i><b>2.4.10</b> Practice: Tomato Dataset</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="sample-statistics.html"><a href="sample-statistics.html"><i class="fa fa-check"></i><b>3</b> Sample Statistics</a><ul>
+<li class="chapter" data-level="3.1" data-path="sample-statistics.html"><a href="sample-statistics.html#samples"><i class="fa fa-check"></i><b>3.1</b> Samples</a></li>
+<li class="chapter" data-level="3.2" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-2"><i class="fa fa-check"></i><b>3.2</b> Case Study</a></li>
+<li class="chapter" data-level="3.3" data-path="sample-statistics.html"><a href="sample-statistics.html#distribution-of-sample-means"><i class="fa fa-check"></i><b>3.3</b> Distribution of Sample Means</a></li>
+<li class="chapter" data-level="3.4" data-path="sample-statistics.html"><a href="sample-statistics.html#central-limit-theorem"><i class="fa fa-check"></i><b>3.4</b> Central Limit Theorem</a></li>
+<li class="chapter" data-level="3.5" data-path="sample-statistics.html"><a href="sample-statistics.html#standard-error"><i class="fa fa-check"></i><b>3.5</b> Standard Error</a></li>
+<li class="chapter" data-level="3.6" data-path="sample-statistics.html"><a href="sample-statistics.html#degrees-of-freedom"><i class="fa fa-check"></i><b>3.6</b> Degrees of Freedom</a></li>
+<li class="chapter" data-level="3.7" data-path="sample-statistics.html"><a href="sample-statistics.html#the-t-distribution"><i class="fa fa-check"></i><b>3.7</b> The t-Distribution</a></li>
+<li class="chapter" data-level="3.8" data-path="sample-statistics.html"><a href="sample-statistics.html#confidence-interval"><i class="fa fa-check"></i><b>3.8</b> Confidence Interval</a></li>
+<li class="chapter" data-level="3.9" data-path="sample-statistics.html"><a href="sample-statistics.html#confidence-interval-and-probability"><i class="fa fa-check"></i><b>3.9</b> Confidence Interval and Probability</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html"><i class="fa fa-check"></i><b>4</b> Two-Treatment Comparisons</a><ul>
+<li class="chapter" data-level="4.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#side-by-side-trials"><i class="fa fa-check"></i><b>4.1</b> Side-by-Side Trials</a></li>
+<li class="chapter" data-level="4.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#blocked-design"><i class="fa fa-check"></i><b>4.2</b> Blocked Design</a></li>
+<li class="chapter" data-level="4.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-3"><i class="fa fa-check"></i><b>4.3</b> Case Study</a></li>
+<li class="chapter" data-level="4.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#confidence-interval-1"><i class="fa fa-check"></i><b>4.4</b> Confidence Interval</a></li>
+<li class="chapter" data-level="4.5" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#t-test"><i class="fa fa-check"></i><b>4.5</b> T-Test</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science for Agricultural Professionals</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="r-language" class="section level1 unnumbered">
+<h1>R-language</h1>
+<p>In this course, we will use the R language to summarise data, calculate statistics, and view trends and relationships in data. R is open-source (free) and incredibly versatile. I have used multiple languages, including SAS and SPSS, in my career; in my opinion, R is not only the cheapest, but the best, and I now use it exclusively and almost daily in my work.</p>
+<p>R also has personal connections to Iowa State: Hadley Wickam, Carson Seivert, two authors of the R language, are Iowa State graduates.</p>
+<p>We will use an application called R-Studio to work with R language. R Studio allows you to write and save scripts (code) to generate analyses. It also allows you to intersperse Markdown (html code) in between your statistical output so that you can explain and discuss your results. The beauty of Markdown is your report and your statistics are together in a single file; no cutting and pasting is needed between documents.</p>
+<p>R is all about having options, and so with R-Studio you have the option of installing it on your laptop or, in case you are using a work laptop without administrative priviledges, you can also use a cloud site, R-Studio Cloud, to work with R and save your work.</p>
+<p>I know that for most of you R (and coding itself) will be a new experience. I am sure the idea of coding will intimidate many of you. To head off your anxiety as much as possible, I offer this: I understand that coding is challenging. I spend my days making mistakes, searching for bugs, and looking up how to do something for the umpteenth time. If something confuses you, that is normal.</p>
+<p>But I can also assure you that you will likely have an easy time remembering what functions to use. In other words, which code to use will not be the problem. Most of your bugs will be due to mispellings, forgetting to close a parentheses, or referring to a dataset by the wrong name, e.g. “soy_data” instead of “soybean_data”. And you will get better at avoiding these mistakes over time – there is not more to learn, just practice. Our exercises in R will be designed to give you that practice, and introduce new functions as slowly as possible.</p>
+<p>At the end of this course, you will have not only your completed work, but the course materials themselves as a resource from which you can borrow code for future projects. There is no shame in copying lines of codes (or whole chunks of code) into your own original analyses. All of us data scientists do that, and it is one of the best ways to continue learning.</p>
+<p>R is supported by many great books which may be accessed for free online, or purchased online for very reasonable prices. These may be used as references during the course, but also to continue learning for years to come. These include many references from bookdown.org:</p>
+<ul>
+<li>Introduction to Data Science: although there are many “Introduction to R” books, this one closely matches how we approach it in Agronomy 513. (<a href="https://rafalab.github.io/dsbook/" class="uri">https://rafalab.github.io/dsbook/</a>)</li>
+<li>R Graphics Cookbook: a comprehensive explanation of how to create just about any plot you could ever imaging in R, mainly using the ggplot package. (<a href="https://r-graphics.org/" class="uri">https://r-graphics.org/</a>)</li>
+<li>Geocomputation with R: The best book I have found for learning how to work with spatial data. (<a href="https://geocompr.robinlovelace.net/" class="uri">https://geocompr.robinlovelace.net/</a>)</li>
+<li>Hands-On Machine Learning with R: I have not read this book, but it appears to be a robust and beautifully-illustrated guid to machine learning concepts in R. (<a href="https://bradleyboehmke.github.io/HOML/" class="uri">https://bradleyboehmke.github.io/HOML/</a>)</li>
+</ul>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction-and-population-statistics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-start.pdf", "bookdown-start.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
