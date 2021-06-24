@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Understanding Statistical Tests | Data Science for Agricultural Professionals</title>
+  <meta name="description" content="Practical statistics for those involved in agronomy and related agricultural sciences." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Understanding Statistical Tests | Data Science for Agricultural Professionals" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://mharbur.github.io/data-science-for-agricultural-professionals/" />
+  
+  <meta property="og:description" content="Practical statistics for those involved in agronomy and related agricultural sciences." />
+  <meta name="github-repo" content="https://github.com/mharbur/data-science-for-agricultural-professionals" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Understanding Statistical Tests | Data Science for Agricultural Professionals" />
+  
+  <meta name="twitter:description" content="Practical statistics for those involved in agronomy and related agricultural sciences." />
+  
+
+<meta name="author" content="Marin L. Harbur" />
+
+
+<meta name="date" content="2021-06-04" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="two-treatment-comparisons.html"/>
+<link rel="next" href="multiple-treatment-trials.html"/>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Bookdown Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#welcome"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-language"><i class="fa fa-check"></i>R-language</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="population-statistics.html"><a href="population-statistics.html"><i class="fa fa-check"></i><b>1</b> Population Statistics</a><ul>
+<li class="chapter" data-level="1.1" data-path="population-statistics.html"><a href="population-statistics.html#populations"><i class="fa fa-check"></i><b>1.1</b> Populations</a></li>
+<li class="chapter" data-level="1.2" data-path="population-statistics.html"><a href="population-statistics.html#case-study-yield-map"><i class="fa fa-check"></i><b>1.2</b> Case Study: Yield Map</a></li>
+<li class="chapter" data-level="1.3" data-path="population-statistics.html"><a href="population-statistics.html#distributions"><i class="fa fa-check"></i><b>1.3</b> Distributions</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="population-statistics.html"><a href="population-statistics.html#histograms"><i class="fa fa-check"></i><b>1.3.1</b> Histograms</a></li>
+<li class="chapter" data-level="1.3.2" data-path="population-statistics.html"><a href="population-statistics.html#percentiles"><i class="fa fa-check"></i><b>1.3.2</b> Percentiles</a></li>
+<li class="chapter" data-level="1.3.3" data-path="population-statistics.html"><a href="population-statistics.html#normal-distribution-model"><i class="fa fa-check"></i><b>1.3.3</b> Normal Distribution Model</a></li>
+<li class="chapter" data-level="1.3.4" data-path="population-statistics.html"><a href="population-statistics.html#measures-of-center"><i class="fa fa-check"></i><b>1.3.4</b> Measures of Center</a></li>
+<li class="chapter" data-level="1.3.5" data-path="population-statistics.html"><a href="population-statistics.html#measures-of-dispersion"><i class="fa fa-check"></i><b>1.3.5</b> Measures of Dispersion</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="population-statistics.html"><a href="population-statistics.html#exercise-introduction-to-r"><i class="fa fa-check"></i><b>1.4</b> Exercise: Introduction to R</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="population-statistics.html"><a href="population-statistics.html#your-very-first-code"><i class="fa fa-check"></i><b>1.4.1</b> Your Very First Code</a></li>
+<li class="chapter" data-level="1.4.2" data-path="population-statistics.html"><a href="population-statistics.html#reading-and-working-with-data-frames"><i class="fa fa-check"></i><b>1.4.2</b> Reading and Working with Data Frames</a></li>
+<li class="chapter" data-level="1.4.3" data-path="population-statistics.html"><a href="population-statistics.html#basic-operations-on-columns"><i class="fa fa-check"></i><b>1.4.3</b> Basic Operations on Columns</a></li>
+<li class="chapter" data-level="1.4.4" data-path="population-statistics.html"><a href="population-statistics.html#knitting-your-results-into-a-document"><i class="fa fa-check"></i><b>1.4.4</b> Knitting Your Results into a Document</a></li>
+<li class="chapter" data-level="1.4.5" data-path="population-statistics.html"><a href="population-statistics.html#practice"><i class="fa fa-check"></i><b>1.4.5</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="population-statistics.html"><a href="population-statistics.html#exercise-introduction-to-shapefiles"><i class="fa fa-check"></i><b>1.5</b> Exercise: Introduction to Shapefiles</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="population-statistics.html"><a href="population-statistics.html#r-packages"><i class="fa fa-check"></i><b>1.5.1</b> R Packages</a></li>
+<li class="chapter" data-level="1.5.2" data-path="population-statistics.html"><a href="population-statistics.html#reading-shapefiles"><i class="fa fa-check"></i><b>1.5.2</b> Reading Shapefiles</a></li>
+<li class="chapter" data-level="1.5.3" data-path="population-statistics.html"><a href="population-statistics.html#examining-spatial-feature-data-frames"><i class="fa fa-check"></i><b>1.5.3</b> Examining Spatial Feature Data Frames</a></li>
+<li class="chapter" data-level="1.5.4" data-path="population-statistics.html"><a href="population-statistics.html#visualizing-data"><i class="fa fa-check"></i><b>1.5.4</b> Visualizing Data</a></li>
+<li class="chapter" data-level="1.5.5" data-path="population-statistics.html"><a href="population-statistics.html#create-your-own-maps"><i class="fa fa-check"></i><b>1.5.5</b> Create Your Own Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="population-statistics.html"><a href="population-statistics.html#exercise-histograms"><i class="fa fa-check"></i><b>1.6</b> Exercise: Histograms</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="population-statistics.html"><a href="population-statistics.html#case-study"><i class="fa fa-check"></i><b>1.6.1</b> Case Study</a></li>
+<li class="chapter" data-level="1.6.2" data-path="population-statistics.html"><a href="population-statistics.html#basic-histogram"><i class="fa fa-check"></i><b>1.6.2</b> Basic Histogram</a></li>
+<li class="chapter" data-level="1.6.3" data-path="population-statistics.html"><a href="population-statistics.html#histograms-with-ggplot"><i class="fa fa-check"></i><b>1.6.3</b> Histograms with ggplot</a></li>
+<li class="chapter" data-level="1.6.4" data-path="population-statistics.html"><a href="population-statistics.html#practice-1"><i class="fa fa-check"></i><b>1.6.4</b> Practice</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html"><i class="fa fa-check"></i><b>2</b> Distributions and Probability</a><ul>
+<li class="chapter" data-level="2.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#case-study-1"><i class="fa fa-check"></i><b>2.1</b> Case Study</a></li>
+<li class="chapter" data-level="2.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-normal-distribution-model"><i class="fa fa-check"></i><b>2.2</b> The Normal Distribution Model</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-bell-curve"><i class="fa fa-check"></i><b>2.2.1</b> The Bell Curve</a></li>
+<li class="chapter" data-level="2.2.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#distribution-and-probability"><i class="fa fa-check"></i><b>2.2.2</b> Distribution and Probability</a></li>
+<li class="chapter" data-level="2.2.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probability-and-the-normal-distribution-curve"><i class="fa fa-check"></i><b>2.2.3</b> Probability and the Normal Distribution Curve</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-z-distribution"><i class="fa fa-check"></i><b>2.3</b> The Z-Distribution</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#important-numbers-95-and-5"><i class="fa fa-check"></i><b>2.3.1</b> Important Numbers: 95% and 5%</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#exercise-z-distribution-and-probability"><i class="fa fa-check"></i><b>2.4</b> Exercise: Z-Distribution and Probability</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#case-study-barley-data"><i class="fa fa-check"></i><b>2.4.1</b> Case Study: Barley Data</a></li>
+<li class="chapter" data-level="2.4.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#measuring-the-population-distribution-mean-and-standard-deviation"><i class="fa fa-check"></i><b>2.4.2</b> Measuring the Population Distribution: Mean and Standard Deviation</a></li>
+<li class="chapter" data-level="2.4.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-shadedist-function"><i class="fa fa-check"></i><b>2.4.3</b> The shadeDist Function</a></li>
+<li class="chapter" data-level="2.4.4" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-in-lower-tails"><i class="fa fa-check"></i><b>2.4.4</b> Probabilities in Lower Tails</a></li>
+<li class="chapter" data-level="2.4.5" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-in-upper-tails"><i class="fa fa-check"></i><b>2.4.5</b> Probabilities in Upper Tails</a></li>
+<li class="chapter" data-level="2.4.6" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-within-a-range"><i class="fa fa-check"></i><b>2.4.6</b> Probabilities Within A Range</a></li>
+<li class="chapter" data-level="2.4.7" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-outside-a-range"><i class="fa fa-check"></i><b>2.4.7</b> Probabilities Outside a Range</a></li>
+<li class="chapter" data-level="2.4.8" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probability-and-sd"><i class="fa fa-check"></i><b>2.4.8</b> Probability and SD</a></li>
+<li class="chapter" data-level="2.4.9" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#practice-cotton-dataset"><i class="fa fa-check"></i><b>2.4.9</b> Practice: Cotton Dataset</a></li>
+<li class="chapter" data-level="2.4.10" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#practice-tomato-dataset"><i class="fa fa-check"></i><b>2.4.10</b> Practice: Tomato Dataset</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="sample-statistics.html"><a href="sample-statistics.html"><i class="fa fa-check"></i><b>3</b> Sample Statistics</a><ul>
+<li class="chapter" data-level="3.1" data-path="sample-statistics.html"><a href="sample-statistics.html#samples"><i class="fa fa-check"></i><b>3.1</b> Samples</a></li>
+<li class="chapter" data-level="3.2" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-2"><i class="fa fa-check"></i><b>3.2</b> Case Study</a></li>
+<li class="chapter" data-level="3.3" data-path="sample-statistics.html"><a href="sample-statistics.html#distribution-of-sample-means"><i class="fa fa-check"></i><b>3.3</b> Distribution of Sample Means</a></li>
+<li class="chapter" data-level="3.4" data-path="sample-statistics.html"><a href="sample-statistics.html#central-limit-theorem"><i class="fa fa-check"></i><b>3.4</b> Central Limit Theorem</a></li>
+<li class="chapter" data-level="3.5" data-path="sample-statistics.html"><a href="sample-statistics.html#standard-error"><i class="fa fa-check"></i><b>3.5</b> Standard Error</a></li>
+<li class="chapter" data-level="3.6" data-path="sample-statistics.html"><a href="sample-statistics.html#degrees-of-freedom"><i class="fa fa-check"></i><b>3.6</b> Degrees of Freedom</a></li>
+<li class="chapter" data-level="3.7" data-path="sample-statistics.html"><a href="sample-statistics.html#the-t-distribution"><i class="fa fa-check"></i><b>3.7</b> The t-Distribution</a></li>
+<li class="chapter" data-level="3.8" data-path="sample-statistics.html"><a href="sample-statistics.html#confidence-interval"><i class="fa fa-check"></i><b>3.8</b> Confidence Interval</a></li>
+<li class="chapter" data-level="3.9" data-path="sample-statistics.html"><a href="sample-statistics.html#confidence-interval-and-probability"><i class="fa fa-check"></i><b>3.9</b> Confidence Interval and Probability</a></li>
+<li class="chapter" data-level="3.10" data-path="sample-statistics.html"><a href="sample-statistics.html#exercise-standard-error"><i class="fa fa-check"></i><b>3.10</b> Exercise: Standard Error</a><ul>
+<li class="chapter" data-level="3.10.1" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-tomatoes"><i class="fa fa-check"></i><b>3.10.1</b> Case Study: Tomatoes</a></li>
+<li class="chapter" data-level="3.10.2" data-path="sample-statistics.html"><a href="sample-statistics.html#calculating-standard-error"><i class="fa fa-check"></i><b>3.10.2</b> Calculating Standard Error</a></li>
+<li class="chapter" data-level="3.10.3" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-barley"><i class="fa fa-check"></i><b>3.10.3</b> Practice: Barley</a></li>
+<li class="chapter" data-level="3.10.4" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-cotton"><i class="fa fa-check"></i><b>3.10.4</b> Practice: Cotton</a></li>
+</ul></li>
+<li class="chapter" data-level="3.11" data-path="sample-statistics.html"><a href="sample-statistics.html#exercise-t-distribution"><i class="fa fa-check"></i><b>3.11</b> Exercise: t-Distribution</a><ul>
+<li class="chapter" data-level="3.11.1" data-path="sample-statistics.html"><a href="sample-statistics.html#plotting-the-distribution"><i class="fa fa-check"></i><b>3.11.1</b> Plotting the Distribution</a></li>
+<li class="chapter" data-level="3.11.2" data-path="sample-statistics.html"><a href="sample-statistics.html#calculating-t"><i class="fa fa-check"></i><b>3.11.2</b> Calculating T</a></li>
+<li class="chapter" data-level="3.11.3" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-2"><i class="fa fa-check"></i><b>3.11.3</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="sample-statistics.html"><a href="sample-statistics.html#exercise-confidence-interval-for-sample-mean"><i class="fa fa-check"></i><b>3.12</b> Exercise: Confidence Interval for Sample Mean</a><ul>
+<li class="chapter" data-level="3.12.1" data-path="sample-statistics.html"><a href="sample-statistics.html#calculating-the-confidence-interval"><i class="fa fa-check"></i><b>3.12.1</b> Calculating the Confidence Interval</a></li>
+<li class="chapter" data-level="3.12.2" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-peanut-sample-1"><i class="fa fa-check"></i><b>3.12.2</b> Case Study: Peanut Sample 1</a></li>
+<li class="chapter" data-level="3.12.3" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-peanut-sample-2"><i class="fa fa-check"></i><b>3.12.3</b> Case Study: Peanut Sample 2</a></li>
+<li class="chapter" data-level="3.12.4" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-3"><i class="fa fa-check"></i><b>3.12.4</b> Practice</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html"><i class="fa fa-check"></i><b>4</b> Two-Treatment Comparisons</a><ul>
+<li class="chapter" data-level="4.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#side-by-side-trials"><i class="fa fa-check"></i><b>4.1</b> Side-by-Side Trials</a></li>
+<li class="chapter" data-level="4.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#blocked-design"><i class="fa fa-check"></i><b>4.2</b> Blocked Design</a></li>
+<li class="chapter" data-level="4.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-3"><i class="fa fa-check"></i><b>4.3</b> Case Study</a></li>
+<li class="chapter" data-level="4.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#confidence-interval-1"><i class="fa fa-check"></i><b>4.4</b> Confidence Interval</a></li>
+<li class="chapter" data-level="4.5" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#t-test"><i class="fa fa-check"></i><b>4.5</b> T-Test</a></li>
+<li class="chapter" data-level="4.6" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-randomizing-plots"><i class="fa fa-check"></i><b>4.6</b> Exercise: Randomizing Plots</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-1"><i class="fa fa-check"></i><b>4.6.1</b> Example 1</a></li>
+<li class="chapter" data-level="4.6.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#the-agricolae-package"><i class="fa fa-check"></i><b>4.6.2</b> The Agricolae Package</a></li>
+<li class="chapter" data-level="4.6.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#randomizing-the-plot"><i class="fa fa-check"></i><b>4.6.3</b> Randomizing the Plot</a></li>
+<li class="chapter" data-level="4.6.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#working-with-lists"><i class="fa fa-check"></i><b>4.6.4</b> Working with Lists</a></li>
+<li class="chapter" data-level="4.6.5" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-2"><i class="fa fa-check"></i><b>4.6.5</b> Example 2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-restructuring-columns-and-rows"><i class="fa fa-check"></i><b>4.7</b> Exercise: Restructuring Columns and Rows</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#operations-on-data"><i class="fa fa-check"></i><b>4.7.1</b> Operations on Data</a></li>
+<li class="chapter" data-level="4.7.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-soybean-fungicide"><i class="fa fa-check"></i><b>4.7.2</b> Case Study: Soybean Fungicide</a></li>
+<li class="chapter" data-level="4.7.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-1-1"><i class="fa fa-check"></i><b>4.7.3</b> Practice 1</a></li>
+<li class="chapter" data-level="4.7.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-2-1"><i class="fa fa-check"></i><b>4.7.4</b> Practice 2</a></li>
+<li class="chapter" data-level="4.7.5" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-3-1"><i class="fa fa-check"></i><b>4.7.5</b> Practice 3</a></li>
+<li class="chapter" data-level="4.7.6" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-4"><i class="fa fa-check"></i><b>4.7.6</b> Practice 4</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-confidence-interval-of-difference"><i class="fa fa-check"></i><b>4.8</b> Exercise: Confidence Interval of Difference"</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-1-1"><i class="fa fa-check"></i><b>4.8.1</b> Example 1</a></li>
+<li class="chapter" data-level="4.8.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-2-1"><i class="fa fa-check"></i><b>4.8.2</b> Example 2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-t-test"><i class="fa fa-check"></i><b>4.9</b> Exercise: T-Test</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-1-wheat-fungicide"><i class="fa fa-check"></i><b>4.9.1</b> Case Study 1: Wheat Fungicide</a></li>
+<li class="chapter" data-level="4.9.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#t-test-1"><i class="fa fa-check"></i><b>4.9.2</b> T-Test</a></li>
+<li class="chapter" data-level="4.9.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-2-apple-variety"><i class="fa fa-check"></i><b>4.9.3</b> Case Study 2: Apple Variety</a></li>
+<li class="chapter" data-level="4.9.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-5"><i class="fa fa-check"></i><b>4.9.4</b> Practice</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html"><i class="fa fa-check"></i><b>5</b> Understanding Statistical Tests</a><ul>
+<li class="chapter" data-level="5.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#research-question"><i class="fa fa-check"></i><b>5.1</b> Research Question</a></li>
+<li class="chapter" data-level="5.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#the-model"><i class="fa fa-check"></i><b>5.2</b> The Model</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#treatment-effect"><i class="fa fa-check"></i><b>5.2.1</b> Treatment Effect</a></li>
+<li class="chapter" data-level="5.2.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#error-effect"><i class="fa fa-check"></i><b>5.2.2</b> Error Effect</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#hypotheses"><i class="fa fa-check"></i><b>5.3</b> Hypotheses</a></li>
+<li class="chapter" data-level="5.4" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#p-value"><i class="fa fa-check"></i><b>5.4</b> P-Value</a></li>
+<li class="chapter" data-level="5.5" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#the-p-value-and-errors"><i class="fa fa-check"></i><b>5.5</b> The P-Value and Errors</a></li>
+<li class="chapter" data-level="5.6" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#one-sided-vs-two-sided-hypotheses"><i class="fa fa-check"></i><b>5.6</b> One-Sided vs Two-Sided Hypotheses</a></li>
+<li class="chapter" data-level="5.7" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#exercise-linear-additive-model"><i class="fa fa-check"></i><b>5.7</b> Exercise: Linear Additive Model</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#case-study-barley-effects"><i class="fa fa-check"></i><b>5.7.1</b> Case Study: Barley Effects</a></li>
+<li class="chapter" data-level="5.7.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#plotting-the-effects"><i class="fa fa-check"></i><b>5.7.2</b> Plotting the Effects</a></li>
+<li class="chapter" data-level="5.7.3" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#examining-individual-plots"><i class="fa fa-check"></i><b>5.7.3</b> Examining Individual Plots</a></li>
+<li class="chapter" data-level="5.7.4" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#practice-groudnut"><i class="fa fa-check"></i><b>5.7.4</b> Practice: Groudnut</a></li>
+<li class="chapter" data-level="5.7.5" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#plotting-the-effects-1"><i class="fa fa-check"></i><b>5.7.5</b> Plotting the Effects</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#exercise-one-sided-hypotheses"><i class="fa fa-check"></i><b>5.8</b> Exercise: One-Sided Hypotheses</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#case-study-groundnut"><i class="fa fa-check"></i><b>5.8.1</b> Case Study: Groundnut</a></li>
+<li class="chapter" data-level="5.8.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#one-sided-t-test"><i class="fa fa-check"></i><b>5.8.2</b> One-Sided T-Test</a></li>
+<li class="chapter" data-level="5.8.3" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#practice-barley-1"><i class="fa fa-check"></i><b>5.8.3</b> Practice: Barley</a></li>
+<li class="chapter" data-level="5.8.4" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#practice-strawberry"><i class="fa fa-check"></i><b>5.8.4</b> Practice: Strawberry</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#exercise-type-i-and-type-ii-errors"><i class="fa fa-check"></i><b>5.9</b> Exercise: Type I and Type II Errors</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html"><i class="fa fa-check"></i><b>6</b> Multiple Treatment Trials</a><ul>
+<li class="chapter" data-level="6.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#case-study-4"><i class="fa fa-check"></i><b>6.1</b> Case Study</a></li>
+<li class="chapter" data-level="6.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#the-linear-additive-model"><i class="fa fa-check"></i><b>6.2</b> The Linear Additive Model</a></li>
+<li class="chapter" data-level="6.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#analysis-of-variance"><i class="fa fa-check"></i><b>6.3</b> Analysis of Variance</a></li>
+<li class="chapter" data-level="6.4" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#the-f-statistic"><i class="fa fa-check"></i><b>6.4</b> The F statistic</a></li>
+<li class="chapter" data-level="6.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#the-anova-table"><i class="fa fa-check"></i><b>6.5</b> The ANOVA Table</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#source-of-variation"><i class="fa fa-check"></i><b>6.5.1</b> Source of Variation</a></li>
+<li class="chapter" data-level="6.5.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#sum-of-squares-1"><i class="fa fa-check"></i><b>6.5.2</b> Sum of Squares</a></li>
+<li class="chapter" data-level="6.5.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#degrees-of-freedom-1"><i class="fa fa-check"></i><b>6.5.3</b> Degrees of Freedom</a></li>
+<li class="chapter" data-level="6.5.4" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#mean-square"><i class="fa fa-check"></i><b>6.5.4</b> Mean Square</a></li>
+<li class="chapter" data-level="6.5.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#f-value"><i class="fa fa-check"></i><b>6.5.5</b> F-Value</a></li>
+<li class="chapter" data-level="6.5.6" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#p-value-1"><i class="fa fa-check"></i><b>6.5.6</b> P-value</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#visualizing-how-the-anova-table-relates-to-variance"><i class="fa fa-check"></i><b>6.6</b> Visualizing How the Anova Table Relates to Variance</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#case-study-barley"><i class="fa fa-check"></i><b>6.6.1</b> Case Study: Barley</a></li>
+<li class="chapter" data-level="6.6.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#anova"><i class="fa fa-check"></i><b>6.6.2</b> ANOVA</a></li>
+<li class="chapter" data-level="6.6.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#calculating-the-coefficient-of-variation"><i class="fa fa-check"></i><b>6.6.3</b> Calculating the Coefficient of Variation</a></li>
+<li class="chapter" data-level="6.6.4" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#practice-beet-data"><i class="fa fa-check"></i><b>6.6.4</b> Practice: Beet Data</a></li>
+<li class="chapter" data-level="6.6.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#practice-potato-data"><i class="fa fa-check"></i><b>6.6.5</b> Practice: Potato Data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#exercise-treatment-means"><i class="fa fa-check"></i><b>6.7</b> Exercise: “Treatment Means”</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#case-study-barley-1"><i class="fa fa-check"></i><b>6.7.1</b> Case Study: Barley</a></li>
+<li class="chapter" data-level="6.7.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#calculating-treatment-means"><i class="fa fa-check"></i><b>6.7.2</b> Calculating Treatment Means</a></li>
+<li class="chapter" data-level="6.7.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#plotting-the-means"><i class="fa fa-check"></i><b>6.7.3</b> Plotting the Means</a></li>
+<li class="chapter" data-level="6.7.4" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#practice-beet-data-1"><i class="fa fa-check"></i><b>6.7.4</b> Practice: Beet Data</a></li>
+<li class="chapter" data-level="6.7.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#practice-potato-data-1"><i class="fa fa-check"></i><b>6.7.5</b> Practice: Potato Data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html"><i class="fa fa-check"></i><b>7</b> Multiple Treatment Designs</a><ul>
+<li class="chapter" data-level="7.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#randomized-complete-block-design"><i class="fa fa-check"></i><b>7.1</b> Randomized Complete Block Design</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-randomized-complete-block-design"><i class="fa fa-check"></i><b>7.1.1</b> Case Study: Randomized Complete Block Design</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#factorial-design"><i class="fa fa-check"></i><b>7.2</b> Factorial Design</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-1-1"><i class="fa fa-check"></i><b>7.2.1</b> Case Study 1</a></li>
+<li class="chapter" data-level="7.2.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-2-1"><i class="fa fa-check"></i><b>7.2.2</b> Case Study 2</a></li>
+<li class="chapter" data-level="7.2.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#discussing-interactions"><i class="fa fa-check"></i><b>7.2.3</b> Discussing Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#split-plot-design"><i class="fa fa-check"></i><b>7.3</b> Split-Plot Design</a></li>
+<li class="chapter" data-level="7.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#linear-additive-model-3"><i class="fa fa-check"></i><b>7.4</b> Linear Additive Model</a></li>
+<li class="chapter" data-level="7.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#conclusion"><i class="fa fa-check"></i><b>7.5</b> Conclusion</a></li>
+<li class="chapter" data-level="7.6" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-randomized-complete-block-design"><i class="fa fa-check"></i><b>7.6</b> Exercise: Randomized Complete Block Design</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-5"><i class="fa fa-check"></i><b>7.6.1</b> Case Study</a></li>
+<li class="chapter" data-level="7.6.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#anova-1"><i class="fa fa-check"></i><b>7.6.2</b> ANOVA</a></li>
+<li class="chapter" data-level="7.6.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#plotting-the-results"><i class="fa fa-check"></i><b>7.6.3</b> Plotting the Results</a></li>
+<li class="chapter" data-level="7.6.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-6"><i class="fa fa-check"></i><b>7.6.4</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-factorial-anova"><i class="fa fa-check"></i><b>7.7</b> Exercise: Factorial ANOVA</a><ul>
+<li class="chapter" data-level="7.7.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-biochar"><i class="fa fa-check"></i><b>7.7.1</b> Case Study: Biochar</a></li>
+<li class="chapter" data-level="7.7.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#anova-2"><i class="fa fa-check"></i><b>7.7.2</b> ANOVA</a></li>
+<li class="chapter" data-level="7.7.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#interaction-plots"><i class="fa fa-check"></i><b>7.7.3</b> Interaction Plots</a></li>
+<li class="chapter" data-level="7.7.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#testing-factors-individually"><i class="fa fa-check"></i><b>7.7.4</b> Testing Factors Individually</a></li>
+<li class="chapter" data-level="7.7.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#bar-plots"><i class="fa fa-check"></i><b>7.7.5</b> Bar Plots</a></li>
+<li class="chapter" data-level="7.7.6" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-7"><i class="fa fa-check"></i><b>7.7.6</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-split-plot-design"><i class="fa fa-check"></i><b>7.8</b> Exercise: Split-Plot Design</a><ul>
+<li class="chapter" data-level="7.8.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-corn-soybean-systems-trial"><i class="fa fa-check"></i><b>7.8.1</b> Case Study: Corn-Soybean Systems Trial</a></li>
+<li class="chapter" data-level="7.8.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#anova-4"><i class="fa fa-check"></i><b>7.8.2</b> ANOVA</a></li>
+<li class="chapter" data-level="7.8.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#interaction-plot"><i class="fa fa-check"></i><b>7.8.3</b> Interaction Plot</a></li>
+<li class="chapter" data-level="7.8.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#bar-plot"><i class="fa fa-check"></i><b>7.8.4</b> Bar plot</a></li>
+<li class="chapter" data-level="7.8.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-8"><i class="fa fa-check"></i><b>7.8.5</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-experimental-design"><i class="fa fa-check"></i><b>7.9</b> Exercise: Experimental Design</a><ul>
+<li class="chapter" data-level="7.9.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#completely-randomized-design"><i class="fa fa-check"></i><b>7.9.1</b> Completely Randomized Design</a></li>
+<li class="chapter" data-level="7.9.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#randomized-complete-block-design-1"><i class="fa fa-check"></i><b>7.9.2</b> Randomized Complete Block Design</a></li>
+<li class="chapter" data-level="7.9.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#factorial-design-1"><i class="fa fa-check"></i><b>7.9.3</b> Factorial Design</a></li>
+<li class="chapter" data-level="7.9.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#split-plot-design-1"><i class="fa fa-check"></i><b>7.9.4</b> Split-Plot Design</a></li>
+<li class="chapter" data-level="7.9.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-9"><i class="fa fa-check"></i><b>7.9.5</b> Practice</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html"><i class="fa fa-check"></i><b>8</b> Means Separation and Data Presentation</a><ul>
+<li class="chapter" data-level="8.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-6"><i class="fa fa-check"></i><b>8.1</b> Case Study</a></li>
+<li class="chapter" data-level="8.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#least-significant-difference"><i class="fa fa-check"></i><b>8.2</b> Least Significant Difference</a></li>
+<li class="chapter" data-level="8.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#lsd-output-in-r"><i class="fa fa-check"></i><b>8.3</b> LSD Output in R</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#statistics-table"><i class="fa fa-check"></i><b>8.3.1</b> Statistics Table</a></li>
+<li class="chapter" data-level="8.3.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#means-table"><i class="fa fa-check"></i><b>8.3.2</b> Means Table</a></li>
+<li class="chapter" data-level="8.3.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#groups-table"><i class="fa fa-check"></i><b>8.3.3</b> Groups Table</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#comparisonwise-versus-experimentwise-error"><i class="fa fa-check"></i><b>8.4</b> Comparisonwise versus Experimentwise Error</a></li>
+<li class="chapter" data-level="8.5" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#tukeys-honest-significant-difference"><i class="fa fa-check"></i><b>8.5</b> Tukey’s Honest Significant Difference</a></li>
+<li class="chapter" data-level="8.6" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#linear-contrast"><i class="fa fa-check"></i><b>8.6</b> Linear Contrast</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#coefficients"><i class="fa fa-check"></i><b>8.6.1</b> Coefficients</a></li>
+<li class="chapter" data-level="8.6.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#linear-contrasts-with-r"><i class="fa fa-check"></i><b>8.6.2</b> Linear Contrasts with R</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#means-presentation"><i class="fa fa-check"></i><b>8.7</b> Means Presentation</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#means-tables"><i class="fa fa-check"></i><b>8.7.1</b> Means Tables</a></li>
+<li class="chapter" data-level="8.7.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#plotting-means"><i class="fa fa-check"></i><b>8.7.2</b> Plotting Means</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#exercise-lsd-and-tukeys-hsd"><i class="fa fa-check"></i><b>8.8</b> Exercise: LSD and Tukey’s HSD</a><ul>
+<li class="chapter" data-level="8.8.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-common-bean"><i class="fa fa-check"></i><b>8.8.1</b> Case Study: Common Bean</a></li>
+<li class="chapter" data-level="8.8.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#least-significant-difference-1"><i class="fa fa-check"></i><b>8.8.2</b> Least Significant Difference</a></li>
+<li class="chapter" data-level="8.8.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#tukey-hsd"><i class="fa fa-check"></i><b>8.8.3</b> Tukey HSD</a></li>
+<li class="chapter" data-level="8.8.4" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-apple"><i class="fa fa-check"></i><b>8.8.4</b> Practice: Apple</a></li>
+<li class="chapter" data-level="8.8.5" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-wheat-treatment-with-mildew"><i class="fa fa-check"></i><b>8.8.5</b> Practice: Wheat Treatment with Mildew</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#exercise-linear-contrasts"><i class="fa fa-check"></i><b>8.9</b> Exercise: Linear Contrasts</a><ul>
+<li class="chapter" data-level="8.9.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-winter-canola-cultivar-trial."><i class="fa fa-check"></i><b>8.9.1</b> Case Study: Winter Canola Cultivar Trial.</a></li>
+<li class="chapter" data-level="8.9.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#running-the-contrast"><i class="fa fa-check"></i><b>8.9.2</b> Running the Contrast</a></li>
+<li class="chapter" data-level="8.9.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-corn-nitrogen-source-and-timing"><i class="fa fa-check"></i><b>8.9.3</b> Practice: Corn Nitrogen Source and Timing</a></li>
+</ul></li>
+<li class="chapter" data-level="8.10" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#exercise-means-tables"><i class="fa fa-check"></i><b>8.10</b> Exercise: Means Tables</a><ul>
+<li class="chapter" data-level="8.10.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-corn-nitrogen-source-and-timing"><i class="fa fa-check"></i><b>8.10.1</b> Case Study: Corn Nitrogen Source and Timing</a></li>
+<li class="chapter" data-level="8.10.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-canola"><i class="fa fa-check"></i><b>8.10.2</b> Practice: Canola</a></li>
+<li class="chapter" data-level="8.10.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-broccoli-lsd"><i class="fa fa-check"></i><b>8.10.3</b> Practice: Broccoli LSD</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science for Agricultural Professionals</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="understanding-statistical-tests" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Understanding Statistical Tests</h1>
+<p>In the last unit, we introduced the concept of statistical testing and, although I endeavor to make this course as practical and painless as possible, I believe it worthwhile to spend a unit on some of the theory of statistical testing. This will help reinforce what we have learned so far in this course, and prepare us for the other statistical tests that lie ahead. Otherwise, it is easy to become ambiguous about what we are really testing, and unclear in reporting our results.</p>
+<p>In the last unit, we discussed experimental design and quickly jumped into data analysis. This unit, we will walk through the thought processes that surround our trial, including:
+- identifying our research question
+- creating a model from our question
+- identifying the hypotheses our data will be used to test
+- recognizing that we can mistakingly accept or reject these hypotheses
+- understanding how the confidence interval and p-value describe our measured difference
+- incorporating pre-existing knowledge into our hypotheses and tests</p>
+<p>This list seems intimidating, but we will take our time and break these down into as much plain language as statistics will allow.</p>
+<div id="research-question" class="section level2">
+<h2><span class="header-section-number">5.1</span> Research Question</h2>
+<p>As I have likely said before in this course, the first think you must have to design an experiment is a clear, testable research question. The question should be answerable using quantitative data and specific about what those data will measure. Here are some examples of bad and good questions:</p>
+<p>Bad: Is this fertilizer better than another? <br>
+Good: Does corn treated with 6-24-6 fertilizer at planting differ in yield from corn that is not treated with an in-furrow starter.</p>
+<p>Bad: Is the winter wheat variety MH666 (“the Beast”) different than variety MH007 (“the Bond”)? <br>
+Good: Does variety MH666 differ in test weight from variety MH007 ?</p>
+<p>Bad: Does herbicide deposition agent “Stick-It!” perform differently than agent “Get-Down!” ? <br>
+Good: Do “Stick-It!” and “Get-Down!” differ in the number of live weeds two weeks after their application with glyphosate?</p>
+<p>Remember to be clear about what we are measuring. Otherwise, it is unclear whether we are testing fertilizer affects on corn yield or moisture at harvest. We don’t know whether we are comparing winter wheat yield or head scab. We don’t know whether we are measuring the effect of our deposition agent on weed survival or crop injury.</p>
+</div>
+<div id="the-model" class="section level2">
+<h2><span class="header-section-number">5.2</span> The Model</h2>
+<p>The word “model” probably makes you shudder and think of a crowded blackboard filled with mathematical equations.</p>
+<!-- ![models]("roman-mager-5mZ_M06Fc9g-unsplash.jpg") -->
+<p>Yes, models can be quite complex. All of you have worked with models, however, and most of you should recall this one:</p>
+<p><span class="math display">\[ y = b + mx  \]</span>
+Where <span class="math inline">\(y\)</span> is the vertical coordinate of a point on a graph, <span class="math inline">\(x\)</span> is its horizontal coordinate, and <span class="math inline">\(b\)</span> is the Y-intercept (where the line crosses the y-axis). The most interesting variable is often <span class="math inline">\(m\)</span>, the slope. The slope is the unit increase in y with each unit increase in x.</p>
+<p>Suppose we took a field of corn and conducted a side-by-side trial where half of the plots were sidedressed with 150 lbs treated with an N stabilizer. The other half were sidedressed with 150 lbs actual N plus 1 unit of nitrogen stabilizer. The mean yield of plots treated with N plus nitrogen stabilizer was 195 bu and the mean yield of plots treated with N alone was 175 bu. How could we express this with a slope equation?</p>
+<p>First, let’s state this as a table. We will express the N stabilizer quantitatively. The “No Stabilizer” treatment included zero units of N stabilizer. The “Stabilizer” treatment received 1 unit of stabilizer.</p>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="understanding-statistical-tests.html#cb334-1"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.3     v purrr   0.3.4
+## v tibble  3.1.0     v dplyr   1.0.5
+## v tidyr   1.1.3     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.1</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="understanding-statistical-tests.html#cb338-1"></a><span class="kw">set.seed</span>(<span class="dv">1776</span>)</span>
+<span id="cb338-2"><a href="understanding-statistical-tests.html#cb338-2"></a><span class="st">`</span><span class="dt">No Stabilizer</span><span class="st">`</span> =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">4</span>, <span class="dt">mean=</span><span class="dv">175</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb338-3"><a href="understanding-statistical-tests.html#cb338-3"></a><span class="st">`</span><span class="dt">Stabilizer</span><span class="st">`</span> =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">4</span>, <span class="dt">mean =</span> <span class="dv">195</span>, <span class="dt">sd=</span><span class="dv">5</span>)</span>
+<span id="cb338-4"><a href="understanding-statistical-tests.html#cb338-4"></a></span>
+<span id="cb338-5"><a href="understanding-statistical-tests.html#cb338-5"></a>original_data =<span class="st"> </span><span class="kw">cbind</span>(<span class="st">`</span><span class="dt">No Stabilizer</span><span class="st">`</span>, <span class="st">`</span><span class="dt">Stabilizer</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
+<span id="cb338-6"><a href="understanding-statistical-tests.html#cb338-6"></a><span class="st">  </span><span class="kw">as.data.frame</span>() </span>
+<span id="cb338-7"><a href="understanding-statistical-tests.html#cb338-7"></a></span>
+<span id="cb338-8"><a href="understanding-statistical-tests.html#cb338-8"></a>means_table =<span class="st"> </span>original_data <span class="op">%&gt;%</span></span>
+<span id="cb338-9"><a href="understanding-statistical-tests.html#cb338-9"></a><span class="st">  </span><span class="kw">gather</span>(Treatment, Yield) <span class="op">%&gt;%</span></span>
+<span id="cb338-10"><a href="understanding-statistical-tests.html#cb338-10"></a><span class="st">  </span><span class="kw">group_by</span>(Treatment) <span class="op">%&gt;%</span></span>
+<span id="cb338-11"><a href="understanding-statistical-tests.html#cb338-11"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Yield =</span> <span class="kw">mean</span>(Yield)) <span class="op">%&gt;%</span></span>
+<span id="cb338-12"><a href="understanding-statistical-tests.html#cb338-12"></a><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
+<span id="cb338-13"><a href="understanding-statistical-tests.html#cb338-13"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Yield =</span> <span class="kw">round</span>(Yield, <span class="dv">1</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb338-14"><a href="understanding-statistical-tests.html#cb338-14"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Nitrogen =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb338-15"><a href="understanding-statistical-tests.html#cb338-15"></a><span class="st">  </span><span class="kw">select</span>(Treatment, Nitrogen, Yield) <span class="op">%&gt;%</span></span>
+<span id="cb338-16"><a href="understanding-statistical-tests.html#cb338-16"></a><span class="st">  </span><span class="kw">column_to_rownames</span>(<span class="dt">var =</span> <span class="st">&quot;Treatment&quot;</span>) </span>
+<span id="cb338-17"><a href="understanding-statistical-tests.html#cb338-17"></a></span>
+<span id="cb338-18"><a href="understanding-statistical-tests.html#cb338-18"></a>mean_yield =<span class="st"> </span><span class="kw">mean</span>(means_table<span class="op">$</span>Yield)</span>
+<span id="cb338-19"><a href="understanding-statistical-tests.html#cb338-19"></a></span>
+<span id="cb338-20"><a href="understanding-statistical-tests.html#cb338-20"></a>means_table</span></code></pre></div>
+<pre><code>##               Nitrogen Yield
+## No Stabilizer        0 177.7
+## Stabilizer           1 198.0</code></pre>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="understanding-statistical-tests.html#cb340-1"></a><span class="co"># yield = c(175, 195, 185)</span></span>
+<span id="cb340-2"><a href="understanding-statistical-tests.html#cb340-2"></a><span class="co"># nitrogen = c(0, 1, 0.5)</span></span>
+<span id="cb340-3"><a href="understanding-statistical-tests.html#cb340-3"></a><span class="co"># original_data = cbind(nitrogen, yield) %&gt;%</span></span>
+<span id="cb340-4"><a href="understanding-statistical-tests.html#cb340-4"></a><span class="co">#   as.data.frame()</span></span>
+<span id="cb340-5"><a href="understanding-statistical-tests.html#cb340-5"></a><span class="co"># rownames(original_data) = c(&quot;No Stabilizer&quot;, &quot;Stabilizer&quot;, &quot;Mean&quot;)</span></span>
+<span id="cb340-6"><a href="understanding-statistical-tests.html#cb340-6"></a><span class="co"># </span></span>
+<span id="cb340-7"><a href="understanding-statistical-tests.html#cb340-7"></a><span class="co"># original_data</span></span></code></pre></div>
+<p>In creating this table, we also calculated the mean stabilizer rate and corn yield across all plots. These are are population means for the field.</p>
+<p>Now, let’s express the stabilizer rate and yield little differently, this time by their differences from their population mean. In half of the plots, the N stabilizer rate was 0.5 less than the population mean of 187.9; in the other half, the rate was 0.5 greater. Similarly, the yield in half of the plots was about 10 bushels less than the population mean of 188.9; in the other half of the plots, it was 10 bushels greater. Our table now looks like this:</p>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="understanding-statistical-tests.html#cb341-1"></a>centered_data =<span class="st"> </span>means_table <span class="op">%&gt;%</span></span>
+<span id="cb341-2"><a href="understanding-statistical-tests.html#cb341-2"></a><span class="st">  </span><span class="kw">scale</span>(<span class="dt">scale =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb341-3"><a href="understanding-statistical-tests.html#cb341-3"></a><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span></span>
+<span id="cb341-4"><a href="understanding-statistical-tests.html#cb341-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Yield =</span> <span class="kw">round</span>(Yield, <span class="dv">1</span>))</span>
+<span id="cb341-5"><a href="understanding-statistical-tests.html#cb341-5"></a></span>
+<span id="cb341-6"><a href="understanding-statistical-tests.html#cb341-6"></a>centered_data</span></code></pre></div>
+<pre><code>##               Nitrogen Yield
+## No Stabilizer     -0.5 -10.2
+## Stabilizer         0.5  10.2</code></pre>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="understanding-statistical-tests.html#cb343-1"></a><span class="co"># </span></span>
+<span id="cb343-2"><a href="understanding-statistical-tests.html#cb343-2"></a><span class="co"># yield = c(-10, 10, 0)</span></span>
+<span id="cb343-3"><a href="understanding-statistical-tests.html#cb343-3"></a><span class="co"># nitrogen = c(-0.5, 0.5, 0)</span></span>
+<span id="cb343-4"><a href="understanding-statistical-tests.html#cb343-4"></a><span class="co"># centered_data = cbind(nitrogen, yield) %&gt;%</span></span>
+<span id="cb343-5"><a href="understanding-statistical-tests.html#cb343-5"></a><span class="co">#   as.data.frame()</span></span>
+<span id="cb343-6"><a href="understanding-statistical-tests.html#cb343-6"></a><span class="co"># rownames(centered_data) = c(&quot;No Stabilizer&quot;, &quot;Stabilizer&quot;, &quot;Mean&quot;)</span></span>
+<span id="cb343-7"><a href="understanding-statistical-tests.html#cb343-7"></a><span class="co"># </span></span>
+<span id="cb343-8"><a href="understanding-statistical-tests.html#cb343-8"></a><span class="co"># centered_data</span></span></code></pre></div>
+<p>What we have just done is a statistical process called <em>center scaling</em>. Centering expresses measures by their distance from the population mean, instead of as absolute values.</p>
+<p>Now let’s plot this out using our line equation. <span class="math inline">\(y\)</span> equals yield. <span class="math inline">\(x\)</span> equals nitrogen rate. <span class="math inline">\(b\)</span> equals the mean yield, the y-intercept, which is zero in our centered data.</p>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="understanding-statistical-tests.html#cb344-1"></a><span class="kw">library</span>(ggpubr)</span>
+<span id="cb344-2"><a href="understanding-statistical-tests.html#cb344-2"></a></span>
+<span id="cb344-3"><a href="understanding-statistical-tests.html#cb344-3"></a>means_plot =<span class="st"> </span>centered_data <span class="op">%&gt;%</span></span>
+<span id="cb344-4"><a href="understanding-statistical-tests.html#cb344-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Nitrogen, <span class="dt">y=</span>Yield)) <span class="op">+</span></span>
+<span id="cb344-5"><a href="understanding-statistical-tests.html#cb344-5"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">color=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size =</span><span class="dv">5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb344-6"><a href="understanding-statistical-tests.html#cb344-6"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="fl">1.5</span>) </span>
+<span id="cb344-7"><a href="understanding-statistical-tests.html#cb344-7"></a></span>
+<span id="cb344-8"><a href="understanding-statistical-tests.html#cb344-8"></a>means_plot <span class="op">+</span><span class="st"> </span></span>
+<span id="cb344-9"><a href="understanding-statistical-tests.html#cb344-9"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Nitrogen <span class="op">+</span><span class="st"> </span><span class="fl">0.06</span>, <span class="dt">y =</span> Yield, <span class="dt">label =</span> Yield), <span class="dt">size =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p><img src="05-Understanding-Statistical-Tests_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Ta da: our line plot. If we were to write this as a linear equation, it would be:</p>
+<p><span class="math display">\[ Yield = 0 + 20*Stabilizer\]</span>
+Thus, as the N stabilizer rate increase from 0 (no stabilizer) to 1 (stabilizer), yield increases 20 bushels.</p>
+<div id="treatment-effect" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Treatment Effect</h3>
+<p>Another way of expressing the effect of the treatment levels is in terms of their distance from the mean yield across all plots. Where sidedressed with nitrogen alone, our mean yield is equal to the population mean minus 10. Conversely, where we sidedressed with nitrogen plus stabilizer, our yield is the population mean <em>plus</em> 10.2. We can express these treatment effects as:</p>
+<p><span class="math display">\[Unstabilized : T_0 = -10.2\]</span>
+<span class="math display">\[Stabilized: T_1 = +10.2\]</span></p>
+<p>Our mean yield when corn is sidedressed with N without stabilizer is then equal to the mean yield across all plots plus the treatment effect:</p>
+<p><span class="math display">\[Unstabilized: Y_0 = \mu + T_0 \]</span>
+<span class="math display">\[Stabilized: Y_1 = \mu + T_1 \]</span></p>
+<p>We can prove this to ourselves by plugging in the actual yields for <span class="math inline">\(Y\)</span> and <span class="math inline">\(\mu\)</span> and the actual treatment effects for <span class="math inline">\(T_0\)</span> and <span class="math inline">\(T_1\)</span>:
+<span class="math display">\[ Unstabilized: 175 = 185 + (-10.2) \]</span>
+<span class="math display">\[Stabilized: Y_1 = 185 + (+10.2) \]</span></p>
+</div>
+<div id="error-effect" class="section level3">
+<h3><span class="header-section-number">5.2.2</span> Error Effect</h3>
+<p>The treatment effect is known as a <em>fixed</em> effect: we assume it will be consistent across all plots within our trial. That said, will every plot that receives nitrogen plus stabilizer will yield 195 bushels? Will every field sidedressed with nitrogen without stabilizer yield 175?</p>
+<p>Of course not. Any yield map will show variation in yield within a field, even when the entire field has been managed uniformly. Differences in soil texture and microclimates, inconsistencies in field operations, and inaccuracies in measuring equipment contribute to variations in the values recorded recorded. These variations will also add to or subtract from the mean yield across all plots.</p>
+<p>We can visualize this in the plot below.</p>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="understanding-statistical-tests.html#cb345-1"></a>centered_original_data_by_trt =<span class="st"> </span>original_data <span class="op">%&gt;%</span></span>
+<span id="cb345-2"><a href="understanding-statistical-tests.html#cb345-2"></a><span class="st">  </span><span class="kw">gather</span>(Nitrogen, Yield) <span class="op">%&gt;%</span></span>
+<span id="cb345-3"><a href="understanding-statistical-tests.html#cb345-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Nitrogen =</span> <span class="kw">gsub</span>(<span class="st">&quot;No Stabilizer&quot;</span>, <span class="fl">-0.5</span>, Nitrogen)) <span class="op">%&gt;%</span></span>
+<span id="cb345-4"><a href="understanding-statistical-tests.html#cb345-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Nitrogen =</span> <span class="kw">gsub</span>(<span class="st">&quot;Stabilizer&quot;</span>, <span class="fl">0.5</span>, Nitrogen)) <span class="op">%&gt;%</span></span>
+<span id="cb345-5"><a href="understanding-statistical-tests.html#cb345-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mu =</span> <span class="kw">mean</span>(Yield)) <span class="op">%&gt;%</span></span>
+<span id="cb345-6"><a href="understanding-statistical-tests.html#cb345-6"></a><span class="st">  </span><span class="kw">group_by</span>(Nitrogen) <span class="op">%&gt;%</span></span>
+<span id="cb345-7"><a href="understanding-statistical-tests.html#cb345-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">T =</span> <span class="kw">mean</span>(Yield) <span class="op">-</span><span class="st"> </span>mu) <span class="op">%&gt;%</span></span>
+<span id="cb345-8"><a href="understanding-statistical-tests.html#cb345-8"></a><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
+<span id="cb345-9"><a href="understanding-statistical-tests.html#cb345-9"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">E =</span> Yield <span class="op">-</span><span class="st"> </span>T <span class="op">-</span><span class="st"> </span>mu) <span class="op">%&gt;%</span><span class="st">  </span></span>
+<span id="cb345-10"><a href="understanding-statistical-tests.html#cb345-10"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Effect =</span> T <span class="op">+</span><span class="st"> </span>E) <span class="op">%&gt;%</span></span>
+<span id="cb345-11"><a href="understanding-statistical-tests.html#cb345-11"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Nitrogen =</span> <span class="kw">as.numeric</span>(Nitrogen)) <span class="op">%&gt;%</span></span>
+<span id="cb345-12"><a href="understanding-statistical-tests.html#cb345-12"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">E =</span> <span class="kw">round</span>(E,<span class="dv">1</span>))</span>
+<span id="cb345-13"><a href="understanding-statistical-tests.html#cb345-13"></a></span>
+<span id="cb345-14"><a href="understanding-statistical-tests.html#cb345-14"></a>means_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> centered_original_data_by_trt, <span class="kw">aes</span>(<span class="dt">x =</span> Nitrogen, <span class="dt">y=</span>Effect, <span class="dt">label=</span>E), <span class="dt">size=</span><span class="dv">3</span>, <span class="dt">color=</span><span class="st">&quot;tomato&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb345-15"><a href="understanding-statistical-tests.html#cb345-15"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> centered_original_data_by_trt, <span class="kw">aes</span>(<span class="dt">x =</span> Nitrogen<span class="fl">+0.02</span>, <span class="dt">y =</span> Effect, <span class="dt">label =</span> E), <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">4</span>)</span></code></pre></div>
+<pre><code>## Warning: Ignoring unknown aesthetics: label</code></pre>
+<p><img src="05-Understanding-Statistical-Tests_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>The blue points still represent the treatment mean, and the black line represents the difference between treatments. The red points are the original data – note how they are distributed around each treatment mean. Any individual observation is going to add to or subtract from its treatment mean. The value which each point adds to the treatment mean is show to the right of the point. This is the error effect for that observation.</p>
+<p>Sometimes it is easier to view the experimental unit effect another way, by excluding the treatment effect so that just the effects are plotted around their mean of zero:</p>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="understanding-statistical-tests.html#cb347-1"></a>centered_original_data_by_trt <span class="op">%&gt;%</span></span>
+<span id="cb347-2"><a href="understanding-statistical-tests.html#cb347-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Nitrogen, <span class="dt">y=</span>E)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb347-3"><a href="understanding-statistical-tests.html#cb347-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">color=</span><span class="st">&quot;tomato&quot;</span>) <span class="op">+</span></span>
+<span id="cb347-4"><a href="understanding-statistical-tests.html#cb347-4"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="kw">aes</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>), <span class="dt">size=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="05-Understanding-Statistical-Tests_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>This kind of plot is often called a <em>residual plot</em>, because the error can be thought of as the unexplained, leftover (ie “residue”) effect after the population mean and and treatment effects are accounted for. When a correct model is fit to the data, about half the observations for each treatment should be greater than zero, and half below zero. The residual plot is a valuable tool to inspect and verify this assumption.</p>
+<p>The yield observed in each plot, then, will be the sum of three values:
+- the mean yield across all plots
+- the effect of the treatment applied to that plot
+- the combined effect of environment, field operations, and measurements</p>
+<p>This model can be expressed as:</p>
+<p><span class="math display">\[ Y_{ij} = \mu + T_i + \epsilon_{ij} \]</span></p>
+<p>Where:
+- <span class="math inline">\(Y_{ij}\)</span> is the yield of the <span class="math inline">\(i^{th}\)</span> treatment level in the <span class="math inline">\(j^{th}\)</span> block
+- <span class="math inline">\(\mu\)</span> is the yield mean across all plots
+- <span class="math inline">\(T_i\)</span> is the effect of the <span class="math inline">\(i^{th}\)</span> level of stabilizer
+- <span class="math inline">\(\epsilon_{ij}\)</span> is the <em>random</em> effect associated with the plot in the <span class="math inline">\(j^{th}\)</span> block that received the <span class="math inline">\(i^{th}\)</span> level of stabilizer</p>
+<p>For example, a plot in the 3rd block that received nitrogen treated with stabilizer (<span class="math inline">\(T_1\)</span>) would be indicated by the equation:</p>
+<p><span class="math display">\[ Y_{13} = \mu + T_1 + \epsilon_{13} \]</span></p>
+<p>If the error for this plot, <span class="math inline">\(\epsilon_{13}\)</span>, was -2, the observed yield would be:</p>
+<p><span class="math display">\[ Y_{13} = 185 + 10 -2 = 193 \]</span></p>
+<p>Why bother with the linear model when we simply want to know if one treatment yields more than the other? There are two reasons. First, although in agriculture we often think of field trials as testing differences, what we are really doing is using the data from those trials to <em>predict</em> future differences. In my opinion, this is one of the key differences betweeen classical statistics and data science. Classical statistics describes what haas happened in the past. Data science predicts what will happen in the future.</p>
+<p>The linear model above is exactly how we would use data from this trial to predict yields if the product is used under similar conditions. Adding the stabilizer to nitrogen during sidedress will increase the mean yield for a field by 10 bushels. But any given point in that field will have a yield that is also determined by the random effects that our model cannot predict: soil and microclimate, equipment, and measurement errors.</p>
+<p>Second, the linear model illustrates what statistics will test for us. Ultimately, every statistical test is a comparison between fixed and random effects: what explains the differences in our observations more: the fixed effects (our treatment) or random effects (error)? In our current example, we can visualize this as follows:</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="understanding-statistical-tests.html#cb348-1"></a>centered_original_data =<span class="st"> </span>original_data <span class="op">%&gt;%</span></span>
+<span id="cb348-2"><a href="understanding-statistical-tests.html#cb348-2"></a><span class="st">  </span><span class="kw">gather</span>(Nitrogen, Yield) <span class="op">%&gt;%</span></span>
+<span id="cb348-3"><a href="understanding-statistical-tests.html#cb348-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Nitrogen =</span> <span class="kw">gsub</span>(<span class="st">&quot;No Stabilizer&quot;</span>, <span class="fl">-0.5</span>, Nitrogen)) <span class="op">%&gt;%</span></span>
+<span id="cb348-4"><a href="understanding-statistical-tests.html#cb348-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Nitrogen =</span> <span class="kw">gsub</span>(<span class="st">&quot;Stabilizer&quot;</span>, <span class="fl">0.5</span>, Nitrogen)) <span class="op">%&gt;%</span></span>
+<span id="cb348-5"><a href="understanding-statistical-tests.html#cb348-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Yield =</span> Yield <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(Yield)) <span class="op">%&gt;%</span></span>
+<span id="cb348-6"><a href="understanding-statistical-tests.html#cb348-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Nitrogen =</span> <span class="kw">as.numeric</span>(Nitrogen))</span>
+<span id="cb348-7"><a href="understanding-statistical-tests.html#cb348-7"></a></span>
+<span id="cb348-8"><a href="understanding-statistical-tests.html#cb348-8"></a><span class="kw">library</span>(ggpubr)</span>
+<span id="cb348-9"><a href="understanding-statistical-tests.html#cb348-9"></a></span>
+<span id="cb348-10"><a href="understanding-statistical-tests.html#cb348-10"></a></span>
+<span id="cb348-11"><a href="understanding-statistical-tests.html#cb348-11"></a><span class="kw">library</span>(pBrackets)</span>
+<span id="cb348-12"><a href="understanding-statistical-tests.html#cb348-12"></a><span class="kw">library</span>(grid)</span>
+<span id="cb348-13"><a href="understanding-statistical-tests.html#cb348-13"></a></span>
+<span id="cb348-14"><a href="understanding-statistical-tests.html#cb348-14"></a></span>
+<span id="cb348-15"><a href="understanding-statistical-tests.html#cb348-15"></a>means_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> centered_original_data, <span class="kw">aes</span>(<span class="dt">x =</span> Nitrogen, <span class="dt">y=</span>Yield), <span class="dt">size=</span><span class="dv">3</span>, <span class="dt">color=</span><span class="st">&quot;tomato&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb348-16"><a href="understanding-statistical-tests.html#cb348-16"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="op">-</span><span class="fl">0.40</span>, <span class="dt">y=</span><span class="op">-</span><span class="dv">10</span>), <span class="dt">label=</span><span class="st">&quot;Does the spread of</span><span class="ch">\n</span><span class="st">individuals within a treatment</span><span class="ch">\n</span><span class="st">explain more of the variance?&quot;</span>, </span>
+<span id="cb348-17"><a href="understanding-statistical-tests.html#cb348-17"></a>            <span class="dt">hjust=</span><span class="dv">0</span>, <span class="dt">vjust=</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">5</span>) <span class="op">+</span></span>
+<span id="cb348-18"><a href="understanding-statistical-tests.html#cb348-18"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="fl">0.05</span>, <span class="dt">y=</span><span class="dv">0</span>), <span class="dt">label=</span><span class="st">&quot;Or does the difference</span><span class="ch">\n</span><span class="st">between treatments explain</span><span class="ch">\n</span><span class="st">more of the variance?&quot;</span>, </span>
+<span id="cb348-19"><a href="understanding-statistical-tests.html#cb348-19"></a>            <span class="dt">hjust=</span><span class="dv">0</span>, <span class="dt">vjust=</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">5</span>) </span>
+<span id="cb348-20"><a href="understanding-statistical-tests.html#cb348-20"></a>  </span>
+<span id="cb348-21"><a href="understanding-statistical-tests.html#cb348-21"></a></span>
+<span id="cb348-22"><a href="understanding-statistical-tests.html#cb348-22"></a><span class="kw">grid.locator</span>(<span class="dt">unit=</span><span class="st">&quot;native&quot;</span>) </span>
+<span id="cb348-23"><a href="understanding-statistical-tests.html#cb348-23"></a></span>
+<span id="cb348-24"><a href="understanding-statistical-tests.html#cb348-24"></a><span class="kw">grid.brackets</span>(<span class="dv">95</span>, <span class="dv">200</span>, <span class="dv">95</span>, <span class="dv">370</span>, <span class="dt">h=</span><span class="fl">0.05</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb348-25"><a href="understanding-statistical-tests.html#cb348-25"></a><span class="kw">grid.brackets</span>(<span class="dv">370</span>, <span class="dv">100</span>, <span class="dv">370</span>, <span class="dv">285</span>, <span class="dt">h=</span><span class="fl">0.05</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="05-Understanding-Statistical-Tests_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>The purpose of a trial is to measure both types of effects and render a verdict. Which is hypotheses are important, as we will now see.</p>
+</div>
+</div>
+<div id="hypotheses" class="section level2">
+<h2><span class="header-section-number">5.3</span> Hypotheses</h2>
+<p>Before we design any experiment, however, we have to define our research question. In the case of a side-by-side trial, the question is generally: "Is one treatments better than the other? This question then needs to be translated into hypotheses.</p>
+<p>Outside of statistics, a hypothesis is often described as “an educated guess.” Experiments are designed, however, to test two or more hypotheses. We may casually describe a side-by-side trial as comparing two treatments, but the data are formally used as evidence to test two, opposing hypotheses:</p>
+<ul>
+<li>Ho: The difference between the two treatments is zero.</li>
+<li>Ha: The difference between the two treatments is not zero.</li>
+</ul>
+<p>The first hypothesis, Ho, is called the <em>null hypothesis</em>. The second hypothesis, Ha, is the <em>alternative hypothesis</em>. Typically, we tend to focus our effort on gathering enough evidence to support the alternative hypothesis: after all this work, we typically want to see a treatment difference! But we need to remember the null hypothesis may also be supported.</p>
+<p>This process, like the linear model ahead, probably seems overly-formal at first. But like the linear model, it helps us to understand what statistics really tell us. We cannot prove either of these hypotheses. The world is full of one-off exceptions that will prevent either hypothesis from being universal truths. Our science is about comparing the evidence for each hypothesis, and selecting the hypothesis that is probable enough to meet our standards.</p>
+<p>To illustrate this, look no further than the t-test we used in the last unit:</p>
+<p><span class="math display">\[ t = \frac{\bar{x}-\mu}{SED} \]</span></p>
+<p>Recall that <span class="math inline">\(\bar{x}\)</span> was our treatment difference, <span class="math inline">\(\mu\)</span> was the hypothesized treatment difference (zero), and <span class="math inline">\(SED\)</span> was the standard error of the difference. The numerator is our treatment effect on plot yield. The denominator quantifes the random effects on plot yield. As this ratio increases, so does t. As t increases, the probability that the true population difference is zero decreases.</p>
+<p>Another nuance of hypotheses is this, especially when it comes to the alternative hypothesis. If the evidence fails to support the alternative hypothesis, that does not mean it is wrong. The fixed (treatment) effect we observed was real. But the random effect was so great we could not rule out the differences we observed were the result of chance.</p>
+<p>Simply put, our confidence interval was too big to rule out the true difference between treatments was actually zero. There was too much variation among plots. In a trial with a lower standard error of the difference, our t-value would have been greater, and the probability that the true difference between treatments was zero would be lesser.</p>
+<p>Statistics is not about finding the truth. It is about quantifying the probability an observed difference is the result of chance. Lower probabilities suggest less chance in our observations, and the greater likelihood this difference will be observed if the trial is repeated by someone else, in a laboratory, or in a production field.</p>
+</div>
+<div id="p-value" class="section level2">
+<h2><span class="header-section-number">5.4</span> P-Value</h2>
+<p>The P-Value is always a source of confusion in statistics. What does it mean? What is so magical about the 0.05, or 5%, cutoff for declaring populations different? Even if you think you’ve mastered the P_value concept already, let’s review it one more time.</p>
+<p>The P-value, as applied to a distribution, is the probability of obseverving a value with a given (or greater) difference from the population mean. For example, if we have a t-distribution with a mean of 0 and a standard error of 1, the probability we will, the probability we will observe a value 2.3 standard errors away than the mean, given a population size of 4, is 0.047, or 4.7%.</p>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="understanding-statistical-tests.html#cb349-1"></a><span class="kw">library</span>(fastGraph)</span>
+<span id="cb349-2"><a href="understanding-statistical-tests.html#cb349-2"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">2.3</span>, <span class="fl">2.3</span>), <span class="st">&quot;dt&quot;</span>, <span class="dt">parm2 =</span> <span class="dv">9</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="05-Understanding-Statistical-Tests_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>What does a P-value of 0.047 mean? It means the probability of us measuring this value, by dumb luck, when the true population mean is 0, is about 4.7%. Put another way, given the standard error we observed, if the true population mean was zero, we would observe a value equal to or more than 2.3 units away from the mean in less than 5 out of 100 trials.</p>
+<p>If this concept sounds the same as that described for a confidence interval, that’s because it is the same principle. If we constructed a 95% confidence interval around the sample mean of 2.3, we would see it excludes zero.</p>
+<p>Knowing this, we have three options. We can conclude, for now, that the population mean really was zero and we were just very lucky (or unlucky) in our sampling.</p>
+<p>We could also repeat the trial multiple times, to see what other values occur. If this is a field trial, that will incur additional research expenses. Even worse, it means delaying a recommendation for several seasons.</p>
+<p>Our final option would be to conclude that our population mean is probably <em>not</em> zero. If the probability of observing a sample mean 2.3 or more units away from the mean, when the true population mean is zero, is 4.7% or less, then we can also say that the probability that the population mean has a value of zero or less, given our sample mean of 2.3, is 4.7% or less. Given this knowledge, we may conclude the true population mean is different from zero.</p>
+<p>This is the power – and beauty! – of statistics. By properly designing an experiment (with sufficient replication and randomization), we can estimate the variability of individuals within a population. We can then use these estimates to test the probability of a hypothetical population mean, given the variability in our sample. And from that, we decide whether one population (which, for example, may have received a new product) is different from the other (which was untreated).</p>
+</div>
+<div id="the-p-value-and-errors" class="section level2">
+<h2><span class="header-section-number">5.5</span> The P-Value and Errors</h2>
+<p>There are two kinds of P-value: the P-Value we measure, and the maximum P-Value we will accept before determinng an observed difference between populations is insignificant. This maximum P-Value is referred to as <em>alpha</em> (<span class="math inline">\(\alpha\)</span>). You have probably seen statistical summaries that included whether treatments were "different at the <span class="math inline">\(P \le 0.05\)</span> level. In this case, the <span class="math inline">\(\alpha\)</span> is 0.05, or 5%.</p>
+<p>Before we discuss why an alpha of 0.05 or 5% is so often used for statistical tests, we need to understand how it relates to the likelihood we will reach the correct inference when comparing populations. You see, once we have gathered our data, calculated the variance in those populations (or, in the case of the paired t-test, the variance in their differences), and run our test(s), we will conclude either that the two populations are the same, or that they are different.</p>
+<p>Either conclusion may be right. Or it may be wrong. And since we rarely measure entire populations, we never know their exact population means. We work with probabilities. In the above example, there was a 4.7% chance we could observe a sample mean 2.3 units from a true population of zero. That means there is a 95.3 % (100 - 4.7) chance we would not see that value by chance. But there is still a chance. In other words, there is still a chance we could conclude the population mean is not zero, when in fact it is.</p>
+<p>When we infer the mean of one population is significantly different from another (whether the second mean be measured or hypothesized), when in fact the two population means are equal, we commit a <em>Type I Error</em>. One example would be concluding the yield of one population, having received additional fertilizer, yielded more than an unfertilized population, when in fact their yields were equal. Another example would be concluding there is a difference in the percent of corn rejected from two populations, each treated with a different insecticide.</p>
+<p>The P-value is the probability of making that Type I Error: of observing a sample mean so improbable enough that it leads us to conclude two populations are different, when for all purposes they are the same. If we are worried that recommending a product to a grower that does not increase yield will cost us their business, then we are worried about making a Type I Error. Outside of agriculture, if we are worried about releasing a treatment for COVID-19 that does not work and will leave users unprotected, we are worried about a Type I Error.</p>
+<p>If we are really, really worried about wrongly inferring a difference between populations, we might use an even lower P-value. We might use P=0.01, which means we will not infer two treatments are different unless the mean difference we observe has less than a 1% probability of being observed by chance. This might be the case if the product we recommend to a grower is not $10 per acre, but $30. If our COVID treatment is very expensive or has serious side effects, we might insist on an even lower alpha, say P=0.001, or 0.1%.</p>
+<p>So why not always use an alpha of 0.01 or 0.001 to infer whether two populations are different?</p>
+<p>There is a second error we can make in the inferences from our research: we can conclude two populations are not different, when in fact they are. In this case, we observed, by chance, a sample mean from one population that was very close to the mean (hypothesized or measured) of another population, when in fact the two population means are different.</p>
+<p>For example, a plant breeder might conclude a there performance of a new hybrid is similar to an existing hybrid, and fail to advance it for further testing. An agronomist might erroneously conclude there is no difference in plants treated with one of two micronnutrient fertilizers, and fail to recommend the superior one to a grower.</p>
+<p>Even more dangerously, a health researcher might conclude there is no difference in the incidence of strokes between a population that receives a new medication and an untreated population, and erroneously conclude a that mdeciation is safe.</p>
+<p>Thus, there is a tradeoff betwteen Type I and Type II errors. By reducing the alpha used as critierial to judge whether an one value is significantly different from another, we reduce the likelihood of a Type I error, but increase the likelihood of a Type II error.</p>
+<p>In agronomic research, we conventionally use an alpha of 0.05. I cannot explain why we use that particular alpha, other than to suggest it provides an acceptable balance between the risks of Type I and Type II errors for our purposes. It is a value that assures most of the time we will only adopt new practices that very likely to increase biomass or quality, while preventing us wrongly rejecting other practices. In my research, I might use an alpha of 0.05 in comparing hybrids for commercial use. But I might use an alpha of 0.10 or 0.15 if I was doing more basic work in weed ecology where I was testing a very general hypothesis to explain their behavior.</p>
+<p>To make things simple, wew will use an alpha of 0.05 for tests in this course, unless states otherwise.</p>
+</div>
+<div id="one-sided-vs-two-sided-hypotheses" class="section level2">
+<h2><span class="header-section-number">5.6</span> One-Sided vs Two-Sided Hypotheses</h2>
+<p>So far, we have treated our hypotheses as:</p>
+<p>Ho: there is no difference between two populations, each treated with a different input or practice
+Ha: there is a difference between two populations, each treated with a different input or practice</p>
+<p>We could casually refer to these as “no difference” and “any difference”. But often in side-by-side trials, we have an intuitive sense (or hope) that one population will be “better” than another. If we are the yield of the two populations, one planted with an older hybrid and the other with a newer hybrid, we may be trying to determine whether the new hybrid is likely to yield more. If we comparing the number of infected plants in populations treated with different fungicides, we may hope the population that receives the new technology will have fewer diseased plants that the population that receives the older technology..</p>
+<p>Is this bias? Yes. Is it wrong? I would argue no. The whole purpose of product development, in which I work, is to identify better products. Better hybrids, better micronutrients, better plant growth regulators. If we were equally satisfied whether a new product performed significantly better or significantly worse than an older product – well, in that case, I’d better look into teaching another section of this course.</p>
+<p>It is okay to have this kind of bias, so long as we keep our research honest. Proper experimental design, including replication and randomization of plots in the field, or pots in the greenhouse, will go a long way towards that honest. So will selection of a P-value that acceptably minimizes Type I errors, so that we don’t advance a new product which isn’t highly likely to perform better in future trials, or in the grower’s field.</p>
+<p>When we have this kind of bias, or interest, however, it also changes our hypotheses. Our null hypothesis is that the population treated with the new product will not perform better than the population treated with the old product. Our alternative hypothesis is the population treated with the new product will perform better.</p>
+<p>If we are comparing yield in corn populations treated with a new fungicide, our hypotheses will be:</p>
+<ul>
+<li>Ho: The yield of the population that receives the new fungicide will be equal too – <em>or lesser</em> – than the yield of the population that receives the old fungicide.</li>
+<li>Ha: The yield of the population that receives the new fungicide will be <em>greater</em> than the yield of the population that receives the old fungicide.</li>
+</ul>
+<p>The reason these are called one-sided hypotheses is because we are only interersted in one-side of the normal distribution. In the two-sided hypotheses we have worked with, we would only care if the yield of the two populations (one receiving the old fungicide, the other receiving the new fungicide) were different. To visualize this</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="understanding-statistical-tests.html#cb350-1"></a><span class="kw">library</span>(fastGraph)</span>
+<span id="cb350-2"><a href="understanding-statistical-tests.html#cb350-2"></a>alpha_<span class="dv">05</span>_2side =<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dv">4</span>)</span>
+<span id="cb350-3"><a href="understanding-statistical-tests.html#cb350-3"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span><span class="kw">c</span>(<span class="op">-</span>alpha_<span class="dv">05</span>_2side, alpha_<span class="dv">05</span>_2side), <span class="st">&quot;dt&quot;</span>, <span class="dt">parm2 =</span> <span class="dv">4</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="05-Understanding-Statistical-Tests_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>If either <span class="math inline">\(t\le-2.78\)</span> or <span class="math inline">\(t\ge-2.78\)</span> (either of the red areas above), we declare the two populations different. In other words, the observed t-value can occur in either of the two tails and be significant. Accordingly, we refer to this as a two-tailed test.</p>
+<p>In testing a one-sided hypothesis, we only care if the difference between the population that received the new fungicide and the population that received the old fungicide (ie new fungicide - old fungicide) has a t-value of 1.98 or greater. We would visualize this as:</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="understanding-statistical-tests.html#cb351-1"></a><span class="kw">library</span>(fastGraph)</span>
+<span id="cb351-2"><a href="understanding-statistical-tests.html#cb351-2"></a>alpha_<span class="dv">05</span>_1side =<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dv">4</span>)</span>
+<span id="cb351-3"><a href="understanding-statistical-tests.html#cb351-3"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span>alpha_<span class="dv">05</span>_1side, <span class="st">&quot;dt&quot;</span>, <span class="dt">parm2 =</span> <span class="dv">4</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p><img src="05-Understanding-Statistical-Tests_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Only if the measured t-value falls in the upper tail will the population that receives the new fungicide be considered significantly better than the population that received the old fungicide. We therefor – you guessed it! – refer to this test as a one-tailed test.</p>
+<p>In using a one-tailed test, however, we need to use a different t-value to achieve our alpha (maximum p-value for significance). If you look at the plot, only 2.5% of the distribution is in the upper tail. If we leave this as it is, we will only conclude the populations are different is their P-value is equal to or less than 2.5%. Reducing our P-value from 5% to 2.5% will, indeed, reduce our probability of Type I errors. But it will increase our likelihood of Type II errors.</p>
+<p>If we are going to conduct a one-tailed test with an alpha of 0.05, we need to adjust the percentage of the distribution in the upper tail to 5% of the distribution:</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="understanding-statistical-tests.html#cb352-1"></a>alpha_<span class="dv">05</span>_1side =<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.95</span>, <span class="dv">4</span>)</span>
+<span id="cb352-2"><a href="understanding-statistical-tests.html#cb352-2"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span>alpha_<span class="dv">05</span>_1side, <span class="st">&quot;dt&quot;</span>, <span class="dt">parm2 =</span> <span class="dv">4</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p><img src="05-Understanding-Statistical-Tests_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>The implication is that the minimum difference between populations to be significant at an alpha=0.05 is lesser than for a two-tailed test.</p>
+<p>A common first response to the one-tailed test is: “Isn’t that cheating? Aren’t we just switching to a one-tailed test so we can nudge our difference passed the goal line for significance”? And, indeed, if you switch to a one-tailed test for that reason alone, it is cheating. That is why it is important we declare our hypotheses before we begin our trial. If we are going to run a one-tailed test, it needs to be based on a one-sided hypothesis that declares, from the beginning, we are only testing the difference in one direction, either because we have intuition that the difference will be one-sided, or we have a practical reason for only being interested in a positive or negative difference between populations.</p>
+</div>
+<div id="exercise-linear-additive-model" class="section level2">
+<h2><span class="header-section-number">5.7</span> Exercise: Linear Additive Model</h2>
+<p>The linear additive model may seem a very esoteric concept in data science, but it is critical to understand how we make predictions from statistical models, and how we test whether those models significantly explain the variance in our observations. It also underscores an important concept in statistical modelling: the assumption that the different effects that combine to explain an observed value are <em>additive</em>.</p>
+<div id="case-study-barley-effects" class="section level3">
+<h3><span class="header-section-number">5.7.1</span> Case Study: Barley Effects</h3>
+<p>The barley dataset is the same we used in the other exercises, except I have calculated the population mean, mu, treatment effet, and error effect. Ignore the last four columns – those were calculated only to create the chart you will run below.</p>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="understanding-statistical-tests.html#cb353-1"></a>barley_effects =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-5/exercise_data/barley_effects_table.csv&quot;</span>)</span>
+<span id="cb353-2"><a href="understanding-statistical-tests.html#cb353-2"></a>barley_effects</span></code></pre></div>
+<pre><code>##    block trt     y plot     mu trt_mean trt_effect error_effect trt_bar_min
+## 1      1 new 291.1    1 312.26   339.06       26.8       -47.96      312.26
+## 2      1 old 223.9    2 312.26   285.46      -26.8       -61.56      -26.80
+## 3      2 new 321.4    3 312.26   339.06       26.8       -17.66      312.26
+## 4      2 old 249.9    4 312.26   285.46      -26.8       -35.56      -26.80
+## 5      3 new 399.3    5 312.26   339.06       26.8        60.24      312.26
+## 6      3 old 330.8    6 312.26   285.46      -26.8        45.34      -26.80
+## 7      4 new 362.6    7 312.26   339.06       26.8        23.54      312.26
+## 8      4 old 349.8    8 312.26   285.46      -26.8        64.34      -26.80
+## 9      5 new 320.9    9 312.26   339.06       26.8       -18.16      312.26
+## 10     5 old 272.9   10 312.26   285.46      -26.8       -12.56      -26.80
+##    trt_bar_max err_bar_min err_bar_max
+## 1       339.06      -47.96         0.0
+## 2         0.00      -88.36       -26.8
+## 3       339.06      -17.66         0.0
+## 4         0.00      -62.36       -26.8
+## 5       339.06      339.06       399.3
+## 6         0.00      312.26       357.6
+## 7       339.06      339.06       362.6
+## 8         0.00      312.26       376.6
+## 9       339.06      -18.16         0.0
+## 10        0.00      -39.36       -26.8</code></pre>
+</div>
+<div id="plotting-the-effects" class="section level3">
+<h3><span class="header-section-number">5.7.2</span> Plotting the Effects</h3>
+<p>Below is the code to create a bar plot. This kind of bar plot is <em>stacked</em> – it shows multiple measures for each observation (plot), stacked on top each other. Normally, a stacked bar plot can be created in a couple of lines of code – the intricate code below was so I could customize the order of stacking for each plot. Run the code and observe the plot.</p>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="understanding-statistical-tests.html#cb355-1"></a><span class="kw">ggplot</span>(barley_effects) <span class="op">+</span></span>
+<span id="cb355-2"><a href="understanding-statistical-tests.html#cb355-2"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot, <span class="dt">y=</span><span class="dv">0</span>, <span class="dt">xend=</span>plot, <span class="dt">yend=</span>mu), <span class="dt">color=</span><span class="st">&quot;lightblue&quot;</span>, <span class="dt">size=</span><span class="dv">14</span>) <span class="op">+</span></span>
+<span id="cb355-3"><a href="understanding-statistical-tests.html#cb355-3"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot, <span class="dt">xend=</span>plot, <span class="dt">y=</span>trt_bar_min, <span class="dt">yend=</span>trt_bar_max), <span class="dt">color=</span><span class="st">&quot;lightgreen&quot;</span>, <span class="dt">size=</span><span class="dv">14</span>) <span class="op">+</span></span>
+<span id="cb355-4"><a href="understanding-statistical-tests.html#cb355-4"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot, <span class="dt">xend=</span>plot, <span class="dt">y=</span>err_bar_min, <span class="dt">yend=</span>err_bar_max), <span class="dt">color=</span><span class="st">&quot;tomato&quot;</span>, <span class="dt">size=</span><span class="dv">14</span>) <span class="op">+</span></span>
+<span id="cb355-5"><a href="understanding-statistical-tests.html#cb355-5"></a><span class="st">  </span><span class="co"># geom_point(aes(x=plot, y=y), size=4) +</span></span>
+<span id="cb355-6"><a href="understanding-statistical-tests.html#cb355-6"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot, <span class="dt">y=</span>mu<span class="op">/</span><span class="dv">2</span>, <span class="dt">label=</span> <span class="kw">round</span>(mu,<span class="dv">1</span>))) <span class="op">+</span></span>
+<span id="cb355-7"><a href="understanding-statistical-tests.html#cb355-7"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot, <span class="dt">y=</span>trt_bar_min<span class="op">+</span>(trt_bar_max<span class="op">-</span>trt_bar_min)<span class="op">/</span><span class="dv">2</span>, <span class="dt">label=</span><span class="kw">round</span>(trt_effect,<span class="dv">1</span>))) <span class="op">+</span></span>
+<span id="cb355-8"><a href="understanding-statistical-tests.html#cb355-8"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot, <span class="dt">y=</span>err_bar_min<span class="op">+</span>(err_bar_max<span class="op">-</span>err_bar_min)<span class="op">/</span><span class="dv">2</span>, <span class="dt">label=</span><span class="kw">round</span>(error_effect,<span class="dv">1</span>))) <span class="op">+</span></span>
+<span id="cb355-9"><a href="understanding-statistical-tests.html#cb355-9"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot<span class="fl">+0.4</span>, <span class="dt">xend=</span>plot<span class="fl">+0.2</span>, <span class="dt">y=</span>y, <span class="dt">yend=</span>y), <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.01</span>, <span class="st">&quot;npc&quot;</span>)), <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb355-10"><a href="understanding-statistical-tests.html#cb355-10"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot<span class="fl">+0.4</span>, <span class="dt">y=</span>y, <span class="dt">label=</span><span class="kw">round</span>(y,<span class="dv">1</span>)), <span class="dt">hjust=</span><span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb355-11"><a href="understanding-statistical-tests.html#cb355-11"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>))</span></code></pre></div>
+<p><img src="05-Understanding-Statistical-Tests_files/figure-html/unnamed-chunk-12-1.png" width="1152" /></p>
+<p>If this plot is too big to fit comfortably on this screen, remember you can knit this code using the menu immediately above this window, and either view it in HTML or print it out to use.</p>
+<p>What I have tried to do with this plot is to visualize the additive effects of the population mean (light blue bar), treatment effect (green bar), and error effect (red bar). The sum of their effects (the observed value) is shown by a black arrow to the right of each bar.</p>
+<p>The blue bars are the same, 312.3, reflecting that the population mean for the whole trial does not change: every plot starts out with this same value, with the effects then adding or subtracting from its observed value.</p>
+<p>Looking at this plot, you can see half of the green bars have a treatment effect of 26.8, while the other half have a treatment effect of -26.8. In a two treatment trial, the treatment effects will be exactly opposite for the two levels of treatment. If we look at the plot above, we can see the positive treatment effect is associated with the new genotype, and the negative effect with the old genotype.</p>
+<p>The red bars represent the error. This is the unexplained variance in observed value. Part of it reflects how, try as hard as we might, not every plot has exactly the same environment. Soil types and microclimates differ. Plot lengths may differ slightly among plots. One plot may be planted more evenly than others. A fertilizer applicator might skip. An ear might bounce out of the combine. Note that the errors are negative in some cases and positive in others. In addition, they are not consistent – their values are random.</p>
+<p>The treatment effect above is an example of a <em>fixed effect</em> – it has a specific, consistent effect, based on the level of treatment.</p>
+<p>The error effect above is an example of a <em>random effect</em>. Its value varies from plot to plot. Its variation usually follows a normal distribution with a mean close to zero. Lets run the histogram below and check.</p>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="understanding-statistical-tests.html#cb356-1"></a><span class="kw">hist</span>(barley_effects<span class="op">$</span>error_effect)</span></code></pre></div>
+<p><img src="05-Understanding-Statistical-Tests_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="understanding-statistical-tests.html#cb357-1"></a><span class="kw">mean</span>(barley_effects<span class="op">$</span>error_effect)</span></code></pre></div>
+<pre><code>## [1] 1.775489e-16</code></pre>
+</div>
+<div id="examining-individual-plots" class="section level3">
+<h3><span class="header-section-number">5.7.3</span> Examining Individual Plots</h3>
+<p>We can see</p>
+<p>Recall our linear model is: Yij = mu + Ti + e(i)j</p>
+<p>Y(i)j is the observed value for plot j that has received treatment i. mu is the population mean. Ti is the treatment effect associated with level i. e(i)j is the</p>
+<p>So let’s plug a few plots into this equation and see how it works.</p>
+<p>In plot 2:
+- Yij = 223.9
+- mu = 312.3,
+- Ti, associated with the old hybrid = -26.8
+- e(i)j, associated with plot 2, = -61.6</p>
+<p>Our model for plot 2, then is: 223.9 = 312.3 - 26.8 - 61.6</p>
+<p>What about for plot 5?</p>
+<p>Yij = 399.3
+mu = 312.3
+- Ti, associated with the new hybrid = +26.8
+- e(i)j, associated with plot 5 = +60.2</p>
+<p>Our model for plot 5, then is: 399.3 = 312.3 + 26.8 + 60.2</p>
+<p>What about for plot 8?</p>
+<p>Yij = 349.8
+mu = 312.3
+- Ti, associated with the old hybrid = -26.8
+- e(i)j, associated with plot 8 = +64.3</p>
+<p>Our model for plot 8, then is: 349.8 = 312.3 - 26.8 + 64.3</p>
+<p>What is interesting in this last example is that the positive error “masks” the negative effect of the treatment – the yield with the old hybrid, in this case, is greater than plots 3 and 9, which received the old hybrid! This underscores why it is important to break down the effects behind an observation to better understand the true contribution of each treatment level.</p>
+</div>
+<div id="practice-groudnut" class="section level3">
+<h3><span class="header-section-number">5.7.4</span> Practice: Groudnut</h3>
+<p>Let’s load and plot the groundnut data from the other exercises this unit. Like the barley data above, we have added several columns in order to calculate treatment and error effects and to draw the plot below.</p>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="understanding-statistical-tests.html#cb359-1"></a>groundnut_effects =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-5/exercise_data/groundnut_effects_table.csv&quot;</span>)</span>
+<span id="cb359-2"><a href="understanding-statistical-tests.html#cb359-2"></a>groundnut_effects</span></code></pre></div>
+<pre><code>##   block row col trt   y dry plot    mu trt_mean trt_effect error_effect
+## 1    B1   4   2   A 5.2 3.3    1 3.225     4.30      1.075         0.90
+## 2    B1   4   6   C 2.4 1.4    2 3.225     2.15     -1.075         0.25
+## 3    B2   3   1   C 1.7 0.9    3 3.225     2.15     -1.075        -0.45
+## 4    B2   3   6   A 4.8 3.0    4 3.225     4.30      1.075         0.50
+## 5    B3   2   3   A 2.4 1.4    5 3.225     4.30      1.075        -1.90
+## 6    B3   2   6   C 2.5 1.5    6 3.225     2.15     -1.075         0.35
+## 7    B4   1   3   C 2.0 1.0    7 3.225     2.15     -1.075        -0.15
+## 8    B4   1   5   A 4.8 3.1    8 3.225     4.30      1.075         0.50
+##   trt_bar_min trt_bar_max err_bar_min err_bar_max
+## 1       3.225         4.3       4.300       5.200
+## 2      -1.075         0.0       3.225       3.475
+## 3      -1.075         0.0      -1.525      -1.075
+## 4       3.225         4.3       4.300       4.800
+## 5       3.225         4.3      -1.900       0.000
+## 6      -1.075         0.0       3.225       3.575
+## 7      -1.075         0.0      -1.225      -1.075
+## 8       3.225         4.3       4.300       4.800</code></pre>
+</div>
+<div id="plotting-the-effects-1" class="section level3">
+<h3><span class="header-section-number">5.7.5</span> Plotting the Effects</h3>
+<p>Below is the code to create a bar plot. This kind of bar plot is <em>stacked</em> – it shows multiple measures for each observation (plot), stacked on top each other. Normally, a stacked bar plot can be created in a couple of lines of code – the intricate code below was so I could customize the order of stacking for each plot. Run the code and observe the plot.</p>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="understanding-statistical-tests.html#cb361-1"></a><span class="kw">ggplot</span>(groundnut_effects) <span class="op">+</span></span>
+<span id="cb361-2"><a href="understanding-statistical-tests.html#cb361-2"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot, <span class="dt">y=</span><span class="dv">0</span>, <span class="dt">xend=</span>plot, <span class="dt">yend=</span>mu), <span class="dt">color=</span><span class="st">&quot;lightblue&quot;</span>, <span class="dt">size=</span><span class="dv">14</span>) <span class="op">+</span></span>
+<span id="cb361-3"><a href="understanding-statistical-tests.html#cb361-3"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot, <span class="dt">xend=</span>plot, <span class="dt">y=</span>trt_bar_min, <span class="dt">yend=</span>trt_bar_max), <span class="dt">color=</span><span class="st">&quot;lightgreen&quot;</span>, <span class="dt">size=</span><span class="dv">14</span>) <span class="op">+</span></span>
+<span id="cb361-4"><a href="understanding-statistical-tests.html#cb361-4"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot, <span class="dt">xend=</span>plot, <span class="dt">y=</span>err_bar_min, <span class="dt">yend=</span>err_bar_max), <span class="dt">color=</span><span class="st">&quot;tomato&quot;</span>, <span class="dt">size=</span><span class="dv">14</span>) <span class="op">+</span></span>
+<span id="cb361-5"><a href="understanding-statistical-tests.html#cb361-5"></a><span class="st">  </span><span class="co"># geom_point(aes(x=plot, y=y), size=4) +</span></span>
+<span id="cb361-6"><a href="understanding-statistical-tests.html#cb361-6"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot, <span class="dt">y=</span>mu<span class="op">/</span><span class="dv">2</span>, <span class="dt">label=</span> <span class="kw">round</span>(mu,<span class="dv">1</span>))) <span class="op">+</span></span>
+<span id="cb361-7"><a href="understanding-statistical-tests.html#cb361-7"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot, <span class="dt">y=</span>trt_bar_min<span class="op">+</span>(trt_bar_max<span class="op">-</span>trt_bar_min)<span class="op">/</span><span class="dv">2</span>, <span class="dt">label=</span><span class="kw">round</span>(trt_effect,<span class="dv">1</span>))) <span class="op">+</span></span>
+<span id="cb361-8"><a href="understanding-statistical-tests.html#cb361-8"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot, <span class="dt">y=</span>err_bar_min<span class="op">+</span>(err_bar_max<span class="op">-</span>err_bar_min)<span class="op">/</span><span class="dv">2</span>, <span class="dt">label=</span><span class="kw">round</span>(error_effect,<span class="dv">1</span>))) <span class="op">+</span></span>
+<span id="cb361-9"><a href="understanding-statistical-tests.html#cb361-9"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot<span class="fl">+0.4</span>, <span class="dt">xend=</span>plot<span class="fl">+0.2</span>, <span class="dt">y=</span>y, <span class="dt">yend=</span>y), <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.01</span>, <span class="st">&quot;npc&quot;</span>)), <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb361-10"><a href="understanding-statistical-tests.html#cb361-10"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x=</span>plot<span class="fl">+0.4</span>, <span class="dt">y=</span>y, <span class="dt">label=</span><span class="kw">round</span>(y,<span class="dv">1</span>)), <span class="dt">hjust=</span><span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb361-11"><a href="understanding-statistical-tests.html#cb361-11"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>))</span></code></pre></div>
+<p><img src="05-Understanding-Statistical-Tests_files/figure-html/unnamed-chunk-15-1.png" width="1152" /></p>
+<p>Model plots 1, 5, and 6, using the linear model as we did above.</p>
+</div>
+</div>
+<div id="exercise-one-sided-hypotheses" class="section level2">
+<h2><span class="header-section-number">5.8</span> Exercise: One-Sided Hypotheses</h2>
+<p>We learned in the lesson there are times when it is appropriate to use a one-sided hypothesis. A one-sided hypothesis specifies how two treatments will rank in a trial, for example that variety B will have greater yield than variety A:</p>
+<p>Ho: A &gt;= B
+Ha: A &lt; B</p>
+<p>A two-sided hypothesis, in contrast, only specifies that variety A and variety B will be different:
+Ho: A = B
+Ha: A &lt;&gt; B</p>
+<p>As we learned in the lecture, the one sided t-test requires a lesser difference for significance than the two-sided test. Given 9 degrees of freedom, and a standard error of the difference of 1, for example, a difference equal to or greater than 2.26 – or equal to or less than -2.26 – between treatments would need to be observed between treatments for the two-sided test to be significant.</p>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="understanding-statistical-tests.html#cb362-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb362-2"><a href="understanding-statistical-tests.html#cb362-2"></a><span class="kw">library</span>(fastGraph)</span>
+<span id="cb362-3"><a href="understanding-statistical-tests.html#cb362-3"></a>alpha_<span class="dv">05</span>_2side =<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dv">9</span>)</span>
+<span id="cb362-4"><a href="understanding-statistical-tests.html#cb362-4"></a><span class="kw">shadeDist</span>(<span class="kw">c</span>(<span class="op">-</span>alpha_<span class="dv">05</span>_2side, alpha_<span class="dv">05</span>_2side), <span class="st">&quot;dt&quot;</span>, <span class="dt">parm2 =</span> <span class="dv">9</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="05-Understanding-Statistical-Tests_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>In a one-sided test, a lower difference, between treatments, 1.83, is required for significance at the p &lt; 0.05 level.</p>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="understanding-statistical-tests.html#cb363-1"></a>alpha_<span class="dv">05</span>_1side =<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.95</span>, <span class="dv">9</span>)</span>
+<span id="cb363-2"><a href="understanding-statistical-tests.html#cb363-2"></a><span class="kw">shadeDist</span>(<span class="dt">xshade=</span>alpha_<span class="dv">05</span>_1side, <span class="st">&quot;dt&quot;</span>, <span class="dt">parm2 =</span> <span class="dv">9</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p><img src="05-Understanding-Statistical-Tests_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div id="case-study-groundnut" class="section level3">
+<h3><span class="header-section-number">5.8.1</span> Case Study: Groundnut</h3>
+<p>In this study, the wet weight of groundnut, in kg/plot, was measured for two genotypes, coded A and C. The plots were paired.</p>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="understanding-statistical-tests.html#cb364-1"></a>groundnut =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-5/exercise_data/groundnut.csv&quot;</span>)</span>
+<span id="cb364-2"><a href="understanding-statistical-tests.html#cb364-2"></a><span class="kw">head</span>(groundnut)</span></code></pre></div>
+<pre><code>##   block row col gen wet dry
+## 1    B1   4   2   A 5.2 3.3
+## 2    B1   4   6   C 2.4 1.4
+## 3    B2   3   1   C 1.7 0.9
+## 4    B2   3   6   A 4.8 3.0
+## 5    B3   2   3   A 2.4 1.4
+## 6    B3   2   6   C 2.5 1.5</code></pre>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="understanding-statistical-tests.html#cb366-1"></a>groundnut <span class="op">%&gt;%</span></span>
+<span id="cb366-2"><a href="understanding-statistical-tests.html#cb366-2"></a><span class="st">  </span><span class="kw">group_by</span>(gen) <span class="op">%&gt;%</span></span>
+<span id="cb366-3"><a href="understanding-statistical-tests.html#cb366-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">wet =</span> <span class="kw">mean</span>(wet))</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##   gen     wet
+##   &lt;chr&gt; &lt;dbl&gt;
+## 1 A      4.3 
+## 2 C      2.15</code></pre>
+</div>
+<div id="one-sided-t-test" class="section level3">
+<h3><span class="header-section-number">5.8.2</span> One-Sided T-Test</h3>
+<p>In the last unit, we learned to use the <em>t.test()</em> function to conduct a paired two-sided t-test. Let’s first analyze the groundnut data that way.</p>
+<p>Out hypotheses are</p>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="understanding-statistical-tests.html#cb368-1"></a><span class="kw">t.test</span>(wet <span class="op">~</span><span class="st"> </span>gen, groundnut, <span class="dt">paired=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  wet by gen
+## t = 2.854, df = 3, p-value = 0.0649
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.2474194  4.5474194
+## sample estimates:
+## mean of the differences 
+##                    2.15</code></pre>
+<p>We see we have a p-value of 0.0649. The two genotypes do not produce different wet weights of groundnuts at the p &lt; 0.05 level of significance.</p>
+<p>Now lets run the one-sided test. To specify our hypothesis properly, we need to know which treatment will be the <em>subtractant</em>: the number that is subtracted. This is really important. In R, the treatment which comes <em>second</em> in alphabetical order is subtracted from the treatment that comes <em>first</em>.</p>
+<p>Let’s say our hypotheses are these:
+Ho: A &gt;= C
+Ha: A &lt; C</p>
+<p>To tell R to run the t.test this way, we add the <em>alternative = ""</em> argument to our t-test. If A is greater than C, we will have a positive difference, so we specify <em>alternative = “greater”</em>.</p>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="understanding-statistical-tests.html#cb370-1"></a><span class="kw">t.test</span>(wet <span class="op">~</span><span class="st"> </span>gen, groundnut, <span class="dt">paired=</span><span class="ot">TRUE</span>, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  wet by gen
+## t = 2.854, df = 3, p-value = 0.03245
+## alternative hypothesis: true difference in means is greater than 0
+## 95 percent confidence interval:
+##  0.3771502       Inf
+## sample estimates:
+## mean of the differences 
+##                    2.15</code></pre>
+<p>We can now see the p-value for the test is 0.03 – genotype C produces a greater wet weight of groundnut than geontype A at the p &lt; 0.05 level of significance.</p>
+</div>
+<div id="practice-barley-1" class="section level3">
+<h3><span class="header-section-number">5.8.3</span> Practice: Barley</h3>
+<p>In this study, yield of a new and old genotype were compared. Treatments were paired.</p>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="understanding-statistical-tests.html#cb372-1"></a>barley =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-5/exercise_data/barley.csv&quot;</span>)</span></code></pre></div>
+<ol style="list-style-type: decimal">
+<li><p>Run a two-sided t.test to compare the yield of the two genotypes. You should get a p-value of 2.158e-06.</p></li>
+<li><p>Run a one-sided t.test to test the hypothesis the new hybrid yields greater than the old hybrid. Going by alphabetical order, R will subtract the mean of “old” from “new”. Given our hypothesis that the yield of the “new” genotype will be greater than that of the “old”, our difference will again be positive. Again, use the “alternative=”greater"* argument with the <em>t.test()</em> function. Your answer should have a p-value = 1.079e-06.</p></li>
+</ol>
+</div>
+<div id="practice-strawberry" class="section level3">
+<h3><span class="header-section-number">5.8.4</span> Practice: Strawberry</h3>
+<p>The yield of two strawberry genotypes was tested in a paired treatment design.</p>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="understanding-statistical-tests.html#cb373-1"></a>strawberry =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-5/exercise_data/strawberry.csv&quot;</span>)</span></code></pre></div>
+<ol style="list-style-type: decimal">
+<li><p>Test the difference between genotypes using a two-sided test. You should get p-value = 0.055.</p></li>
+<li><p>Test the hypothesis that genotype F is greater than genotype R1. Since R will subtract R1 from F, our difference will be positive. You should get p-value = 0.0275.</p></li>
+</ol>
+</div>
+</div>
+<div id="exercise-type-i-and-type-ii-errors" class="section level2">
+<h2><span class="header-section-number">5.9</span> Exercise: Type I and Type II Errors</h2>
+<p>Please use the following link to test whether you understand the difference between Type I and Type II errors.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="two-treatment-comparisons.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="multiple-treatment-trials.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-start.pdf", "bookdown-start.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
