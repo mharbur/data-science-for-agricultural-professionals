@@ -1,0 +1,130 @@
+---
+title: exercise -- simple linear regression
+output: html_document
+---
+
+# Introduction
+In the previous exercise, we learned about scatter plots and correlation.  Correlation is used to measure the association between variables, with no assumptions about the direction of causation between variables.  We often use correlation with exploratory work, whereas we use regression when our understanding of a topic has grown to incorporate basic knowledge of a science.  For example, we know that the rate of photosynthesis of a plant is generally a response to the intensity of photosynthetic radiation (that is, light), instead of the other way around.  When we use regression, we fit a model to the data.  We then test whether that model explains a significant amount of the variation among our samples, and use it as a linear equation to quantify the relationship between Y and X.
+
+
+# Case Study: Corn Allometry
+Using our data from the scatterplots and correlation exercise, we will construct simple linear regression models, evaluate their significance, and write the linear model from its coefficients.
+
+```{r}
+library(tidyverse)
+allometry = read.csv("data/corn_allometry.csv")
+head(allometry)
+```
+
+# Fitting the regression model
+The regression model is fit using a very similar approach to that used for the analysis of variance.  In fact, the only thing that is different is that we use *lm()* to define the linear model, instead of *aov()*.  We will model yield as a function of total_leaves (total leaf dry matter).
+
+```{r}
+model_yield_total_leaves = lm(yield ~ total_leaves, data=allometry)
+```
+
+# Examining the residuals
+An important step that is easy to forget (in fact, I almost did just now) is to plot the residuals.  The residuals are the differences between the values predicted by the regression model and the observed values.  We observe the residuals to make sure they are randomly distributed around the regression line, represented by the dotted line at Y=0 below.  We can use the the *plot()* function with our model to get the residual plot.  
+```{r}
+plot(model_yield_total_leaves, which=1)  # the "which=1" argument tells R to plot the residuals
+```
+
+The red line is not a linear regression line, but a LOESS (locally estimated scatterplot smoothing) -- a nonlinear model that can bend to fit the data more closely.  If a linear model is appropriate to fit the relationship between Y and X, the red line will be close to (but rarely exactly) linear.  The above plot suggests linear regression is appropriate.  What we want to beware of is a red line that rises way above zero on either end and dips way below zero in the middle, or vice versa.  Those scenarios suggest the relationship between Y and X may be curvedinstead of linear.
+
+# Viewing the Model Coefficients
+A lot of information is included in the linear model output.  Rather than wade through it in one big chunck, we will use a package called *broom* to break it into more digestible pieces.  We can use the *tidy()* format to summarise the coefficients.
+
+```{r}
+library(broom)
+tidy(model_yield_total_leaves)
+```
+
+Remember, our regression line is defined as: 
+
+Y = alpha + Beta*x, where alpha is the y-intercept and Beta is the slope.  In the output, the (Intercept) row provides information on alpha.  The estimate column contains its estimated value, 67.47.  R automatically tests whether the estimated value of the intercept is significantly different from zero.  That measure is given in the p.value column.  We see that alpha is significantly different from zero.  Much of the time, this insight isn't particularly interesting -- there are many relationships between Y and X where the y-intercept is not zero.  For example, if we studied the relationship between yield and nitrogen, we would likely observe a yield above zero, even if our nitrogen rate was zero.
+
+The second row provides information on Beta.  Its estimated value is 1.26.  We see from its p.value that Beta is also significantly different from zero.  Unlike alpha, this p.vaue is very interesting to us.  If our p.value is significantly different from zero, then we can reject the hypothesis that there is no relationship between yield and total_leaves.  Our model explains a significant amount of the observed variation among our samples.
+
+# More measures of model fit
+The *anova()* function will generate an ANOVA table for our results.  We interpret this model the same as we have done previously.  
+```{r}
+anova(model_yield_total_leaves)
+```
+
+The F-value is the ratio of the variance explained by our model to the variance explained by random variation among individuals.  In this case, total_leaves is our independent variable.  Since our model is based on a regression line, it only has one degree of freedom.  This is because if we know the slope and any one point on that line, we can predict its y-value of any point as long as we know its x value.  Don't get hung up on this -- just know that the linear model is supposed to have 1 degree of freedom.
+
+Our F-value is large and the probability of encountering that an F-value that large by chance is given by Pr(>F).  That value is very low, so we conclude our model explains a significant amount of the observed variation.  You may also not that the p.value for the slope of the regression model and the Pr(>F) above are identical -- 3.083-09.  This is because the significance of the model is based entirely on the significance of the slope. 
+
+One other important statistic can be gotten from the *glance()* function.  We are interested in the statistic all the way to the left: r.squared.
+```{r}
+glance(model_yield_total_leaves)
+```
+
+r.squared is the percentage of the total variataion explained by the regression model.  In this case, 30.25% of the variation is explained by our regression model.  r.squared can be as great as 1, in which case the observerd values and predicted values are identical, and as little as zero, in which case there is no relationship between the dependent variable (Y) and the independent variable (X).  Our r.squared value of 0.3025 does not suggest a strong relationship between yield and total number of leaves.  That said, biological systems are very complicated -- studying them outdoors makes them moreso.  Given this complexity, an r.squared of 0.30 is worth attention.
+
+
+# Practice 1
+Lets now model yield as a function of the total_leaf_area.  First, lets fit the regression model.
+
+```{r}
+```
+
+Next, plot the residuals. Your results should look like:
+
+
+![](images/corn_leaf_area_residuals.png)
+
+Next, let's view the model coefficients
+```{r}
+```
+
+What do you notice about the relationship between yield and total leaf area?  Is it significant?  Does yield increase or decrease with total leaf area?
+
+Using the coefficients above, write the regression model.
+
+Use the glance() function to develop additional model fit statistics.  
+
+```{r}
+```
+
+You should see an r.squared of 0.50.
+
+# Practice 2
+Now lets work with our corn fertility data.  
+```{r}
+fertility = read.csv("data/corn_fertility.csv")
+head(fertility)
+
+```
+
+Create a simple linear regression model for yield as a function of organic matter.
+```{r}
+
+```
+
+Next, plot the residuals. Your results should look like:
+```{r}
+
+```
+
+![](images/organic_matter_residuals.png)
+
+What do you notice about the residuals?  Is there strong indiciation that a linear model might be inappropriate?
+
+Next, let's view the model coefficients
+```{r}
+library(broom)
+
+```
+
+What do you notice about the relationship between yield and organic matter?  Is it significant?  Does yield increase or decrease with organic matter?
+
+Using the coefficients above, write the regression model.
+
+Use the glance() function to develop additional model fit statistics.  
+
+```{r}
+
+```
+
+You should see an r.squared of 0.15.

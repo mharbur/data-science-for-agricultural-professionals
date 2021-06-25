@@ -1,0 +1,85 @@
+---
+title: exercise -- scatterplots and regression
+output: html_document
+---
+
+# Introduction
+This week's lesson is a marked shift from previous units.  Until now, we have worked with independent variables (our X variables) that were categorical: they had names that represented their value.  This week, we begin working with both continuous X and Y variables.  As we have learned in this lecture, the simplest way to establish a relationship between variables is to examine scatterplots and calculate the correlation coefficients.
+
+# Case Study: Corn Data
+*Allometry* is the study of the different parts of an organism an how their sizes are related.  In the the word allometry, we can see the root of the word "allocate".  Thus, allometry seeks to understand how the allocation of biomass to one part of an organism may be related to the allocation of biomass to another part.  In agronomy, this can provide valuable insight into the relative importance of bigger leaves, taller plants, or larger stalks to grain yield.
+
+Let's begin by loading our data.  This dataset is a simulated based on statistics published by Fred Warren and Robert Fenley in 1970.
+
+```{r}
+library(tidyverse)
+allometry = read.csv("data/corn_allometry.csv")
+
+head(allometry)
+```
+
+The first thing we want to do is to examine our data with a scatterplot.  The quickest way to do this is with the *plot()* command.  This will give us a matrix (a grid) with all possible scatterplots, based on our dataset.  
+```{r}
+plot(allometry)
+```
+
+This is called a *scatterplot matrix*.  The variable listed in each column defines the position of the points on the X axis for every plot in that column.  The variable listed in each row defines the position of the points on the Y axis for every plot in that row.  So if we look at the plot directly to the right of yield second plot from left in top column column, its Y-axis is yield and its X axis is total leaves (total leaf biomass).
+
+Of course, this matrix is crowded.  If we want to highlight a single scatterplot, we can use ggplot.
+
+```{r}
+allometry %>%                                 # the data frame to feed to ggplot
+  ggplot(aes(x=total_leaves, y=yield)) +      # tells R where to locate each point
+  geom_point()                                # tells ggplot to plot points instead of another shape (geom)
+```
+
+What can we see in this plot?  Yield and total leaves seel to be correlated.  As total_leaves increased, so did yield.
+
+We can quantify the correlation between yield and total leaves using the *cor.test()* function and the two variables.
+
+```{r}
+cor.test(allometry$yield, allometry$total_leaves)
+```
+
+The output looks very similar to the t-test we learned earlier.  It lists the measured value for t.  It includes the probability that t is zero, which is also the probability that the correlation we measured is equal to zero.  It also includes, at the bottom, the correlation coefficient (cor), which in this case is 0.55.
+
+What if we have a lot of variables?  As we did with the scatter plot matrix, we can buid a correlation matrix that shows all the correlations among variables.  Again, the code is very simple.  
+
+```{r}
+cor(allometry)
+```
+
+If we look along the row corresponding to yield, we see six columns whose names include yield, total_leaves, total_leaf_area, etc.  Whereever the yield row intersects these colums, we can read the correlation coefficient.  For example, where yield intersets yield, the correlation coefficient is 1.0  This makes sense-- yield should be perfectly correlated with itself.  If we look at where the yield row intersects the stalk_circ column, we see a regression coefficient of 0.49. 
+
+
+# Practice 1
+Using the above dataset, calculate a scatter plot for height and corn yield, with corn_height on the X-axis and yield on the Y-axis. Your plot should look like.
+
+```{r}
+p = allometry %>%                                 # the data frame to feed to ggplot
+  ggplot(aes(x=height, y=yield)) +      # tells R where to locate each point
+  geom_point()  
+
+ggsave("images/yield_vs_height.png", device = "png")
+```
+
+![](images/yield_vs_height.png)
+
+# Practice 2
+Using the above dataset, calculate the correlation between height and yield using the cor.test() function.  Your estimate for the correlation coefficient (the number at the bottom of the output) should be 0.49.
+```{r}
+cor.test(allometry$stalk_circ, allometry$yield)
+```
+
+# Practice 3
+Load the dataset "data/corn_fertility.csv".  These data evaluate the response of yield to corn fertility characteristics.
+```{r}
+fertility = read.csv("data/corn_fertility.csv")
+head(fertility)
+
+```
+
+Create a scatterplot matrix for all variables in the fertility dataset.
+
+# Practice 4
+Create a correlation matrix for all the variables in the fertility dataset.
