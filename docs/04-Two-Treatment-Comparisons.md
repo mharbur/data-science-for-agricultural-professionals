@@ -254,7 +254,7 @@ plot_plan
 ## [1] 2
 ## 
 ## $parameters$seed
-## [1] -1586761213
+## [1] -1417495599
 ## 
 ## $parameters$kinds
 ## [1] "Super-Duper"
@@ -265,19 +265,19 @@ plot_plan
 ## 
 ## $sketch
 ##      [,1] [,2]
-## [1,] "B"  "A" 
+## [1,] "A"  "B" 
 ## [2,] "B"  "A" 
-## [3,] "B"  "A" 
+## [3,] "A"  "B" 
 ## [4,] "A"  "B" 
 ## 
 ## $book
 ##   plots block treatment_name
-## 1   101     1              B
-## 2   102     1              A
+## 1   101     1              A
+## 2   102     1              B
 ## 3   201     2              B
 ## 4   202     2              A
-## 5   301     3              B
-## 6   302     3              A
+## 5   301     3              A
+## 6   302     3              B
 ## 7   401     4              A
 ## 8   402     4              B
 ```
@@ -291,9 +291,9 @@ plot_plan$sketch
 
 ```
 ##      [,1] [,2]
-## [1,] "B"  "A" 
+## [1,] "A"  "B" 
 ## [2,] "B"  "A" 
-## [3,] "B"  "A" 
+## [3,] "A"  "B" 
 ## [4,] "A"  "B"
 ```
 
@@ -306,12 +306,12 @@ plot_plan$book
 
 ```
 ##   plots block treatment_name
-## 1   101     1              B
-## 2   102     1              A
+## 1   101     1              A
+## 2   102     1              B
 ## 3   201     2              B
 ## 4   202     2              A
-## 5   301     3              B
-## 6   302     3              A
+## 5   301     3              A
+## 6   302     3              B
 ## 7   401     4              A
 ## 8   402     4              B
 ```
@@ -335,13 +335,13 @@ hemp_plot_plan$sketch
 ```
 ##       [,1]    [,2]   
 ##  [1,] "Jerry" "Bob"  
-##  [2,] "Bob"   "Jerry"
+##  [2,] "Jerry" "Bob"  
 ##  [3,] "Bob"   "Jerry"
 ##  [4,] "Bob"   "Jerry"
 ##  [5,] "Jerry" "Bob"  
 ##  [6,] "Jerry" "Bob"  
-##  [7,] "Bob"   "Jerry"
-##  [8,] "Jerry" "Bob"  
+##  [7,] "Jerry" "Bob"  
+##  [8,] "Bob"   "Jerry"
 ##  [9,] "Bob"   "Jerry"
 ## [10,] "Bob"   "Jerry"
 ```
@@ -356,8 +356,8 @@ hemp_plot_plan$book
 ##    plots block hemp_variety
 ## 1    101     1        Jerry
 ## 2    102     1          Bob
-## 3    201     2          Bob
-## 4    202     2        Jerry
+## 3    201     2        Jerry
+## 4    202     2          Bob
 ## 5    301     3          Bob
 ## 6    302     3        Jerry
 ## 7    401     4          Bob
@@ -366,10 +366,10 @@ hemp_plot_plan$book
 ## 10   502     5          Bob
 ## 11   601     6        Jerry
 ## 12   602     6          Bob
-## 13   701     7          Bob
-## 14   702     7        Jerry
-## 15   801     8        Jerry
-## 16   802     8          Bob
+## 13   701     7        Jerry
+## 14   702     7          Bob
+## 15   801     8          Bob
+## 16   802     8        Jerry
 ## 17   901     9          Bob
 ## 18   902     9        Jerry
 ## 19  1001    10          Bob

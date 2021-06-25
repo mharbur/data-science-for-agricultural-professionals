@@ -1,14 +1,4 @@
----
-title: "Correlation and Regression"
-output: html_document
-runtime: shiny
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
-```
-
-# Introduction
+# Correlation and Simple Regression
 Let's review our progress so far.
 
 In Units 1 to 3, we learned about populations, distributions, and samples.  A population was a group of individuals in which we were interested.  We use statistics to describe the spread or distribution of a population.  When it is not possible to measure every individual in a population, a sample or subset can be used to estimate the frequency with which different values would be observed were the whole population measured.
@@ -22,19 +12,19 @@ In Unit 8, we learned about to test for differences among multiple qualitative t
 In Units 9 and 10, we will learn to work with quantitative treatments.  Quantitative treatments can be ranked.  The most obvious example would be rate trials for fertilizers, crop protection products, or crop seeds.  What makes this situation different is that we are trying to describe a relationship between $x$ and $y$ along within a range of x values, rather at only at discrete values of x.
 
 
-# Correlation
+## Correlation
 There are two ways of analyzing the relationship between two quantitative variables.  If our hypothesis is that an change in $x$, the independent variable (for example, pre-planting nitrogen fertilation rate), *causes* a change in $y$, the dependent variable (for example, yield), then we use a *regression model* to analyze the data.  Not only can the relationship between tested for significance -- the model itself can be used to predict $y$ for any value of $x$ within the range of those in the dataset.
 
 Sometimes, however, we don't know whether $x$ causes $y$, or $y$ causes $x$.  This is the chicken-and-egg scenario.  Outside animal science, however, we can run into this situation in crop development when we look at the allocation of biomass to different plant parts or different chemical components of tissue.
 
-## Case Study: Cucumber
+### Case Study: Cucumber
 In this study, cucumbers were grown the their number of leaves, branches, early fruits, and total fruits were measured.  
 
 First, let's load the data and look at its structure.
 ```{r}
 library(tidyverse)
 library(ggplot2)
-cucumber = read.csv("data/cucumber_traits.csv")
+cucumber = read.csv("data-unit-10/cucumber_traits.csv")
 head(cucumber)
 ```
 
@@ -55,61 +45,13 @@ ggplot(cucumber, aes(x=branches, y=earlyfruit)) +
 
 In both cases, we can see that as one variable increases, so does the other.  But we don't know whether the increase in one causes the increase in the other, or whether there is another variable (measured or unmeasured, that causes both to increase).`
 
-# Correlation
+## Correlation
 
 Correlation doesn't measure *causation*.  Instead, it measures *association*. The first way to identify correlations is to plot variables as we have just done.  But, of course, it is hard for us to measure the strength of the association just by eye.  In addition, it is good to have a way of directly measuring the strengh of the correlation.  Our measure in this case is the *correlation coefficient*, $r$. r varies between –1 and 1.  Values near 0 indicate little or no association between Y and X.  Values close to 1 indicate a strong, positive relationship between Y and X.  A positive relationship means that as X increases, so does Y.  Conversely, values close to 1 indicate a strong, negative relationship between Y and X.  A negative relationship means that as X increases, Y decreases.  
 
-Experiment with the appliciation below.  What happens as you adjust the value of r using the slider control?
+Experiment with the application found at the following link:
 
-```{r}
-library(plotly)
-
-library(shiny)
-
-ui <- fluidPage(
-  sidebarLayout(
-    sidebarPanel(
-      sliderInput("corrCoef", "Select R", min=-1, max = 1, step = 0.05, value = 0.8)
-    ),
-    mainPanel(
-      plotOutput("corrPlot", width = "600px", height="600px")
-    )
-  )
-)
-
-server <- function(input, output, session) {
-  output$corrPlot = renderPlot({
-    set.seed(1234)
-    n = 1000
-    r = input$corrCoef
-    x1 = rnorm(n)
-    x2 = rnorm(n)
-    y1 = scale(x2) * r  +  scale(residuals(lm(x1~x2))) * sqrt(1-r*r)
-    
-    r = cor(y1,x2)
-    
-    cor_data = cbind(y1, x2) %>%
-      as.data.frame() 
-    
-    cor_data %>%
-      rename(y=V1, 
-             x=x2) %>%
-      ggplot(aes(x=x, y=y)) +
-      geom_point() +
-      geom_text(x=3.5, y=3.5, label=paste0("r = " , r), color="blue", size=8) + 
-      lims(x=c(-4,4), y=c(-4,4)) +
-      coord_fixed()
-      })
-
-    
-}
-
-shinyApp(ui, server, options = list(height="800px"))
-
-
-```
-
-When r is close to zero, the “cloud” of data in the scatter plot will appear circular.  As r increases positively, the data will start to look like a football – with its nose pointed up and right and its tail pointed down and left.  As r gets closer to 1, the data may represent a cigar – or an under-inflated football (yes, I’m talking to you, Brady).  And as r gets very close to 1, the data cloud will resemble a straight line.  As r increases negatively, the same patterns occur, only with the data points converging on a diagonal line that slopes up and to the left.
+What happens as you adjust the value of r using the slider control?
 
 For the cucumber datasets above, the correlations are shown below:
 
@@ -134,13 +76,13 @@ grid.arrange(plot1, plot2, ncol=2)
 ```
 
 
-## How Is r Calcuated (optional reading)
+### How Is r Calcuated (optional reading)
 
 Something that bothered me for years was understanding what r represented – how did we get from a cloud of data to that number?.  The formula is readily available, but how does it work?  To find the explanation in plain English is really hard to find, so I hope you enjoy this!
 
 To understand this, let's consider you are in Marshalltown, Iowa, waiting for the next Derecho.  You want to go visit your friends, however, who are similarly waiting in Des Moines for whatever doom 2020 will bring there.  How will you get there?
 
-![Iowa Map](data/marshalltown_dsm_euclidian.png)
+![Iowa Map](data-unit-10/marshalltown_dsm_euclidian.png)
 
 First, you could go "as the crow flies" on Routes 330 and 65.  This is the shortest distance between Marshalltown and Des Moines.  In mathematical terms this is know as the "Euclidian Distance".  Now you probably know the Eucidian Distance by a different name, the one you learned in eigth grade geometry.  Yes, it is the hypotenuse, the diagonal on a right triangle!
 
@@ -273,7 +215,7 @@ Statistics is the end, about describing the *shape* of the data.  How widely are
 Then again, it's not like they had *Tiger King* to watch.
 
 
-# Regression
+## Regression
 Regression describes a relationship between an independent variable (usually represented by the letter $y$) and one or more dependent variables ($x_x$, $x_2$, etc).  Regression differs from correlation in that the model assumes that the value of $x$ is substantially determined by the value of $x$.  Instead of describing the *association* between $y$ and $x$, we now refer to causation – how $X$ determines the value of $Y$.
 
 Regression analysis may be conducted simply to test the hypothesis that a change in one variable drives a change in another, for example, that an increase in herbicide rate causes an increase in weed control.  Regression, however, can also be used to predict the value of y based on intermediate values of x, that is, values of x between those used to fit or "train" the regression model.
@@ -285,11 +227,11 @@ If you hear a data scientist discuss a predictive model, it is this very concept
 In this lesson, we will learn about one common kind of regression, simple linear regression.  This means we will learn how to fit a cloud of data with a straight line that summarizes the relationship between $Y$ and $X$.  This assumes, of course, that it is appropriate to use a straight line to model that relationship, and there are ways for us to test that we will learn at the end of this lesson.
 
 
-## Case Study
+### Case Study
 
 A trial was conducted in Waseca, Minnesota, to model corn response to nitrogen.  Yields are per plot, not per acre.
 ```{r}
-nitrogen = read.csv("data/nitrogen_waseca.csv")
+nitrogen = read.csv("data-unit-10/nitrogen_waseca.csv")
 head(nitrogen)
 ```
 
@@ -307,7 +249,7 @@ unique(nitrogen$nitro)
 
 We can see that the centers of the distribution appear to fall in a straight line, so we are confident we can model the data with simple linear regression.
 
-## Linear Equation
+### Linear Equation
 Simple linear regression, unlike correlation, fits the data could with an equation.  In Unit 5, we revisited middle school, where you learned that a line can be defined by the following equation:
 $$ y = mx + b $$
 Where $y$ and $x$ define the coordinate of a point along that line, $m$ is equal to the slope or “rise” (the change in the value of y with each unit change in $x$, and $b$ is the $y$-intercept (where the line crosses the y-axis.  The y-intercept can be seen as the “anchor” of the line; the slope describes how the line is pivoted on that anchor.  
@@ -318,7 +260,7 @@ $$\hat{y} = \hat{\alpha} + \hat{\beta} x$$
 
 The y intercept is represented by the greek letter $\alpha$, the slope is represented by the letter $\beta$.   $y$, α, and β all have hat-like symbols called carats ($\hat{}$) above them to signify they are estimates, not known population values.  This is because the regression line for the population is being estimated from a sample.  $\hat{y}$ is also an estimate, since it is calculated using the estimated values $\hat{\alpha}$ and $\hat{\beta}$.  Only x, which in experiments is manipulated, is a known value.
 
-## Calculating the Regression Equation
+### Calculating the Regression Equation
 We can easily add a regression line to our scatter plot.
 ```{r}
 ggplot(data=nitrogen, aes(x=nitro, y=yield)) +
@@ -349,7 +291,7 @@ $$\hat{y} = 8.476 + 0.04903(15) = 9.21145 $$
 
 Which rounds to 9.21.  So how is the regression line calculated?
 
-## Least-Squares Estimate
+### Least-Squares Estimate
 The regression line is fit to the data using a method known as the least-squares estimate.  To understand this concept we must recognize the goal of a regression equation is to make the most precise estimate for Y as possible.  We are not estimating X, which is already known.  Thus, the regression line crosses the data cloud in a way that minimizes the vertical distance (Y-distance) of observations from the regression line.  The horizontal distance (X-distance) is not fit by the line.
 
 ```{r eval=FALSE, include=FALSE}
@@ -409,48 +351,9 @@ ggplot(data=nitrogen_final, aes(x=nitro, y=yield)) +
 
 In the plot above, the distances of each the four points to the regression line are highlighted by arrows.  The arrows are staggered ("jittered", in plot lingo) so you can see them more easily.  Note how the line falls closely to the middle of the points at each level of R.
 
-In the plot below, use the slider to the left to observe the change in the regression line and error sum of squares, which measures the sums of the differences between observed values and the value predicted by the regression line.  Try to minimize the sum of squares.
+Follow the link below to an appl that will allow you to adjust the slope of a regression line and observe the change in the error sum of squares, which measures the sums of the differences between observed values and the value predicted by the regression line. 
 
-```{r}
-library(shiny)
-
-ui <- fluidPage(
-  sidebarLayout(
-    sidebarPanel(
-      sliderInput("slope", "Select Slope of regression line", min=-0.05, max=0.15, step=0.01, value=0.0)
-    ),
-    mainPanel(
-      plotOutput("plot")
-    )
-  )
-)
-
-server <- function(input, output, session) {
-  nitrogenCustomModel = reactive({
-    nitrogen_custom_model = nitrogen %>%
-      dplyr::select(nitro, yield) %>%
-      mutate(slope = input$slope) %>%
-      mutate(pred = mean(yield) + (nitro -mean(nitro))*slope) %>%
-      mutate(ss_error = sum((yield-pred)^2))
-  })
-  
-  output$plot = renderPlot({
-    ggplot(data=nitrogenCustomModel(), aes(x=nitro, y=yield)) +
-      geom_point(size = 2) +
-      geom_line(aes(x=nitro, y=pred), color="blue", size=2) +
-      geom_text(aes(x=45, y=8, label=paste0("Error SS = ", round(mean(ss_error),2))), hjust=0, size=6)
-  })
-  
-}
-
-
-
-shinyApp(ui, server)
-
-```
-
-What you will observe is the position of the regression line that minimizes the sum of squares is identical to that fit using the least squares regression technique.  In addition 
-
+You should have observed the position of the regression line that minimizes the sum of squares is identical to that fit using the least squares regression technique.  
 
 The line is fit using two steps.  First the slope is determined, in an approach that is laughably simple -- after you understand it.
 
@@ -476,7 +379,7 @@ $$\hat{\alpha} = \hat{y} - \hat{\beta}\bar{x} $$
 
 This equation tells us how much the line descends (or ascends) from the point ($\bar{x}, \bar{y}$) to where x=0 (in other words, the Y axis).
 
-## Significance of Coefficients
+### Significance of Coefficients
 What else can we learn from our linear model?  We can use the *summary()* command in R to get additional information.
 
 ```{r}
@@ -500,7 +403,7 @@ The null hypothesis, $H_o$, is the slope of the true regression line is equal to
 
 The significance of the difference of the slope from zero may be tested two ways.  First, a t-test will directly test the probability that β≠0.  Second, the significance of the linear model may be tested using an Analysis of Variance, as we learned in Units 5 and 6.
 
-## Analysis of Variance
+### Analysis of Variance
 Similarly, we can use the *summary.aov()* command in R to generate an analysis of variance of our results.
 
 ```{r}
@@ -513,7 +416,7 @@ For a linear regression model, the degree of freedom associated with the effect 
 
 Notice that the F-value is the square of the calculated t-value for slope in the coefficients table.  This is always the case.
 
-## Measuring Model Fit with R-Square
+### Measuring Model Fit with R-Square
 Let's return to the summary of the regression model.  
 
 ```{r}
@@ -529,7 +432,7 @@ $R^2$ has a minimum possible value of 0 (no relationship at all between y and x)
 
 
 
-## Checking whether the Linear Model is Appropriate
+### Checking whether the Linear Model is Appropriate
 As stated earlier, the simple linear regression model is a predictive model – that is, it is not only useful for establishing a linear relationship between Y and X – it can also be used under the correct circumstances to predict Y given a known value of X.  But while a model can be generated in seconds, there are a couple of cautions we must observe.
 
 First, we must be sure it was appropriate to fit our data with a linear model.  We can do this by plotting the residuals around the regression line. The *ggResidpanel* package in R allows us to quickly inspect residuals.  All we do use run *resid_panel()* function with two arguments: the name of our model ("regression_model") and the plot we want (plots = "resid").  
@@ -579,7 +482,7 @@ resid_panel(bad_model, plots="resid")
 
 As we expect, there is a clear pattern to the data.  It curves over the regression line and back down again.  If we want to model the complete nitrogen response curve, we will need to use a nonlinear model, which we will learn in the next unit.  
 
-# Extrapolation
+## Extrapolation
 The above example also illustrates why we should not extrapolate: because we do not know how the relationship between x and y may change. In addition, the accuracy of the regression model decreases as one moves away from the middle of the regression line.  
 
 Given the uncertainty of the estimated intercept, the entire true regression line may be higher or lower – i.e. every point on the line might be one unit higher or lower than estimated by our estimated regression model.  There is also uncertainty in our estimate of slope – the true regression line may have greater or less slope than our estimate.  When we combine the two sources of uncertainty, we end up with a plot like this:
@@ -597,3 +500,388 @@ We have greater certainty in our predictions when we predict y for values of x b
 Estimating Y for X values outside the range of values used to estimate the model is called extrapolation, and should be avoided.  Not only is our current model less reliable outside the data range used to fit the model – we should not even assume that the relationship between Y and X is linear outside the of the range of data we have analyzed.  For example, the middle a typical growth curve (often called “sigmoidal”, from sigma, the Greek word for “S”) is linear, but each end curves sharply.  
 
 When we make predictions outside of the range of x values used to fit our model, this is extrapolation.  We can now see why it should be avoided.
+
+
+## Exercise: Sccatterplots and Regression
+This week's lesson is a marked shift from previous units.  Until now, we have worked with independent variables (our X variables) that were categorical: they had names that represented their value.  This week, we begin working with both continuous X and Y variables.  As we have learned in this lecture, the simplest way to establish a relationship between variables is to examine scatterplots and calculate the correlation coefficients.
+
+### Case Study: Corn Data
+*Allometry* is the study of the different parts of an organism an how their sizes are related.  In the the word allometry, we can see the root of the word "allocate".  Thus, allometry seeks to understand how the allocation of biomass to one part of an organism may be related to the allocation of biomass to another part.  In agronomy, this can provide valuable insight into the relative importance of bigger leaves, taller plants, or larger stalks to grain yield.
+
+Let's begin by loading our data.  This dataset is a simulated based on statistics published by Fred Warren and Robert Fenley in 1970.
+
+```{r}
+library(tidyverse)
+allometry = read.csv("data-unit-10/exercise_data/corn_allometry.csv")
+
+head(allometry)
+```
+
+The first thing we want to do is to examine our data with a scatterplot.  The quickest way to do this is with the *plot()* command.  This will give us a matrix (a grid) with all possible scatterplots, based on our dataset.  
+```{r}
+plot(allometry)
+```
+
+This is called a *scatterplot matrix*.  The variable listed in each column defines the position of the points on the X axis for every plot in that column.  The variable listed in each row defines the position of the points on the Y axis for every plot in that row.  So if we look at the plot directly to the right of yield second plot from left in top column column, its Y-axis is yield and its X axis is total leaves (total leaf biomass).
+
+Of course, this matrix is crowded.  If we want to highlight a single scatterplot, we can use ggplot.
+
+```{r}
+allometry %>%                                 # the data frame to feed to ggplot
+  ggplot(aes(x=total_leaves, y=yield)) +      # tells R where to locate each point
+  geom_point()                                # tells ggplot to plot points instead of another shape (geom)
+```
+
+What can we see in this plot?  Yield and total leaves seel to be correlated.  As total_leaves increased, so did yield.
+
+We can quantify the correlation between yield and total leaves using the *cor.test()* function and the two variables.
+
+```{r}
+cor.test(allometry$yield, allometry$total_leaves)
+```
+
+The output looks very similar to the t-test we learned earlier.  It lists the measured value for t.  It includes the probability that t is zero, which is also the probability that the correlation we measured is equal to zero.  It also includes, at the bottom, the correlation coefficient (cor), which in this case is 0.55.
+
+What if we have a lot of variables?  As we did with the scatter plot matrix, we can buid a correlation matrix that shows all the correlations among variables.  Again, the code is very simple.  
+
+```{r}
+cor(allometry)
+```
+
+If we look along the row corresponding to yield, we see six columns whose names include yield, total_leaves, total_leaf_area, etc.  Whereever the yield row intersects these colums, we can read the correlation coefficient.  For example, where yield intersets yield, the correlation coefficient is 1.0  This makes sense-- yield should be perfectly correlated with itself.  If we look at where the yield row intersects the stalk_circ column, we see a regression coefficient of 0.49. 
+
+
+### Practice 1
+Using the above dataset, calculate a scatter plot for height and corn yield, with corn_height on the X-axis and yield on the Y-axis. Your plot should look like.
+
+![](data-unit-10/exercise_images/yield_vs_height.png)
+
+### Practice 2
+Using the above dataset, calculate the correlation between height and yield using the cor.test() function.  Your estimate for the correlation coefficient (the number at the bottom of the output) should be 0.49.
+```{r}
+cor.test(allometry$stalk_circ, allometry$yield)
+```
+
+### Practice 3
+Load the dataset "data/corn_fertility.csv".  These data evaluate the response of yield to corn fertility characteristics.
+```{r}
+fertility = read.csv("data-unit-10/exercise_data/corn_fertility.csv")
+head(fertility)
+
+```
+
+Create a scatterplot matrix for all variables in the fertility dataset.
+
+### Practice 4
+Create a correlation matrix for all the variables in the fertility dataset.
+
+
+
+## Exercise: Simple Linear Regression
+In the previous exercise, we learned about scatter plots and correlation.  Correlation is used to measure the association between variables, with no assumptions about the direction of causation between variables.  We often use correlation with exploratory work, whereas we use regression when our understanding of a topic has grown to incorporate basic knowledge of a science.  For example, we know that the rate of photosynthesis of a plant is generally a response to the intensity of photosynthetic radiation (that is, light), instead of the other way around.  When we use regression, we fit a model to the data.  We then test whether that model explains a significant amount of the variation among our samples, and use it as a linear equation to quantify the relationship between Y and X.
+
+
+### Case Study: Corn Allometry
+Using our data from the scatterplots and correlation exercise, we will construct simple linear regression models, evaluate their significance, and write the linear model from its coefficients.
+
+```{r}
+library(tidyverse)
+allometry = read.csv("data-unit-10/exercise_data/corn_allometry.csv")
+head(allometry)
+```
+
+### Fitting the regression model
+The regression model is fit using a very similar approach to that used for the analysis of variance.  In fact, the only thing that is different is that we use *lm()* to define the linear model, instead of *aov()*.  We will model yield as a function of total_leaves (total leaf dry matter).
+
+```{r}
+model_yield_total_leaves = lm(yield ~ total_leaves, data=allometry)
+```
+
+### Examining the residuals
+An important step that is easy to forget (in fact, I almost did just now) is to plot the residuals.  The residuals are the differences between the values predicted by the regression model and the observed values.  We observe the residuals to make sure they are randomly distributed around the regression line, represented by the dotted line at Y=0 below.  We can use the the *plot()* function with our model to get the residual plot.  
+```{r}
+plot(model_yield_total_leaves, which=1)  # the "which=1" argument tells R to plot the residuals
+```
+
+The red line is not a linear regression line, but a LOESS (locally estimated scatterplot smoothing) -- a nonlinear model that can bend to fit the data more closely.  If a linear model is appropriate to fit the relationship between Y and X, the red line will be close to (but rarely exactly) linear.  The above plot suggests linear regression is appropriate.  What we want to beware of is a red line that rises way above zero on either end and dips way below zero in the middle, or vice versa.  Those scenarios suggest the relationship between Y and X may be curvedinstead of linear.
+
+### Viewing the Model Coefficients
+A lot of information is included in the linear model output.  Rather than wade through it in one big chunck, we will use a package called *broom* to break it into more digestible pieces.  We can use the *tidy()* format to summarise the coefficients.
+
+```{r}
+library(broom)
+tidy(model_yield_total_leaves)
+```
+
+Remember, our regression line is defined as: 
+
+Y = alpha + Beta*x, where alpha is the y-intercept and Beta is the slope.  In the output, the (Intercept) row provides information on alpha.  The estimate column contains its estimated value, 67.47.  R automatically tests whether the estimated value of the intercept is significantly different from zero.  That measure is given in the p.value column.  We see that alpha is significantly different from zero.  Much of the time, this insight isn't particularly interesting -- there are many relationships between Y and X where the y-intercept is not zero.  For example, if we studied the relationship between yield and nitrogen, we would likely observe a yield above zero, even if our nitrogen rate was zero.
+
+The second row provides information on Beta.  Its estimated value is 1.26.  We see from its p.value that Beta is also significantly different from zero.  Unlike alpha, this p.vaue is very interesting to us.  If our p.value is significantly different from zero, then we can reject the hypothesis that there is no relationship between yield and total_leaves.  Our model explains a significant amount of the observed variation among our samples.
+
+### More measures of model fit
+The *anova()* function will generate an ANOVA table for our results.  We interpret this model the same as we have done previously.  
+```{r}
+anova(model_yield_total_leaves)
+```
+
+The F-value is the ratio of the variance explained by our model to the variance explained by random variation among individuals.  In this case, total_leaves is our independent variable.  Since our model is based on a regression line, it only has one degree of freedom.  This is because if we know the slope and any one point on that line, we can predict its y-value of any point as long as we know its x value.  Don't get hung up on this -- just know that the linear model is supposed to have 1 degree of freedom.
+
+Our F-value is large and the probability of encountering that an F-value that large by chance is given by Pr(>F).  That value is very low, so we conclude our model explains a significant amount of the observed variation.  You may also not that the p.value for the slope of the regression model and the Pr(>F) above are identical -- 3.083-09.  This is because the significance of the model is based entirely on the significance of the slope. 
+
+One other important statistic can be gotten from the *glance()* function.  We are interested in the statistic all the way to the left: r.squared.
+```{r}
+glance(model_yield_total_leaves)
+```
+
+r.squared is the percentage of the total variataion explained by the regression model.  In this case, 30.25% of the variation is explained by our regression model.  r.squared can be as great as 1, in which case the observerd values and predicted values are identical, and as little as zero, in which case there is no relationship between the dependent variable (Y) and the independent variable (X).  Our r.squared value of 0.3025 does not suggest a strong relationship between yield and total number of leaves.  That said, biological systems are very complicated -- studying them outdoors makes them moreso.  Given this complexity, an r.squared of 0.30 is worth attention.
+
+
+### Practice 1
+Lets now model yield as a function of the total_leaf_area.  First, lets fit the regression model.
+
+```{r}
+```
+
+Next, plot the residuals. Your results should look like:
+
+
+![](data-unit-10/exercise_images/corn_leaf_area_residuals.png)
+
+Next, let's view the model coefficients
+```{r}
+```
+
+What do you notice about the relationship between yield and total leaf area?  Is it significant?  Does yield increase or decrease with total leaf area?
+
+Using the coefficients above, write the regression model.
+
+Use the glance() function to develop additional model fit statistics.  
+
+```{r}
+```
+
+You should see an r.squared of 0.50.
+
+### Practice 2
+Now lets work with our corn fertility data.  
+```{r}
+fertility = read.csv("data-unit-10/exercise_data/corn_fertility.csv")
+head(fertility)
+
+```
+
+Create a simple linear regression model for yield as a function of organic matter.
+```{r}
+
+```
+
+Next, plot the residuals. Your results should look like:
+```{r}
+
+```
+
+![](data-unit-10/exercise_images/organic_matter_residuals.png)
+
+What do you notice about the residuals?  Is there strong indiciation that a linear model might be inappropriate?
+
+Next, let's view the model coefficients
+```{r}
+library(broom)
+
+```
+
+What do you notice about the relationship between yield and organic matter?  Is it significant?  Does yield increase or decrease with organic matter?
+
+Using the coefficients above, write the regression model.
+
+Use the glance() function to develop additional model fit statistics.  
+
+```{r}
+
+```
+
+You should see an r.squared of 0.15.
+
+## Exercise: Making Predictions from Regression Models.
+Now that we have created our linear models and ascertained that they explain a significant amount of the variance in our data, we want to use them to visualize the relationship between our Y and X variables.  Furthermore, we may want to use them to make predictions for specific values of X.
+
+### Case Study
+We will continue to work with our corn allometry dataset.
+
+```{r}
+library(tidyverse)
+allometry = read.csv("data-unit-10/exercise_data/corn_allometry.csv")
+head(allometry)
+```
+
+### Creating and Testing our Model
+What effect does stalk circumference have on yield?  Let's find out.
+```{r}
+model_circumference = lm(yield ~ stalk_circ, data=allometry)
+
+```
+
+We will again us tools from the *broom()* package to present clear results.  First, we examine our coefficients.
+```{r}
+library(broom)
+tidy(model_circumference)
+```
+
+We see the slope of our model is significantly different than zero.  There is a significant relationship between stalk circumference and yield.  How strong is this relationship?
+```{r}
+glance(model_circumference)
+```
+
+We see the r.squared is about 0.24 .  Not particularly strong, but meaningful just the same.
+
+### Visualizing the Regression Model
+Let's visualize this relationship using *ggplot()*.
+```{r}
+model_circumference %>%
+  ggplot(aes(x=stalk_circ, y=yield)) +
+  geom_point() +
+  geom_smooth(method = "lm", se=TRUE)
+```
+
+Above, we first created a scatter plot, based on the stalk circumference and yield associated with each observation.  The first two lines of plot creation, ggplot() and geom_point() shoud be increasingly familiar to you.
+
+The next line, uses the *geom_smooth()* function to add our regression model.  The argument *method="lm"* tells R to fit a linear model to the data.  This model is identical to that we used in our regression analysis.  The second argument, *se=TRUE*, tells R to shade the confidence interval around the regression line.  
+
+Remember, our regression line is an estimate, based on samples.  Our model parameters, including our slope, are estimates, complete with standard errors.  The confidence interval is based on the slope of our line.  Because a change in the slope of the line would be more pronounced at the ends of our regression line than the middle (think of it like a propeller), our confidence interval has a convex (or hourglass) shape to it.  We are 95% confident the actual relationship between Y and X is included in this confidence interval.
+
+### Making Predictions with the Regression Model
+Once we have defined a simple linear regression model, it is easy to make predictions with it.
+
+First, we need to create a new data frame with the values of stalk circumference for which we want to make predictions.  We use the *data.frame()* function to create the data.frame.  Next, we define the first column of the data.frame, stalk_circ.  We define it as having 5 values, from 1.5 to 3.5
+```{r}
+new_stalk_data = data.frame(
+  stalk_circ=c(1.5,
+               2.0,
+               2.5,
+               3.0,
+               3.5))
+
+new_stalk_data
+```
+
+That was probably the hardest part of the prediction.  Now, all we need to do is run the *predict()* function.  This function takes two arguments: 1) the name of the linear model we have developed, and 2) the name of the data.frame with the new values of stalk_circ.
+```{r}
+predict(model_circumference, new_stalk_data)
+
+```
+
+We can also assign these values to a new column in our new_stalk_data dataframe.  
+
+```{r}
+new_stalk_data$yield = predict(model_circumference, new_stalk_data)
+
+new_stalk_data
+```
+
+Finally, we can plot these new values using *ggplot()*
+```{r}
+new_stalk_data %>%
+  ggplot(aes(x=stalk_circ, y=yield)) +
+  geom_point()
+```
+
+### Practice 1
+What effect does the area of the highest leaf have on yield?  Let's find out.  
+
+1) Build the linear model
+```{r}
+
+```
+
+2) Examine the model coefficients.  The estimate for area_highest_leaf should be about 0.016.
+```{r}
+
+```
+
+3) How strong is the relationship between highest leaf area and yield?  Pretty strong: your results should show an r.squared of 0.64.
+```{r}
+
+```
+
+3) Create a plot of the regression model using ggplot().  Your plot should look like:
+
+![](data-unit-10/exercise_images/regression_highest_leaf_area.png)
+
+4) Make predictions for the five new leaf area values in the new_leaf_area data.frame 
+```{r}
+
+new_leaf_area = data.frame(
+  area_highest_leaf = c(900,
+                        1000,
+                        1100,
+                        1200,
+                        1300
+                        )
+)
+
+# Your new table should look like:
+#   
+# area_highest_leaf	yield
+# 900	159.2116
+# 1000	160.7872
+# 1100	162.3629
+# 1200	163.9385
+# 1300	165.5141  
+```
+
+
+### Practice 2
+We will work with the corn fertility dataset once more.  
+```{r}
+fertility = read.csv("data-unit-10/exercise_data/corn_fertility.csv")
+head(fertility)
+```
+
+1) Create the linear model for yield as a function of phosphorus.
+```{r}
+
+```
+
+2) Examine the model coefficients.  The estimate for phosphorus should be about -5.94.
+```{r}
+
+```
+
+3) How strong is the relationship between highest leaf area and yield?  Not very strong: your results should show an r.squared of 0.15.
+```{r}
+
+```
+
+3) Create a plot of the regression model using ggplot().  Your plot should look like:
+```{r}
+
+```
+
+
+![](data-unit-10/exercise_images/regression_organic_matter.png)
+
+4) Make predictions for the five new organic matter values in the new_om data.frame 
+```{r}
+
+new_om = data.frame(
+  organic_matter = c(1.5,
+                     1.8,
+                     2.1,
+                     2.4,
+                     2.7
+                     )
+)
+
+
+
+# Your new table should look like:
+#   
+# organic_matter	yield
+# 1.5	168.2745
+# 1.8	166.4925
+# 2.1	164.7104
+# 2.4	162.9283
+# 2.7	161.1463  
+# 
+``` 
