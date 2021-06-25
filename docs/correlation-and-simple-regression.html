@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 Correlation and Simple Regression | Data Science for Agricultural Professionals</title>
+  <meta name="description" content="Practical statistics for those involved in agronomy and related agricultural sciences." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 Correlation and Simple Regression | Data Science for Agricultural Professionals" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://mharbur.github.io/data-science-for-agricultural-professionals/" />
+  
+  <meta property="og:description" content="Practical statistics for those involved in agronomy and related agricultural sciences." />
+  <meta name="github-repo" content="https://github.com/mharbur/data-science-for-agricultural-professionals" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 Correlation and Simple Regression | Data Science for Agricultural Professionals" />
+  
+  <meta name="twitter:description" content="Practical statistics for those involved in agronomy and related agricultural sciences." />
+  
+
+<meta name="author" content="Marin L. Harbur" />
+
+
+<meta name="date" content="2021-06-25" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="messy-and-missing-data.html"/>
+
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Bookdown Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#welcome"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-language"><i class="fa fa-check"></i>R-language</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="population-statistics.html"><a href="population-statistics.html"><i class="fa fa-check"></i><b>1</b> Population Statistics</a><ul>
+<li class="chapter" data-level="1.1" data-path="population-statistics.html"><a href="population-statistics.html#populations"><i class="fa fa-check"></i><b>1.1</b> Populations</a></li>
+<li class="chapter" data-level="1.2" data-path="population-statistics.html"><a href="population-statistics.html#case-study-yield-map"><i class="fa fa-check"></i><b>1.2</b> Case Study: Yield Map</a></li>
+<li class="chapter" data-level="1.3" data-path="population-statistics.html"><a href="population-statistics.html#distributions"><i class="fa fa-check"></i><b>1.3</b> Distributions</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="population-statistics.html"><a href="population-statistics.html#histograms"><i class="fa fa-check"></i><b>1.3.1</b> Histograms</a></li>
+<li class="chapter" data-level="1.3.2" data-path="population-statistics.html"><a href="population-statistics.html#percentiles"><i class="fa fa-check"></i><b>1.3.2</b> Percentiles</a></li>
+<li class="chapter" data-level="1.3.3" data-path="population-statistics.html"><a href="population-statistics.html#normal-distribution-model"><i class="fa fa-check"></i><b>1.3.3</b> Normal Distribution Model</a></li>
+<li class="chapter" data-level="1.3.4" data-path="population-statistics.html"><a href="population-statistics.html#measures-of-center"><i class="fa fa-check"></i><b>1.3.4</b> Measures of Center</a></li>
+<li class="chapter" data-level="1.3.5" data-path="population-statistics.html"><a href="population-statistics.html#measures-of-dispersion"><i class="fa fa-check"></i><b>1.3.5</b> Measures of Dispersion</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="population-statistics.html"><a href="population-statistics.html#exercise-introduction-to-r"><i class="fa fa-check"></i><b>1.4</b> Exercise: Introduction to R</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="population-statistics.html"><a href="population-statistics.html#your-very-first-code"><i class="fa fa-check"></i><b>1.4.1</b> Your Very First Code</a></li>
+<li class="chapter" data-level="1.4.2" data-path="population-statistics.html"><a href="population-statistics.html#reading-and-working-with-data-frames"><i class="fa fa-check"></i><b>1.4.2</b> Reading and Working with Data Frames</a></li>
+<li class="chapter" data-level="1.4.3" data-path="population-statistics.html"><a href="population-statistics.html#basic-operations-on-columns"><i class="fa fa-check"></i><b>1.4.3</b> Basic Operations on Columns</a></li>
+<li class="chapter" data-level="1.4.4" data-path="population-statistics.html"><a href="population-statistics.html#knitting-your-results-into-a-document"><i class="fa fa-check"></i><b>1.4.4</b> Knitting Your Results into a Document</a></li>
+<li class="chapter" data-level="1.4.5" data-path="population-statistics.html"><a href="population-statistics.html#practice"><i class="fa fa-check"></i><b>1.4.5</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="population-statistics.html"><a href="population-statistics.html#exercise-introduction-to-shapefiles"><i class="fa fa-check"></i><b>1.5</b> Exercise: Introduction to Shapefiles</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="population-statistics.html"><a href="population-statistics.html#r-packages"><i class="fa fa-check"></i><b>1.5.1</b> R Packages</a></li>
+<li class="chapter" data-level="1.5.2" data-path="population-statistics.html"><a href="population-statistics.html#reading-shapefiles"><i class="fa fa-check"></i><b>1.5.2</b> Reading Shapefiles</a></li>
+<li class="chapter" data-level="1.5.3" data-path="population-statistics.html"><a href="population-statistics.html#examining-spatial-feature-data-frames"><i class="fa fa-check"></i><b>1.5.3</b> Examining Spatial Feature Data Frames</a></li>
+<li class="chapter" data-level="1.5.4" data-path="population-statistics.html"><a href="population-statistics.html#visualizing-data"><i class="fa fa-check"></i><b>1.5.4</b> Visualizing Data</a></li>
+<li class="chapter" data-level="1.5.5" data-path="population-statistics.html"><a href="population-statistics.html#create-your-own-maps"><i class="fa fa-check"></i><b>1.5.5</b> Create Your Own Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="population-statistics.html"><a href="population-statistics.html#exercise-histograms"><i class="fa fa-check"></i><b>1.6</b> Exercise: Histograms</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="population-statistics.html"><a href="population-statistics.html#case-study"><i class="fa fa-check"></i><b>1.6.1</b> Case Study</a></li>
+<li class="chapter" data-level="1.6.2" data-path="population-statistics.html"><a href="population-statistics.html#basic-histogram"><i class="fa fa-check"></i><b>1.6.2</b> Basic Histogram</a></li>
+<li class="chapter" data-level="1.6.3" data-path="population-statistics.html"><a href="population-statistics.html#histograms-with-ggplot"><i class="fa fa-check"></i><b>1.6.3</b> Histograms with ggplot</a></li>
+<li class="chapter" data-level="1.6.4" data-path="population-statistics.html"><a href="population-statistics.html#practice-1"><i class="fa fa-check"></i><b>1.6.4</b> Practice</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html"><i class="fa fa-check"></i><b>2</b> Distributions and Probability</a><ul>
+<li class="chapter" data-level="2.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#case-study-1"><i class="fa fa-check"></i><b>2.1</b> Case Study</a></li>
+<li class="chapter" data-level="2.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-normal-distribution-model"><i class="fa fa-check"></i><b>2.2</b> The Normal Distribution Model</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-bell-curve"><i class="fa fa-check"></i><b>2.2.1</b> The Bell Curve</a></li>
+<li class="chapter" data-level="2.2.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#distribution-and-probability"><i class="fa fa-check"></i><b>2.2.2</b> Distribution and Probability</a></li>
+<li class="chapter" data-level="2.2.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probability-and-the-normal-distribution-curve"><i class="fa fa-check"></i><b>2.2.3</b> Probability and the Normal Distribution Curve</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-z-distribution"><i class="fa fa-check"></i><b>2.3</b> The Z-Distribution</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#important-numbers-95-and-5"><i class="fa fa-check"></i><b>2.3.1</b> Important Numbers: 95% and 5%</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#exercise-z-distribution-and-probability"><i class="fa fa-check"></i><b>2.4</b> Exercise: Z-Distribution and Probability</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#case-study-barley-data"><i class="fa fa-check"></i><b>2.4.1</b> Case Study: Barley Data</a></li>
+<li class="chapter" data-level="2.4.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#measuring-the-population-distribution-mean-and-standard-deviation"><i class="fa fa-check"></i><b>2.4.2</b> Measuring the Population Distribution: Mean and Standard Deviation</a></li>
+<li class="chapter" data-level="2.4.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-shadedist-function"><i class="fa fa-check"></i><b>2.4.3</b> The shadeDist Function</a></li>
+<li class="chapter" data-level="2.4.4" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-in-lower-tails"><i class="fa fa-check"></i><b>2.4.4</b> Probabilities in Lower Tails</a></li>
+<li class="chapter" data-level="2.4.5" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-in-upper-tails"><i class="fa fa-check"></i><b>2.4.5</b> Probabilities in Upper Tails</a></li>
+<li class="chapter" data-level="2.4.6" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-within-a-range"><i class="fa fa-check"></i><b>2.4.6</b> Probabilities Within A Range</a></li>
+<li class="chapter" data-level="2.4.7" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probabilities-outside-a-range"><i class="fa fa-check"></i><b>2.4.7</b> Probabilities Outside a Range</a></li>
+<li class="chapter" data-level="2.4.8" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probability-and-sd"><i class="fa fa-check"></i><b>2.4.8</b> Probability and SD</a></li>
+<li class="chapter" data-level="2.4.9" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#practice-cotton-dataset"><i class="fa fa-check"></i><b>2.4.9</b> Practice: Cotton Dataset</a></li>
+<li class="chapter" data-level="2.4.10" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#practice-tomato-dataset"><i class="fa fa-check"></i><b>2.4.10</b> Practice: Tomato Dataset</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="sample-statistics.html"><a href="sample-statistics.html"><i class="fa fa-check"></i><b>3</b> Sample Statistics</a><ul>
+<li class="chapter" data-level="3.1" data-path="sample-statistics.html"><a href="sample-statistics.html#samples"><i class="fa fa-check"></i><b>3.1</b> Samples</a></li>
+<li class="chapter" data-level="3.2" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-2"><i class="fa fa-check"></i><b>3.2</b> Case Study</a></li>
+<li class="chapter" data-level="3.3" data-path="sample-statistics.html"><a href="sample-statistics.html#distribution-of-sample-means"><i class="fa fa-check"></i><b>3.3</b> Distribution of Sample Means</a></li>
+<li class="chapter" data-level="3.4" data-path="sample-statistics.html"><a href="sample-statistics.html#central-limit-theorem"><i class="fa fa-check"></i><b>3.4</b> Central Limit Theorem</a></li>
+<li class="chapter" data-level="3.5" data-path="sample-statistics.html"><a href="sample-statistics.html#standard-error"><i class="fa fa-check"></i><b>3.5</b> Standard Error</a></li>
+<li class="chapter" data-level="3.6" data-path="sample-statistics.html"><a href="sample-statistics.html#degrees-of-freedom"><i class="fa fa-check"></i><b>3.6</b> Degrees of Freedom</a></li>
+<li class="chapter" data-level="3.7" data-path="sample-statistics.html"><a href="sample-statistics.html#the-t-distribution"><i class="fa fa-check"></i><b>3.7</b> The t-Distribution</a></li>
+<li class="chapter" data-level="3.8" data-path="sample-statistics.html"><a href="sample-statistics.html#confidence-interval"><i class="fa fa-check"></i><b>3.8</b> Confidence Interval</a></li>
+<li class="chapter" data-level="3.9" data-path="sample-statistics.html"><a href="sample-statistics.html#confidence-interval-and-probability"><i class="fa fa-check"></i><b>3.9</b> Confidence Interval and Probability</a></li>
+<li class="chapter" data-level="3.10" data-path="sample-statistics.html"><a href="sample-statistics.html#exercise-standard-error"><i class="fa fa-check"></i><b>3.10</b> Exercise: Standard Error</a><ul>
+<li class="chapter" data-level="3.10.1" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-tomatoes"><i class="fa fa-check"></i><b>3.10.1</b> Case Study: Tomatoes</a></li>
+<li class="chapter" data-level="3.10.2" data-path="sample-statistics.html"><a href="sample-statistics.html#calculating-standard-error"><i class="fa fa-check"></i><b>3.10.2</b> Calculating Standard Error</a></li>
+<li class="chapter" data-level="3.10.3" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-barley"><i class="fa fa-check"></i><b>3.10.3</b> Practice: Barley</a></li>
+<li class="chapter" data-level="3.10.4" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-cotton"><i class="fa fa-check"></i><b>3.10.4</b> Practice: Cotton</a></li>
+</ul></li>
+<li class="chapter" data-level="3.11" data-path="sample-statistics.html"><a href="sample-statistics.html#exercise-t-distribution"><i class="fa fa-check"></i><b>3.11</b> Exercise: t-Distribution</a><ul>
+<li class="chapter" data-level="3.11.1" data-path="sample-statistics.html"><a href="sample-statistics.html#plotting-the-distribution"><i class="fa fa-check"></i><b>3.11.1</b> Plotting the Distribution</a></li>
+<li class="chapter" data-level="3.11.2" data-path="sample-statistics.html"><a href="sample-statistics.html#calculating-t"><i class="fa fa-check"></i><b>3.11.2</b> Calculating T</a></li>
+<li class="chapter" data-level="3.11.3" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-2"><i class="fa fa-check"></i><b>3.11.3</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="sample-statistics.html"><a href="sample-statistics.html#exercise-confidence-interval-for-sample-mean"><i class="fa fa-check"></i><b>3.12</b> Exercise: Confidence Interval for Sample Mean</a><ul>
+<li class="chapter" data-level="3.12.1" data-path="sample-statistics.html"><a href="sample-statistics.html#calculating-the-confidence-interval"><i class="fa fa-check"></i><b>3.12.1</b> Calculating the Confidence Interval</a></li>
+<li class="chapter" data-level="3.12.2" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-peanut-sample-1"><i class="fa fa-check"></i><b>3.12.2</b> Case Study: Peanut Sample 1</a></li>
+<li class="chapter" data-level="3.12.3" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-peanut-sample-2"><i class="fa fa-check"></i><b>3.12.3</b> Case Study: Peanut Sample 2</a></li>
+<li class="chapter" data-level="3.12.4" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-3"><i class="fa fa-check"></i><b>3.12.4</b> Practice</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html"><i class="fa fa-check"></i><b>4</b> Two-Treatment Comparisons</a><ul>
+<li class="chapter" data-level="4.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#side-by-side-trials"><i class="fa fa-check"></i><b>4.1</b> Side-by-Side Trials</a></li>
+<li class="chapter" data-level="4.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#blocked-design"><i class="fa fa-check"></i><b>4.2</b> Blocked Design</a></li>
+<li class="chapter" data-level="4.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-3"><i class="fa fa-check"></i><b>4.3</b> Case Study</a></li>
+<li class="chapter" data-level="4.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#confidence-interval-1"><i class="fa fa-check"></i><b>4.4</b> Confidence Interval</a></li>
+<li class="chapter" data-level="4.5" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#t-test"><i class="fa fa-check"></i><b>4.5</b> T-Test</a></li>
+<li class="chapter" data-level="4.6" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-randomizing-plots"><i class="fa fa-check"></i><b>4.6</b> Exercise: Randomizing Plots</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-1"><i class="fa fa-check"></i><b>4.6.1</b> Example 1</a></li>
+<li class="chapter" data-level="4.6.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#the-agricolae-package"><i class="fa fa-check"></i><b>4.6.2</b> The Agricolae Package</a></li>
+<li class="chapter" data-level="4.6.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#randomizing-the-plot"><i class="fa fa-check"></i><b>4.6.3</b> Randomizing the Plot</a></li>
+<li class="chapter" data-level="4.6.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#working-with-lists"><i class="fa fa-check"></i><b>4.6.4</b> Working with Lists</a></li>
+<li class="chapter" data-level="4.6.5" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-2"><i class="fa fa-check"></i><b>4.6.5</b> Example 2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-restructuring-columns-and-rows"><i class="fa fa-check"></i><b>4.7</b> Exercise: Restructuring Columns and Rows</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#operations-on-data"><i class="fa fa-check"></i><b>4.7.1</b> Operations on Data</a></li>
+<li class="chapter" data-level="4.7.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-soybean-fungicide"><i class="fa fa-check"></i><b>4.7.2</b> Case Study: Soybean Fungicide</a></li>
+<li class="chapter" data-level="4.7.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-1-1"><i class="fa fa-check"></i><b>4.7.3</b> Practice 1</a></li>
+<li class="chapter" data-level="4.7.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-2-1"><i class="fa fa-check"></i><b>4.7.4</b> Practice 2</a></li>
+<li class="chapter" data-level="4.7.5" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-3-1"><i class="fa fa-check"></i><b>4.7.5</b> Practice 3</a></li>
+<li class="chapter" data-level="4.7.6" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-4"><i class="fa fa-check"></i><b>4.7.6</b> Practice 4</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-confidence-interval-of-difference"><i class="fa fa-check"></i><b>4.8</b> Exercise: Confidence Interval of Difference"</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-1-1"><i class="fa fa-check"></i><b>4.8.1</b> Example 1</a></li>
+<li class="chapter" data-level="4.8.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-2-1"><i class="fa fa-check"></i><b>4.8.2</b> Example 2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-t-test"><i class="fa fa-check"></i><b>4.9</b> Exercise: T-Test</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-1-wheat-fungicide"><i class="fa fa-check"></i><b>4.9.1</b> Case Study 1: Wheat Fungicide</a></li>
+<li class="chapter" data-level="4.9.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#t-test-1"><i class="fa fa-check"></i><b>4.9.2</b> T-Test</a></li>
+<li class="chapter" data-level="4.9.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-2-apple-variety"><i class="fa fa-check"></i><b>4.9.3</b> Case Study 2: Apple Variety</a></li>
+<li class="chapter" data-level="4.9.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-5"><i class="fa fa-check"></i><b>4.9.4</b> Practice</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html"><i class="fa fa-check"></i><b>5</b> Understanding Statistical Tests</a><ul>
+<li class="chapter" data-level="5.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#research-question"><i class="fa fa-check"></i><b>5.1</b> Research Question</a></li>
+<li class="chapter" data-level="5.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#the-model"><i class="fa fa-check"></i><b>5.2</b> The Model</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#treatment-effect"><i class="fa fa-check"></i><b>5.2.1</b> Treatment Effect</a></li>
+<li class="chapter" data-level="5.2.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#error-effect"><i class="fa fa-check"></i><b>5.2.2</b> Error Effect</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#hypotheses"><i class="fa fa-check"></i><b>5.3</b> Hypotheses</a></li>
+<li class="chapter" data-level="5.4" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#p-value"><i class="fa fa-check"></i><b>5.4</b> P-Value</a></li>
+<li class="chapter" data-level="5.5" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#the-p-value-and-errors"><i class="fa fa-check"></i><b>5.5</b> The P-Value and Errors</a></li>
+<li class="chapter" data-level="5.6" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#one-sided-vs-two-sided-hypotheses"><i class="fa fa-check"></i><b>5.6</b> One-Sided vs Two-Sided Hypotheses</a></li>
+<li class="chapter" data-level="5.7" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#exercise-linear-additive-model"><i class="fa fa-check"></i><b>5.7</b> Exercise: Linear Additive Model</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#case-study-barley-effects"><i class="fa fa-check"></i><b>5.7.1</b> Case Study: Barley Effects</a></li>
+<li class="chapter" data-level="5.7.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#plotting-the-effects"><i class="fa fa-check"></i><b>5.7.2</b> Plotting the Effects</a></li>
+<li class="chapter" data-level="5.7.3" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#examining-individual-plots"><i class="fa fa-check"></i><b>5.7.3</b> Examining Individual Plots</a></li>
+<li class="chapter" data-level="5.7.4" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#practice-groudnut"><i class="fa fa-check"></i><b>5.7.4</b> Practice: Groudnut</a></li>
+<li class="chapter" data-level="5.7.5" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#plotting-the-effects-1"><i class="fa fa-check"></i><b>5.7.5</b> Plotting the Effects</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#exercise-one-sided-hypotheses"><i class="fa fa-check"></i><b>5.8</b> Exercise: One-Sided Hypotheses</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#case-study-groundnut"><i class="fa fa-check"></i><b>5.8.1</b> Case Study: Groundnut</a></li>
+<li class="chapter" data-level="5.8.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#one-sided-t-test"><i class="fa fa-check"></i><b>5.8.2</b> One-Sided T-Test</a></li>
+<li class="chapter" data-level="5.8.3" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#practice-barley-1"><i class="fa fa-check"></i><b>5.8.3</b> Practice: Barley</a></li>
+<li class="chapter" data-level="5.8.4" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#practice-strawberry"><i class="fa fa-check"></i><b>5.8.4</b> Practice: Strawberry</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#exercise-type-i-and-type-ii-errors"><i class="fa fa-check"></i><b>5.9</b> Exercise: Type I and Type II Errors</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html"><i class="fa fa-check"></i><b>6</b> Multiple Treatment Trials</a><ul>
+<li class="chapter" data-level="6.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#case-study-4"><i class="fa fa-check"></i><b>6.1</b> Case Study</a></li>
+<li class="chapter" data-level="6.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#the-linear-additive-model"><i class="fa fa-check"></i><b>6.2</b> The Linear Additive Model</a></li>
+<li class="chapter" data-level="6.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#analysis-of-variance"><i class="fa fa-check"></i><b>6.3</b> Analysis of Variance</a></li>
+<li class="chapter" data-level="6.4" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#the-f-statistic"><i class="fa fa-check"></i><b>6.4</b> The F statistic</a></li>
+<li class="chapter" data-level="6.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#the-anova-table"><i class="fa fa-check"></i><b>6.5</b> The ANOVA Table</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#source-of-variation"><i class="fa fa-check"></i><b>6.5.1</b> Source of Variation</a></li>
+<li class="chapter" data-level="6.5.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#sum-of-squares-1"><i class="fa fa-check"></i><b>6.5.2</b> Sum of Squares</a></li>
+<li class="chapter" data-level="6.5.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#degrees-of-freedom-1"><i class="fa fa-check"></i><b>6.5.3</b> Degrees of Freedom</a></li>
+<li class="chapter" data-level="6.5.4" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#mean-square"><i class="fa fa-check"></i><b>6.5.4</b> Mean Square</a></li>
+<li class="chapter" data-level="6.5.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#f-value"><i class="fa fa-check"></i><b>6.5.5</b> F-Value</a></li>
+<li class="chapter" data-level="6.5.6" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#p-value-1"><i class="fa fa-check"></i><b>6.5.6</b> P-value</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#visualizing-how-the-anova-table-relates-to-variance"><i class="fa fa-check"></i><b>6.6</b> Visualizing How the Anova Table Relates to Variance</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#case-study-barley"><i class="fa fa-check"></i><b>6.6.1</b> Case Study: Barley</a></li>
+<li class="chapter" data-level="6.6.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#anova"><i class="fa fa-check"></i><b>6.6.2</b> ANOVA</a></li>
+<li class="chapter" data-level="6.6.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#calculating-the-coefficient-of-variation"><i class="fa fa-check"></i><b>6.6.3</b> Calculating the Coefficient of Variation</a></li>
+<li class="chapter" data-level="6.6.4" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#practice-beet-data"><i class="fa fa-check"></i><b>6.6.4</b> Practice: Beet Data</a></li>
+<li class="chapter" data-level="6.6.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#practice-potato-data"><i class="fa fa-check"></i><b>6.6.5</b> Practice: Potato Data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#exercise-treatment-means"><i class="fa fa-check"></i><b>6.7</b> Exercise: “Treatment Means”</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#case-study-barley-1"><i class="fa fa-check"></i><b>6.7.1</b> Case Study: Barley</a></li>
+<li class="chapter" data-level="6.7.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#calculating-treatment-means"><i class="fa fa-check"></i><b>6.7.2</b> Calculating Treatment Means</a></li>
+<li class="chapter" data-level="6.7.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#plotting-the-means"><i class="fa fa-check"></i><b>6.7.3</b> Plotting the Means</a></li>
+<li class="chapter" data-level="6.7.4" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#practice-beet-data-1"><i class="fa fa-check"></i><b>6.7.4</b> Practice: Beet Data</a></li>
+<li class="chapter" data-level="6.7.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#practice-potato-data-1"><i class="fa fa-check"></i><b>6.7.5</b> Practice: Potato Data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html"><i class="fa fa-check"></i><b>7</b> Multiple Treatment Designs</a><ul>
+<li class="chapter" data-level="7.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#randomized-complete-block-design"><i class="fa fa-check"></i><b>7.1</b> Randomized Complete Block Design</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-randomized-complete-block-design"><i class="fa fa-check"></i><b>7.1.1</b> Case Study: Randomized Complete Block Design</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#factorial-design"><i class="fa fa-check"></i><b>7.2</b> Factorial Design</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-1-1"><i class="fa fa-check"></i><b>7.2.1</b> Case Study 1</a></li>
+<li class="chapter" data-level="7.2.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-2-1"><i class="fa fa-check"></i><b>7.2.2</b> Case Study 2</a></li>
+<li class="chapter" data-level="7.2.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#discussing-interactions"><i class="fa fa-check"></i><b>7.2.3</b> Discussing Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#split-plot-design"><i class="fa fa-check"></i><b>7.3</b> Split-Plot Design</a></li>
+<li class="chapter" data-level="7.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#linear-additive-model-3"><i class="fa fa-check"></i><b>7.4</b> Linear Additive Model</a></li>
+<li class="chapter" data-level="7.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#conclusion"><i class="fa fa-check"></i><b>7.5</b> Conclusion</a></li>
+<li class="chapter" data-level="7.6" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-randomized-complete-block-design"><i class="fa fa-check"></i><b>7.6</b> Exercise: Randomized Complete Block Design</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-5"><i class="fa fa-check"></i><b>7.6.1</b> Case Study</a></li>
+<li class="chapter" data-level="7.6.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#anova-1"><i class="fa fa-check"></i><b>7.6.2</b> ANOVA</a></li>
+<li class="chapter" data-level="7.6.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#plotting-the-results"><i class="fa fa-check"></i><b>7.6.3</b> Plotting the Results</a></li>
+<li class="chapter" data-level="7.6.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-6"><i class="fa fa-check"></i><b>7.6.4</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-factorial-anova"><i class="fa fa-check"></i><b>7.7</b> Exercise: Factorial ANOVA</a><ul>
+<li class="chapter" data-level="7.7.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-biochar"><i class="fa fa-check"></i><b>7.7.1</b> Case Study: Biochar</a></li>
+<li class="chapter" data-level="7.7.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#anova-2"><i class="fa fa-check"></i><b>7.7.2</b> ANOVA</a></li>
+<li class="chapter" data-level="7.7.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#interaction-plots"><i class="fa fa-check"></i><b>7.7.3</b> Interaction Plots</a></li>
+<li class="chapter" data-level="7.7.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#testing-factors-individually"><i class="fa fa-check"></i><b>7.7.4</b> Testing Factors Individually</a></li>
+<li class="chapter" data-level="7.7.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#bar-plots"><i class="fa fa-check"></i><b>7.7.5</b> Bar Plots</a></li>
+<li class="chapter" data-level="7.7.6" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-7"><i class="fa fa-check"></i><b>7.7.6</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-split-plot-design"><i class="fa fa-check"></i><b>7.8</b> Exercise: Split-Plot Design</a><ul>
+<li class="chapter" data-level="7.8.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-corn-soybean-systems-trial"><i class="fa fa-check"></i><b>7.8.1</b> Case Study: Corn-Soybean Systems Trial</a></li>
+<li class="chapter" data-level="7.8.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#anova-4"><i class="fa fa-check"></i><b>7.8.2</b> ANOVA</a></li>
+<li class="chapter" data-level="7.8.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#interaction-plot"><i class="fa fa-check"></i><b>7.8.3</b> Interaction Plot</a></li>
+<li class="chapter" data-level="7.8.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#bar-plot"><i class="fa fa-check"></i><b>7.8.4</b> Bar plot</a></li>
+<li class="chapter" data-level="7.8.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-8"><i class="fa fa-check"></i><b>7.8.5</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-experimental-design"><i class="fa fa-check"></i><b>7.9</b> Exercise: Experimental Design</a><ul>
+<li class="chapter" data-level="7.9.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#completely-randomized-design"><i class="fa fa-check"></i><b>7.9.1</b> Completely Randomized Design</a></li>
+<li class="chapter" data-level="7.9.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#randomized-complete-block-design-1"><i class="fa fa-check"></i><b>7.9.2</b> Randomized Complete Block Design</a></li>
+<li class="chapter" data-level="7.9.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#factorial-design-1"><i class="fa fa-check"></i><b>7.9.3</b> Factorial Design</a></li>
+<li class="chapter" data-level="7.9.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#split-plot-design-1"><i class="fa fa-check"></i><b>7.9.4</b> Split-Plot Design</a></li>
+<li class="chapter" data-level="7.9.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-9"><i class="fa fa-check"></i><b>7.9.5</b> Practice</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html"><i class="fa fa-check"></i><b>8</b> Means Separation and Data Presentation</a><ul>
+<li class="chapter" data-level="8.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-6"><i class="fa fa-check"></i><b>8.1</b> Case Study</a></li>
+<li class="chapter" data-level="8.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#least-significant-difference"><i class="fa fa-check"></i><b>8.2</b> Least Significant Difference</a></li>
+<li class="chapter" data-level="8.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#lsd-output-in-r"><i class="fa fa-check"></i><b>8.3</b> LSD Output in R</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#statistics-table"><i class="fa fa-check"></i><b>8.3.1</b> Statistics Table</a></li>
+<li class="chapter" data-level="8.3.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#means-table"><i class="fa fa-check"></i><b>8.3.2</b> Means Table</a></li>
+<li class="chapter" data-level="8.3.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#groups-table"><i class="fa fa-check"></i><b>8.3.3</b> Groups Table</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#comparisonwise-versus-experimentwise-error"><i class="fa fa-check"></i><b>8.4</b> Comparisonwise versus Experimentwise Error</a></li>
+<li class="chapter" data-level="8.5" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#tukeys-honest-significant-difference"><i class="fa fa-check"></i><b>8.5</b> Tukey’s Honest Significant Difference</a></li>
+<li class="chapter" data-level="8.6" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#linear-contrast"><i class="fa fa-check"></i><b>8.6</b> Linear Contrast</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#coefficients"><i class="fa fa-check"></i><b>8.6.1</b> Coefficients</a></li>
+<li class="chapter" data-level="8.6.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#linear-contrasts-with-r"><i class="fa fa-check"></i><b>8.6.2</b> Linear Contrasts with R</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#means-presentation"><i class="fa fa-check"></i><b>8.7</b> Means Presentation</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#means-tables"><i class="fa fa-check"></i><b>8.7.1</b> Means Tables</a></li>
+<li class="chapter" data-level="8.7.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#plotting-means"><i class="fa fa-check"></i><b>8.7.2</b> Plotting Means</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#exercise-lsd-and-tukeys-hsd"><i class="fa fa-check"></i><b>8.8</b> Exercise: LSD and Tukey’s HSD</a><ul>
+<li class="chapter" data-level="8.8.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-common-bean"><i class="fa fa-check"></i><b>8.8.1</b> Case Study: Common Bean</a></li>
+<li class="chapter" data-level="8.8.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#least-significant-difference-1"><i class="fa fa-check"></i><b>8.8.2</b> Least Significant Difference</a></li>
+<li class="chapter" data-level="8.8.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#tukey-hsd"><i class="fa fa-check"></i><b>8.8.3</b> Tukey HSD</a></li>
+<li class="chapter" data-level="8.8.4" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-apple"><i class="fa fa-check"></i><b>8.8.4</b> Practice: Apple</a></li>
+<li class="chapter" data-level="8.8.5" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-wheat-treatment-with-mildew"><i class="fa fa-check"></i><b>8.8.5</b> Practice: Wheat Treatment with Mildew</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#exercise-linear-contrasts"><i class="fa fa-check"></i><b>8.9</b> Exercise: Linear Contrasts</a><ul>
+<li class="chapter" data-level="8.9.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-winter-canola-cultivar-trial."><i class="fa fa-check"></i><b>8.9.1</b> Case Study: Winter Canola Cultivar Trial.</a></li>
+<li class="chapter" data-level="8.9.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#running-the-contrast"><i class="fa fa-check"></i><b>8.9.2</b> Running the Contrast</a></li>
+<li class="chapter" data-level="8.9.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-corn-nitrogen-source-and-timing"><i class="fa fa-check"></i><b>8.9.3</b> Practice: Corn Nitrogen Source and Timing</a></li>
+</ul></li>
+<li class="chapter" data-level="8.10" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#exercise-means-tables"><i class="fa fa-check"></i><b>8.10</b> Exercise: Means Tables</a><ul>
+<li class="chapter" data-level="8.10.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-corn-nitrogen-source-and-timing"><i class="fa fa-check"></i><b>8.10.1</b> Case Study: Corn Nitrogen Source and Timing</a></li>
+<li class="chapter" data-level="8.10.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-canola"><i class="fa fa-check"></i><b>8.10.2</b> Practice: Canola</a></li>
+<li class="chapter" data-level="8.10.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-broccoli-lsd"><i class="fa fa-check"></i><b>8.10.3</b> Practice: Broccoli LSD</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html"><i class="fa fa-check"></i><b>9</b> Messy and Missing Data</a><ul>
+<li class="chapter" data-level="9.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#inspecting-data-for-normal-distributions"><i class="fa fa-check"></i><b>9.1</b> Inspecting data for Normal Distributions</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#histograms-1"><i class="fa fa-check"></i><b>9.1.1</b> Histograms</a></li>
+<li class="chapter" data-level="9.1.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#rank-percentile-plots"><i class="fa fa-check"></i><b>9.1.2</b> Rank Percentile Plots</a></li>
+<li class="chapter" data-level="9.1.3" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#box-plots"><i class="fa fa-check"></i><b>9.1.3</b> Box Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#inspecting-data-for-equal-variances"><i class="fa fa-check"></i><b>9.2</b> Inspecting Data for Equal Variances</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#mean-variance-plot"><i class="fa fa-check"></i><b>9.2.1</b> Mean-Variance Plot</a></li>
+<li class="chapter" data-level="9.2.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#homogeneity-of-variance-tests"><i class="fa fa-check"></i><b>9.2.2</b> Homogeneity of Variance Tests</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#dealing-with-messy-data"><i class="fa fa-check"></i><b>9.3</b> Dealing with Messy Data</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#outliers"><i class="fa fa-check"></i><b>9.3.1</b> Outliers</a></li>
+<li class="chapter" data-level="9.3.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#non-normal-data-and-unequal-variances"><i class="fa fa-check"></i><b>9.3.2</b> Non-normal Data and Unequal Variances</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>9.4</b> Dealing with Missing Data</a></li>
+<li class="chapter" data-level="9.5" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#summary"><i class="fa fa-check"></i><b>9.5</b> Summary</a></li>
+<li class="chapter" data-level="9.6" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#exercise-visual-data-inspection"><i class="fa fa-check"></i><b>9.6</b> Exercise: Visual Data Inspection</a><ul>
+<li class="chapter" data-level="9.6.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#case-study-1-2"><i class="fa fa-check"></i><b>9.6.1</b> Case Study 1</a></li>
+<li class="chapter" data-level="9.6.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#histogram"><i class="fa fa-check"></i><b>9.6.2</b> Histogram</a></li>
+<li class="chapter" data-level="9.6.3" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#rank-percentile"><i class="fa fa-check"></i><b>9.6.3</b> Rank-Percentile</a></li>
+<li class="chapter" data-level="9.6.4" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#case-study-2-2"><i class="fa fa-check"></i><b>9.6.4</b> Case Study 2</a></li>
+<li class="chapter" data-level="9.6.5" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#box-plot"><i class="fa fa-check"></i><b>9.6.5</b> Box Plot</a></li>
+<li class="chapter" data-level="9.6.6" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#practice-10"><i class="fa fa-check"></i><b>9.6.6</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#exercise-identifying-unequal-variances"><i class="fa fa-check"></i><b>9.7</b> Exercise: Identifying Unequal Variances"</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#case-study-grape-colapsis-in-seed-corn"><i class="fa fa-check"></i><b>9.7.1</b> Case Study: Grape Colapsis in Seed Corn</a></li>
+<li class="chapter" data-level="9.7.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#practice-pigweed-height"><i class="fa fa-check"></i><b>9.7.2</b> Practice: Pigweed Height</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#exercise-transforming-and-analyzing-data"><i class="fa fa-check"></i><b>9.8</b> Exercise: Transforming and Analyzing Data</a><ul>
+<li class="chapter" data-level="9.8.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#case-study-grape-colapsis-in-seed-corn-1"><i class="fa fa-check"></i><b>9.8.1</b> Case Study: Grape Colapsis in Seed Corn</a></li>
+<li class="chapter" data-level="9.8.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#practice-pigweed-height-1"><i class="fa fa-check"></i><b>9.8.2</b> Practice: Pigweed Height</a></li>
+<li class="chapter" data-level="9.8.3" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#practice-pigweed-biomass"><i class="fa fa-check"></i><b>9.8.3</b> Practice: Pigweed Biomass</a></li>
+</ul></li>
+<li class="chapter" data-level="9.9" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#exercise-imputing-missing-data"><i class="fa fa-check"></i><b>9.9</b> Exercise: Imputing Missing Data</a><ul>
+<li class="chapter" data-level="9.9.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#case-study-wheat-genotype-trial"><i class="fa fa-check"></i><b>9.9.1</b> Case Study: Wheat Genotype Trial</a></li>
+<li class="chapter" data-level="9.9.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#practice-1-2"><i class="fa fa-check"></i><b>9.9.2</b> Practice 1</a></li>
+<li class="chapter" data-level="9.9.3" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#practice-2-2"><i class="fa fa-check"></i><b>9.9.3</b> Practice 2</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html"><i class="fa fa-check"></i><b>10</b> Correlation and Simple Regression</a><ul>
+<li class="chapter" data-level="10.1" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#correlation"><i class="fa fa-check"></i><b>10.1</b> Correlation</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#case-study-cucumber"><i class="fa fa-check"></i><b>10.1.1</b> Case Study: Cucumber</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#correlation-1"><i class="fa fa-check"></i><b>10.2</b> Correlation</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#how-is-r-calcuated-optional-reading"><i class="fa fa-check"></i><b>10.2.1</b> How Is r Calcuated (optional reading)</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#regression"><i class="fa fa-check"></i><b>10.3</b> Regression</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#case-study-7"><i class="fa fa-check"></i><b>10.3.1</b> Case Study</a></li>
+<li class="chapter" data-level="10.3.2" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#linear-equation"><i class="fa fa-check"></i><b>10.3.2</b> Linear Equation</a></li>
+<li class="chapter" data-level="10.3.3" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#calculating-the-regression-equation"><i class="fa fa-check"></i><b>10.3.3</b> Calculating the Regression Equation</a></li>
+<li class="chapter" data-level="10.3.4" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#least-squares-estimate"><i class="fa fa-check"></i><b>10.3.4</b> Least-Squares Estimate</a></li>
+<li class="chapter" data-level="10.3.5" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#significance-of-coefficients"><i class="fa fa-check"></i><b>10.3.5</b> Significance of Coefficients</a></li>
+<li class="chapter" data-level="10.3.6" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#analysis-of-variance-6"><i class="fa fa-check"></i><b>10.3.6</b> Analysis of Variance</a></li>
+<li class="chapter" data-level="10.3.7" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#measuring-model-fit-with-r-square"><i class="fa fa-check"></i><b>10.3.7</b> Measuring Model Fit with R-Square</a></li>
+<li class="chapter" data-level="10.3.8" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#checking-whether-the-linear-model-is-appropriate"><i class="fa fa-check"></i><b>10.3.8</b> Checking whether the Linear Model is Appropriate</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#extrapolation"><i class="fa fa-check"></i><b>10.4</b> Extrapolation</a></li>
+<li class="chapter" data-level="10.5" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#exercise-sccatterplots-and-regression"><i class="fa fa-check"></i><b>10.5</b> Exercise: Sccatterplots and Regression</a><ul>
+<li class="chapter" data-level="10.5.1" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#case-study-corn-data"><i class="fa fa-check"></i><b>10.5.1</b> Case Study: Corn Data</a></li>
+<li class="chapter" data-level="10.5.2" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#practice-1-3"><i class="fa fa-check"></i><b>10.5.2</b> Practice 1</a></li>
+<li class="chapter" data-level="10.5.3" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#practice-2-3"><i class="fa fa-check"></i><b>10.5.3</b> Practice 2</a></li>
+<li class="chapter" data-level="10.5.4" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#practice-3-2"><i class="fa fa-check"></i><b>10.5.4</b> Practice 3</a></li>
+<li class="chapter" data-level="10.5.5" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#practice-4-1"><i class="fa fa-check"></i><b>10.5.5</b> Practice 4</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#exercise-simple-linear-regression"><i class="fa fa-check"></i><b>10.6</b> Exercise: Simple Linear Regression</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#case-study-corn-allometry"><i class="fa fa-check"></i><b>10.6.1</b> Case Study: Corn Allometry</a></li>
+<li class="chapter" data-level="10.6.2" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#fitting-the-regression-model"><i class="fa fa-check"></i><b>10.6.2</b> Fitting the regression model</a></li>
+<li class="chapter" data-level="10.6.3" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#examining-the-residuals"><i class="fa fa-check"></i><b>10.6.3</b> Examining the residuals</a></li>
+<li class="chapter" data-level="10.6.4" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#viewing-the-model-coefficients"><i class="fa fa-check"></i><b>10.6.4</b> Viewing the Model Coefficients</a></li>
+<li class="chapter" data-level="10.6.5" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#more-measures-of-model-fit"><i class="fa fa-check"></i><b>10.6.5</b> More measures of model fit</a></li>
+<li class="chapter" data-level="10.6.6" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#practice-1-4"><i class="fa fa-check"></i><b>10.6.6</b> Practice 1</a></li>
+<li class="chapter" data-level="10.6.7" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#practice-2-4"><i class="fa fa-check"></i><b>10.6.7</b> Practice 2</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#exercise-making-predictions-from-regression-models."><i class="fa fa-check"></i><b>10.7</b> Exercise: Making Predictions from Regression Models.</a><ul>
+<li class="chapter" data-level="10.7.1" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#case-study-8"><i class="fa fa-check"></i><b>10.7.1</b> Case Study</a></li>
+<li class="chapter" data-level="10.7.2" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#creating-and-testing-our-model"><i class="fa fa-check"></i><b>10.7.2</b> Creating and Testing our Model</a></li>
+<li class="chapter" data-level="10.7.3" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#visualizing-the-regression-model"><i class="fa fa-check"></i><b>10.7.3</b> Visualizing the Regression Model</a></li>
+<li class="chapter" data-level="10.7.4" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#making-predictions-with-the-regression-model"><i class="fa fa-check"></i><b>10.7.4</b> Making Predictions with the Regression Model</a></li>
+<li class="chapter" data-level="10.7.5" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#practice-1-5"><i class="fa fa-check"></i><b>10.7.5</b> Practice 1</a></li>
+<li class="chapter" data-level="10.7.6" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#practice-2-5"><i class="fa fa-check"></i><b>10.7.6</b> Practice 2</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science for Agricultural Professionals</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="correlation-and-simple-regression" class="section level1">
+<h1><span class="header-section-number">Chapter 10</span> Correlation and Simple Regression</h1>
+<p>Let’s review our progress so far.</p>
+<p>In Units 1 to 3, we learned about populations, distributions, and samples. A population was a group of individuals in which we were interested. We use statistics to describe the spread or distribution of a population. When it is not possible to measure every individual in a population, a sample or subset can be used to estimate the frequency with which different values would be observed were the whole population measured.</p>
+<p>In Units 4 and 5, we learned how to test whether two populations were different. The t-distribution allowed us to calculate the probability the two populations were the same, in spite of a measured difference. When the two populations were managed differently, the t-test could be used to test whether they, and therefore their management practices, caused different outcomes.</p>
+<p>In Units 6 and 7, we learned how to test differences among multiple qualitative treatments. By qualitative, we mean there was no natural ranking of treatments: they were identified by name, and not a numeric value that occurred along a scale. Different hybrids, herbicides, and cropping systems are all examples of qualitative treatments. Different experimental designs allowed us to reduce error, or unexplained variation among experimental units in a trial. Factorial trials allowed us to test multiple factors and once, as well as test for any interactions among factors.</p>
+<p>In Unit 8, we learned about to test for differences among multiple qualitative treatments. The LSD and Tukey tests can be used to test the difference among treatments. Contrasts can be used to compare intuitive groupings of treatments. We learned how to report results in tables and plots.</p>
+<p>In Units 9 and 10, we will learn to work with quantitative treatments. Quantitative treatments can be ranked. The most obvious example would be rate trials for fertilizers, crop protection products, or crop seeds. What makes this situation different is that we are trying to describe a relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> along within a range of x values, rather at only at discrete values of x.</p>
+<div id="correlation" class="section level2">
+<h2><span class="header-section-number">10.1</span> Correlation</h2>
+<p>There are two ways of analyzing the relationship between two quantitative variables. If our hypothesis is that an change in <span class="math inline">\(x\)</span>, the independent variable (for example, pre-planting nitrogen fertilation rate), <em>causes</em> a change in <span class="math inline">\(y\)</span>, the dependent variable (for example, yield), then we use a <em>regression model</em> to analyze the data. Not only can the relationship between tested for significance – the model itself can be used to predict <span class="math inline">\(y\)</span> for any value of <span class="math inline">\(x\)</span> within the range of those in the dataset.</p>
+<p>Sometimes, however, we don’t know whether <span class="math inline">\(x\)</span> causes <span class="math inline">\(y\)</span>, or <span class="math inline">\(y\)</span> causes <span class="math inline">\(x\)</span>. This is the chicken-and-egg scenario. Outside animal science, however, we can run into this situation in crop development when we look at the allocation of biomass to different plant parts or different chemical components of tissue.</p>
+<div id="case-study-cucumber" class="section level3">
+<h3><span class="header-section-number">10.1.1</span> Case Study: Cucumber</h3>
+<p>In this study, cucumbers were grown the their number of leaves, branches, early fruits, and total fruits were measured.</p>
+<p>First, let’s load the data and look at its structure.</p>
+<div class="sourceCode" id="cb862"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb862-1"><a href="correlation-and-simple-regression.html#cb862-1"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.3     v purrr   0.3.4
+## v tibble  3.1.0     v dplyr   1.0.5
+## v tidyr   1.1.3     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.1</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb866-1"><a href="correlation-and-simple-regression.html#cb866-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb866-2"><a href="correlation-and-simple-regression.html#cb866-2"></a>cucumber =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-10/cucumber_traits.csv&quot;</span>)</span>
+<span id="cb866-3"><a href="correlation-and-simple-regression.html#cb866-3"></a><span class="kw">head</span>(cucumber)</span></code></pre></div>
+<pre><code>##   cycle rep plants flowers branches leaves totalfruit culledfruit earlyfruit
+## 1     1   1     29      22       40    240          1           0          0
+## 2     1   2     21      17       34    120         17           2          1
+## 3     1   3     31      52       32    440         29          15          3
+## 4     1   4     30      49       77    550         25           9          5
+## 5     1   5     28      88      140   1315         58          13         27
+## 6     1   6     28     162      105    986         39           9         14</code></pre>
+<p>What is the relationship between branches and leaves? Let’s plot the data.</p>
+<div class="sourceCode" id="cb868"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb868-1"><a href="correlation-and-simple-regression.html#cb868-1"></a><span class="kw">ggplot</span>(cucumber, <span class="kw">aes</span>(<span class="dt">x=</span>branches, <span class="dt">y =</span> leaves)) <span class="op">+</span></span>
+<span id="cb868-2"><a href="correlation-and-simple-regression.html#cb868-2"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>We don’t know whether leaves cause more branches. You might argue that more branches provide more places for leaves to form. But you could equally argue that the number of leaves affects the production of photosynthates for additional branching.</p>
+<p>Similarly, what is the relationship between earlyfruit and the number of branches?</p>
+<div class="sourceCode" id="cb869"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb869-1"><a href="correlation-and-simple-regression.html#cb869-1"></a><span class="kw">ggplot</span>(cucumber, <span class="kw">aes</span>(<span class="dt">x=</span>branches, <span class="dt">y=</span>earlyfruit)) <span class="op">+</span></span>
+<span id="cb869-2"><a href="correlation-and-simple-regression.html#cb869-2"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>In both cases, we can see that as one variable increases, so does the other. But we don’t know whether the increase in one causes the increase in the other, or whether there is another variable (measured or unmeasured, that causes both to increase).`</p>
+</div>
+</div>
+<div id="correlation-1" class="section level2">
+<h2><span class="header-section-number">10.2</span> Correlation</h2>
+<p>Correlation doesn’t measure <em>causation</em>. Instead, it measures <em>association</em>. The first way to identify correlations is to plot variables as we have just done. But, of course, it is hard for us to measure the strength of the association just by eye. In addition, it is good to have a way of directly measuring the strengh of the correlation. Our measure in this case is the <em>correlation coefficient</em>, <span class="math inline">\(r\)</span>. r varies between –1 and 1. Values near 0 indicate little or no association between Y and X. Values close to 1 indicate a strong, positive relationship between Y and X. A positive relationship means that as X increases, so does Y. Conversely, values close to 1 indicate a strong, negative relationship between Y and X. A negative relationship means that as X increases, Y decreases.</p>
+<p>Experiment with the application found at the following link:</p>
+<p>What happens as you adjust the value of r using the slider control?</p>
+<p>For the cucumber datasets above, the correlations are shown below:</p>
+<div class="sourceCode" id="cb870"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb870-1"><a href="correlation-and-simple-regression.html#cb870-1"></a>cor_branches_leaves =<span class="st"> </span><span class="kw">round</span>(<span class="kw">cor</span>(cucumber<span class="op">$</span>branches, cucumber<span class="op">$</span>leaves),<span class="dv">2</span>)</span>
+<span id="cb870-2"><a href="correlation-and-simple-regression.html#cb870-2"></a></span>
+<span id="cb870-3"><a href="correlation-and-simple-regression.html#cb870-3"></a>plot1 =<span class="st"> </span><span class="kw">ggplot</span>(cucumber, <span class="kw">aes</span>(<span class="dt">x=</span>branches, <span class="dt">y =</span> leaves)) <span class="op">+</span></span>
+<span id="cb870-4"><a href="correlation-and-simple-regression.html#cb870-4"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb870-5"><a href="correlation-and-simple-regression.html#cb870-5"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">x=</span><span class="dv">140</span>, <span class="dt">y=</span><span class="fl">0.9</span><span class="op">*</span><span class="kw">max</span>(cucumber<span class="op">$</span>leaves), <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;r = &quot;</span>, cor_branches_leaves))</span>
+<span id="cb870-6"><a href="correlation-and-simple-regression.html#cb870-6"></a></span>
+<span id="cb870-7"><a href="correlation-and-simple-regression.html#cb870-7"></a>cor_branches_earlyfruit =<span class="st"> </span><span class="kw">round</span>(<span class="kw">cor</span>(cucumber<span class="op">$</span>branches, cucumber<span class="op">$</span>earlyfruit),<span class="dv">2</span>)</span>
+<span id="cb870-8"><a href="correlation-and-simple-regression.html#cb870-8"></a>max_earlyfruit =<span class="st"> </span><span class="kw">max</span>(cucumber<span class="op">$</span>earlyfruit)</span>
+<span id="cb870-9"><a href="correlation-and-simple-regression.html#cb870-9"></a></span>
+<span id="cb870-10"><a href="correlation-and-simple-regression.html#cb870-10"></a>plot2 =<span class="st"> </span><span class="kw">ggplot</span>(cucumber, <span class="kw">aes</span>(<span class="dt">x=</span>branches, <span class="dt">y =</span> earlyfruit)) <span class="op">+</span></span>
+<span id="cb870-11"><a href="correlation-and-simple-regression.html#cb870-11"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb870-12"><a href="correlation-and-simple-regression.html#cb870-12"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data=</span>cucumber, <span class="dt">x=</span><span class="dv">140</span>, <span class="dt">y=</span><span class="fl">0.9</span><span class="op">*</span><span class="kw">max</span>(cucumber<span class="op">$</span>earlyfruit), <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;r = &quot;</span>, cor_branches_earlyfruit))</span>
+<span id="cb870-13"><a href="correlation-and-simple-regression.html#cb870-13"></a></span>
+<span id="cb870-14"><a href="correlation-and-simple-regression.html#cb870-14"></a><span class="kw">require</span>(gridExtra)</span></code></pre></div>
+<pre><code>## Loading required package: gridExtra</code></pre>
+<pre><code>## 
+## Attaching package: &#39;gridExtra&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     combine</code></pre>
+<div class="sourceCode" id="cb874"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb874-1"><a href="correlation-and-simple-regression.html#cb874-1"></a><span class="kw">grid.arrange</span>(plot1, plot2, <span class="dt">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div id="how-is-r-calcuated-optional-reading" class="section level3">
+<h3><span class="header-section-number">10.2.1</span> How Is r Calcuated (optional reading)</h3>
+<p>Something that bothered me for years was understanding what r represented – how did we get from a cloud of data to that number?. The formula is readily available, but how does it work? To find the explanation in plain English is really hard to find, so I hope you enjoy this!</p>
+<p>To understand this, let’s consider you are in Marshalltown, Iowa, waiting for the next Derecho. You want to go visit your friends, however, who are similarly waiting in Des Moines for whatever doom 2020 will bring there. How will you get there?</p>
+<div class="figure">
+<img src="data-unit-10/marshalltown_dsm_euclidian.png" alt="" />
+<p class="caption">Iowa Map</p>
+</div>
+<p>First, you could go “as the crow flies” on Routes 330 and 65. This is the shortest distance between Marshalltown and Des Moines. In mathematical terms this is know as the “Euclidian Distance”. Now you probably know the Eucidian Distance by a different name, the one you learned in eigth grade geometry. Yes, it is the hypotenuse, the diagonal on a right triangle!</p>
+<p>Second, you might want to stop in Ames to take some barbecue or pizza to your friends in Des Moines. In that case, you would travel a right angle, “horizontally” along US 30-and then “vertically” down I-35. You might call this “going out of your way”. The mathematical term is “Manhattan Distance”. No, not Kansas. The Manhattan distance is named for the grid system of streets in the upper two thirds of Manhattan. The avenues for the vertical axes and the streets form the horizontal axes.</p>
+<p>As you might remember, the length of the hypotenuse of a right triangle is calculated as:</p>
+<p><span class="math display">\[z^2 = x^2 + y^2\]</span></p>
+<p>Where <span class="math inline">\(z\)</span> is the distance as the crow flies, <span class="math inline">\(x\)</span> is the horizontal distance, and <span class="math inline">\(y\)</span> is the vertical distance. This is the Euclidian Distance. The Manhattan distance, by contrast, is simply <span class="math inline">\(x + y\)</span>.</p>
+<p>Now what if we were simply driving from Marshalltown to Ames? Would the Euclidian distance and the Manhattan distance be so different? No, because both Marshalltown and Ames are roughly on the x-axis? Similarly, what if we drove from Ames to Des Moines? The Euclidian distance and Manhattan distance would again be similar, because we were travelling across the x-axis.</p>
+<p>The difference between the Euclidian distance and the Manhattan distance is greatest when we must travel at a 45 degree angle from the X axis. We can demonstrate this with the following plot. Every point below is four units from the origin (<span class="math inline">\(x=0,y=0\)</span>). Notice that when the point is on the x or y axis, the Euclidian distance and Manhattan distance are equal. But as the angle increases to zero, the Euclidian distance decreases, reaching its lowest value when x=y and the angle from the axis is 45 degrees.</p>
+<p>In the plot below, each point has a Manhattan distance (<span class="math inline">\(x+y\)</span>) of 4. The Euclidian distance is shown beside each point. We can see the Euclidian distance is least when <span class="math inline">\(y=x=2\)</span>.</p>
+<div class="sourceCode" id="cb875"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb875-1"><a href="correlation-and-simple-regression.html#cb875-1"></a>x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb875-2"><a href="correlation-and-simple-regression.html#cb875-2"></a>y =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)</span>
+<span id="cb875-3"><a href="correlation-and-simple-regression.html#cb875-3"></a></span>
+<span id="cb875-4"><a href="correlation-and-simple-regression.html#cb875-4"></a>distance_example =<span class="st"> </span><span class="kw">cbind</span>(x,y) <span class="op">%&gt;%</span></span>
+<span id="cb875-5"><a href="correlation-and-simple-regression.html#cb875-5"></a><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span></span>
+<span id="cb875-6"><a href="correlation-and-simple-regression.html#cb875-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">euclidian_distance =</span> <span class="kw">sqrt</span>(x<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>y<span class="op">^</span><span class="dv">2</span>),</span>
+<span id="cb875-7"><a href="correlation-and-simple-regression.html#cb875-7"></a>         <span class="dt">manhattan_distance =</span> x<span class="op">+</span>y,</span>
+<span id="cb875-8"><a href="correlation-and-simple-regression.html#cb875-8"></a>         <span class="dt">id =</span> <span class="kw">row_number</span>(),</span>
+<span id="cb875-9"><a href="correlation-and-simple-regression.html#cb875-9"></a>         <span class="dt">id =</span> <span class="kw">as.factor</span>(id),</span>
+<span id="cb875-10"><a href="correlation-and-simple-regression.html#cb875-10"></a>         <span class="dt">euclidian_distance =</span> <span class="kw">round</span>(euclidian_distance, <span class="dv">1</span>))</span>
+<span id="cb875-11"><a href="correlation-and-simple-regression.html#cb875-11"></a></span>
+<span id="cb875-12"><a href="correlation-and-simple-regression.html#cb875-12"></a><span class="kw">ggplot</span>(distance_example, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">group=</span>id, <span class="dt">label =</span> euclidian_distance)) <span class="op">+</span></span>
+<span id="cb875-13"><a href="correlation-and-simple-regression.html#cb875-13"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color=</span>id), <span class="dt">size=</span><span class="dv">5</span>) <span class="op">+</span></span>
+<span id="cb875-14"><a href="correlation-and-simple-regression.html#cb875-14"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> <span class="dv">0</span>, <span class="dt">xend =</span> x, <span class="dt">yend =</span> y, <span class="dt">color=</span>id), <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="dv">7</span>, <span class="st">&quot;mm&quot;</span>)), <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb875-15"><a href="correlation-and-simple-regression.html#cb875-15"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x <span class="op">+</span><span class="st"> </span><span class="fl">0.3</span>, <span class="dt">y=</span> y <span class="op">+</span><span class="st"> </span><span class="fl">0.3</span>, <span class="dt">color =</span> id), <span class="dt">size=</span><span class="dv">6</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb875-16"><a href="correlation-and-simple-regression.html#cb875-16"></a><span class="st">  </span><span class="kw">coord_fixed</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb875-17"><a href="correlation-and-simple-regression.html#cb875-17"></a><span class="st">  </span><span class="kw">lims</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">4.5</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">4.5</span>)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb875-18"><a href="correlation-and-simple-regression.html#cb875-18"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Conversely, in the plot below, each point is the same Euclidean distance (4 units) from the origin (<span class="math inline">\(x=0,y=0\)</span>). The Manhattan distance is shown beside each point. We can see the Manhattan distance is greatest when the point is at a 45 degree angle from the origin.</p>
+<div class="sourceCode" id="cb876"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb876-1"><a href="correlation-and-simple-regression.html#cb876-1"></a>x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>,<span class="fl">3.85</span>,<span class="fl">3.4</span>, <span class="fl">2.83</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb876-2"><a href="correlation-and-simple-regression.html#cb876-2"></a>z =<span class="st"> </span><span class="dv">4</span></span>
+<span id="cb876-3"><a href="correlation-and-simple-regression.html#cb876-3"></a></span>
+<span id="cb876-4"><a href="correlation-and-simple-regression.html#cb876-4"></a>distance_example_<span class="dv">2</span> =<span class="st"> </span><span class="kw">cbind</span>(x,z) <span class="op">%&gt;%</span></span>
+<span id="cb876-5"><a href="correlation-and-simple-regression.html#cb876-5"></a><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span></span>
+<span id="cb876-6"><a href="correlation-and-simple-regression.html#cb876-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">euclidian_distance =</span> z,</span>
+<span id="cb876-7"><a href="correlation-and-simple-regression.html#cb876-7"></a>         <span class="dt">y=</span> <span class="kw">sqrt</span>(z<span class="op">^</span><span class="dv">2</span> <span class="op">-</span><span class="st">  </span>x<span class="op">^</span><span class="dv">2</span>),</span>
+<span id="cb876-8"><a href="correlation-and-simple-regression.html#cb876-8"></a>         <span class="dt">manhattan_distance =</span> x<span class="op">+</span>y,</span>
+<span id="cb876-9"><a href="correlation-and-simple-regression.html#cb876-9"></a>         <span class="dt">id =</span> <span class="kw">row_number</span>(),</span>
+<span id="cb876-10"><a href="correlation-and-simple-regression.html#cb876-10"></a>         <span class="dt">id =</span> <span class="kw">as.factor</span>(id),</span>
+<span id="cb876-11"><a href="correlation-and-simple-regression.html#cb876-11"></a>         <span class="dt">manhattan_distance =</span> <span class="kw">round</span>(manhattan_distance, <span class="dv">1</span>))</span>
+<span id="cb876-12"><a href="correlation-and-simple-regression.html#cb876-12"></a></span>
+<span id="cb876-13"><a href="correlation-and-simple-regression.html#cb876-13"></a><span class="kw">ggplot</span>(distance_example_<span class="dv">2</span>, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">group=</span>id, <span class="dt">label =</span> manhattan_distance)) <span class="op">+</span></span>
+<span id="cb876-14"><a href="correlation-and-simple-regression.html#cb876-14"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color=</span>id), <span class="dt">size=</span><span class="dv">5</span>) <span class="op">+</span></span>
+<span id="cb876-15"><a href="correlation-and-simple-regression.html#cb876-15"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> <span class="dv">0</span>, <span class="dt">xend =</span> x, <span class="dt">yend =</span> y, <span class="dt">color=</span>id), <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="dv">7</span>, <span class="st">&quot;mm&quot;</span>)), <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb876-16"><a href="correlation-and-simple-regression.html#cb876-16"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x <span class="op">+</span><span class="st"> </span><span class="fl">0.3</span>, <span class="dt">y=</span> y <span class="op">+</span><span class="st"> </span><span class="fl">0.3</span>, <span class="dt">color =</span> id), <span class="dt">size=</span><span class="dv">6</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb876-17"><a href="correlation-and-simple-regression.html#cb876-17"></a><span class="st">  </span><span class="kw">coord_fixed</span>() <span class="op">+</span></span>
+<span id="cb876-18"><a href="correlation-and-simple-regression.html#cb876-18"></a><span class="st">  </span><span class="kw">lims</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">4.5</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">4.5</span>)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb876-19"><a href="correlation-and-simple-regression.html#cb876-19"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>The calculation of the correlation coefficient, <span class="math inline">\(r\)</span>, depends on this concept of <em>covariance</em> between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. The covariance is calculated as:</p>
+<p><span class="math display">\[S_{xy} = \sum(x_i - \bar{x})(y_i-\bar{y}) \]</span></p>
+<p>Let’s go back to our cucumber data. We will calculate the difference of each point from the <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(\bar{y}\)</span>. The points are plotted below.</p>
+<div class="sourceCode" id="cb877"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb877-1"><a href="correlation-and-simple-regression.html#cb877-1"></a>cucumber_cov =<span class="st"> </span>cucumber <span class="op">%&gt;%</span></span>
+<span id="cb877-2"><a href="correlation-and-simple-regression.html#cb877-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">branches_delta =</span> branches <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(branches),</span>
+<span id="cb877-3"><a href="correlation-and-simple-regression.html#cb877-3"></a>         <span class="dt">leaves_delta =</span> leaves <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(leaves),</span>
+<span id="cb877-4"><a href="correlation-and-simple-regression.html#cb877-4"></a>         <span class="dt">cov =</span> branches_delta <span class="op">*</span><span class="st"> </span>leaves_delta)</span>
+<span id="cb877-5"><a href="correlation-and-simple-regression.html#cb877-5"></a></span>
+<span id="cb877-6"><a href="correlation-and-simple-regression.html#cb877-6"></a><span class="kw">ggplot</span>(cucumber_cov, <span class="kw">aes</span>(<span class="dt">x=</span> branches_delta, <span class="dt">y=</span>leaves_delta)) <span class="op">+</span></span>
+<span id="cb877-7"><a href="correlation-and-simple-regression.html#cb877-7"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb877-8"><a href="correlation-and-simple-regression.html#cb877-8"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span><span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb877-9"><a href="correlation-and-simple-regression.html#cb877-9"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept=</span><span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb877-10"><a href="correlation-and-simple-regression.html#cb877-10"></a><span class="st">  </span><span class="kw">lims</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">100</span>, <span class="dv">100</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">700</span>, <span class="dv">700</span>))</span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>What we have now are four quandrants. The differences between them are important important because they affect the <em>sign</em> of the covariance. Remember, the covariance of each point is the product of the x-distance and the y-distance of each point.</p>
+<div class="sourceCode" id="cb878"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb878-1"><a href="correlation-and-simple-regression.html#cb878-1"></a><span class="kw">ggplot</span>(cucumber_cov, <span class="kw">aes</span>(<span class="dt">x=</span> branches_delta, <span class="dt">y=</span>leaves_delta)) <span class="op">+</span></span>
+<span id="cb878-2"><a href="correlation-and-simple-regression.html#cb878-2"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb878-3"><a href="correlation-and-simple-regression.html#cb878-3"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span><span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb878-4"><a href="correlation-and-simple-regression.html#cb878-4"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept=</span><span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb878-5"><a href="correlation-and-simple-regression.html#cb878-5"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">x=</span><span class="dv">50</span>, <span class="dt">y=</span><span class="dv">400</span>, <span class="dt">label=</span><span class="st">&quot;I&quot;</span>, <span class="dt">size =</span> <span class="dv">20</span>, <span class="dt">color=</span><span class="st">&quot;darkgrey&quot;</span>, ) <span class="op">+</span></span>
+<span id="cb878-6"><a href="correlation-and-simple-regression.html#cb878-6"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">x=</span><span class="dv">50</span>, <span class="dt">y=</span><span class="op">-</span><span class="dv">400</span>, <span class="dt">label=</span><span class="st">&quot;II&quot;</span>, <span class="dt">size =</span> <span class="dv">20</span>, <span class="dt">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="op">+</span></span>
+<span id="cb878-7"><a href="correlation-and-simple-regression.html#cb878-7"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">x=</span><span class="op">-</span><span class="dv">50</span>, <span class="dt">y=</span><span class="op">-</span><span class="dv">400</span>, <span class="dt">label=</span><span class="st">&quot;III&quot;</span>, <span class="dt">size =</span> <span class="dv">20</span>, <span class="dt">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="op">+</span></span>
+<span id="cb878-8"><a href="correlation-and-simple-regression.html#cb878-8"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">x=</span><span class="op">-</span><span class="dv">50</span>, <span class="dt">y=</span><span class="dv">400</span>, <span class="dt">label=</span><span class="st">&quot;IV&quot;</span>, <span class="dt">size =</span> <span class="dv">20</span>, <span class="dt">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="op">+</span></span>
+<span id="cb878-9"><a href="correlation-and-simple-regression.html#cb878-9"></a><span class="st">  </span><span class="kw">lims</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">100</span>, <span class="dv">100</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">700</span>, <span class="dv">700</span>))</span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>In quadrant I, both the x-distance and y-distance are positive, so their product will be positive. In quadrant II, the x-distance is still positive but the y-distance is negative, so their product will be negative. In quadrant III, both x-distance and y-distance are negative, so their negatives will cancel each other and the product will be positive. Finally, quadrant IV, will have a positve x-distance and negative y-distance and have a negative sign.</p>
+<div class="sourceCode" id="cb879"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb879-1"><a href="correlation-and-simple-regression.html#cb879-1"></a><span class="kw">ggplot</span>(cucumber_cov, <span class="kw">aes</span>(<span class="dt">x=</span> branches_delta, <span class="dt">y=</span>leaves_delta)) <span class="op">+</span></span>
+<span id="cb879-2"><a href="correlation-and-simple-regression.html#cb879-2"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb879-3"><a href="correlation-and-simple-regression.html#cb879-3"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span><span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb879-4"><a href="correlation-and-simple-regression.html#cb879-4"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept=</span><span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb879-5"><a href="correlation-and-simple-regression.html#cb879-5"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">x=</span><span class="dv">50</span>, <span class="dt">y=</span><span class="dv">400</span>, <span class="dt">label=</span><span class="st">&quot;+&quot;</span>, <span class="dt">size =</span> <span class="dv">25</span>, <span class="dt">color=</span><span class="st">&quot;darkgrey&quot;</span>, ) <span class="op">+</span></span>
+<span id="cb879-6"><a href="correlation-and-simple-regression.html#cb879-6"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">x=</span><span class="dv">50</span>, <span class="dt">y=</span><span class="op">-</span><span class="dv">355</span>, <span class="dt">label=</span><span class="st">&quot;-&quot;</span>, <span class="dt">size =</span> <span class="dv">25</span>, <span class="dt">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="op">+</span></span>
+<span id="cb879-7"><a href="correlation-and-simple-regression.html#cb879-7"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">x=</span><span class="op">-</span><span class="dv">50</span>, <span class="dt">y=</span><span class="op">-</span><span class="dv">400</span>, <span class="dt">label=</span><span class="st">&quot;+&quot;</span>, <span class="dt">size =</span> <span class="dv">25</span>, <span class="dt">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="op">+</span></span>
+<span id="cb879-8"><a href="correlation-and-simple-regression.html#cb879-8"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">x=</span><span class="op">-</span><span class="dv">50</span>, <span class="dt">y=</span><span class="dv">445</span>, <span class="dt">label=</span><span class="st">&quot;-&quot;</span>, <span class="dt">size =</span> <span class="dv">25</span>, <span class="dt">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="op">+</span></span>
+<span id="cb879-9"><a href="correlation-and-simple-regression.html#cb879-9"></a><span class="st">  </span><span class="kw">lims</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">100</span>, <span class="dv">100</span>), <span class="dt">y=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">700</span>, <span class="dv">700</span>))</span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Enough already! How does all this determine r? It’s simple – the stronger the association between x and y, the more linear the arrangement of the observations in the plot above. The more linear the arrangement, the more the points will be in diagonal quadrants. In the plot above, any observations that fall in quadrant I or III will contribute to the positive value of r. Any points that fall in quadrants II or IV will subtract from the value or r.</p>
+<p>In that way, a loose distribution of points around all four quadrants, which would indicate x and y are weakly associated, would be penalized with an r score close to zero. A distribution concentrated in quadrants I and III would have a positive r value closer to 1, indicating a <em>positive</em> association between x and y. Conversely, a distribution concentrated in quadrants II and IV would have a negative r value closer to -1, and a <em>negative</em> association between x and y.</p>
+<p>One last detail. Why is r always between -1 and 1? To understand that, we look at the complete calculation of r.</p>
+<p><span class="math display">\[r=\frac{S_{xy}}{\sqrt{S_{xx}}\cdot\sqrt{S_{yy}}} \]</span></p>
+<p>You don’t need to memorize this equation. Here is what it is doing, in plain English. <span class="math inline">\(S_{xy}\)</span> is the covariance. It tells us, for each point, how it’s x and y value vary together. <span class="math inline">\(S_{xx}\)</span> is the sum of squares of x. It sums the distances of each point from the origin (<span class="math inline">\(x=0,y=0\)</span>) along the x axis. <span class="math inline">\(S_{yy}\)</span> is the sum of squares of y. It is the total y distance of points from the origin. By multiplying the square root of <span class="math inline">\(S_{xx}\)</span> and <span class="math inline">\(S_{yy}\)</span>, we calculate the maximum theoretical covariance that the points in our measure could have.</p>
+<p>r is, after all this, a proportion. It is the measured covariance of the points, divided by the covariance they would have if they fell in a straight line.</p>
+<p>I hope you enjoy this explanation. I don’t like to go into great detail about calculations, but one of my greatest hangups with statistics is how little effort is often made to explain where the statistics actually come from. If you look to Wikipedia for an explanation, you usually get a formula that assumes you have an advanced degree in calculus. Why does this have to be so hard?</p>
+<p>Statistics is the end, about describing the <em>shape</em> of the data. How widely are the observations distributed? How far do they have to be from the mean to be too improbabe to be the result of chance? Do the points fall in a line or not? There is beauty in these shapes, as well as awe that persons, decades and even millenia before digital computers, discovered how to describe them with formulas.</p>
+<p>Then again, it’s not like they had <em>Tiger King</em> to watch.</p>
+</div>
+</div>
+<div id="regression" class="section level2">
+<h2><span class="header-section-number">10.3</span> Regression</h2>
+<p>Regression describes a relationship between an independent variable (usually represented by the letter <span class="math inline">\(y\)</span>) and one or more dependent variables (<span class="math inline">\(x_x\)</span>, <span class="math inline">\(x_2\)</span>, etc). Regression differs from correlation in that the model assumes that the value of <span class="math inline">\(x\)</span> is substantially determined by the value of <span class="math inline">\(x\)</span>. Instead of describing the <em>association</em> between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>, we now refer to causation – how <span class="math inline">\(X\)</span> determines the value of <span class="math inline">\(Y\)</span>.</p>
+<p>Regression analysis may be conducted simply to test the hypothesis that a change in one variable drives a change in another, for example, that an increase in herbicide rate causes an increase in weed control. Regression, however, can also be used to predict the value of y based on intermediate values of x, that is, values of x between those used to fit or “train” the regression model.</p>
+<p>The prediction of values of y for intermediate values of x is called <em>interpolation</em>. In the word interpolation we see “inter”, meaning between, and “pole”, meaning end. So interpolation is the prediction of values between actually sampled values. If we try to make predictions for y outside of the range of values of x in which the model was trained , this is known as <em>extrapolation</em>, and should be approached very cautiously.</p>
+<p>If you hear a data scientist discuss a predictive model, it is this very concept to which they refer. To be fair, there are many tools besides regression that are used in predictive models. We will discuss those toward the end of this course. But the regression is commonly used and one of the more intuitive predictive tools in data science.</p>
+<p>In this lesson, we will learn about one common kind of regression, simple linear regression. This means we will learn how to fit a cloud of data with a straight line that summarizes the relationship between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span>. This assumes, of course, that it is appropriate to use a straight line to model that relationship, and there are ways for us to test that we will learn at the end of this lesson.</p>
+<div id="case-study-7" class="section level3">
+<h3><span class="header-section-number">10.3.1</span> Case Study</h3>
+<p>A trial was conducted in Waseca, Minnesota, to model corn response to nitrogen. Yields are per plot, not per acre.</p>
+<div class="sourceCode" id="cb880"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb880-1"><a href="correlation-and-simple-regression.html#cb880-1"></a>nitrogen =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-10/nitrogen_waseca.csv&quot;</span>)</span>
+<span id="cb880-2"><a href="correlation-and-simple-regression.html#cb880-2"></a><span class="kw">head</span>(nitrogen)</span></code></pre></div>
+<pre><code>##   site     loc rep nitro    yield
+## 1   S3 Waseca1  R1   0.0  9.49895
+## 2   S3 Waseca1  R2   0.0 10.05715
+## 3   S3 Waseca1  R3   0.0  8.02693
+## 4   S3 Waseca1  R4   0.0  6.64823
+## 5   S3 Waseca1  R1  33.6 10.01547
+## 6   S3 Waseca1  R2  33.6 11.03366</code></pre>
+<p>The first thing we should do with any data, but especially data we plan to fit with a linear regression model, is to visually examine the data. Here, we will create a scatterplot with yield on the Y-axis and nitro (the nitrogen rate) on the X-axis.</p>
+<div class="sourceCode" id="cb882"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb882-1"><a href="correlation-and-simple-regression.html#cb882-1"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>nitrogen, <span class="kw">aes</span>(<span class="dt">x=</span>nitro, <span class="dt">y=</span>yield)) <span class="op">+</span></span>
+<span id="cb882-2"><a href="correlation-and-simple-regression.html#cb882-2"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>We can see that nitrogen waw applied at three rates. It is easy to check these five rates using the unique command in R.</p>
+<div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb883-1"><a href="correlation-and-simple-regression.html#cb883-1"></a><span class="kw">unique</span>(nitrogen<span class="op">$</span>nitro)</span></code></pre></div>
+<pre><code>## [1]  0.0 33.6 67.2</code></pre>
+<p>We can see that the centers of the distribution appear to fall in a straight line, so we are confident we can model the data with simple linear regression.</p>
+</div>
+<div id="linear-equation" class="section level3">
+<h3><span class="header-section-number">10.3.2</span> Linear Equation</h3>
+<p>Simple linear regression, unlike correlation, fits the data could with an equation. In Unit 5, we revisited middle school, where you learned that a line can be defined by the following equation:
+<span class="math display">\[ y = mx + b \]</span>
+Where <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> define the coordinate of a point along that line, <span class="math inline">\(m\)</span> is equal to the slope or “rise” (the change in the value of y with each unit change in <span class="math inline">\(x\)</span>, and <span class="math inline">\(b\)</span> is the <span class="math inline">\(y\)</span>-intercept (where the line crosses the y-axis. The y-intercept can be seen as the “anchor” of the line; the slope describes how the line is pivoted on that anchor.</p>
+<p>In statistics we use a slightly different equation – same concept, different annotation</p>
+<p><span class="math display">\[\hat{y} = \hat{\alpha} + \hat{\beta} x\]</span></p>
+<p>The y intercept is represented by the greek letter <span class="math inline">\(\alpha\)</span>, the slope is represented by the letter <span class="math inline">\(\beta\)</span>. <span class="math inline">\(y\)</span>, α, and β all have hat-like symbols called carats (<span class="math inline">\(\hat{}\)</span>) above them to signify they are estimates, not known population values. This is because the regression line for the population is being estimated from a sample. <span class="math inline">\(\hat{y}\)</span> is also an estimate, since it is calculated using the estimated values <span class="math inline">\(\hat{\alpha}\)</span> and <span class="math inline">\(\hat{\beta}\)</span>. Only x, which in experiments is manipulated, is a known value.</p>
+</div>
+<div id="calculating-the-regression-equation" class="section level3">
+<h3><span class="header-section-number">10.3.3</span> Calculating the Regression Equation</h3>
+<p>We can easily add a regression line to our scatter plot.</p>
+<div class="sourceCode" id="cb885"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb885-1"><a href="correlation-and-simple-regression.html#cb885-1"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>nitrogen, <span class="kw">aes</span>(<span class="dt">x=</span>nitro, <span class="dt">y=</span>yield)) <span class="op">+</span></span>
+<span id="cb885-2"><a href="correlation-and-simple-regression.html#cb885-2"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb885-3"><a href="correlation-and-simple-regression.html#cb885-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm, <span class="dt">se=</span><span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>The blue line represents the regression model for the relationship between yield and nitro. Of course, it would be nice to see the linear equation as well, which we can estimate using the <em>lm()</em> function of R.</p>
+<div class="sourceCode" id="cb887"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb887-1"><a href="correlation-and-simple-regression.html#cb887-1"></a>regression_model =<span class="st"> </span><span class="kw">lm</span>(yield<span class="op">~</span>nitro, nitrogen)</span>
+<span id="cb887-2"><a href="correlation-and-simple-regression.html#cb887-2"></a>regression_model</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ nitro, data = nitrogen)
+## 
+## Coefficients:
+## (Intercept)        nitro  
+##     8.47604      0.04903</code></pre>
+<p>The cofficients above define our regression model. The number given under “(Intercept)” is the estimate of the y-intercept, or <span class="math inline">\(\hat{\alpha}\)</span>. The number under nitro is the estimate of the slope, or <span class="math inline">\(\hat{\beta}\)</span>. Knowing that, we can construct our regression equation:</p>
+<p><span class="math display">\[\hat{y} = \hat{\alpha} + \hat{\beta} x\]</span>
+<span class="math display">\[\hat{y} = 8.476 + 0.04903x\]</span></p>
+<p>This tells us that the yield with 0 units of n is about 8.5, and for each unit of nitrogen yield increases about 0.05 units. If we had 50 units of nitrogen, our yield would be:</p>
+<p><span class="math display">\[\hat{y} = 8.476 + 0.04903(50) = 10.9275 \]</span></p>
+<p>Since nitrogen was only measured to three significant digits, we will round the predicted value to 10.9.</p>
+<p>If we had 15 units of nitrogen, our yield would be:
+<span class="math display">\[\hat{y} = 8.476 + 0.04903(15) = 9.21145 \]</span></p>
+<p>Which rounds to 9.21. So how is the regression line calculated?</p>
+</div>
+<div id="least-squares-estimate" class="section level3">
+<h3><span class="header-section-number">10.3.4</span> Least-Squares Estimate</h3>
+<p>The regression line is fit to the data using a method known as the least-squares estimate. To understand this concept we must recognize the goal of a regression equation is to make the most precise estimate for Y as possible. We are not estimating X, which is already known. Thus, the regression line crosses the data cloud in a way that minimizes the vertical distance (Y-distance) of observations from the regression line. The horizontal distance (X-distance) is not fit by the line.</p>
+<div class="sourceCode" id="cb889"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb889-1"><a href="correlation-and-simple-regression.html#cb889-1"></a><span class="co">## Sample data</span></span>
+<span id="cb889-2"><a href="correlation-and-simple-regression.html#cb889-2"></a></span>
+<span id="cb889-3"><a href="correlation-and-simple-regression.html#cb889-3"></a>nitrogen<span class="op">$</span>res &lt;-<span class="st"> </span><span class="kw">residuals</span>(<span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>nitro, <span class="dt">data=</span>nitrogen))</span>
+<span id="cb889-4"><a href="correlation-and-simple-regression.html#cb889-4"></a>nitrogen<span class="op">$</span>pred =<span class="st"> </span><span class="kw">predict</span>(<span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>nitro, <span class="dt">data=</span>nitrogen))</span>
+<span id="cb889-5"><a href="correlation-and-simple-regression.html#cb889-5"></a>nitrogen_final =<span class="st"> </span>nitrogen <span class="op">%&gt;%</span></span>
+<span id="cb889-6"><a href="correlation-and-simple-regression.html#cb889-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rep2 =</span> <span class="kw">gsub</span>(<span class="st">&quot;R&quot;</span>, <span class="st">&quot;&quot;</span>, rep)) <span class="op">%&gt;%</span></span>
+<span id="cb889-7"><a href="correlation-and-simple-regression.html#cb889-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rep2 =</span> <span class="kw">as.numeric</span>(rep2)) <span class="op">%&gt;%</span></span>
+<span id="cb889-8"><a href="correlation-and-simple-regression.html#cb889-8"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">xpos =</span> nitro <span class="op">+</span><span class="st"> </span>((rep2<span class="dv">-2</span>)<span class="op">*</span><span class="fl">0.8</span>))</span>
+<span id="cb889-9"><a href="correlation-and-simple-regression.html#cb889-9"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>nitrogen_final, <span class="kw">aes</span>(<span class="dt">x=</span>nitro, <span class="dt">y=</span>yield)) <span class="op">+</span></span>
+<span id="cb889-10"><a href="correlation-and-simple-regression.html#cb889-10"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb889-11"><a href="correlation-and-simple-regression.html#cb889-11"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm, <span class="dt">se=</span><span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb889-12"><a href="correlation-and-simple-regression.html#cb889-12"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x=</span>xpos, <span class="dt">xend=</span>xpos, <span class="dt">y=</span>yield, <span class="dt">yend=</span>pred, <span class="dt">color=</span>rep), <span class="dt">size=</span><span class="fl">1.5</span>, <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.01</span>, <span class="st">&quot;npc&quot;</span>)))</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-16-1.png" width="768" /></p>
+<p>In the plot above, the distances of each the four points to the regression line are highlighted by arrows. The arrows are staggered (“jittered”, in plot lingo) so you can see them more easily. Note how the line falls closely to the middle of the points at each level of R.</p>
+<p>Follow the link below to an appl that will allow you to adjust the slope of a regression line and observe the change in the error sum of squares, which measures the sums of the differences between observed values and the value predicted by the regression line.</p>
+<p>You should have observed the position of the regression line that minimizes the sum of squares is identical to that fit using the least squares regression technique.</p>
+<p>The line is fit using two steps. First the slope is determined, in an approach that is laughably simple – after you understand it.</p>
+<p><span class="math display">\[\hat{\beta} = \frac{S_{xy}}{S_{xx}}\]</span></p>
+<p>What is so simple about this? Let’s remember what the covariance and sum of squares represents. The covariance is the sum of the manhattan distances of each individual from the “center” of the sample, which is the point located at (<span class="math inline">\(\bar{x}, \bar{y}\)</span>). For each point, the Manhattan distance is the product of the horizontal distance of an individual from <span class="math inline">\(\bar{x}\)</span>, multiplied by the sum of the vertical distance of an individual from <span class="math inline">\(\bar{y}\)</span>.</p>
+<p>The sum of squares for <span class="math inline">\(x\)</span>, (<span class="math inline">\(S_{xx}\)</span>) is the sum of the squared distances of each individual from the <span class="math inline">\(\bar{x}\)</span>.</p>
+<p>We can re-write the fraction above as:</p>
+<p><span class="math display">\[\hat{\beta} = \frac{\sum{(x_i - \bar{x})(y_i - \bar{y})}}{\sum(x_i - \bar{x})(x_i - \bar{x})} \]</span></p>
+<p>In the equation above, we can cancel out <span class="math inline">\((x_i - \bar{x})\)</span> from the numerator and denominator so that we are left with:</p>
+<p><span class="math display">\[\hat{\beta} = \frac{\sum{(y_i - \bar{y})}}{\sum(x_i - \bar{x})} \]</span>
+)
+In other words, the change in y over the change in y.</p>
+<p>Once we solve for slope (<span class="math inline">\(\hat{\beta}\)</span>) we can solve for the y-intercept (<span class="math inline">\(\hat{\alpha}\)</span>). Alpha-hat is equal to the</p>
+<p><span class="math display">\[\hat{\alpha} = \hat{y} - \hat{\beta}\bar{x} \]</span></p>
+<p>This equation tells us how much the line descends (or ascends) from the point (<span class="math inline">\(\bar{x}, \bar{y}\)</span>) to where x=0 (in other words, the Y axis).</p>
+</div>
+<div id="significance-of-coefficients" class="section level3">
+<h3><span class="header-section-number">10.3.5</span> Significance of Coefficients</h3>
+<p>What else can we learn from our linear model? We can use the <em>summary()</em> command in R to get additional information.</p>
+<div class="sourceCode" id="cb891"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb891-1"><a href="correlation-and-simple-regression.html#cb891-1"></a><span class="kw">summary</span>(regression_model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ nitro, data = nitrogen)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.8278 -0.6489 -0.2865  0.9384  1.5811 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  8.47604    0.50016  16.947 1.08e-08 ***
+## nitro        0.04903    0.01153   4.252  0.00168 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.096 on 10 degrees of freedom
+## Multiple R-squared:  0.6439, Adjusted R-squared:  0.6083 
+## F-statistic: 18.08 on 1 and 10 DF,  p-value: 0.001683</code></pre>
+<p>Of particular interest in this output is the “Coefficients:” section. It shows the coefficient estimates, as we saw before. But it also provides information on the standard error of these estimates and tests whether they are significantly different.</p>
+<p>Again, both <span class="math inline">\(\hat{\beta}\)</span> and the <span class="math inline">\(\hat{\alpha}\)</span> are estimates. The slope of the least-squares line in the actual population may tilt a more downward or upward than this estimate. Similarly, the line may be higher or lower in the actual population, depending on the actual Y axis. We cannot know the actual slope and y-intercept of the population. But from the sample we can define confidence intervals for both values, and calculate the probability that they differ from hypothetical values by chance.</p>
+<p>We forego the discussion how these values are calculated – most computer programs readily provide these – and instead focus on what they represent. The confidence interval for the Y-intercept represents a range of values that is likely (at the level we specify, often 95%) to contain the true Y-intercept for the true regression line through the population.</p>
+<p>In some cases, we are interested if the estimated intercept differs from some hypothetical value – in that case we can simply check whether how the true population Y-intercept compares to a hypothetical value. If the value falls outside the confidence interval, we conclude the values are significantly different. In other words, there is low probability the true Y-intercept is equal to the hypothetical value.</p>
+<p>More often, we are interested in whether the slope is significantly different than zero. This question can be represented by a pair of hypotheses:
+<span class="math display">\[ H_o: \beta = 0\]</span>
+<span class="math display">\[ H_a: \beta \ne 0\]</span></p>
+<p>The null hypothesis, <span class="math inline">\(H_o\)</span>, is the slope of the true regression line is equal to zero. In other words, <span class="math inline">\(y\)</span> does not change in a consistent manner with changes in <span class="math inline">\(x\)</span>. Put more bluntly: there is no significant relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>. The alternative hypothesis, Ha, is the slope of the true regression line is <em>not</em> equal to zero. Y <em>does</em> vary with X in a consistent way, so there is a significant relationship between Y and X in the population.</p>
+<p>The significance of the difference of the slope from zero may be tested two ways. First, a t-test will directly test the probability that β≠0. Second, the significance of the linear model may be tested using an Analysis of Variance, as we learned in Units 5 and 6.</p>
+</div>
+<div id="analysis-of-variance-6" class="section level3">
+<h3><span class="header-section-number">10.3.6</span> Analysis of Variance</h3>
+<p>Similarly, we can use the <em>summary.aov()</em> command in R to generate an analysis of variance of our results.</p>
+<div class="sourceCode" id="cb893"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb893-1"><a href="correlation-and-simple-regression.html#cb893-1"></a><span class="kw">summary.aov</span>(regression_model)</span></code></pre></div>
+<pre><code>##             Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+## nitro        1  21.71  21.713   18.08 0.00168 **
+## Residuals   10  12.01   1.201                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>This analysis of variance works the same as those you learned previously. The variance described by the relationship between Y and X (in this example identified by the “nitro” term) is compared to the random variance among data points. If the model describes substantially more variance than explained by the random location of the data points, the model can be judged to be significant.</p>
+<p>For a linear regression model, the degree of freedom associated with the effect of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span> is always 1. The concept behind this is that if you know the mean and one of the two endpoints, you can predict the other endpoint. The residuals will have <span class="math inline">\(n-1\)</span> degrees of freedom, where <span class="math inline">\(n\)</span> is the total number of observations.</p>
+<p>Notice that the F-value is the square of the calculated t-value for slope in the coefficients table. This is always the case.</p>
+</div>
+<div id="measuring-model-fit-with-r-square" class="section level3">
+<h3><span class="header-section-number">10.3.7</span> Measuring Model Fit with R-Square</h3>
+<p>Let’s return to the summary of the regression model.</p>
+<div class="sourceCode" id="cb895"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb895-1"><a href="correlation-and-simple-regression.html#cb895-1"></a><span class="kw">summary</span>(regression_model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ nitro, data = nitrogen)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.8278 -0.6489 -0.2865  0.9384  1.5811 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  8.47604    0.50016  16.947 1.08e-08 ***
+## nitro        0.04903    0.01153   4.252  0.00168 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.096 on 10 degrees of freedom
+## Multiple R-squared:  0.6439, Adjusted R-squared:  0.6083 
+## F-statistic: 18.08 on 1 and 10 DF,  p-value: 0.001683</code></pre>
+<p>At the bottom is another important statistic, <em>Multiple R-squared</em>, or <span class="math inline">\(R^2\)</span>. How well the model fits the data can be measured with the statistic <span class="math inline">\(R^2\)</span>. Yes, this is the square of the correlation coefficient we learned earlier. <span class="math inline">\(R^2\)</span> describes the proportion of the total sum of squares described by the regression model: it is calculated by dividing the model sum of squares.</p>
+<p>The total sum of squares in the model above is <span class="math inline">\(21.71 + 12.01 = 33.72\)</span>. We can confirm the <span class="math inline">\(R^2\)</span> from the model summary by dividing the model sum of squares, <span class="math inline">\(21.71\)</span>, by this total, <span class="math inline">\(33.72\)</span>. <span class="math inline">\(21.71 \div 33.72 = 0.6439\)</span>. This means that 64% of the variation between observed values can be explained by the relationship between yield and nitrogen rate.</p>
+<p><span class="math inline">\(R^2\)</span> has a minimum possible value of 0 (no relationship at all between y and x) and 1 (perfect linear relationship between y and x). Along with the model coefficients and the analysis of variance, it is the most important measure of model fit.</p>
+</div>
+<div id="checking-whether-the-linear-model-is-appropriate" class="section level3">
+<h3><span class="header-section-number">10.3.8</span> Checking whether the Linear Model is Appropriate</h3>
+<p>As stated earlier, the simple linear regression model is a predictive model – that is, it is not only useful for establishing a linear relationship between Y and X – it can also be used under the correct circumstances to predict Y given a known value of X. But while a model can be generated in seconds, there are a couple of cautions we must observe.</p>
+<p>First, we must be sure it was appropriate to fit our data with a linear model. We can do this by plotting the residuals around the regression line. The <em>ggResidpanel</em> package in R allows us to quickly inspect residuals. All we do use run <em>resid_panel()</em> function with two arguments: the name of our model (“regression_model”) and the plot we want (plots = “resid”).</p>
+<div class="sourceCode" id="cb897"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb897-1"><a href="correlation-and-simple-regression.html#cb897-1"></a><span class="kw">library</span>(ggResidpanel)</span>
+<span id="cb897-2"><a href="correlation-and-simple-regression.html#cb897-2"></a><span class="kw">resid_panel</span>(regression_model, <span class="dt">plots =</span> <span class="st">&quot;resid&quot;</span>)</span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>In my mind, the residual plot is roughly equivalent to taking the regression plot above and shifting it so the regression line is horizontal. There are a few more differences, however. The horizontal axis is the y-value predicted by the model for each value of x. The vertical axis is the standardized difference (the actual difference divided by the mean standard deviation across all observations) of each observed value from that predicted for it. The better the regression model fits the observations the closer the points will fall to the blue line.</p>
+<p>The key thing we are checking is whether there is any pattern to how the regression line fits the data. Does it tend to overpredict or underpredict the observed values of x? Are the points randomly scattered about the line, or do they seem to form a curve?</p>
+<p>In this example, we only modelled a subset of the nitrogen study data. I intentionally left out the higher rates. Why? Let’s plot the complete dataset.</p>
+<div class="sourceCode" id="cb898"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb898-1"><a href="correlation-and-simple-regression.html#cb898-1"></a><span class="kw">library</span>(agridat)</span>
+<span id="cb898-2"><a href="correlation-and-simple-regression.html#cb898-2"></a>complete_nitrogen =<span class="st"> </span>hernandez.nitrogen</span>
+<span id="cb898-3"><a href="correlation-and-simple-regression.html#cb898-3"></a><span class="kw">ggplot</span>(complete_nitrogen, <span class="kw">aes</span>(<span class="dt">x=</span>nitro, <span class="dt">y=</span>yield)) <span class="op">+</span></span>
+<span id="cb898-4"><a href="correlation-and-simple-regression.html#cb898-4"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>We can see the complete dataset does not follow a linear pattern. What would a regression line, fit to this data, look like?</p>
+<div class="sourceCode" id="cb899"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb899-1"><a href="correlation-and-simple-regression.html#cb899-1"></a><span class="kw">ggplot</span>(complete_nitrogen, <span class="kw">aes</span>(<span class="dt">x=</span>nitro, <span class="dt">y=</span>yield)) <span class="op">+</span></span>
+<span id="cb899-2"><a href="correlation-and-simple-regression.html#cb899-2"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb899-3"><a href="correlation-and-simple-regression.html#cb899-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>We can see how the regression line appears seems to overpredict the observed values for at low and high values of nitrogen and underpredict the intermediat values.</p>
+<p>What does our regression model look like?</p>
+<div class="sourceCode" id="cb901"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb901-1"><a href="correlation-and-simple-regression.html#cb901-1"></a>bad_model =<span class="st"> </span><span class="kw">lm</span>(yield<span class="op">~</span>nitro, <span class="dt">data =</span> complete_nitrogen)</span>
+<span id="cb901-2"><a href="correlation-and-simple-regression.html#cb901-2"></a><span class="kw">summary</span>(bad_model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ nitro, data = complete_nitrogen)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.1752 -0.8803  0.1086  1.1148  3.4049 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 8.872032   0.251752   35.24   &lt;2e-16 ***
+## nitro       0.023434   0.001974   11.87   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.674 on 134 degrees of freedom
+## Multiple R-squared:  0.5126, Adjusted R-squared:  0.5089 
+## F-statistic: 140.9 on 1 and 134 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb903"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb903-1"><a href="correlation-and-simple-regression.html#cb903-1"></a><span class="kw">summary.aov</span>(bad_model)</span></code></pre></div>
+<pre><code>##              Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## nitro         1  395.1   395.1   140.9 &lt;2e-16 ***
+## Residuals   134  375.7     2.8                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The model is still highly significant, even though it is obvious it doesn’t fit the data! Why? Because the simple linear regression model only tests whether the slope is different from zero. Let’s look at the residuals:</p>
+<div class="sourceCode" id="cb905"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb905-1"><a href="correlation-and-simple-regression.html#cb905-1"></a><span class="kw">resid_panel</span>(bad_model, <span class="dt">plots=</span><span class="st">&quot;resid&quot;</span>)</span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>As we expect, there is a clear pattern to the data. It curves over the regression line and back down again. If we want to model the complete nitrogen response curve, we will need to use a nonlinear model, which we will learn in the next unit.</p>
+</div>
+</div>
+<div id="extrapolation" class="section level2">
+<h2><span class="header-section-number">10.4</span> Extrapolation</h2>
+<p>The above example also illustrates why we should not extrapolate: because we do not know how the relationship between x and y may change. In addition, the accuracy of the regression model decreases as one moves away from the middle of the regression line.</p>
+<p>Given the uncertainty of the estimated intercept, the entire true regression line may be higher or lower – i.e. every point on the line might be one unit higher or lower than estimated by our estimated regression model. There is also uncertainty in our estimate of slope – the true regression line may have greater or less slope than our estimate. When we combine the two sources of uncertainty, we end up with a plot like this:</p>
+<div class="sourceCode" id="cb906"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb906-1"><a href="correlation-and-simple-regression.html#cb906-1"></a><span class="kw">ggplot</span>(regression_model, <span class="kw">aes</span>(<span class="dt">x=</span>nitro, <span class="dt">y=</span>yield)) <span class="op">+</span></span>
+<span id="cb906-2"><a href="correlation-and-simple-regression.html#cb906-2"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb906-3"><a href="correlation-and-simple-regression.html#cb906-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>The dark grey area around the line represents the standard error of the prediction. The least error in our estimated regression line – and the error in any prediction made from it occurs closer at <span class="math inline">\(\bar{x}\)</span>. As the distance from <span class="math inline">\(\bar{x}\)</span> increases, so does the uncertainty of the Y-value predicted from it. At first, that increase in uncertainty is small, but it increases rapidly as we approach the outer data points fit with the model.</p>
+<p>We have greater certainty in our predictions when we predict y for values of x between the least and greatest x values used in fitting the model. This method of prediction is called interpolation – we are estimating Y for X values within the range of values used to estimate the model.</p>
+<p>Estimating Y for X values outside the range of values used to estimate the model is called extrapolation, and should be avoided. Not only is our current model less reliable outside the data range used to fit the model – we should not even assume that the relationship between Y and X is linear outside the of the range of data we have analyzed. For example, the middle a typical growth curve (often called “sigmoidal”, from sigma, the Greek word for “S”) is linear, but each end curves sharply.</p>
+<p>When we make predictions outside of the range of x values used to fit our model, this is extrapolation. We can now see why it should be avoided.</p>
+</div>
+<div id="exercise-sccatterplots-and-regression" class="section level2">
+<h2><span class="header-section-number">10.5</span> Exercise: Sccatterplots and Regression</h2>
+<p>This week’s lesson is a marked shift from previous units. Until now, we have worked with independent variables (our X variables) that were categorical: they had names that represented their value. This week, we begin working with both continuous X and Y variables. As we have learned in this lecture, the simplest way to establish a relationship between variables is to examine scatterplots and calculate the correlation coefficients.</p>
+<div id="case-study-corn-data" class="section level3">
+<h3><span class="header-section-number">10.5.1</span> Case Study: Corn Data</h3>
+<p><em>Allometry</em> is the study of the different parts of an organism an how their sizes are related. In the the word allometry, we can see the root of the word “allocate”. Thus, allometry seeks to understand how the allocation of biomass to one part of an organism may be related to the allocation of biomass to another part. In agronomy, this can provide valuable insight into the relative importance of bigger leaves, taller plants, or larger stalks to grain yield.</p>
+<p>Let’s begin by loading our data. This dataset is a simulated based on statistics published by Fred Warren and Robert Fenley in 1970.</p>
+<div class="sourceCode" id="cb908"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb908-1"><a href="correlation-and-simple-regression.html#cb908-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb908-2"><a href="correlation-and-simple-regression.html#cb908-2"></a>allometry =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_allometry.csv&quot;</span>)</span>
+<span id="cb908-3"><a href="correlation-and-simple-regression.html#cb908-3"></a></span>
+<span id="cb908-4"><a href="correlation-and-simple-regression.html#cb908-4"></a><span class="kw">head</span>(allometry)</span></code></pre></div>
+<pre><code>##      yield total_leaves total_leaf_area   height stalk_circ area_highest_leaf
+## 1 166.0838     76.58265        964.9109 69.57771   2.750763          1219.800
+## 2 162.2875     79.71361        533.3816 12.48882   2.984688          1051.207
+## 3 169.4557     76.56896       1294.9548 30.72335   2.793448          1454.084
+## 4 167.9799     78.60217       1448.9345 32.65071   2.631524          1371.558
+## 5 173.1781     82.62165       1258.3317 32.27236   3.755847          1696.366
+## 6 168.4464     77.50940       1110.5993 25.46963   2.917688          1259.125</code></pre>
+<p>The first thing we want to do is to examine our data with a scatterplot. The quickest way to do this is with the <em>plot()</em> command. This will give us a matrix (a grid) with all possible scatterplots, based on our dataset.</p>
+<div class="sourceCode" id="cb910"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb910-1"><a href="correlation-and-simple-regression.html#cb910-1"></a><span class="kw">plot</span>(allometry)</span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p>This is called a <em>scatterplot matrix</em>. The variable listed in each column defines the position of the points on the X axis for every plot in that column. The variable listed in each row defines the position of the points on the Y axis for every plot in that row. So if we look at the plot directly to the right of yield second plot from left in top column column, its Y-axis is yield and its X axis is total leaves (total leaf biomass).</p>
+<p>Of course, this matrix is crowded. If we want to highlight a single scatterplot, we can use ggplot.</p>
+<div class="sourceCode" id="cb911"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb911-1"><a href="correlation-and-simple-regression.html#cb911-1"></a>allometry <span class="op">%&gt;%</span><span class="st">                                 </span><span class="co"># the data frame to feed to ggplot</span></span>
+<span id="cb911-2"><a href="correlation-and-simple-regression.html#cb911-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>total_leaves, <span class="dt">y=</span>yield)) <span class="op">+</span><span class="st">      </span><span class="co"># tells R where to locate each point</span></span>
+<span id="cb911-3"><a href="correlation-and-simple-regression.html#cb911-3"></a><span class="st">  </span><span class="kw">geom_point</span>()                                <span class="co"># tells ggplot to plot points instead of another shape (geom)</span></span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p>What can we see in this plot? Yield and total leaves seel to be correlated. As total_leaves increased, so did yield.</p>
+<p>We can quantify the correlation between yield and total leaves using the <em>cor.test()</em> function and the two variables.</p>
+<div class="sourceCode" id="cb912"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb912-1"><a href="correlation-and-simple-regression.html#cb912-1"></a><span class="kw">cor.test</span>(allometry<span class="op">$</span>yield, allometry<span class="op">$</span>total_leaves)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  allometry$yield and allometry$total_leaves
+## t = 6.5193, df = 98, p-value = 3.083e-09
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.3964056 0.6736443
+## sample estimates:
+##  cor 
+## 0.55</code></pre>
+<p>The output looks very similar to the t-test we learned earlier. It lists the measured value for t. It includes the probability that t is zero, which is also the probability that the correlation we measured is equal to zero. It also includes, at the bottom, the correlation coefficient (cor), which in this case is 0.55.</p>
+<p>What if we have a lot of variables? As we did with the scatter plot matrix, we can buid a correlation matrix that shows all the correlations among variables. Again, the code is very simple.</p>
+<div class="sourceCode" id="cb914"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb914-1"><a href="correlation-and-simple-regression.html#cb914-1"></a><span class="kw">cor</span>(allometry)</span></code></pre></div>
+<pre><code>##                   yield total_leaves total_leaf_area    height stalk_circ
+## yield              1.00    0.5500000       0.7100000 0.5500000  0.4900000
+## total_leaves       0.55    1.0000000       0.4033716 0.2032565  0.3146973
+## total_leaf_area    0.71    0.4033716       1.0000000 0.4174365  0.4297034
+## height             0.55    0.2032565       0.4174365 1.0000000  0.2302604
+## stalk_circ         0.49    0.3146973       0.4297034 0.2302604  1.0000000
+## area_highest_leaf  0.80    0.5332687       0.5409881 0.4691421  0.3397559
+##                   area_highest_leaf
+## yield                     0.8000000
+## total_leaves              0.5332687
+## total_leaf_area           0.5409881
+## height                    0.4691421
+## stalk_circ                0.3397559
+## area_highest_leaf         1.0000000</code></pre>
+<p>If we look along the row corresponding to yield, we see six columns whose names include yield, total_leaves, total_leaf_area, etc. Whereever the yield row intersects these colums, we can read the correlation coefficient. For example, where yield intersets yield, the correlation coefficient is 1.0 This makes sense– yield should be perfectly correlated with itself. If we look at where the yield row intersects the stalk_circ column, we see a regression coefficient of 0.49.</p>
+</div>
+<div id="practice-1-3" class="section level3">
+<h3><span class="header-section-number">10.5.2</span> Practice 1</h3>
+<p>Using the above dataset, calculate a scatter plot for height and corn yield, with corn_height on the X-axis and yield on the Y-axis. Your plot should look like.</p>
+<p><img src="data-unit-10/exercise_images/yield_vs_height.png" /></p>
+</div>
+<div id="practice-2-3" class="section level3">
+<h3><span class="header-section-number">10.5.3</span> Practice 2</h3>
+<p>Using the above dataset, calculate the correlation between height and yield using the cor.test() function. Your estimate for the correlation coefficient (the number at the bottom of the output) should be 0.49.</p>
+<div class="sourceCode" id="cb916"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb916-1"><a href="correlation-and-simple-regression.html#cb916-1"></a><span class="kw">cor.test</span>(allometry<span class="op">$</span>stalk_circ, allometry<span class="op">$</span>yield)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  allometry$stalk_circ and allometry$yield
+## t = 5.5646, df = 98, p-value = 2.287e-07
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.3248467 0.6261540
+## sample estimates:
+##  cor 
+## 0.49</code></pre>
+</div>
+<div id="practice-3-2" class="section level3">
+<h3><span class="header-section-number">10.5.4</span> Practice 3</h3>
+<p>Load the dataset “data/corn_fertility.csv”. These data evaluate the response of yield to corn fertility characteristics.</p>
+<div class="sourceCode" id="cb918"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb918-1"><a href="correlation-and-simple-regression.html#cb918-1"></a>fertility =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_fertility.csv&quot;</span>)</span>
+<span id="cb918-2"><a href="correlation-and-simple-regression.html#cb918-2"></a><span class="kw">head</span>(fertility)</span></code></pre></div>
+<pre><code>##      yield organic_matter magnesium     potash phosphorus       pH
+## 1 166.0838       2.007710 101.87145   7.214161  105.57985 6.287836
+## 2 162.2875       2.001714 122.71640 163.097239   42.50915 7.304132
+## 3 169.4557       1.544267  62.12231  26.855054  193.89253 7.494299
+## 4 167.9799       1.795988  65.36950  31.239609   84.29568 7.221934
+## 5 173.1781       1.988002 227.62357 -30.477244  158.02454 6.573853
+## 6 168.4464       2.084489  91.22296  62.028413  100.50722 7.108826</code></pre>
+<p>Create a scatterplot matrix for all variables in the fertility dataset.</p>
+</div>
+<div id="practice-4-1" class="section level3">
+<h3><span class="header-section-number">10.5.5</span> Practice 4</h3>
+<p>Create a correlation matrix for all the variables in the fertility dataset.</p>
+</div>
+</div>
+<div id="exercise-simple-linear-regression" class="section level2">
+<h2><span class="header-section-number">10.6</span> Exercise: Simple Linear Regression</h2>
+<p>In the previous exercise, we learned about scatter plots and correlation. Correlation is used to measure the association between variables, with no assumptions about the direction of causation between variables. We often use correlation with exploratory work, whereas we use regression when our understanding of a topic has grown to incorporate basic knowledge of a science. For example, we know that the rate of photosynthesis of a plant is generally a response to the intensity of photosynthetic radiation (that is, light), instead of the other way around. When we use regression, we fit a model to the data. We then test whether that model explains a significant amount of the variation among our samples, and use it as a linear equation to quantify the relationship between Y and X.</p>
+<div id="case-study-corn-allometry" class="section level3">
+<h3><span class="header-section-number">10.6.1</span> Case Study: Corn Allometry</h3>
+<p>Using our data from the scatterplots and correlation exercise, we will construct simple linear regression models, evaluate their significance, and write the linear model from its coefficients.</p>
+<div class="sourceCode" id="cb920"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb920-1"><a href="correlation-and-simple-regression.html#cb920-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb920-2"><a href="correlation-and-simple-regression.html#cb920-2"></a>allometry =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_allometry.csv&quot;</span>)</span>
+<span id="cb920-3"><a href="correlation-and-simple-regression.html#cb920-3"></a><span class="kw">head</span>(allometry)</span></code></pre></div>
+<pre><code>##      yield total_leaves total_leaf_area   height stalk_circ area_highest_leaf
+## 1 166.0838     76.58265        964.9109 69.57771   2.750763          1219.800
+## 2 162.2875     79.71361        533.3816 12.48882   2.984688          1051.207
+## 3 169.4557     76.56896       1294.9548 30.72335   2.793448          1454.084
+## 4 167.9799     78.60217       1448.9345 32.65071   2.631524          1371.558
+## 5 173.1781     82.62165       1258.3317 32.27236   3.755847          1696.366
+## 6 168.4464     77.50940       1110.5993 25.46963   2.917688          1259.125</code></pre>
+</div>
+<div id="fitting-the-regression-model" class="section level3">
+<h3><span class="header-section-number">10.6.2</span> Fitting the regression model</h3>
+<p>The regression model is fit using a very similar approach to that used for the analysis of variance. In fact, the only thing that is different is that we use <em>lm()</em> to define the linear model, instead of <em>aov()</em>. We will model yield as a function of total_leaves (total leaf dry matter).</p>
+<div class="sourceCode" id="cb922"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb922-1"><a href="correlation-and-simple-regression.html#cb922-1"></a>model_yield_total_leaves =<span class="st"> </span><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>total_leaves, <span class="dt">data=</span>allometry)</span></code></pre></div>
+</div>
+<div id="examining-the-residuals" class="section level3">
+<h3><span class="header-section-number">10.6.3</span> Examining the residuals</h3>
+<p>An important step that is easy to forget (in fact, I almost did just now) is to plot the residuals. The residuals are the differences between the values predicted by the regression model and the observed values. We observe the residuals to make sure they are randomly distributed around the regression line, represented by the dotted line at Y=0 below. We can use the the <em>plot()</em> function with our model to get the residual plot.</p>
+<div class="sourceCode" id="cb923"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb923-1"><a href="correlation-and-simple-regression.html#cb923-1"></a><span class="kw">plot</span>(model_yield_total_leaves, <span class="dt">which=</span><span class="dv">1</span>)  <span class="co"># the &quot;which=1&quot; argument tells R to plot the residuals</span></span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p>The red line is not a linear regression line, but a LOESS (locally estimated scatterplot smoothing) – a nonlinear model that can bend to fit the data more closely. If a linear model is appropriate to fit the relationship between Y and X, the red line will be close to (but rarely exactly) linear. The above plot suggests linear regression is appropriate. What we want to beware of is a red line that rises way above zero on either end and dips way below zero in the middle, or vice versa. Those scenarios suggest the relationship between Y and X may be curvedinstead of linear.</p>
+</div>
+<div id="viewing-the-model-coefficients" class="section level3">
+<h3><span class="header-section-number">10.6.4</span> Viewing the Model Coefficients</h3>
+<p>A lot of information is included in the linear model output. Rather than wade through it in one big chunck, we will use a package called <em>broom</em> to break it into more digestible pieces. We can use the <em>tidy()</em> format to summarise the coefficients.</p>
+<div class="sourceCode" id="cb924"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb924-1"><a href="correlation-and-simple-regression.html#cb924-1"></a><span class="kw">library</span>(broom)</span>
+<span id="cb924-2"><a href="correlation-and-simple-regression.html#cb924-2"></a><span class="kw">tidy</span>(model_yield_total_leaves)</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 5
+##   term         estimate std.error statistic       p.value
+##   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+## 1 (Intercept)     67.5     15.0        4.49 0.0000197    
+## 2 total_leaves     1.26     0.193      6.52 0.00000000308</code></pre>
+<p>Remember, our regression line is defined as:</p>
+<p>Y = alpha + Beta*x, where alpha is the y-intercept and Beta is the slope. In the output, the (Intercept) row provides information on alpha. The estimate column contains its estimated value, 67.47. R automatically tests whether the estimated value of the intercept is significantly different from zero. That measure is given in the p.value column. We see that alpha is significantly different from zero. Much of the time, this insight isn’t particularly interesting – there are many relationships between Y and X where the y-intercept is not zero. For example, if we studied the relationship between yield and nitrogen, we would likely observe a yield above zero, even if our nitrogen rate was zero.</p>
+<p>The second row provides information on Beta. Its estimated value is 1.26. We see from its p.value that Beta is also significantly different from zero. Unlike alpha, this p.vaue is very interesting to us. If our p.value is significantly different from zero, then we can reject the hypothesis that there is no relationship between yield and total_leaves. Our model explains a significant amount of the observed variation among our samples.</p>
+</div>
+<div id="more-measures-of-model-fit" class="section level3">
+<h3><span class="header-section-number">10.6.5</span> More measures of model fit</h3>
+<p>The <em>anova()</em> function will generate an ANOVA table for our results. We interpret this model the same as we have done previously.</p>
+<div class="sourceCode" id="cb926"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb926-1"><a href="correlation-and-simple-regression.html#cb926-1"></a><span class="kw">anova</span>(model_yield_total_leaves)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: yield
+##              Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+## total_leaves  1  625.28  625.28  42.502 3.083e-09 ***
+## Residuals    98 1441.75   14.71                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The F-value is the ratio of the variance explained by our model to the variance explained by random variation among individuals. In this case, total_leaves is our independent variable. Since our model is based on a regression line, it only has one degree of freedom. This is because if we know the slope and any one point on that line, we can predict its y-value of any point as long as we know its x value. Don’t get hung up on this – just know that the linear model is supposed to have 1 degree of freedom.</p>
+<p>Our F-value is large and the probability of encountering that an F-value that large by chance is given by Pr(&gt;F). That value is very low, so we conclude our model explains a significant amount of the observed variation. You may also not that the p.value for the slope of the regression model and the Pr(&gt;F) above are identical – 3.083-09. This is because the significance of the model is based entirely on the significance of the slope.</p>
+<p>One other important statistic can be gotten from the <em>glance()</em> function. We are interested in the statistic all the way to the left: r.squared.</p>
+<div class="sourceCode" id="cb928"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb928-1"><a href="correlation-and-simple-regression.html#cb928-1"></a><span class="kw">glance</span>(model_yield_total_leaves)</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 12
+##   r.squared adj.r.squared sigma statistic       p.value    df logLik   AIC   BIC
+##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.302         0.295  3.84      42.5 0.00000000308     1  -275.  557.  564.
+## # ... with 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+<p>r.squared is the percentage of the total variataion explained by the regression model. In this case, 30.25% of the variation is explained by our regression model. r.squared can be as great as 1, in which case the observerd values and predicted values are identical, and as little as zero, in which case there is no relationship between the dependent variable (Y) and the independent variable (X). Our r.squared value of 0.3025 does not suggest a strong relationship between yield and total number of leaves. That said, biological systems are very complicated – studying them outdoors makes them moreso. Given this complexity, an r.squared of 0.30 is worth attention.</p>
+</div>
+<div id="practice-1-4" class="section level3">
+<h3><span class="header-section-number">10.6.6</span> Practice 1</h3>
+<p>Lets now model yield as a function of the total_leaf_area. First, lets fit the regression model.</p>
+<p>Next, plot the residuals. Your results should look like:</p>
+<p><img src="data-unit-10/exercise_images/corn_leaf_area_residuals.png" /></p>
+<p>Next, let’s view the model coefficients</p>
+<p>What do you notice about the relationship between yield and total leaf area? Is it significant? Does yield increase or decrease with total leaf area?</p>
+<p>Using the coefficients above, write the regression model.</p>
+<p>Use the glance() function to develop additional model fit statistics.</p>
+<p>You should see an r.squared of 0.50.</p>
+</div>
+<div id="practice-2-4" class="section level3">
+<h3><span class="header-section-number">10.6.7</span> Practice 2</h3>
+<p>Now lets work with our corn fertility data.</p>
+<div class="sourceCode" id="cb930"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb930-1"><a href="correlation-and-simple-regression.html#cb930-1"></a>fertility =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_fertility.csv&quot;</span>)</span>
+<span id="cb930-2"><a href="correlation-and-simple-regression.html#cb930-2"></a><span class="kw">head</span>(fertility)</span></code></pre></div>
+<pre><code>##      yield organic_matter magnesium     potash phosphorus       pH
+## 1 166.0838       2.007710 101.87145   7.214161  105.57985 6.287836
+## 2 162.2875       2.001714 122.71640 163.097239   42.50915 7.304132
+## 3 169.4557       1.544267  62.12231  26.855054  193.89253 7.494299
+## 4 167.9799       1.795988  65.36950  31.239609   84.29568 7.221934
+## 5 173.1781       1.988002 227.62357 -30.477244  158.02454 6.573853
+## 6 168.4464       2.084489  91.22296  62.028413  100.50722 7.108826</code></pre>
+<p>Create a simple linear regression model for yield as a function of organic matter.</p>
+<p>Next, plot the residuals. Your results should look like:</p>
+<p><img src="data-unit-10/exercise_images/organic_matter_residuals.png" /></p>
+<p>What do you notice about the residuals? Is there strong indiciation that a linear model might be inappropriate?</p>
+<p>Next, let’s view the model coefficients</p>
+<div class="sourceCode" id="cb932"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb932-1"><a href="correlation-and-simple-regression.html#cb932-1"></a><span class="kw">library</span>(broom)</span></code></pre></div>
+<p>What do you notice about the relationship between yield and organic matter? Is it significant? Does yield increase or decrease with organic matter?</p>
+<p>Using the coefficients above, write the regression model.</p>
+<p>Use the glance() function to develop additional model fit statistics.</p>
+<p>You should see an r.squared of 0.15.</p>
+</div>
+</div>
+<div id="exercise-making-predictions-from-regression-models." class="section level2">
+<h2><span class="header-section-number">10.7</span> Exercise: Making Predictions from Regression Models.</h2>
+<p>Now that we have created our linear models and ascertained that they explain a significant amount of the variance in our data, we want to use them to visualize the relationship between our Y and X variables. Furthermore, we may want to use them to make predictions for specific values of X.</p>
+<div id="case-study-8" class="section level3">
+<h3><span class="header-section-number">10.7.1</span> Case Study</h3>
+<p>We will continue to work with our corn allometry dataset.</p>
+<div class="sourceCode" id="cb933"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb933-1"><a href="correlation-and-simple-regression.html#cb933-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb933-2"><a href="correlation-and-simple-regression.html#cb933-2"></a>allometry =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_allometry.csv&quot;</span>)</span>
+<span id="cb933-3"><a href="correlation-and-simple-regression.html#cb933-3"></a><span class="kw">head</span>(allometry)</span></code></pre></div>
+<pre><code>##      yield total_leaves total_leaf_area   height stalk_circ area_highest_leaf
+## 1 166.0838     76.58265        964.9109 69.57771   2.750763          1219.800
+## 2 162.2875     79.71361        533.3816 12.48882   2.984688          1051.207
+## 3 169.4557     76.56896       1294.9548 30.72335   2.793448          1454.084
+## 4 167.9799     78.60217       1448.9345 32.65071   2.631524          1371.558
+## 5 173.1781     82.62165       1258.3317 32.27236   3.755847          1696.366
+## 6 168.4464     77.50940       1110.5993 25.46963   2.917688          1259.125</code></pre>
+</div>
+<div id="creating-and-testing-our-model" class="section level3">
+<h3><span class="header-section-number">10.7.2</span> Creating and Testing our Model</h3>
+<p>What effect does stalk circumference have on yield? Let’s find out.</p>
+<div class="sourceCode" id="cb935"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb935-1"><a href="correlation-and-simple-regression.html#cb935-1"></a>model_circumference =<span class="st"> </span><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>stalk_circ, <span class="dt">data=</span>allometry)</span></code></pre></div>
+<p>We will again us tools from the <em>broom()</em> package to present clear results. First, we examine our coefficients.</p>
+<div class="sourceCode" id="cb936"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb936-1"><a href="correlation-and-simple-regression.html#cb936-1"></a><span class="kw">library</span>(broom)</span>
+<span id="cb936-2"><a href="correlation-and-simple-regression.html#cb936-2"></a><span class="kw">tidy</span>(model_circumference)</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   157.       1.60      97.9  1.52e-99
+## 2 stalk_circ      3.20     0.575      5.56 2.29e- 7</code></pre>
+<p>We see the slope of our model is significantly different than zero. There is a significant relationship between stalk circumference and yield. How strong is this relationship?</p>
+<div class="sourceCode" id="cb938"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb938-1"><a href="correlation-and-simple-regression.html#cb938-1"></a><span class="kw">glance</span>(model_circumference)</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 12
+##   r.squared adj.r.squared sigma statistic     p.value    df logLik   AIC   BIC
+##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.240         0.232  4.00      31.0 0.000000229     1  -280.  565.  573.
+## # ... with 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+<p>We see the r.squared is about 0.24 . Not particularly strong, but meaningful just the same.</p>
+</div>
+<div id="visualizing-the-regression-model" class="section level3">
+<h3><span class="header-section-number">10.7.3</span> Visualizing the Regression Model</h3>
+<p>Let’s visualize this relationship using <em>ggplot()</em>.</p>
+<div class="sourceCode" id="cb940"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb940-1"><a href="correlation-and-simple-regression.html#cb940-1"></a>model_circumference <span class="op">%&gt;%</span></span>
+<span id="cb940-2"><a href="correlation-and-simple-regression.html#cb940-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>stalk_circ, <span class="dt">y=</span>yield)) <span class="op">+</span></span>
+<span id="cb940-3"><a href="correlation-and-simple-regression.html#cb940-3"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb940-4"><a href="correlation-and-simple-regression.html#cb940-4"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p>Above, we first created a scatter plot, based on the stalk circumference and yield associated with each observation. The first two lines of plot creation, ggplot() and geom_point() shoud be increasingly familiar to you.</p>
+<p>The next line, uses the <em>geom_smooth()</em> function to add our regression model. The argument <em>method=“lm”</em> tells R to fit a linear model to the data. This model is identical to that we used in our regression analysis. The second argument, <em>se=TRUE</em>, tells R to shade the confidence interval around the regression line.</p>
+<p>Remember, our regression line is an estimate, based on samples. Our model parameters, including our slope, are estimates, complete with standard errors. The confidence interval is based on the slope of our line. Because a change in the slope of the line would be more pronounced at the ends of our regression line than the middle (think of it like a propeller), our confidence interval has a convex (or hourglass) shape to it. We are 95% confident the actual relationship between Y and X is included in this confidence interval.</p>
+</div>
+<div id="making-predictions-with-the-regression-model" class="section level3">
+<h3><span class="header-section-number">10.7.4</span> Making Predictions with the Regression Model</h3>
+<p>Once we have defined a simple linear regression model, it is easy to make predictions with it.</p>
+<p>First, we need to create a new data frame with the values of stalk circumference for which we want to make predictions. We use the <em>data.frame()</em> function to create the data.frame. Next, we define the first column of the data.frame, stalk_circ. We define it as having 5 values, from 1.5 to 3.5</p>
+<div class="sourceCode" id="cb942"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb942-1"><a href="correlation-and-simple-regression.html#cb942-1"></a>new_stalk_data =<span class="st"> </span><span class="kw">data.frame</span>(</span>
+<span id="cb942-2"><a href="correlation-and-simple-regression.html#cb942-2"></a>  <span class="dt">stalk_circ=</span><span class="kw">c</span>(<span class="fl">1.5</span>,</span>
+<span id="cb942-3"><a href="correlation-and-simple-regression.html#cb942-3"></a>               <span class="fl">2.0</span>,</span>
+<span id="cb942-4"><a href="correlation-and-simple-regression.html#cb942-4"></a>               <span class="fl">2.5</span>,</span>
+<span id="cb942-5"><a href="correlation-and-simple-regression.html#cb942-5"></a>               <span class="fl">3.0</span>,</span>
+<span id="cb942-6"><a href="correlation-and-simple-regression.html#cb942-6"></a>               <span class="fl">3.5</span>))</span>
+<span id="cb942-7"><a href="correlation-and-simple-regression.html#cb942-7"></a></span>
+<span id="cb942-8"><a href="correlation-and-simple-regression.html#cb942-8"></a>new_stalk_data</span></code></pre></div>
+<pre><code>##   stalk_circ
+## 1        1.5
+## 2        2.0
+## 3        2.5
+## 4        3.0
+## 5        3.5</code></pre>
+<p>That was probably the hardest part of the prediction. Now, all we need to do is run the <em>predict()</em> function. This function takes two arguments: 1) the name of the linear model we have developed, and 2) the name of the data.frame with the new values of stalk_circ.</p>
+<div class="sourceCode" id="cb944"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb944-1"><a href="correlation-and-simple-regression.html#cb944-1"></a><span class="kw">predict</span>(model_circumference, new_stalk_data)</span></code></pre></div>
+<pre><code>##        1        2        3        4        5 
+## 161.6444 163.2436 164.8429 166.4422 168.0415</code></pre>
+<p>We can also assign these values to a new column in our new_stalk_data dataframe.</p>
+<div class="sourceCode" id="cb946"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb946-1"><a href="correlation-and-simple-regression.html#cb946-1"></a>new_stalk_data<span class="op">$</span>yield =<span class="st"> </span><span class="kw">predict</span>(model_circumference, new_stalk_data)</span>
+<span id="cb946-2"><a href="correlation-and-simple-regression.html#cb946-2"></a></span>
+<span id="cb946-3"><a href="correlation-and-simple-regression.html#cb946-3"></a>new_stalk_data</span></code></pre></div>
+<pre><code>##   stalk_circ    yield
+## 1        1.5 161.6444
+## 2        2.0 163.2436
+## 3        2.5 164.8429
+## 4        3.0 166.4422
+## 5        3.5 168.0415</code></pre>
+<p>Finally, we can plot these new values using <em>ggplot()</em></p>
+<div class="sourceCode" id="cb948"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb948-1"><a href="correlation-and-simple-regression.html#cb948-1"></a>new_stalk_data <span class="op">%&gt;%</span></span>
+<span id="cb948-2"><a href="correlation-and-simple-regression.html#cb948-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>stalk_circ, <span class="dt">y=</span>yield)) <span class="op">+</span></span>
+<span id="cb948-3"><a href="correlation-and-simple-regression.html#cb948-3"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+</div>
+<div id="practice-1-5" class="section level3">
+<h3><span class="header-section-number">10.7.5</span> Practice 1</h3>
+<p>What effect does the area of the highest leaf have on yield? Let’s find out.</p>
+<ol style="list-style-type: decimal">
+<li><p>Build the linear model</p></li>
+<li><p>Examine the model coefficients. The estimate for area_highest_leaf should be about 0.016.</p></li>
+<li><p>How strong is the relationship between highest leaf area and yield? Pretty strong: your results should show an r.squared of 0.64.</p></li>
+<li><p>Create a plot of the regression model using ggplot(). Your plot should look like:</p></li>
+</ol>
+<p><img src="data-unit-10/exercise_images/regression_highest_leaf_area.png" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Make predictions for the five new leaf area values in the new_leaf_area data.frame</li>
+</ol>
+<div class="sourceCode" id="cb949"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb949-1"><a href="correlation-and-simple-regression.html#cb949-1"></a>new_leaf_area =<span class="st"> </span><span class="kw">data.frame</span>(</span>
+<span id="cb949-2"><a href="correlation-and-simple-regression.html#cb949-2"></a>  <span class="dt">area_highest_leaf =</span> <span class="kw">c</span>(<span class="dv">900</span>,</span>
+<span id="cb949-3"><a href="correlation-and-simple-regression.html#cb949-3"></a>                        <span class="dv">1000</span>,</span>
+<span id="cb949-4"><a href="correlation-and-simple-regression.html#cb949-4"></a>                        <span class="dv">1100</span>,</span>
+<span id="cb949-5"><a href="correlation-and-simple-regression.html#cb949-5"></a>                        <span class="dv">1200</span>,</span>
+<span id="cb949-6"><a href="correlation-and-simple-regression.html#cb949-6"></a>                        <span class="dv">1300</span></span>
+<span id="cb949-7"><a href="correlation-and-simple-regression.html#cb949-7"></a>                        )</span>
+<span id="cb949-8"><a href="correlation-and-simple-regression.html#cb949-8"></a>)</span>
+<span id="cb949-9"><a href="correlation-and-simple-regression.html#cb949-9"></a></span>
+<span id="cb949-10"><a href="correlation-and-simple-regression.html#cb949-10"></a><span class="co"># Your new table should look like:</span></span>
+<span id="cb949-11"><a href="correlation-and-simple-regression.html#cb949-11"></a><span class="co">#   </span></span>
+<span id="cb949-12"><a href="correlation-and-simple-regression.html#cb949-12"></a><span class="co"># area_highest_leaf yield</span></span>
+<span id="cb949-13"><a href="correlation-and-simple-regression.html#cb949-13"></a><span class="co"># 900   159.2116</span></span>
+<span id="cb949-14"><a href="correlation-and-simple-regression.html#cb949-14"></a><span class="co"># 1000  160.7872</span></span>
+<span id="cb949-15"><a href="correlation-and-simple-regression.html#cb949-15"></a><span class="co"># 1100  162.3629</span></span>
+<span id="cb949-16"><a href="correlation-and-simple-regression.html#cb949-16"></a><span class="co"># 1200  163.9385</span></span>
+<span id="cb949-17"><a href="correlation-and-simple-regression.html#cb949-17"></a><span class="co"># 1300  165.5141  </span></span></code></pre></div>
+</div>
+<div id="practice-2-5" class="section level3">
+<h3><span class="header-section-number">10.7.6</span> Practice 2</h3>
+<p>We will work with the corn fertility dataset once more.</p>
+<div class="sourceCode" id="cb950"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb950-1"><a href="correlation-and-simple-regression.html#cb950-1"></a>fertility =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_fertility.csv&quot;</span>)</span>
+<span id="cb950-2"><a href="correlation-and-simple-regression.html#cb950-2"></a><span class="kw">head</span>(fertility)</span></code></pre></div>
+<pre><code>##      yield organic_matter magnesium     potash phosphorus       pH
+## 1 166.0838       2.007710 101.87145   7.214161  105.57985 6.287836
+## 2 162.2875       2.001714 122.71640 163.097239   42.50915 7.304132
+## 3 169.4557       1.544267  62.12231  26.855054  193.89253 7.494299
+## 4 167.9799       1.795988  65.36950  31.239609   84.29568 7.221934
+## 5 173.1781       1.988002 227.62357 -30.477244  158.02454 6.573853
+## 6 168.4464       2.084489  91.22296  62.028413  100.50722 7.108826</code></pre>
+<ol style="list-style-type: decimal">
+<li><p>Create the linear model for yield as a function of phosphorus.</p></li>
+<li><p>Examine the model coefficients. The estimate for phosphorus should be about -5.94.</p></li>
+<li><p>How strong is the relationship between highest leaf area and yield? Not very strong: your results should show an r.squared of 0.15.</p></li>
+<li><p>Create a plot of the regression model using ggplot(). Your plot should look like:</p></li>
+</ol>
+<p><img src="data-unit-10/exercise_images/regression_organic_matter.png" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Make predictions for the five new organic matter values in the new_om data.frame</li>
+</ol>
+<div class="sourceCode" id="cb952"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb952-1"><a href="correlation-and-simple-regression.html#cb952-1"></a>new_om =<span class="st"> </span><span class="kw">data.frame</span>(</span>
+<span id="cb952-2"><a href="correlation-and-simple-regression.html#cb952-2"></a>  <span class="dt">organic_matter =</span> <span class="kw">c</span>(<span class="fl">1.5</span>,</span>
+<span id="cb952-3"><a href="correlation-and-simple-regression.html#cb952-3"></a>                     <span class="fl">1.8</span>,</span>
+<span id="cb952-4"><a href="correlation-and-simple-regression.html#cb952-4"></a>                     <span class="fl">2.1</span>,</span>
+<span id="cb952-5"><a href="correlation-and-simple-regression.html#cb952-5"></a>                     <span class="fl">2.4</span>,</span>
+<span id="cb952-6"><a href="correlation-and-simple-regression.html#cb952-6"></a>                     <span class="fl">2.7</span></span>
+<span id="cb952-7"><a href="correlation-and-simple-regression.html#cb952-7"></a>                     )</span>
+<span id="cb952-8"><a href="correlation-and-simple-regression.html#cb952-8"></a>)</span>
+<span id="cb952-9"><a href="correlation-and-simple-regression.html#cb952-9"></a></span>
+<span id="cb952-10"><a href="correlation-and-simple-regression.html#cb952-10"></a></span>
+<span id="cb952-11"><a href="correlation-and-simple-regression.html#cb952-11"></a></span>
+<span id="cb952-12"><a href="correlation-and-simple-regression.html#cb952-12"></a><span class="co"># Your new table should look like:</span></span>
+<span id="cb952-13"><a href="correlation-and-simple-regression.html#cb952-13"></a><span class="co">#   </span></span>
+<span id="cb952-14"><a href="correlation-and-simple-regression.html#cb952-14"></a><span class="co"># organic_matter    yield</span></span>
+<span id="cb952-15"><a href="correlation-and-simple-regression.html#cb952-15"></a><span class="co"># 1.5   168.2745</span></span>
+<span id="cb952-16"><a href="correlation-and-simple-regression.html#cb952-16"></a><span class="co"># 1.8   166.4925</span></span>
+<span id="cb952-17"><a href="correlation-and-simple-regression.html#cb952-17"></a><span class="co"># 2.1   164.7104</span></span>
+<span id="cb952-18"><a href="correlation-and-simple-regression.html#cb952-18"></a><span class="co"># 2.4   162.9283</span></span>
+<span id="cb952-19"><a href="correlation-and-simple-regression.html#cb952-19"></a><span class="co"># 2.7   161.1463  </span></span>
+<span id="cb952-20"><a href="correlation-and-simple-regression.html#cb952-20"></a><span class="co"># </span></span></code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="messy-and-missing-data.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-start.pdf", "bookdown-start.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
