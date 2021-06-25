@@ -1,0 +1,68 @@
+---
+title: "County Level Environmental Dataset"
+output: html_notebook
+runtime: shiny
+---
+
+We are going to work with a county-level dataset from Purdue university that includes soil characteristics, precipitation, corn, and soybean yield.  The authors used land use maps to exclude any acres not in crop production.  Here is a little app with which to appreciate this dataset.
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(urbnmapr)
+library(sf)
+library(leaflet)
+
+counties = read.csv("data/county_environments.csv")
+
+## get county shapes ##
+counties_sf = get_urbn_map("counties", sf = TRUE) %>%
+    rename(stco = county_fips) %>%
+    mutate(stco = as.numeric(stco))
+
+counties_w_env = counties_sf %>%
+  left_join(counties) %>%
+  st_as_sf() %>%
+  st_transform(4326) %>%
+  gather(feature, value, ppt:wheat)
+
+
+library(shiny)
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("feature", "Select feature:", choices = unique(counties_w_env$feature))
+    ),
+    mainPanel(
+      leafletOutput("map")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  filteredData = reactive({
+    out_data = counties_w_env %>%
+      filter(feature==input$feature)
+  })
+
+  output$map = renderLeaflet({
+    in_data = filteredData()
+    pal_lm <- colorNumeric(grDevices::rainbow(5), in_data$value, reverse = TRUE)
+    leaflet(in_data) %>%
+      addTiles() %>%
+      addPolygons(
+        weight = 0.3,
+        color = "black",
+        fillColor = ~pal_lm(value),
+        fillOpacity = 0.5, smoothFactor = 0.5,
+        popup = ~paste0(county_name, "<br>", value),
+        layerId = ~stco
+      ) %>%
+       addLegend("bottomright",
+                pal = pal_lm,
+                values=~value,
+                title="Values")
+  })  
+}
+
+shinyApp(ui, server)
+```
