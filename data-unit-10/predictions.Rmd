@@ -1,0 +1,187 @@
+---
+title: exercise -- making predictions from regression models.
+output: html_document
+--- 
+
+# Introduction
+Now that we have created our linear models and ascertained that they explain a significant amount of the variance in our data, we want to use them to visualize the relationship between our Y and X variables.  Furthermore, we may want to use them to make predictions for specific values of X.
+
+# Case Study
+We will continue to work with our corn allometry dataset.
+
+```{r}
+library(tidyverse)
+allometry = read.csv("data/corn_allometry.csv")
+head(allometry)
+```
+
+# Creating and Testing our Model
+What effect does stalk circumference have on yield?  Let's find out.
+```{r}
+model_circumference = lm(yield ~ stalk_circ, data=allometry)
+
+```
+
+We will again us tools from the *broom()* package to present clear results.  First, we examine our coefficients.
+```{r}
+library(broom)
+tidy(model_circumference)
+```
+
+We see the slope of our model is significantly different than zero.  There is a significant relationship between stalk circumference and yield.  How strong is this relationship?
+```{r}
+glance(model_circumference)
+```
+
+We see the r.squared is about 0.24 .  Not particularly strong, but meaningful just the same.
+
+# Visualizing the Regression Model
+Let's visualize this relationship using *ggplot()*.
+```{r}
+model_circumference %>%
+  ggplot(aes(x=stalk_circ, y=yield)) +
+  geom_point() +
+  geom_smooth(method = "lm", se=TRUE)
+```
+
+Above, we first created a scatter plot, based on the stalk circumference and yield associated with each observation.  The first two lines of plot creation, ggplot() and geom_point() shoud be increasingly familiar to you.
+
+The next line, uses the *geom_smooth()* function to add our regression model.  The argument *method="lm"* tells R to fit a linear model to the data.  This model is identical to that we used in our regression analysis.  The second argument, *se=TRUE*, tells R to shade the confidence interval around the regression line.  
+
+Remember, our regression line is an estimate, based on samples.  Our model parameters, including our slope, are estimates, complete with standard errors.  The confidence interval is based on the slope of our line.  Because a change in the slope of the line would be more pronounced at the ends of our regression line than the middle (think of it like a propeller), our confidence interval has a convex (or hourglass) shape to it.  We are 95% confident the actual relationship between Y and X is included in this confidence interval.
+
+# Making Predictions with the Regression Model
+Once we have defined a simple linear regression model, it is easy to make predictions with it.
+
+First, we need to create a new data frame with the values of stalk circumference for which we want to make predictions.  We use the *data.frame()* function to create the data.frame.  Next, we define the first column of the data.frame, stalk_circ.  We define it as having 5 values, from 1.5 to 3.5
+```{r}
+new_stalk_data = data.frame(
+  stalk_circ=c(1.5,
+               2.0,
+               2.5,
+               3.0,
+               3.5))
+
+new_stalk_data
+```
+
+That was probably the hardest part of the prediction.  Now, all we need to do is run the *predict()* function.  This function takes two arguments: 1) the name of the linear model we have developed, and 2) the name of the data.frame with the new values of stalk_circ.
+```{r}
+predict(model_circumference, new_stalk_data)
+
+```
+
+We can also assign these values to a new column in our new_stalk_data dataframe.  
+
+```{r}
+new_stalk_data$yield = predict(model_circumference, new_stalk_data)
+
+new_stalk_data
+```
+
+Finally, we can plot these new values using *ggplot()*
+```{r}
+new_stalk_data %>%
+  ggplot(aes(x=stalk_circ, y=yield)) +
+  geom_point()
+```
+
+# Practice 1
+What effect does the area of the highest leaf have on yield?  Let's find out.  
+
+1) Build the linear model
+```{r}
+
+```
+
+2) Examine the model coefficients.  The estimate for area_highest_leaf should be about 0.016.
+```{r}
+
+```
+
+3) How strong is the relationship between highest leaf area and yield?  Pretty strong: your results should show an r.squared of 0.64.
+```{r}
+
+```
+
+3) Create a plot of the regression model using ggplot().  Your plot should look like:
+
+![](images/regression_highest_leaf_area.png)
+
+4) Make predictions for the five new leaf area values in the new_leaf_area data.frame 
+```{r}
+
+new_leaf_area = data.frame(
+  area_highest_leaf = c(900,
+                        1000,
+                        1100,
+                        1200,
+                        1300
+                        )
+)
+
+# Your new table should look like:
+#   
+# area_highest_leaf	yield
+# 900	159.2116
+# 1000	160.7872
+# 1100	162.3629
+# 1200	163.9385
+# 1300	165.5141  
+```
+
+
+# Practice 2
+We will work with the corn fertility dataset once more.  
+```{r}
+fertility = read.csv("data/corn_fertility.csv")
+head(fertility)
+```
+
+1) Create the linear model for yield as a function of phosphorus.
+```{r}
+
+```
+
+2) Examine the model coefficients.  The estimate for phosphorus should be about -5.94.
+```{r}
+
+```
+
+3) How strong is the relationship between highest leaf area and yield?  Not very strong: your results should show an r.squared of 0.15.
+```{r}
+
+```
+
+3) Create a plot of the regression model using ggplot().  Your plot should look like:
+```{r}
+
+```
+
+
+![](images/regression_organic_matter.png)
+
+4) Make predictions for the five new organic matter values in the new_om data.frame 
+```{r}
+
+new_om = data.frame(
+  organic_matter = c(1.5,
+                     1.8,
+                     2.1,
+                     2.4,
+                     2.7
+                     )
+)
+
+
+
+# Your new table should look like:
+#   
+# organic_matter	yield
+# 1.5	168.2745
+# 1.8	166.4925
+# 2.1	164.7104
+# 2.4	162.9283
+# 2.7	161.1463  
+# 
+``` 

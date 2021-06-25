@@ -1,0 +1,55 @@
+---
+title: "Correlation App"
+output: html_notebook
+---
+
+Experiment with the appliciation below.  What happens as you adjust the value of r using the slider control?
+
+```{r}
+library(tidyverse)
+library(plotly)
+
+library(shiny)
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("corrCoef", "Select R", min=-1, max = 1, step = 0.05, value = 0.8)
+    ),
+    mainPanel(
+      plotOutput("corrPlot", width = "600px", height="600px")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  output$corrPlot = renderPlot({
+    set.seed(1234)
+    n = 1000
+    r = input$corrCoef
+    x1 = rnorm(n)
+    x2 = rnorm(n)
+    y1 = scale(x2) * r  +  scale(residuals(lm(x1~x2))) * sqrt(1-r*r)
+    
+    r = cor(y1,x2)
+    
+    cor_data = cbind(y1, x2) %>%
+      as.data.frame() 
+    
+    cor_data %>%
+      rename(y=V1, 
+             x=x2) %>%
+      ggplot(aes(x=x, y=y)) +
+      geom_point() +
+      geom_text(x=3.5, y=3.5, label=paste0("r = " , r), color="blue", size=8) + 
+      lims(x=c(-4,4), y=c(-4,4)) +
+      coord_fixed()
+      })
+
+    
+}
+
+shinyApp(ui, server, options = list(height="800px"))
+```
+
+When r is close to zero, the “cloud” of data in the scatter plot will appear circular.  As r increases positively, the data will start to look like a football – with its nose pointed up and right and its tail pointed down and left.  As r gets closer to 1, the data may represent a cigar – or an under-inflated football (yes, I’m talking to you, Brady).  And as r gets very close to 1, the data cloud will resemble a straight line.  As r increases negatively, the same patterns occur, only with the data points converging on a diagonal line that slopes up and to the left.

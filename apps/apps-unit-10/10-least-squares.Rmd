@@ -1,0 +1,50 @@
+---
+title: "Least Squares Regression Line"
+output: html_notebook
+---
+
+Use the slider to the left to observe the change in the regression line and error sum of squares, which measures the sums of the differences between observed values and the value predicted by the regression line.  Try to minimize the sum of squares.
+
+```{r}
+nitrogen = read.csv("data/nitrogen_waseca.csv")
+
+library(tidyverse)
+library(shiny)
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("slope", "Select Slope of regression line", min=-0.05, max=0.15, step=0.01, value=0.0)
+    ),
+    mainPanel(
+      plotOutput("plot")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  nitrogenCustomModel = reactive({
+    nitrogen_custom_model = nitrogen %>%
+      dplyr::select(nitro, yield) %>%
+      mutate(slope = input$slope) %>%
+      mutate(pred = mean(yield) + (nitro -mean(nitro))*slope) %>%
+      mutate(ss_error = sum((yield-pred)^2))
+  })
+  
+  output$plot = renderPlot({
+    ggplot(data=nitrogenCustomModel(), aes(x=nitro, y=yield)) +
+      geom_point(size = 2) +
+      geom_line(aes(x=nitro, y=pred), color="blue", size=2) +
+      geom_text(aes(x=45, y=8, label=paste0("Error SS = ", round(mean(ss_error),2))), hjust=0, size=6)
+  })
+  
+}
+
+
+
+shinyApp(ui, server)
+
+```
+Note the position of the regression line that minimizes the sum of squares is identical to that fit using the least squares regression technique.
+
+
