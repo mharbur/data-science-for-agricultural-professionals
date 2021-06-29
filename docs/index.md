@@ -1,7 +1,7 @@
 --- 
 title: "Data Science for Agricultural Professionals"
 author: "Marin L. Harbur"
-date: "2021-06-25"
+date: "2021-06-29"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib]
@@ -12,6 +12,10 @@ github-repo: 'https://github.com/mharbur/data-science-for-agricultural-professio
 url: 'https://mharbur.github.io/data-science-for-agricultural-professionals/'
 description: "Practical statistics for those involved in agronomy and related agricultural sciences."
 ---
+
+
+
+
 
 # Preface{-}
 ## Welcome{-}

@@ -13,6 +13,7 @@ rmd_files: ["index.Rmd",
   "08-Means-Separation-and-Presentation.Rmd",
   "09-Messy-and-Missing-Data.Rmd",
   "10-Correlation-and_Simple-Regression.Rmd",
-  "11-Multiple-Linear-and-Nonlinear-Regression.Rmd"]
+  "11-Multiple-Linear-and-Nonlinear-Regression.Rmd",
+  "12-Spatial-Statistics.Rmd"]
 clean: [packages.bib, bookdown.bbl]
 new_session: yes

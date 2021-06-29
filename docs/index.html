@@ -24,7 +24,7 @@
 <meta name="author" content="Marin L. Harbur" />
 
 
-<meta name="date" content="2021-06-25" />
+<meta name="date" content="2021-06-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 
 <link rel="next" href="population-statistics.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,7 +51,6 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.9.3/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
@@ -58,21 +58,33 @@
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script>
+<script src="libs/stars-1/data_stars_stars2a7b6c.txt"></script>
+<script src="libs/joda-0.0.1/joda.js"></script>
+<script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -92,7 +104,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -141,52 +153,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">A Minimal Bookdown Book</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#welcome"><i class="fa fa-check"></i>Welcome</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-language"><i class="fa fa-check"></i>R-language</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="population-statistics.html"><a href="population-statistics.html"><i class="fa fa-check"></i><b>1</b> Population Statistics</a><ul>
+<li class="chapter" data-level="1" data-path="population-statistics.html"><a href="population-statistics.html"><i class="fa fa-check"></i><b>1</b> Population Statistics</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="population-statistics.html"><a href="population-statistics.html#populations"><i class="fa fa-check"></i><b>1.1</b> Populations</a></li>
 <li class="chapter" data-level="1.2" data-path="population-statistics.html"><a href="population-statistics.html#case-study-yield-map"><i class="fa fa-check"></i><b>1.2</b> Case Study: Yield Map</a></li>
-<li class="chapter" data-level="1.3" data-path="population-statistics.html"><a href="population-statistics.html#distributions"><i class="fa fa-check"></i><b>1.3</b> Distributions</a><ul>
+<li class="chapter" data-level="1.3" data-path="population-statistics.html"><a href="population-statistics.html#distributions"><i class="fa fa-check"></i><b>1.3</b> Distributions</a>
+<ul>
 <li class="chapter" data-level="1.3.1" data-path="population-statistics.html"><a href="population-statistics.html#histograms"><i class="fa fa-check"></i><b>1.3.1</b> Histograms</a></li>
 <li class="chapter" data-level="1.3.2" data-path="population-statistics.html"><a href="population-statistics.html#percentiles"><i class="fa fa-check"></i><b>1.3.2</b> Percentiles</a></li>
 <li class="chapter" data-level="1.3.3" data-path="population-statistics.html"><a href="population-statistics.html#normal-distribution-model"><i class="fa fa-check"></i><b>1.3.3</b> Normal Distribution Model</a></li>
 <li class="chapter" data-level="1.3.4" data-path="population-statistics.html"><a href="population-statistics.html#measures-of-center"><i class="fa fa-check"></i><b>1.3.4</b> Measures of Center</a></li>
 <li class="chapter" data-level="1.3.5" data-path="population-statistics.html"><a href="population-statistics.html#measures-of-dispersion"><i class="fa fa-check"></i><b>1.3.5</b> Measures of Dispersion</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="population-statistics.html"><a href="population-statistics.html#exercise-introduction-to-r"><i class="fa fa-check"></i><b>1.4</b> Exercise: Introduction to R</a><ul>
+<li class="chapter" data-level="1.4" data-path="population-statistics.html"><a href="population-statistics.html#exercise-introduction-to-r"><i class="fa fa-check"></i><b>1.4</b> Exercise: Introduction to R</a>
+<ul>
 <li class="chapter" data-level="1.4.1" data-path="population-statistics.html"><a href="population-statistics.html#your-very-first-code"><i class="fa fa-check"></i><b>1.4.1</b> Your Very First Code</a></li>
 <li class="chapter" data-level="1.4.2" data-path="population-statistics.html"><a href="population-statistics.html#reading-and-working-with-data-frames"><i class="fa fa-check"></i><b>1.4.2</b> Reading and Working with Data Frames</a></li>
 <li class="chapter" data-level="1.4.3" data-path="population-statistics.html"><a href="population-statistics.html#basic-operations-on-columns"><i class="fa fa-check"></i><b>1.4.3</b> Basic Operations on Columns</a></li>
 <li class="chapter" data-level="1.4.4" data-path="population-statistics.html"><a href="population-statistics.html#knitting-your-results-into-a-document"><i class="fa fa-check"></i><b>1.4.4</b> Knitting Your Results into a Document</a></li>
 <li class="chapter" data-level="1.4.5" data-path="population-statistics.html"><a href="population-statistics.html#practice"><i class="fa fa-check"></i><b>1.4.5</b> Practice</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="population-statistics.html"><a href="population-statistics.html#exercise-introduction-to-shapefiles"><i class="fa fa-check"></i><b>1.5</b> Exercise: Introduction to Shapefiles</a><ul>
+<li class="chapter" data-level="1.5" data-path="population-statistics.html"><a href="population-statistics.html#exercise-introduction-to-shapefiles"><i class="fa fa-check"></i><b>1.5</b> Exercise: Introduction to Shapefiles</a>
+<ul>
 <li class="chapter" data-level="1.5.1" data-path="population-statistics.html"><a href="population-statistics.html#r-packages"><i class="fa fa-check"></i><b>1.5.1</b> R Packages</a></li>
 <li class="chapter" data-level="1.5.2" data-path="population-statistics.html"><a href="population-statistics.html#reading-shapefiles"><i class="fa fa-check"></i><b>1.5.2</b> Reading Shapefiles</a></li>
 <li class="chapter" data-level="1.5.3" data-path="population-statistics.html"><a href="population-statistics.html#examining-spatial-feature-data-frames"><i class="fa fa-check"></i><b>1.5.3</b> Examining Spatial Feature Data Frames</a></li>
 <li class="chapter" data-level="1.5.4" data-path="population-statistics.html"><a href="population-statistics.html#visualizing-data"><i class="fa fa-check"></i><b>1.5.4</b> Visualizing Data</a></li>
 <li class="chapter" data-level="1.5.5" data-path="population-statistics.html"><a href="population-statistics.html#create-your-own-maps"><i class="fa fa-check"></i><b>1.5.5</b> Create Your Own Maps</a></li>
 </ul></li>
-<li class="chapter" data-level="1.6" data-path="population-statistics.html"><a href="population-statistics.html#exercise-histograms"><i class="fa fa-check"></i><b>1.6</b> Exercise: Histograms</a><ul>
+<li class="chapter" data-level="1.6" data-path="population-statistics.html"><a href="population-statistics.html#exercise-histograms"><i class="fa fa-check"></i><b>1.6</b> Exercise: Histograms</a>
+<ul>
 <li class="chapter" data-level="1.6.1" data-path="population-statistics.html"><a href="population-statistics.html#case-study"><i class="fa fa-check"></i><b>1.6.1</b> Case Study</a></li>
 <li class="chapter" data-level="1.6.2" data-path="population-statistics.html"><a href="population-statistics.html#basic-histogram"><i class="fa fa-check"></i><b>1.6.2</b> Basic Histogram</a></li>
 <li class="chapter" data-level="1.6.3" data-path="population-statistics.html"><a href="population-statistics.html#histograms-with-ggplot"><i class="fa fa-check"></i><b>1.6.3</b> Histograms with ggplot</a></li>
 <li class="chapter" data-level="1.6.4" data-path="population-statistics.html"><a href="population-statistics.html#practice-1"><i class="fa fa-check"></i><b>1.6.4</b> Practice</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html"><i class="fa fa-check"></i><b>2</b> Distributions and Probability</a><ul>
+<li class="chapter" data-level="2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html"><i class="fa fa-check"></i><b>2</b> Distributions and Probability</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#case-study-1"><i class="fa fa-check"></i><b>2.1</b> Case Study</a></li>
-<li class="chapter" data-level="2.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-normal-distribution-model"><i class="fa fa-check"></i><b>2.2</b> The Normal Distribution Model</a><ul>
+<li class="chapter" data-level="2.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-normal-distribution-model"><i class="fa fa-check"></i><b>2.2</b> The Normal Distribution Model</a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-bell-curve"><i class="fa fa-check"></i><b>2.2.1</b> The Bell Curve</a></li>
 <li class="chapter" data-level="2.2.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#distribution-and-probability"><i class="fa fa-check"></i><b>2.2.2</b> Distribution and Probability</a></li>
 <li class="chapter" data-level="2.2.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#probability-and-the-normal-distribution-curve"><i class="fa fa-check"></i><b>2.2.3</b> Probability and the Normal Distribution Curve</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-z-distribution"><i class="fa fa-check"></i><b>2.3</b> The Z-Distribution</a><ul>
+<li class="chapter" data-level="2.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-z-distribution"><i class="fa fa-check"></i><b>2.3</b> The Z-Distribution</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#important-numbers-95-and-5"><i class="fa fa-check"></i><b>2.3.1</b> Important Numbers: 95% and 5%</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#exercise-z-distribution-and-probability"><i class="fa fa-check"></i><b>2.4</b> Exercise: Z-Distribution and Probability</a><ul>
+<li class="chapter" data-level="2.4" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#exercise-z-distribution-and-probability"><i class="fa fa-check"></i><b>2.4</b> Exercise: Z-Distribution and Probability</a>
+<ul>
 <li class="chapter" data-level="2.4.1" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#case-study-barley-data"><i class="fa fa-check"></i><b>2.4.1</b> Case Study: Barley Data</a></li>
 <li class="chapter" data-level="2.4.2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#measuring-the-population-distribution-mean-and-standard-deviation"><i class="fa fa-check"></i><b>2.4.2</b> Measuring the Population Distribution: Mean and Standard Deviation</a></li>
 <li class="chapter" data-level="2.4.3" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#the-shadedist-function"><i class="fa fa-check"></i><b>2.4.3</b> The shadeDist Function</a></li>
@@ -199,7 +221,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.10" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html#practice-tomato-dataset"><i class="fa fa-check"></i><b>2.4.10</b> Practice: Tomato Dataset</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="sample-statistics.html"><a href="sample-statistics.html"><i class="fa fa-check"></i><b>3</b> Sample Statistics</a><ul>
+<li class="chapter" data-level="3" data-path="sample-statistics.html"><a href="sample-statistics.html"><i class="fa fa-check"></i><b>3</b> Sample Statistics</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="sample-statistics.html"><a href="sample-statistics.html#samples"><i class="fa fa-check"></i><b>3.1</b> Samples</a></li>
 <li class="chapter" data-level="3.2" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-2"><i class="fa fa-check"></i><b>3.2</b> Case Study</a></li>
 <li class="chapter" data-level="3.3" data-path="sample-statistics.html"><a href="sample-statistics.html#distribution-of-sample-means"><i class="fa fa-check"></i><b>3.3</b> Distribution of Sample Means</a></li>
@@ -209,38 +232,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.7" data-path="sample-statistics.html"><a href="sample-statistics.html#the-t-distribution"><i class="fa fa-check"></i><b>3.7</b> The t-Distribution</a></li>
 <li class="chapter" data-level="3.8" data-path="sample-statistics.html"><a href="sample-statistics.html#confidence-interval"><i class="fa fa-check"></i><b>3.8</b> Confidence Interval</a></li>
 <li class="chapter" data-level="3.9" data-path="sample-statistics.html"><a href="sample-statistics.html#confidence-interval-and-probability"><i class="fa fa-check"></i><b>3.9</b> Confidence Interval and Probability</a></li>
-<li class="chapter" data-level="3.10" data-path="sample-statistics.html"><a href="sample-statistics.html#exercise-standard-error"><i class="fa fa-check"></i><b>3.10</b> Exercise: Standard Error</a><ul>
+<li class="chapter" data-level="3.10" data-path="sample-statistics.html"><a href="sample-statistics.html#exercise-standard-error"><i class="fa fa-check"></i><b>3.10</b> Exercise: Standard Error</a>
+<ul>
 <li class="chapter" data-level="3.10.1" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-tomatoes"><i class="fa fa-check"></i><b>3.10.1</b> Case Study: Tomatoes</a></li>
 <li class="chapter" data-level="3.10.2" data-path="sample-statistics.html"><a href="sample-statistics.html#calculating-standard-error"><i class="fa fa-check"></i><b>3.10.2</b> Calculating Standard Error</a></li>
 <li class="chapter" data-level="3.10.3" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-barley"><i class="fa fa-check"></i><b>3.10.3</b> Practice: Barley</a></li>
 <li class="chapter" data-level="3.10.4" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-cotton"><i class="fa fa-check"></i><b>3.10.4</b> Practice: Cotton</a></li>
 </ul></li>
-<li class="chapter" data-level="3.11" data-path="sample-statistics.html"><a href="sample-statistics.html#exercise-t-distribution"><i class="fa fa-check"></i><b>3.11</b> Exercise: t-Distribution</a><ul>
+<li class="chapter" data-level="3.11" data-path="sample-statistics.html"><a href="sample-statistics.html#exercise-t-distribution"><i class="fa fa-check"></i><b>3.11</b> Exercise: t-Distribution</a>
+<ul>
 <li class="chapter" data-level="3.11.1" data-path="sample-statistics.html"><a href="sample-statistics.html#plotting-the-distribution"><i class="fa fa-check"></i><b>3.11.1</b> Plotting the Distribution</a></li>
 <li class="chapter" data-level="3.11.2" data-path="sample-statistics.html"><a href="sample-statistics.html#calculating-t"><i class="fa fa-check"></i><b>3.11.2</b> Calculating T</a></li>
 <li class="chapter" data-level="3.11.3" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-2"><i class="fa fa-check"></i><b>3.11.3</b> Practice</a></li>
 </ul></li>
-<li class="chapter" data-level="3.12" data-path="sample-statistics.html"><a href="sample-statistics.html#exercise-confidence-interval-for-sample-mean"><i class="fa fa-check"></i><b>3.12</b> Exercise: Confidence Interval for Sample Mean</a><ul>
+<li class="chapter" data-level="3.12" data-path="sample-statistics.html"><a href="sample-statistics.html#exercise-confidence-interval-for-sample-mean"><i class="fa fa-check"></i><b>3.12</b> Exercise: Confidence Interval for Sample Mean</a>
+<ul>
 <li class="chapter" data-level="3.12.1" data-path="sample-statistics.html"><a href="sample-statistics.html#calculating-the-confidence-interval"><i class="fa fa-check"></i><b>3.12.1</b> Calculating the Confidence Interval</a></li>
 <li class="chapter" data-level="3.12.2" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-peanut-sample-1"><i class="fa fa-check"></i><b>3.12.2</b> Case Study: Peanut Sample 1</a></li>
 <li class="chapter" data-level="3.12.3" data-path="sample-statistics.html"><a href="sample-statistics.html#case-study-peanut-sample-2"><i class="fa fa-check"></i><b>3.12.3</b> Case Study: Peanut Sample 2</a></li>
 <li class="chapter" data-level="3.12.4" data-path="sample-statistics.html"><a href="sample-statistics.html#practice-3"><i class="fa fa-check"></i><b>3.12.4</b> Practice</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html"><i class="fa fa-check"></i><b>4</b> Two-Treatment Comparisons</a><ul>
+<li class="chapter" data-level="4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html"><i class="fa fa-check"></i><b>4</b> Two-Treatment Comparisons</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#side-by-side-trials"><i class="fa fa-check"></i><b>4.1</b> Side-by-Side Trials</a></li>
 <li class="chapter" data-level="4.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#blocked-design"><i class="fa fa-check"></i><b>4.2</b> Blocked Design</a></li>
 <li class="chapter" data-level="4.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-3"><i class="fa fa-check"></i><b>4.3</b> Case Study</a></li>
 <li class="chapter" data-level="4.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#confidence-interval-1"><i class="fa fa-check"></i><b>4.4</b> Confidence Interval</a></li>
 <li class="chapter" data-level="4.5" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#t-test"><i class="fa fa-check"></i><b>4.5</b> T-Test</a></li>
-<li class="chapter" data-level="4.6" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-randomizing-plots"><i class="fa fa-check"></i><b>4.6</b> Exercise: Randomizing Plots</a><ul>
+<li class="chapter" data-level="4.6" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-randomizing-plots"><i class="fa fa-check"></i><b>4.6</b> Exercise: Randomizing Plots</a>
+<ul>
 <li class="chapter" data-level="4.6.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-1"><i class="fa fa-check"></i><b>4.6.1</b> Example 1</a></li>
 <li class="chapter" data-level="4.6.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#the-agricolae-package"><i class="fa fa-check"></i><b>4.6.2</b> The Agricolae Package</a></li>
 <li class="chapter" data-level="4.6.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#randomizing-the-plot"><i class="fa fa-check"></i><b>4.6.3</b> Randomizing the Plot</a></li>
 <li class="chapter" data-level="4.6.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#working-with-lists"><i class="fa fa-check"></i><b>4.6.4</b> Working with Lists</a></li>
 <li class="chapter" data-level="4.6.5" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-2"><i class="fa fa-check"></i><b>4.6.5</b> Example 2</a></li>
 </ul></li>
-<li class="chapter" data-level="4.7" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-restructuring-columns-and-rows"><i class="fa fa-check"></i><b>4.7</b> Exercise: Restructuring Columns and Rows</a><ul>
+<li class="chapter" data-level="4.7" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-restructuring-columns-and-rows"><i class="fa fa-check"></i><b>4.7</b> Exercise: Restructuring Columns and Rows</a>
+<ul>
 <li class="chapter" data-level="4.7.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#operations-on-data"><i class="fa fa-check"></i><b>4.7.1</b> Operations on Data</a></li>
 <li class="chapter" data-level="4.7.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-soybean-fungicide"><i class="fa fa-check"></i><b>4.7.2</b> Case Study: Soybean Fungicide</a></li>
 <li class="chapter" data-level="4.7.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-1-1"><i class="fa fa-check"></i><b>4.7.3</b> Practice 1</a></li>
@@ -248,20 +277,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.7.5" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-3-1"><i class="fa fa-check"></i><b>4.7.5</b> Practice 3</a></li>
 <li class="chapter" data-level="4.7.6" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-4"><i class="fa fa-check"></i><b>4.7.6</b> Practice 4</a></li>
 </ul></li>
-<li class="chapter" data-level="4.8" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-confidence-interval-of-difference"><i class="fa fa-check"></i><b>4.8</b> Exercise: Confidence Interval of Difference"</a><ul>
+<li class="chapter" data-level="4.8" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-confidence-interval-of-difference"><i class="fa fa-check"></i><b>4.8</b> Exercise: Confidence Interval of Difference"</a>
+<ul>
 <li class="chapter" data-level="4.8.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-1-1"><i class="fa fa-check"></i><b>4.8.1</b> Example 1</a></li>
 <li class="chapter" data-level="4.8.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#example-2-1"><i class="fa fa-check"></i><b>4.8.2</b> Example 2</a></li>
 </ul></li>
-<li class="chapter" data-level="4.9" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-t-test"><i class="fa fa-check"></i><b>4.9</b> Exercise: T-Test</a><ul>
+<li class="chapter" data-level="4.9" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#exercise-t-test"><i class="fa fa-check"></i><b>4.9</b> Exercise: T-Test</a>
+<ul>
 <li class="chapter" data-level="4.9.1" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-1-wheat-fungicide"><i class="fa fa-check"></i><b>4.9.1</b> Case Study 1: Wheat Fungicide</a></li>
 <li class="chapter" data-level="4.9.2" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#t-test-1"><i class="fa fa-check"></i><b>4.9.2</b> T-Test</a></li>
 <li class="chapter" data-level="4.9.3" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#case-study-2-apple-variety"><i class="fa fa-check"></i><b>4.9.3</b> Case Study 2: Apple Variety</a></li>
 <li class="chapter" data-level="4.9.4" data-path="two-treatment-comparisons.html"><a href="two-treatment-comparisons.html#practice-5"><i class="fa fa-check"></i><b>4.9.4</b> Practice</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html"><i class="fa fa-check"></i><b>5</b> Understanding Statistical Tests</a><ul>
+<li class="chapter" data-level="5" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html"><i class="fa fa-check"></i><b>5</b> Understanding Statistical Tests</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#research-question"><i class="fa fa-check"></i><b>5.1</b> Research Question</a></li>
-<li class="chapter" data-level="5.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#the-model"><i class="fa fa-check"></i><b>5.2</b> The Model</a><ul>
+<li class="chapter" data-level="5.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#the-model"><i class="fa fa-check"></i><b>5.2</b> The Model</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#treatment-effect"><i class="fa fa-check"></i><b>5.2.1</b> Treatment Effect</a></li>
 <li class="chapter" data-level="5.2.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#error-effect"><i class="fa fa-check"></i><b>5.2.2</b> Error Effect</a></li>
 </ul></li>
@@ -269,14 +302,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#p-value"><i class="fa fa-check"></i><b>5.4</b> P-Value</a></li>
 <li class="chapter" data-level="5.5" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#the-p-value-and-errors"><i class="fa fa-check"></i><b>5.5</b> The P-Value and Errors</a></li>
 <li class="chapter" data-level="5.6" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#one-sided-vs-two-sided-hypotheses"><i class="fa fa-check"></i><b>5.6</b> One-Sided vs Two-Sided Hypotheses</a></li>
-<li class="chapter" data-level="5.7" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#exercise-linear-additive-model"><i class="fa fa-check"></i><b>5.7</b> Exercise: Linear Additive Model</a><ul>
+<li class="chapter" data-level="5.7" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#exercise-linear-additive-model"><i class="fa fa-check"></i><b>5.7</b> Exercise: Linear Additive Model</a>
+<ul>
 <li class="chapter" data-level="5.7.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#case-study-barley-effects"><i class="fa fa-check"></i><b>5.7.1</b> Case Study: Barley Effects</a></li>
 <li class="chapter" data-level="5.7.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#plotting-the-effects"><i class="fa fa-check"></i><b>5.7.2</b> Plotting the Effects</a></li>
 <li class="chapter" data-level="5.7.3" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#examining-individual-plots"><i class="fa fa-check"></i><b>5.7.3</b> Examining Individual Plots</a></li>
 <li class="chapter" data-level="5.7.4" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#practice-groudnut"><i class="fa fa-check"></i><b>5.7.4</b> Practice: Groudnut</a></li>
 <li class="chapter" data-level="5.7.5" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#plotting-the-effects-1"><i class="fa fa-check"></i><b>5.7.5</b> Plotting the Effects</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#exercise-one-sided-hypotheses"><i class="fa fa-check"></i><b>5.8</b> Exercise: One-Sided Hypotheses</a><ul>
+<li class="chapter" data-level="5.8" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#exercise-one-sided-hypotheses"><i class="fa fa-check"></i><b>5.8</b> Exercise: One-Sided Hypotheses</a>
+<ul>
 <li class="chapter" data-level="5.8.1" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#case-study-groundnut"><i class="fa fa-check"></i><b>5.8.1</b> Case Study: Groundnut</a></li>
 <li class="chapter" data-level="5.8.2" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#one-sided-t-test"><i class="fa fa-check"></i><b>5.8.2</b> One-Sided T-Test</a></li>
 <li class="chapter" data-level="5.8.3" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#practice-barley-1"><i class="fa fa-check"></i><b>5.8.3</b> Practice: Barley</a></li>
@@ -284,12 +319,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5.9" data-path="understanding-statistical-tests.html"><a href="understanding-statistical-tests.html#exercise-type-i-and-type-ii-errors"><i class="fa fa-check"></i><b>5.9</b> Exercise: Type I and Type II Errors</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html"><i class="fa fa-check"></i><b>6</b> Multiple Treatment Trials</a><ul>
+<li class="chapter" data-level="6" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html"><i class="fa fa-check"></i><b>6</b> Multiple Treatment Trials</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#case-study-4"><i class="fa fa-check"></i><b>6.1</b> Case Study</a></li>
 <li class="chapter" data-level="6.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#the-linear-additive-model"><i class="fa fa-check"></i><b>6.2</b> The Linear Additive Model</a></li>
 <li class="chapter" data-level="6.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#analysis-of-variance"><i class="fa fa-check"></i><b>6.3</b> Analysis of Variance</a></li>
 <li class="chapter" data-level="6.4" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#the-f-statistic"><i class="fa fa-check"></i><b>6.4</b> The F statistic</a></li>
-<li class="chapter" data-level="6.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#the-anova-table"><i class="fa fa-check"></i><b>6.5</b> The ANOVA Table</a><ul>
+<li class="chapter" data-level="6.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#the-anova-table"><i class="fa fa-check"></i><b>6.5</b> The ANOVA Table</a>
+<ul>
 <li class="chapter" data-level="6.5.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#source-of-variation"><i class="fa fa-check"></i><b>6.5.1</b> Source of Variation</a></li>
 <li class="chapter" data-level="6.5.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#sum-of-squares-1"><i class="fa fa-check"></i><b>6.5.2</b> Sum of Squares</a></li>
 <li class="chapter" data-level="6.5.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#degrees-of-freedom-1"><i class="fa fa-check"></i><b>6.5.3</b> Degrees of Freedom</a></li>
@@ -297,14 +334,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#f-value"><i class="fa fa-check"></i><b>6.5.5</b> F-Value</a></li>
 <li class="chapter" data-level="6.5.6" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#p-value-1"><i class="fa fa-check"></i><b>6.5.6</b> P-value</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#visualizing-how-the-anova-table-relates-to-variance"><i class="fa fa-check"></i><b>6.6</b> Visualizing How the Anova Table Relates to Variance</a><ul>
+<li class="chapter" data-level="6.6" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#visualizing-how-the-anova-table-relates-to-variance"><i class="fa fa-check"></i><b>6.6</b> Visualizing How the Anova Table Relates to Variance</a>
+<ul>
 <li class="chapter" data-level="6.6.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#case-study-barley"><i class="fa fa-check"></i><b>6.6.1</b> Case Study: Barley</a></li>
 <li class="chapter" data-level="6.6.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#anova"><i class="fa fa-check"></i><b>6.6.2</b> ANOVA</a></li>
 <li class="chapter" data-level="6.6.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#calculating-the-coefficient-of-variation"><i class="fa fa-check"></i><b>6.6.3</b> Calculating the Coefficient of Variation</a></li>
 <li class="chapter" data-level="6.6.4" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#practice-beet-data"><i class="fa fa-check"></i><b>6.6.4</b> Practice: Beet Data</a></li>
 <li class="chapter" data-level="6.6.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#practice-potato-data"><i class="fa fa-check"></i><b>6.6.5</b> Practice: Potato Data</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#exercise-treatment-means"><i class="fa fa-check"></i><b>6.7</b> Exercise: “Treatment Means”</a><ul>
+<li class="chapter" data-level="6.7" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#exercise-treatment-means"><i class="fa fa-check"></i><b>6.7</b> Exercise: “Treatment Means”</a>
+<ul>
 <li class="chapter" data-level="6.7.1" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#case-study-barley-1"><i class="fa fa-check"></i><b>6.7.1</b> Case Study: Barley</a></li>
 <li class="chapter" data-level="6.7.2" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#calculating-treatment-means"><i class="fa fa-check"></i><b>6.7.2</b> Calculating Treatment Means</a></li>
 <li class="chapter" data-level="6.7.3" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#plotting-the-means"><i class="fa fa-check"></i><b>6.7.3</b> Plotting the Means</a></li>
@@ -312,11 +351,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.7.5" data-path="multiple-treatment-trials.html"><a href="multiple-treatment-trials.html#practice-potato-data-1"><i class="fa fa-check"></i><b>6.7.5</b> Practice: Potato Data</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html"><i class="fa fa-check"></i><b>7</b> Multiple Treatment Designs</a><ul>
-<li class="chapter" data-level="7.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#randomized-complete-block-design"><i class="fa fa-check"></i><b>7.1</b> Randomized Complete Block Design</a><ul>
+<li class="chapter" data-level="7" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html"><i class="fa fa-check"></i><b>7</b> Multiple Treatment Designs</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#randomized-complete-block-design"><i class="fa fa-check"></i><b>7.1</b> Randomized Complete Block Design</a>
+<ul>
 <li class="chapter" data-level="7.1.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-randomized-complete-block-design"><i class="fa fa-check"></i><b>7.1.1</b> Case Study: Randomized Complete Block Design</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#factorial-design"><i class="fa fa-check"></i><b>7.2</b> Factorial Design</a><ul>
+<li class="chapter" data-level="7.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#factorial-design"><i class="fa fa-check"></i><b>7.2</b> Factorial Design</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-1-1"><i class="fa fa-check"></i><b>7.2.1</b> Case Study 1</a></li>
 <li class="chapter" data-level="7.2.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-2-1"><i class="fa fa-check"></i><b>7.2.2</b> Case Study 2</a></li>
 <li class="chapter" data-level="7.2.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#discussing-interactions"><i class="fa fa-check"></i><b>7.2.3</b> Discussing Interactions</a></li>
@@ -324,13 +366,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#split-plot-design"><i class="fa fa-check"></i><b>7.3</b> Split-Plot Design</a></li>
 <li class="chapter" data-level="7.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#linear-additive-model-3"><i class="fa fa-check"></i><b>7.4</b> Linear Additive Model</a></li>
 <li class="chapter" data-level="7.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#conclusion"><i class="fa fa-check"></i><b>7.5</b> Conclusion</a></li>
-<li class="chapter" data-level="7.6" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-randomized-complete-block-design"><i class="fa fa-check"></i><b>7.6</b> Exercise: Randomized Complete Block Design</a><ul>
+<li class="chapter" data-level="7.6" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-randomized-complete-block-design"><i class="fa fa-check"></i><b>7.6</b> Exercise: Randomized Complete Block Design</a>
+<ul>
 <li class="chapter" data-level="7.6.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-5"><i class="fa fa-check"></i><b>7.6.1</b> Case Study</a></li>
 <li class="chapter" data-level="7.6.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#anova-1"><i class="fa fa-check"></i><b>7.6.2</b> ANOVA</a></li>
 <li class="chapter" data-level="7.6.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#plotting-the-results"><i class="fa fa-check"></i><b>7.6.3</b> Plotting the Results</a></li>
 <li class="chapter" data-level="7.6.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-6"><i class="fa fa-check"></i><b>7.6.4</b> Practice</a></li>
 </ul></li>
-<li class="chapter" data-level="7.7" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-factorial-anova"><i class="fa fa-check"></i><b>7.7</b> Exercise: Factorial ANOVA</a><ul>
+<li class="chapter" data-level="7.7" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-factorial-anova"><i class="fa fa-check"></i><b>7.7</b> Exercise: Factorial ANOVA</a>
+<ul>
 <li class="chapter" data-level="7.7.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-biochar"><i class="fa fa-check"></i><b>7.7.1</b> Case Study: Biochar</a></li>
 <li class="chapter" data-level="7.7.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#anova-2"><i class="fa fa-check"></i><b>7.7.2</b> ANOVA</a></li>
 <li class="chapter" data-level="7.7.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#interaction-plots"><i class="fa fa-check"></i><b>7.7.3</b> Interaction Plots</a></li>
@@ -338,14 +382,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#bar-plots"><i class="fa fa-check"></i><b>7.7.5</b> Bar Plots</a></li>
 <li class="chapter" data-level="7.7.6" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-7"><i class="fa fa-check"></i><b>7.7.6</b> Practice</a></li>
 </ul></li>
-<li class="chapter" data-level="7.8" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-split-plot-design"><i class="fa fa-check"></i><b>7.8</b> Exercise: Split-Plot Design</a><ul>
+<li class="chapter" data-level="7.8" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-split-plot-design"><i class="fa fa-check"></i><b>7.8</b> Exercise: Split-Plot Design</a>
+<ul>
 <li class="chapter" data-level="7.8.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#case-study-corn-soybean-systems-trial"><i class="fa fa-check"></i><b>7.8.1</b> Case Study: Corn-Soybean Systems Trial</a></li>
 <li class="chapter" data-level="7.8.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#anova-4"><i class="fa fa-check"></i><b>7.8.2</b> ANOVA</a></li>
 <li class="chapter" data-level="7.8.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#interaction-plot"><i class="fa fa-check"></i><b>7.8.3</b> Interaction Plot</a></li>
 <li class="chapter" data-level="7.8.4" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#bar-plot"><i class="fa fa-check"></i><b>7.8.4</b> Bar plot</a></li>
 <li class="chapter" data-level="7.8.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-8"><i class="fa fa-check"></i><b>7.8.5</b> Practice</a></li>
 </ul></li>
-<li class="chapter" data-level="7.9" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-experimental-design"><i class="fa fa-check"></i><b>7.9</b> Exercise: Experimental Design</a><ul>
+<li class="chapter" data-level="7.9" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#exercise-experimental-design"><i class="fa fa-check"></i><b>7.9</b> Exercise: Experimental Design</a>
+<ul>
 <li class="chapter" data-level="7.9.1" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#completely-randomized-design"><i class="fa fa-check"></i><b>7.9.1</b> Completely Randomized Design</a></li>
 <li class="chapter" data-level="7.9.2" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#randomized-complete-block-design-1"><i class="fa fa-check"></i><b>7.9.2</b> Randomized Complete Block Design</a></li>
 <li class="chapter" data-level="7.9.3" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#factorial-design-1"><i class="fa fa-check"></i><b>7.9.3</b> Factorial Design</a></li>
@@ -353,59 +399,71 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.9.5" data-path="multiple-treatment-designs.html"><a href="multiple-treatment-designs.html#practice-9"><i class="fa fa-check"></i><b>7.9.5</b> Practice</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html"><i class="fa fa-check"></i><b>8</b> Means Separation and Data Presentation</a><ul>
+<li class="chapter" data-level="8" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html"><i class="fa fa-check"></i><b>8</b> Means Separation and Data Presentation</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-6"><i class="fa fa-check"></i><b>8.1</b> Case Study</a></li>
 <li class="chapter" data-level="8.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#least-significant-difference"><i class="fa fa-check"></i><b>8.2</b> Least Significant Difference</a></li>
-<li class="chapter" data-level="8.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#lsd-output-in-r"><i class="fa fa-check"></i><b>8.3</b> LSD Output in R</a><ul>
+<li class="chapter" data-level="8.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#lsd-output-in-r"><i class="fa fa-check"></i><b>8.3</b> LSD Output in R</a>
+<ul>
 <li class="chapter" data-level="8.3.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#statistics-table"><i class="fa fa-check"></i><b>8.3.1</b> Statistics Table</a></li>
 <li class="chapter" data-level="8.3.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#means-table"><i class="fa fa-check"></i><b>8.3.2</b> Means Table</a></li>
 <li class="chapter" data-level="8.3.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#groups-table"><i class="fa fa-check"></i><b>8.3.3</b> Groups Table</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#comparisonwise-versus-experimentwise-error"><i class="fa fa-check"></i><b>8.4</b> Comparisonwise versus Experimentwise Error</a></li>
 <li class="chapter" data-level="8.5" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#tukeys-honest-significant-difference"><i class="fa fa-check"></i><b>8.5</b> Tukey’s Honest Significant Difference</a></li>
-<li class="chapter" data-level="8.6" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#linear-contrast"><i class="fa fa-check"></i><b>8.6</b> Linear Contrast</a><ul>
+<li class="chapter" data-level="8.6" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#linear-contrast"><i class="fa fa-check"></i><b>8.6</b> Linear Contrast</a>
+<ul>
 <li class="chapter" data-level="8.6.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#coefficients"><i class="fa fa-check"></i><b>8.6.1</b> Coefficients</a></li>
 <li class="chapter" data-level="8.6.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#linear-contrasts-with-r"><i class="fa fa-check"></i><b>8.6.2</b> Linear Contrasts with R</a></li>
 </ul></li>
-<li class="chapter" data-level="8.7" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#means-presentation"><i class="fa fa-check"></i><b>8.7</b> Means Presentation</a><ul>
+<li class="chapter" data-level="8.7" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#means-presentation"><i class="fa fa-check"></i><b>8.7</b> Means Presentation</a>
+<ul>
 <li class="chapter" data-level="8.7.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#means-tables"><i class="fa fa-check"></i><b>8.7.1</b> Means Tables</a></li>
 <li class="chapter" data-level="8.7.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#plotting-means"><i class="fa fa-check"></i><b>8.7.2</b> Plotting Means</a></li>
 </ul></li>
-<li class="chapter" data-level="8.8" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#exercise-lsd-and-tukeys-hsd"><i class="fa fa-check"></i><b>8.8</b> Exercise: LSD and Tukey’s HSD</a><ul>
+<li class="chapter" data-level="8.8" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#exercise-lsd-and-tukeys-hsd"><i class="fa fa-check"></i><b>8.8</b> Exercise: LSD and Tukey’s HSD</a>
+<ul>
 <li class="chapter" data-level="8.8.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-common-bean"><i class="fa fa-check"></i><b>8.8.1</b> Case Study: Common Bean</a></li>
 <li class="chapter" data-level="8.8.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#least-significant-difference-1"><i class="fa fa-check"></i><b>8.8.2</b> Least Significant Difference</a></li>
 <li class="chapter" data-level="8.8.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#tukey-hsd"><i class="fa fa-check"></i><b>8.8.3</b> Tukey HSD</a></li>
 <li class="chapter" data-level="8.8.4" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-apple"><i class="fa fa-check"></i><b>8.8.4</b> Practice: Apple</a></li>
 <li class="chapter" data-level="8.8.5" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-wheat-treatment-with-mildew"><i class="fa fa-check"></i><b>8.8.5</b> Practice: Wheat Treatment with Mildew</a></li>
 </ul></li>
-<li class="chapter" data-level="8.9" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#exercise-linear-contrasts"><i class="fa fa-check"></i><b>8.9</b> Exercise: Linear Contrasts</a><ul>
+<li class="chapter" data-level="8.9" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#exercise-linear-contrasts"><i class="fa fa-check"></i><b>8.9</b> Exercise: Linear Contrasts</a>
+<ul>
 <li class="chapter" data-level="8.9.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-winter-canola-cultivar-trial."><i class="fa fa-check"></i><b>8.9.1</b> Case Study: Winter Canola Cultivar Trial.</a></li>
 <li class="chapter" data-level="8.9.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#running-the-contrast"><i class="fa fa-check"></i><b>8.9.2</b> Running the Contrast</a></li>
 <li class="chapter" data-level="8.9.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-corn-nitrogen-source-and-timing"><i class="fa fa-check"></i><b>8.9.3</b> Practice: Corn Nitrogen Source and Timing</a></li>
 </ul></li>
-<li class="chapter" data-level="8.10" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#exercise-means-tables"><i class="fa fa-check"></i><b>8.10</b> Exercise: Means Tables</a><ul>
+<li class="chapter" data-level="8.10" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#exercise-means-tables"><i class="fa fa-check"></i><b>8.10</b> Exercise: Means Tables</a>
+<ul>
 <li class="chapter" data-level="8.10.1" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#case-study-corn-nitrogen-source-and-timing"><i class="fa fa-check"></i><b>8.10.1</b> Case Study: Corn Nitrogen Source and Timing</a></li>
 <li class="chapter" data-level="8.10.2" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-canola"><i class="fa fa-check"></i><b>8.10.2</b> Practice: Canola</a></li>
 <li class="chapter" data-level="8.10.3" data-path="means-separation-and-data-presentation.html"><a href="means-separation-and-data-presentation.html#practice-broccoli-lsd"><i class="fa fa-check"></i><b>8.10.3</b> Practice: Broccoli LSD</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html"><i class="fa fa-check"></i><b>9</b> Messy and Missing Data</a><ul>
-<li class="chapter" data-level="9.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#inspecting-data-for-normal-distributions"><i class="fa fa-check"></i><b>9.1</b> Inspecting data for Normal Distributions</a><ul>
+<li class="chapter" data-level="9" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html"><i class="fa fa-check"></i><b>9</b> Messy and Missing Data</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#inspecting-data-for-normal-distributions"><i class="fa fa-check"></i><b>9.1</b> Inspecting data for Normal Distributions</a>
+<ul>
 <li class="chapter" data-level="9.1.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#histograms-1"><i class="fa fa-check"></i><b>9.1.1</b> Histograms</a></li>
 <li class="chapter" data-level="9.1.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#rank-percentile-plots"><i class="fa fa-check"></i><b>9.1.2</b> Rank Percentile Plots</a></li>
 <li class="chapter" data-level="9.1.3" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#box-plots"><i class="fa fa-check"></i><b>9.1.3</b> Box Plots</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#inspecting-data-for-equal-variances"><i class="fa fa-check"></i><b>9.2</b> Inspecting Data for Equal Variances</a><ul>
+<li class="chapter" data-level="9.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#inspecting-data-for-equal-variances"><i class="fa fa-check"></i><b>9.2</b> Inspecting Data for Equal Variances</a>
+<ul>
 <li class="chapter" data-level="9.2.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#mean-variance-plot"><i class="fa fa-check"></i><b>9.2.1</b> Mean-Variance Plot</a></li>
 <li class="chapter" data-level="9.2.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#homogeneity-of-variance-tests"><i class="fa fa-check"></i><b>9.2.2</b> Homogeneity of Variance Tests</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#dealing-with-messy-data"><i class="fa fa-check"></i><b>9.3</b> Dealing with Messy Data</a><ul>
+<li class="chapter" data-level="9.3" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#dealing-with-messy-data"><i class="fa fa-check"></i><b>9.3</b> Dealing with Messy Data</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#outliers"><i class="fa fa-check"></i><b>9.3.1</b> Outliers</a></li>
 <li class="chapter" data-level="9.3.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#non-normal-data-and-unequal-variances"><i class="fa fa-check"></i><b>9.3.2</b> Non-normal Data and Unequal Variances</a></li>
 </ul></li>
 <li class="chapter" data-level="9.4" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>9.4</b> Dealing with Missing Data</a></li>
 <li class="chapter" data-level="9.5" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#summary"><i class="fa fa-check"></i><b>9.5</b> Summary</a></li>
-<li class="chapter" data-level="9.6" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#exercise-visual-data-inspection"><i class="fa fa-check"></i><b>9.6</b> Exercise: Visual Data Inspection</a><ul>
+<li class="chapter" data-level="9.6" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#exercise-visual-data-inspection"><i class="fa fa-check"></i><b>9.6</b> Exercise: Visual Data Inspection</a>
+<ul>
 <li class="chapter" data-level="9.6.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#case-study-1-2"><i class="fa fa-check"></i><b>9.6.1</b> Case Study 1</a></li>
 <li class="chapter" data-level="9.6.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#histogram"><i class="fa fa-check"></i><b>9.6.2</b> Histogram</a></li>
 <li class="chapter" data-level="9.6.3" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#rank-percentile"><i class="fa fa-check"></i><b>9.6.3</b> Rank-Percentile</a></li>
@@ -413,29 +471,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.6.5" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#box-plot"><i class="fa fa-check"></i><b>9.6.5</b> Box Plot</a></li>
 <li class="chapter" data-level="9.6.6" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#practice-10"><i class="fa fa-check"></i><b>9.6.6</b> Practice</a></li>
 </ul></li>
-<li class="chapter" data-level="9.7" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#exercise-identifying-unequal-variances"><i class="fa fa-check"></i><b>9.7</b> Exercise: Identifying Unequal Variances"</a><ul>
+<li class="chapter" data-level="9.7" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#exercise-identifying-unequal-variances"><i class="fa fa-check"></i><b>9.7</b> Exercise: Identifying Unequal Variances"</a>
+<ul>
 <li class="chapter" data-level="9.7.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#case-study-grape-colapsis-in-seed-corn"><i class="fa fa-check"></i><b>9.7.1</b> Case Study: Grape Colapsis in Seed Corn</a></li>
 <li class="chapter" data-level="9.7.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#practice-pigweed-height"><i class="fa fa-check"></i><b>9.7.2</b> Practice: Pigweed Height</a></li>
 </ul></li>
-<li class="chapter" data-level="9.8" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#exercise-transforming-and-analyzing-data"><i class="fa fa-check"></i><b>9.8</b> Exercise: Transforming and Analyzing Data</a><ul>
+<li class="chapter" data-level="9.8" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#exercise-transforming-and-analyzing-data"><i class="fa fa-check"></i><b>9.8</b> Exercise: Transforming and Analyzing Data</a>
+<ul>
 <li class="chapter" data-level="9.8.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#case-study-grape-colapsis-in-seed-corn-1"><i class="fa fa-check"></i><b>9.8.1</b> Case Study: Grape Colapsis in Seed Corn</a></li>
 <li class="chapter" data-level="9.8.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#practice-pigweed-height-1"><i class="fa fa-check"></i><b>9.8.2</b> Practice: Pigweed Height</a></li>
 <li class="chapter" data-level="9.8.3" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#practice-pigweed-biomass"><i class="fa fa-check"></i><b>9.8.3</b> Practice: Pigweed Biomass</a></li>
 </ul></li>
-<li class="chapter" data-level="9.9" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#exercise-imputing-missing-data"><i class="fa fa-check"></i><b>9.9</b> Exercise: Imputing Missing Data</a><ul>
+<li class="chapter" data-level="9.9" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#exercise-imputing-missing-data"><i class="fa fa-check"></i><b>9.9</b> Exercise: Imputing Missing Data</a>
+<ul>
 <li class="chapter" data-level="9.9.1" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#case-study-wheat-genotype-trial"><i class="fa fa-check"></i><b>9.9.1</b> Case Study: Wheat Genotype Trial</a></li>
 <li class="chapter" data-level="9.9.2" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#practice-1-2"><i class="fa fa-check"></i><b>9.9.2</b> Practice 1</a></li>
 <li class="chapter" data-level="9.9.3" data-path="messy-and-missing-data.html"><a href="messy-and-missing-data.html#practice-2-2"><i class="fa fa-check"></i><b>9.9.3</b> Practice 2</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html"><i class="fa fa-check"></i><b>10</b> Correlation and Simple Regression</a><ul>
-<li class="chapter" data-level="10.1" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#correlation"><i class="fa fa-check"></i><b>10.1</b> Correlation</a><ul>
+<li class="chapter" data-level="10" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html"><i class="fa fa-check"></i><b>10</b> Correlation and Simple Regression</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#correlation"><i class="fa fa-check"></i><b>10.1</b> Correlation</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#case-study-cucumber"><i class="fa fa-check"></i><b>10.1.1</b> Case Study: Cucumber</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#correlation-1"><i class="fa fa-check"></i><b>10.2</b> Correlation</a><ul>
+<li class="chapter" data-level="10.2" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#correlation-1"><i class="fa fa-check"></i><b>10.2</b> Correlation</a>
+<ul>
 <li class="chapter" data-level="10.2.1" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#how-is-r-calcuated-optional-reading"><i class="fa fa-check"></i><b>10.2.1</b> How Is r Calcuated (optional reading)</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#regression"><i class="fa fa-check"></i><b>10.3</b> Regression</a><ul>
+<li class="chapter" data-level="10.3" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#regression"><i class="fa fa-check"></i><b>10.3</b> Regression</a>
+<ul>
 <li class="chapter" data-level="10.3.1" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#case-study-7"><i class="fa fa-check"></i><b>10.3.1</b> Case Study</a></li>
 <li class="chapter" data-level="10.3.2" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#linear-equation"><i class="fa fa-check"></i><b>10.3.2</b> Linear Equation</a></li>
 <li class="chapter" data-level="10.3.3" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#calculating-the-regression-equation"><i class="fa fa-check"></i><b>10.3.3</b> Calculating the Regression Equation</a></li>
@@ -446,14 +511,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.3.8" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#checking-whether-the-linear-model-is-appropriate"><i class="fa fa-check"></i><b>10.3.8</b> Checking whether the Linear Model is Appropriate</a></li>
 </ul></li>
 <li class="chapter" data-level="10.4" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#extrapolation"><i class="fa fa-check"></i><b>10.4</b> Extrapolation</a></li>
-<li class="chapter" data-level="10.5" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#exercise-sccatterplots-and-regression"><i class="fa fa-check"></i><b>10.5</b> Exercise: Sccatterplots and Regression</a><ul>
+<li class="chapter" data-level="10.5" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#exercise-sccatterplots-and-regression"><i class="fa fa-check"></i><b>10.5</b> Exercise: Sccatterplots and Regression</a>
+<ul>
 <li class="chapter" data-level="10.5.1" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#case-study-corn-data"><i class="fa fa-check"></i><b>10.5.1</b> Case Study: Corn Data</a></li>
 <li class="chapter" data-level="10.5.2" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#practice-1-3"><i class="fa fa-check"></i><b>10.5.2</b> Practice 1</a></li>
 <li class="chapter" data-level="10.5.3" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#practice-2-3"><i class="fa fa-check"></i><b>10.5.3</b> Practice 2</a></li>
 <li class="chapter" data-level="10.5.4" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#practice-3-2"><i class="fa fa-check"></i><b>10.5.4</b> Practice 3</a></li>
 <li class="chapter" data-level="10.5.5" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#practice-4-1"><i class="fa fa-check"></i><b>10.5.5</b> Practice 4</a></li>
 </ul></li>
-<li class="chapter" data-level="10.6" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#exercise-simple-linear-regression"><i class="fa fa-check"></i><b>10.6</b> Exercise: Simple Linear Regression</a><ul>
+<li class="chapter" data-level="10.6" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#exercise-simple-linear-regression"><i class="fa fa-check"></i><b>10.6</b> Exercise: Simple Linear Regression</a>
+<ul>
 <li class="chapter" data-level="10.6.1" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#case-study-corn-allometry"><i class="fa fa-check"></i><b>10.6.1</b> Case Study: Corn Allometry</a></li>
 <li class="chapter" data-level="10.6.2" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#fitting-the-regression-model"><i class="fa fa-check"></i><b>10.6.2</b> Fitting the regression model</a></li>
 <li class="chapter" data-level="10.6.3" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#examining-the-residuals"><i class="fa fa-check"></i><b>10.6.3</b> Examining the residuals</a></li>
@@ -462,7 +529,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.6.6" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#practice-1-4"><i class="fa fa-check"></i><b>10.6.6</b> Practice 1</a></li>
 <li class="chapter" data-level="10.6.7" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#practice-2-4"><i class="fa fa-check"></i><b>10.6.7</b> Practice 2</a></li>
 </ul></li>
-<li class="chapter" data-level="10.7" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#exercise-making-predictions-from-regression-models."><i class="fa fa-check"></i><b>10.7</b> Exercise: Making Predictions from Regression Models.</a><ul>
+<li class="chapter" data-level="10.7" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#exercise-making-predictions-from-regression-models."><i class="fa fa-check"></i><b>10.7</b> Exercise: Making Predictions from Regression Models.</a>
+<ul>
 <li class="chapter" data-level="10.7.1" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#case-study-8"><i class="fa fa-check"></i><b>10.7.1</b> Case Study</a></li>
 <li class="chapter" data-level="10.7.2" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#creating-and-testing-our-model"><i class="fa fa-check"></i><b>10.7.2</b> Creating and Testing our Model</a></li>
 <li class="chapter" data-level="10.7.3" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#visualizing-the-regression-model"><i class="fa fa-check"></i><b>10.7.3</b> Visualizing the Regression Model</a></li>
@@ -471,42 +539,84 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.7.6" data-path="correlation-and-simple-regression.html"><a href="correlation-and-simple-regression.html#practice-2-5"><i class="fa fa-check"></i><b>10.7.6</b> Practice 2</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html"><i class="fa fa-check"></i><b>11</b> Nonlinear Relationships and Multiple Linear Regression</a><ul>
-<li class="chapter" data-level="11.1" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#multiplie-linear-regression"><i class="fa fa-check"></i><b>11.1</b> Multiplie Linear Regression</a><ul>
+<li class="chapter" data-level="11" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html"><i class="fa fa-check"></i><b>11</b> Nonlinear Relationships and Multiple Linear Regression</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#multiplie-linear-regression"><i class="fa fa-check"></i><b>11.1</b> Multiplie Linear Regression</a>
+<ul>
 <li class="chapter" data-level="11.1.1" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#case-study-modelling-yield-by-county"><i class="fa fa-check"></i><b>11.1.1</b> Case Study: Modelling Yield by County</a></li>
 <li class="chapter" data-level="11.1.2" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#beware-of-bloated-models"><i class="fa fa-check"></i><b>11.1.2</b> Beware of Bloated Models</a></li>
 <li class="chapter" data-level="11.1.3" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#methods-for-avoiding-bloated-models"><i class="fa fa-check"></i><b>11.1.3</b> Methods for Avoiding Bloated Models</a></li>
 <li class="chapter" data-level="11.1.4" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#tunning-and-comparing-models"><i class="fa fa-check"></i><b>11.1.4</b> Tunning and Comparing Models</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#nonlinear-relationships"><i class="fa fa-check"></i><b>11.2</b> Nonlinear Relationships</a><ul>
+<li class="chapter" data-level="11.2" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#nonlinear-relationships"><i class="fa fa-check"></i><b>11.2</b> Nonlinear Relationships</a>
+<ul>
 <li class="chapter" data-level="11.2.1" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#fitting-nonlinear-responses-with-linear-regression"><i class="fa fa-check"></i><b>11.2.1</b> Fitting Nonlinear Responses with Linear Regression</a></li>
 <li class="chapter" data-level="11.2.2" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#fitting-nonlinear-responses-with-nonlinear-regression"><i class="fa fa-check"></i><b>11.2.2</b> Fitting Nonlinear Responses with Nonlinear Regression</a></li>
 </ul></li>
 <li class="chapter" data-level="11.3" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#summary-1"><i class="fa fa-check"></i><b>11.3</b> Summary</a></li>
-<li class="chapter" data-level="11.4" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#exercise-multiple-linear-regression"><i class="fa fa-check"></i><b>11.4</b> Exercise: Multiple Linear Regression</a><ul>
+<li class="chapter" data-level="11.4" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#exercise-multiple-linear-regression"><i class="fa fa-check"></i><b>11.4</b> Exercise: Multiple Linear Regression</a>
+<ul>
 <li class="chapter" data-level="11.4.1" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#case-study-country-corn-yields"><i class="fa fa-check"></i><b>11.4.1</b> Case Study: Country Corn Yields</a></li>
 <li class="chapter" data-level="11.4.2" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#fitting-the-model"><i class="fa fa-check"></i><b>11.4.2</b> Fitting the Model</a></li>
 <li class="chapter" data-level="11.4.3" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#inspecting-the-model"><i class="fa fa-check"></i><b>11.4.3</b> Inspecting the Model</a></li>
 <li class="chapter" data-level="11.4.4" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#practice-thompson-corn-data"><i class="fa fa-check"></i><b>11.4.4</b> Practice: Thompson Corn Data</a></li>
 </ul></li>
-<li class="chapter" data-level="11.5" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#exercise-avoiding-bloated-models"><i class="fa fa-check"></i><b>11.5</b> Exercise: Avoiding Bloated Models</a><ul>
+<li class="chapter" data-level="11.5" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#exercise-avoiding-bloated-models"><i class="fa fa-check"></i><b>11.5</b> Exercise: Avoiding Bloated Models</a>
+<ul>
 <li class="chapter" data-level="11.5.1" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#case-study-9"><i class="fa fa-check"></i><b>11.5.1</b> Case Study</a></li>
 <li class="chapter" data-level="11.5.2" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#covariance-matrix"><i class="fa fa-check"></i><b>11.5.2</b> Covariance Matrix</a></li>
 <li class="chapter" data-level="11.5.3" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#partial-correlation-1"><i class="fa fa-check"></i><b>11.5.3</b> Partial Correlation</a></li>
 <li class="chapter" data-level="11.5.4" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#cross-validation-1"><i class="fa fa-check"></i><b>11.5.4</b> Cross-Validation</a></li>
 <li class="chapter" data-level="11.5.5" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#practice-thompson-corn-data-1"><i class="fa fa-check"></i><b>11.5.5</b> Practice: Thompson Corn Data</a></li>
 </ul></li>
-<li class="chapter" data-level="11.6" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#exercise-tuning-the-model"><i class="fa fa-check"></i><b>11.6</b> Exercise: Tuning the Model</a><ul>
+<li class="chapter" data-level="11.6" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#exercise-tuning-the-model"><i class="fa fa-check"></i><b>11.6</b> Exercise: Tuning the Model</a>
+<ul>
 <li class="chapter" data-level="11.6.1" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#case-study-10"><i class="fa fa-check"></i><b>11.6.1</b> Case Study</a></li>
 <li class="chapter" data-level="11.6.2" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#tuning-the-model"><i class="fa fa-check"></i><b>11.6.2</b> Tuning the Model</a></li>
 <li class="chapter" data-level="11.6.3" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#practice-11"><i class="fa fa-check"></i><b>11.6.3</b> Practice</a></li>
 <li class="chapter" data-level="11.6.4" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#practice-12"><i class="fa fa-check"></i><b>11.6.4</b> Practice</a></li>
 </ul></li>
-<li class="chapter" data-level="11.7" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#exercise-nonlinear-regression"><i class="fa fa-check"></i><b>11.7</b> Exercise: Nonlinear Regression</a><ul>
+<li class="chapter" data-level="11.7" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#exercise-nonlinear-regression"><i class="fa fa-check"></i><b>11.7</b> Exercise: Nonlinear Regression</a>
+<ul>
 <li class="chapter" data-level="11.7.1" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#case-study-1-monomolecular-data"><i class="fa fa-check"></i><b>11.7.1</b> Case Study 1: Monomolecular Data</a></li>
 <li class="chapter" data-level="11.7.2" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#case-study-2-logistic-data"><i class="fa fa-check"></i><b>11.7.2</b> Case Study 2: Logistic Data</a></li>
 <li class="chapter" data-level="11.7.3" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#practice-1-6"><i class="fa fa-check"></i><b>11.7.3</b> Practice 1</a></li>
 <li class="chapter" data-level="11.7.4" data-path="nonlinear-relationships-and-multiple-linear-regression.html"><a href="nonlinear-relationships-and-multiple-linear-regression.html#practice-2-6"><i class="fa fa-check"></i><b>11.7.4</b> Practice 2</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="spatial-statistics.html"><a href="spatial-statistics.html"><i class="fa fa-check"></i><b>12</b> Spatial Statistics</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="spatial-statistics.html"><a href="spatial-statistics.html#projection-general"><i class="fa fa-check"></i><b>12.1</b> Projection (General)</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="spatial-statistics.html"><a href="spatial-statistics.html#wgs-84-epsg-4236"><i class="fa fa-check"></i><b>12.1.1</b> WGS 84 (EPSG: 4236)</a></li>
+<li class="chapter" data-level="12.1.2" data-path="spatial-statistics.html"><a href="spatial-statistics.html#mercator-epsg-3857"><i class="fa fa-check"></i><b>12.1.2</b> Mercator (EPSG: 3857)</a></li>
+<li class="chapter" data-level="12.1.3" data-path="spatial-statistics.html"><a href="spatial-statistics.html#us-national-atlas-equal-area-epsg-2163"><i class="fa fa-check"></i><b>12.1.3</b> US National Atlas Equal Area (EPSG: 2163)</a></li>
+<li class="chapter" data-level="12.1.4" data-path="spatial-statistics.html"><a href="spatial-statistics.html#utm-zone-11n-epsg-2955"><i class="fa fa-check"></i><b>12.1.4</b> UTM Zone 11N (EPSG: 2955)</a></li>
+<li class="chapter" data-level="12.1.5" data-path="spatial-statistics.html"><a href="spatial-statistics.html#projection-summary"><i class="fa fa-check"></i><b>12.1.5</b> Projection Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="spatial-statistics.html"><a href="spatial-statistics.html#shape-files"><i class="fa fa-check"></i><b>12.2</b> Shape Files</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="spatial-statistics.html"><a href="spatial-statistics.html#case-study-soybean-yield-in-iowa"><i class="fa fa-check"></i><b>12.2.1</b> Case Study: Soybean Yield in Iowa</a></li>
+<li class="chapter" data-level="12.2.2" data-path="spatial-statistics.html"><a href="spatial-statistics.html#ssurgo"><i class="fa fa-check"></i><b>12.2.2</b> SSURGO</a></li>
+<li class="chapter" data-level="12.2.3" data-path="spatial-statistics.html"><a href="spatial-statistics.html#operations-with-shapes"><i class="fa fa-check"></i><b>12.2.3</b> Operations with Shapes</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="spatial-statistics.html"><a href="spatial-statistics.html#rasters"><i class="fa fa-check"></i><b>12.3</b> Rasters</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="spatial-statistics.html"><a href="spatial-statistics.html#interpolation"><i class="fa fa-check"></i><b>12.3.1</b> Interpolation</a></li>
+<li class="chapter" data-level="12.3.2" data-path="spatial-statistics.html"><a href="spatial-statistics.html#kriging"><i class="fa fa-check"></i><b>12.3.2</b> Kriging</a></li>
+<li class="chapter" data-level="12.3.3" data-path="spatial-statistics.html"><a href="spatial-statistics.html#operations-on-kriged-data"><i class="fa fa-check"></i><b>12.3.3</b> Operations on Kriged Data</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="spatial-statistics.html"><a href="spatial-statistics.html#exercise-shape-files"><i class="fa fa-check"></i><b>12.4</b> Exercise: Shape Files</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="spatial-statistics.html"><a href="spatial-statistics.html#case-study-11"><i class="fa fa-check"></i><b>12.4.1</b> Case Study</a></li>
+<li class="chapter" data-level="12.4.2" data-path="spatial-statistics.html"><a href="spatial-statistics.html#practice-13"><i class="fa fa-check"></i><b>12.4.2</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="spatial-statistics.html"><a href="spatial-statistics.html#exercise-ssurgo"><i class="fa fa-check"></i><b>12.5</b> Exercise: SSURGO</a></li>
+<li class="chapter" data-level="12.6" data-path="spatial-statistics.html"><a href="spatial-statistics.html#exercise-rasters"><i class="fa fa-check"></i><b>12.6</b> Exercise: Rasters</a>
+<ul>
+<li class="chapter" data-level="12.6.1" data-path="spatial-statistics.html"><a href="spatial-statistics.html#case-study-soil-test-data"><i class="fa fa-check"></i><b>12.6.1</b> Case Study: Soil Test Data</a></li>
+<li class="chapter" data-level="12.6.2" data-path="spatial-statistics.html"><a href="spatial-statistics.html#practice-1-7"><i class="fa fa-check"></i><b>12.6.2</b> Practice 1</a></li>
+<li class="chapter" data-level="12.6.3" data-path="spatial-statistics.html"><a href="spatial-statistics.html#practice-2-7"><i class="fa fa-check"></i><b>12.6.3</b> Practice 2</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -532,7 +642,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Data Science for Agricultural Professionals</h1>
 <p class="author"><em>Marin L. Harbur</em></p>
-<p class="date"><em>2021-06-25</em></p>
+<p class="date"><em>2021-06-29</em></p>
 </div>
 <div id="preface" class="section level1 unnumbered">
 <h1>Preface</h1>
@@ -560,7 +670,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We will use an application called R-Studio to work with R language. R Studio allows you to write and save scripts (code) to generate analyses. It also allows you to intersperse Markdown (html code) in between your statistical output so that you can explain and discuss your results. The beauty of Markdown is your report and your statistics are together in a single file; no cutting and pasting is needed between documents.</p>
 <p>R is all about having options, and so with R-Studio you have the option of installing it on your laptop or, in case you are using a work laptop without administrative priviledges, you can also use a cloud site, R-Studio Cloud, to work with R and save your work.</p>
 <p>I know that for most of you R (and coding itself) will be a new experience. I am sure the idea of coding will intimidate many of you. To head off your anxiety as much as possible, I offer this: I understand that coding is challenging. I spend my days making mistakes, searching for bugs, and looking up how to do something for the umpteenth time. If something confuses you, that is normal.</p>
-<p>But I can also assure you that you will likely have an easy time remembering what functions to use. In other words, which code to use will not be the problem. Most of your bugs will be due to mispellings, forgetting to close a parentheses, or referring to a dataset by the wrong name, e.g. “soy_data” instead of “soybean_data”. And you will get better at avoiding these mistakes over time – there is not more to learn, just practice. Our exercises in R will be designed to give you that practice, and introduce new functions as slowly as possible.</p>
+<p>But I can also assure you that you will likely have an easy time remembering what functions to use. In other words, which code to use will not be the problem. Most of your bugs will be due to mispellings, forgetting to close a parentheses, or referring to a dataset by the wrong name, e.g. “soy_data” instead of “soybean_data.” And you will get better at avoiding these mistakes over time – there is not more to learn, just practice. Our exercises in R will be designed to give you that practice, and introduce new functions as slowly as possible.</p>
 <p>At the end of this course, you will have not only your completed work, but the course materials themselves as a resource from which you can borrow code for future projects. There is no shame in copying lines of codes (or whole chunks of code) into your own original analyses. All of us data scientists do that, and it is one of the best ways to continue learning.</p>
 <p>R is supported by many great books which may be accessed for free online, or purchased online for very reasonable prices. These may be used as references during the course, but also to continue learning for years to come. These include many references from bookdown.org:</p>
 <ul>

@@ -98,7 +98,7 @@ We can see this by plotting the data below. This command has three parts.  Plot 
 plot(yield["yield_bu"])
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/plot_shapefile-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 What do you observe if you replace "yield_bu" with "Moisture" in the above code?  Does one area of the field appear a little drier than the others?
 
@@ -115,13 +115,13 @@ Before we get into the math required to generate these statistics, however, we s
 histogram = hist(yield$yield_bu, breaks = 12)
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/histogram1-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 ```r
 plot(histogram)
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/histogram1-2.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-4-2.png" width="672" />
 
 A histogram gives us a quick visualization of our data.  In the histogram above, each bar represents range of values.  This range is often referred to as a *bin*.  The lowest bin includes values from 50 to 59.0000.  The next bin includes values from 60 to 69.9999.  And so on.  The height of each bar represents the number of individuals in that population that have values within that range.
 
@@ -139,7 +139,7 @@ ggplot(data=yield, aes(x=yield_bu)) +
   geom_histogram(breaks=seq(50, 110, 10), fill="tomato", color="black")
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/ggplot_histogram-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 Varying the bin width provides us with different perspectives on our distribution.  Please click on the link below to open an application where you can vary the bin width and see how it changes your perspective.
 
@@ -173,7 +173,7 @@ Let's overlay a curve, representing the normal distribution model, on our histog
 plotNormalHistogram(yield$yield_bu, breaks = 10)
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/hist_normal_curve-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 In a perfect situation, our curve would pass through the midpoint of each bar.  This rarely happens with real-world data, and especially in agriculture.  The data may be slightly skewed, meaning there are more individuals that measure above the mean than below, or vice versa.
 
@@ -266,7 +266,7 @@ abline(v = mean(yield$yield_bu), col="red")
 abline(v = median(yield$yield_bu), col="blue")
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/hist_with_mean_median-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
 As you can see, they are practically identical.  When the mean and median are similar, the number of individuals measuring greater and less than the mean are roughly equivalent.  In this case, our data can be represented using a model called the normal distribution. 
 
@@ -318,10 +318,10 @@ sample(yield_residuals, 20)
 ```
 
 ```
-##  [1]  -1.7011962   3.2525728  -2.4736727 -15.4281727  12.6060211  -2.1741698
-##  [7] -10.2874246   1.5514120  -9.8284448   7.0853343   5.1976990 -11.6115979
-## [13]   3.2159914  -0.4601265   2.4483580 -13.7732058   6.3055930  -5.8932642
-## [19] -11.1117403   4.1704129
+##  [1]  -5.28634023   4.45851427   9.38917800   5.79895521 -14.88565030
+##  [6]   5.39363044  -0.53116732  -2.31380546  -5.92308110  -3.38615502
+## [11]   5.16231533   5.01444115  -0.13202322   8.57037779  13.56143122
+## [16]  -0.04666328  -7.02490869 -23.49283913   4.57137008   8.66187724
 ```
 
 If we sum up all the yield residuals, what number do we get?  Any guesses before you click "Run Code"?
@@ -701,7 +701,7 @@ To visualize the data, we can use the "plot" function from the sf package.  You 
 plot(indiana$TOTCROP_AC)
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-37-1.png" width="672" />
 
 Instead of a map, however, this shows us the range of values for TOTCROP_AC in the dataset.  To view a map, we need to first subset the data so it only has two columns: the TOTCROP_AC data and geometry columns.  We can then map these data: 
 
@@ -711,7 +711,7 @@ tot_crop = indiana["TOTCROP_AC"]
 plot(tot_crop)
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-38-1.png" width="672" />
 
 No one can resist a pretty map.  The technical name for a map like this, where you color-code political shapes like counties, is "chloropleth."  We are seeing plenty of these in 2020, between the pandemic and the election year.  
 
@@ -722,7 +722,7 @@ farm_income = indiana["DOL_FARM"]
 plot(farm_income)
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-39-1.png" width="672" />
 
 Where are the chickens in Indiana?  Let's find out:
 
@@ -731,7 +731,7 @@ chickens = indiana["N_CHICKENS"]
 plot(chickens)
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-40-1.png" width="672" />
 
 It would appear the most finger-lickin' good county is Elkart County, in the far north.  Appropriately, there are also a couple of counties near Kentucky!
 
@@ -770,13 +770,13 @@ yield = cotton$yield
 histogram = hist(yield)
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-42-1.png" width="672" />
 
 ```r
 plot(histogram)
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-19-2.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-42-2.png" width="672" />
 
 And, voila, we have a plot of our histogram.  Each bar represents a range in values, or a "bin".  We can see the upper and lower yield limits of each bins using the "histogram$breaks" command.
 
@@ -806,7 +806,7 @@ As we saw in the lesson, varying the number of columns can affect how we see pat
 histogram = hist(yield, breaks = 28)
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-45-1.png" width="672" />
 
 Note that we ended up with 27, not 28 bins, but that each now has a bin width that is 0.05 kg.  We can verify this by again inspecting the data with "histogram$breaks".
 
@@ -844,7 +844,7 @@ ggplot(data=cotton, aes(x=yield)) +
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-24-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-47-1.png" width="672" />
 
 By default, R chooses to create 30 bins.  We can easily specify a different number of bins using the "bins=" argument.
 
@@ -854,7 +854,7 @@ ggplot(data=cotton, aes(x=yield)) +
   geom_histogram(bins=15)
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-48-1.png" width="672" />
 
 Alternatively, we can set a particular binwidth using the "binwidth =" argument.
 
@@ -864,7 +864,7 @@ ggplot(data=cotton, aes(x=yield)) +
   geom_histogram(binwidth=0.05)
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-49-1.png" width="672" />
 
 If we want to make our plot a little less bland, we can tell ggplot to use a different color to fill the bars using the "fill = " argument
 
@@ -874,7 +874,7 @@ ggplot(data=cotton, aes(x=yield)) +
   geom_histogram(binwidth=0.05, fill="darkolivegreen")
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-27-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-50-1.png" width="672" />
 
 Finally, we can outline the bars using the "color = " argument.
 
@@ -883,7 +883,7 @@ ggplot(data=cotton, aes(x=yield)) +
   geom_histogram(binwidth=0.05, fill="darkolivegreen", color="black")
 ```
 
-<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-28-1.png" width="672" />
+<img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-51-1.png" width="672" />
 
 We will introduce more ways to fine tune our plots as the course goes on.
 

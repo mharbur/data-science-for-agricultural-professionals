@@ -27,7 +27,7 @@ In most cases, however, it is not physically or financially feasible to measure 
 
 For our first case study, we will use a situation where every individual in our population can be measured: a single soybean field in central Iowa.  In this case, yield data were gathered using a combine monitor.  In case you don't live and breathe field crops like me, combines (the machines that harvest grain) are usually equipped with a scale that repeatedly weighs grain as the combine moves across the field.  The moisture of the grain is also recorded.  These data are combined with measures of the combine speed and knowledge of the number of rows harvested at once to calculate the yield per area of grain, adjusted to the market standard for grain moisture.  
 
-```{r yield_dataset, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 library(sf)
 library(tidyverse)
 library(rcompanion)
@@ -42,7 +42,7 @@ Let's start tearing this dataset apart, using our very first chunk of code.  We 
 
 Just click on the button "Run Code" in the upper right corner of the window below.
 
-```{r head}
+```{r}
 head(yield)
 
 ```
@@ -56,7 +56,7 @@ That this dataset has a column named geometry indicates it is a "shapefile" -- a
 
 We can see this by plotting the data below. This command has three parts.  Plot tells R to draw a map.  "yield" tells R to use the yield dataset.  "yield_bu" is the column we want to plot -- we place it in quotes and brackets ([]) to tell R to only plot this column.  Otherwise R will plot each of the columns, which will require a longer runtime.
 
-```{r plot_shapefile}
+```{r}
 plot(yield["yield_bu"])
 ```
 
@@ -70,7 +70,7 @@ At this point, we have two options any time we want to know about soybean yield 
 
 Before we get into the math required to generate these statistics, however, we should look at the "shape" of our data.  One of the easiest and most informative things for us to do is to create a particular bar chart known as a histogram.  
 
-```{r histogram1}
+```{r}
 histogram = hist(yield$yield_bu, breaks = 12)
 plot(histogram)
 ```
@@ -97,7 +97,7 @@ In the plot above, the midpoint for each bar is indicated by the orange bar bene
 
 We can also draw a histogram using the power ggplot package from Hadley Wickham, which allows for much greater customization of plots.  We will use this package extensively throughout the course.  Here is just a taste:
 
-```{r ggplot_histogram}
+```{r}
 
 ggplot(data=yield, aes(x=yield_bu)) +
   geom_histogram(breaks=seq(50, 110, 10), fill="tomato", color="black")
@@ -111,7 +111,7 @@ Varying the bin width provides us with different perspectives on our distributio
 ### Percentiles
 We can also use percentiles to help us describe the data even more numerically.  To identify percentiles, the data are numerically ordered (ranked) from lowest to highest.  Each percentile is associated with a number; the percentile is the percentage of all data equal to or less than that number.  We can quicly generate the 0th, 25th, 50th, and 75th, and 100th percentile in R using the summary command.
 
-```{r, percentile_summary}
+```{r}
 summary(yield$yield_bu)
 
 ```
@@ -125,7 +125,7 @@ We are now gaining a better sense of the range of observations that were most co
 ### Normal Distribution Model
 Let's overlay a curve, representing the normal distribution model, on our histogram with the following function, plotNormalHistogram.
 
-```{r, hist_normal_curve}
+```{r}
 plotNormalHistogram(yield$yield_bu, breaks = 10)
 ```
 
@@ -145,19 +145,19 @@ The $\mu$ symbol (a u with a tail) signifies the true mean of a population.  The
 
 For example, if we have a set of number from 1:5, their mean can be calculated as:
 
-```{r, mean_calculation}
+```{r}
 (1+2+3+4+5)/5
 ```
 
 R, of course, has a function for this:
-```{r mean_function}
+```{r }
 x = c(1,2,3,4,5)
 mean(x)
 ```
 In the example above, we created a vector (a dataset with one column) of numbers by listing within c(...).  We also assigned this vector a name, x.  We won't create too many vectors in this course, but this is how to do it.  Try switching the numbers in between the parentheses above and calculating a mean for that dataset.    
 
 Let's calculate the mean yield for our field.
-```{r mean_yield, exercise = TRUE}
+```{r, exercise = TRUE}
 mean(yield$yield_bu)
 
 ```
@@ -174,20 +174,20 @@ We use "abline" to tell R to draw a line on our plot.  "v" tells it to draw a ve
 
 Earlier, you were introduced to the median.  As discussed, the median is a number such that half of the individuals in the population are greater and half are less.  If we have an odd number of individuals, the median is the "middle" number as the individuals are ranked from greatest to least.
 
-```{r, median_odd_number}
+```{r}
 median(c(1,2,3,4,5))
 ```
 
 
 If we have an even number of measures, the median is the average of the middle two individuals in the ranking:
 
-```{r, median_even_number}
+```{r}
 median(c(1,2,3,4,5,6))
 ```
 
 
 Let's add a second line representing the median.
-```{r, hist_with_mean_median}
+```{r}
 hist(yield$yield_bu, breaks=10)
 abline(v = mean(yield$yield_bu), col="red")
 abline(v = median(yield$yield_bu), col="blue")
@@ -213,7 +213,7 @@ Where again $x_i$ is the value $x$ of the $ith$ individual in the population and
 
 Why do we square the differences between the observations and means?  Simply, if we were to add the unsquared differences they would add to exactly zero.  Let's prove this to ourselves.  Let's again use the set of numbers (1, 2, 3, 4, 5).  We can measure the distance of each individual from the mean by subtracting the mean from it.  This difference is called the residual.
 
-```{r, residual_definition}
+```{r}
 individuals = c(1,2,3,4,5)
 residuals = individuals - mean(individuals)
 residuals
@@ -223,7 +223,7 @@ In the first line of code, we defined our individuals as having values of 1, 2, 
 
 And if we sum these residuals we get zero.
 
-```{r, sum_of_residuals}
+```{r}
 sum(residuals)
 ```
 
@@ -235,14 +235,14 @@ sample(yield_residuals, 20)
 ```
 
 If we sum up all the yield residuals, what number do we get?  Any guesses before you click "Run Code"?
-```{r, sum_yield_residuals}
+```{r}
 sum(yield_residuals)
 ```
 Not exactly zero, but a very, very small number -- a 4 with 10 zeros in front of it.  The difference from zero is the result of rounding errors during the calculation.
 
 The sum of squares is calculated by squaring each residual and then summing the residuals.  For our example using the set (1, 2, 3, 4, 5):
 
-```{r, sum_square_residuals}
+```{r}
 individuals = c(1,2,3,4,5)
 residuals = individuals - mean(individuals)
 squared_residuals = residuals^2
@@ -250,7 +250,7 @@ sum(squared_residuals)
 ```
 
 And for our yield data:
-```{r, sum_yield_square_residuals}
+```{r}
 yield_residuals = yield$yield_bu - mean(yield$yield_bu)
 squared_yield_residuals = yield_residuals^2
 yield_sum_of_squared_residuals = sum(squared_yield_residuals)
@@ -262,7 +262,7 @@ yield_sum_of_squared_residuals
 
 The sum of squares helps quantify spread: the larger the sum of squares, the greater the spread of observations around the population mean.  There is one issue with the sum of squares, though: since the sum of square is derived from the differences between each observation and the mean, it is also related to the number of individuals overall in our population.  In our example above, the sum of squares was 10:
 
-```{r, ss_vs_number_of_obs}
+```{r}
 individuals = c(1,2,3,4,5)
 residuals = individuals - mean(individuals)
 squared_residuals = residuals^2
@@ -276,7 +276,7 @@ If we want to compare the spread of two different populations with different num
 
 $$\sigma^2 = \frac{S_{xx}}{n}$$
 We can calculate the variance as follows.
-```{r, variance_example}
+```{r}
 individuals = c(1,2,3,4,5)
 residuals = individuals - mean(individuals)
 squared_residuals = residuals^2
@@ -292,7 +292,7 @@ By dividing the sum of squares by the number of individuals, we "average" our su
 Change the first line of code above so it reads "individuals = c(1,2,3,4,5,1,2,3,4,5) and run the code again.  The variance will now divide the sum of squares by 10.  The variance will again be 2.
 
 Our yield variance is:
-```{r, yield_variance}
+```{r}
 yield_variance = yield_sum_of_squared_residuals/length(yield_residuals)
 ```
 
@@ -303,14 +303,14 @@ Our challenge in using the variance to describe population spread is it's units 
 $$\sigma = \sqrt{(\sigma^2)}$$
 
 
-```{r, sd_example}
+```{r}
 sqrt(variance)
 ```
 
 
 The standard deviation of our yield data is:
 
-```{r, sd_yield}
+```{r}
 sqrt(yield_variance)
 ```
 

@@ -50,7 +50,7 @@ library(sf)
 plot(yield["yield_bu"])
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/plot_field-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 
 ## The Normal Distribution Model
@@ -123,7 +123,7 @@ library(fastGraph)
 plotDist("dnorm", yield_mean, yield_sd)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/plot_distribution-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 Let's now shade the area underneath the normal curve corresponding to X values from 70 - 80.  This area will represent the proportion of the population Where individuals were measured to have values between 70 and 80 bushels.
 
@@ -139,7 +139,7 @@ The shade.norm function makes effort painless.  There are five arguments in this
 shadeDist(xshade=c(70,80), ddist = "dnorm", yield_mean, yield_sd, lower.tail = FALSE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/shade_range-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 Pretty cool, huh?  The red area is the proportion of the soybean yield population that was between 70 and 80 bushels.  shadeDist has also presented us with the proportion of the curve represented by that area, which it has labelled "Probability".  The probabiliity in this case is 0.3722.  What does that number mean?
 
@@ -164,7 +164,7 @@ length(yield_subset)
 ```
 
 ```
-## [1] 334
+## [1] 340
 ```
 
 Is the proportion predicted by the normal distribution curve exactly that of the actual population?  Probably not.  The normal distribution curve is, after all, a model -- it is an approximation of the actual population.
@@ -183,7 +183,7 @@ The relationship between probability and the normal distribution curve is based 
 plotDist("dnorm", 0, 1)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/normal_distribution-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
 The Z-distribution helps us understand how probability relates to standard deviation, regardless of the nature of a study or its measurement units.
 
@@ -194,7 +194,7 @@ For example, the proportion of a population within one standard deviation of the
 shadeDist(xshade=c(-1, 1), ddist = "dnorm", 0, 1, lower.tail = FALSE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/one_sd_shaded-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 Similarly, the proportion of a population within 1.96 standard deviations of the mean is about 95 percent:
 
@@ -203,7 +203,7 @@ Similarly, the proportion of a population within 1.96 standard deviations of the
 shadeDist(xshade=c(-1.96, 1.96), ddist = "dnorm", 0, 1, lower.tail = FALSE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/two_sd_shaded-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 Conversely, the proportion of a population beyond 1.96 standard deviations from the mean is about 5 percent.  We can visualize this by changing the last argument of our code to "lower.tail = TRUE". 
 
@@ -211,7 +211,7 @@ Conversely, the proportion of a population beyond 1.96 standard deviations from 
 shadeDist(xshade=c(-1.96, 1.96), ddist = "dnorm", 0, 1, lower.tail = TRUE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/outside_two_sd_shaded-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
 We refer to the upper and lower ends of the distribution as tails.  In a normal distribution we would expect about 2.5% of observations to less than -1.96 standard deviations of the mean.  We can measure the proportion in one tail by changing our argument in the shadeDist command to "xshade = -1.96".
 
@@ -220,7 +220,7 @@ We refer to the upper and lower ends of the distribution as tails.  In a normal 
 shadeDist(xshade=-1.96, ddist = "dnorm", 0, 1, lower.tail = TRUE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/lower_tail-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 
 And 2.5% of the population to be more than +1.96 above the mean:
 
@@ -229,7 +229,7 @@ And 2.5% of the population to be more than +1.96 above the mean:
 shadeDist(xshade=1.96, ddist = "dnorm", 0, 1, lower.tail = FALSE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/upper_tail-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 Notice we changed the last argument back to "lower.tail = TRUE".  The causes R to shade the area above 1.96 standard deviations of the mean.  
 
 ### Important Numbers: 95% and 5%
@@ -295,7 +295,7 @@ yield = barley$yield
 hist(yield)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
 The histogram shows the barley distribution is approximately normal.  No distribution is perfectly normal.  Remember, when we fit the data with the normal distribution, we are using a model distribution, not the actual distribution.  But the model tends to perform very, very well. 
 
@@ -359,7 +359,7 @@ shadeDist(xshade = NULL,
           parm2 = sigma)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 And voila, we have our basic normal distribution curve.  The horizontal (X) axis represents the range of observed values.  The vertical axis, titled (probability density function), indicates the proportion of the population that would include a given range of X values.
 
@@ -379,7 +379,7 @@ shadeDist(xshade = 100,
           lower.tail = TRUE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-24-1.png" width="672" />
 
 When we run the curve, we see that approximately 4.8 percent of the population has a yield value less than 100.  If we were randomly subsets of this field, we would expect to measure a yield less than 100 in about 4.8 our of 100 samples.  In other words, there is about a 4.8% probability our subset would have a value less than 100.
 
@@ -393,7 +393,7 @@ shadeDist(xshade = 140,
           lower.tail = TRUE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-25-1.png" width="672" />
 
 Our probability is about 35%.
 
@@ -410,7 +410,7 @@ shadeDist(xshade = 185,
           lower.tail = FALSE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-26-1.png" width="672" />
 
 The probability greater than 170 would be about 28%.
 
@@ -423,7 +423,7 @@ shadeDist(xshade = 170,
           lower.tail = FALSE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-27-1.png" width="672" />
 
 ### Probabilities Within A Range
 Sometimes we would like to measure the probability of a range of values in the middle of our distribution.  To do this, we change our xshade argument to "xshade = c(120, 170)".  We use "c()" whenever we are giving R a set of values to work with.  For xshade, this set only has two values: the lower and upper X values for our area.
@@ -437,7 +437,7 @@ shadeDist(xshade = c(120, 170),
           lower.tail = FALSE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-28-1.png" width="672" />
 
 The probability of observing individuals with yields between 120 and 170 is about 57%.  What about between 136 and 182?
 
@@ -450,7 +450,7 @@ shadeDist(xshade = c(136, 182),
           lower.tail = FALSE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-29-1.png" width="672" />
 
 The probability is about 53%.
 
@@ -466,7 +466,7 @@ shadeDist(xshade = c(120, 170),
           lower.tail = TRUE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-30-1.png" width="672" />
 
 The probability of observing individuals with yields less than 120 or greater than 170 is about 43%.  What about outside 136 and 182?
 
@@ -479,7 +479,7 @@ shadeDist(xshade = c(136, 182),
           lower.tail = TRUE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-31-1.png" width="672" />
 
 The probability of observing individuals with values less than 136 or greater than 182 is about 47%.
 
@@ -516,7 +516,7 @@ shadeDist(xshade = c(mu_minus_sigma, mu_plus_sigma),
           lower.tail = FALSE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-33-1.png" width="672" />
 
 We confirm the percentage of observations between the population mean minus one standard deviation and the population mean plus one standard deviation is about 68%.
 
@@ -551,7 +551,7 @@ shadeDist(xshade = c(mu_minus_1.96_sigma, mu_plus_1.96_sigma),
           lower.tail = FALSE)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-35-1.png" width="672" />
 
 We have confirmed 95% of individuals are between 1.96 standard deviations below and above the mean.
 
@@ -587,7 +587,7 @@ cotton_yield = cotton$yield
 hist(cotton_yield)
 ```
 
-<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+<img src="02-Distributions-and-Probability_files/figure-html/unnamed-chunk-38-1.png" width="672" />
 
 Let's calculate our cotton mean and standard deviation.
 

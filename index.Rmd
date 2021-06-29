@@ -13,6 +13,10 @@ url: 'https://mharbur.github.io/data-science-for-agricultural-professionals/'
 description: "Practical statistics for those involved in agronomy and related agricultural sciences."
 ---
 
+
+
+
+
 # Preface{-}
 ## Welcome{-}
 Welcome to Data Science for Agricultural Professionals.  I have written these course materials for a few reasons.  First, it is my job.  The more powerful motivation, however, was to write a guide that satisfied the following criteria:

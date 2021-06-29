@@ -6,7 +6,7 @@ The peak of the curve is located at the population mean, $\mu$.  The width of th
 ## Case Study
 This week, we will continue to work with the Iowa soybean yield dataset introduced to us in Unit 1.
 
-```{r yield_dataset, include=FALSE}
+```{r include=FALSE}
 library(sf)
 library(tidyverse)
 library(rcompanion)
@@ -17,14 +17,14 @@ yield = st_read("data-unit-2/merriweather_yield_map/merriweather_yield_map.shp")
 ```
 
 Let's review the structure of this dataset:
-```{r, review_structure}
+```{r}
 
 head(yield)
 
 ```
 
 And map the field:
-```{r, plot_field}
+```{r}
 library(sf)
 plot(yield["yield_bu"])
 ```
@@ -62,7 +62,7 @@ These probabilities are all calculated from distributions -- the frequency with 
 Probability can be calculated as the proportion of the area underneath the normal distribution that corresponds to a particular range of values.  We can visualize this, but first we need to construct the normal distribution curve for our soybean field.
 
 We need just two data to construct our curve: the mean and standard deviation of our yield.  These are both easily calculated in R.
-```{r, mean_and_sd, exercise = TRUE}
+```{r, exercise = TRUE}
 library(muStat)
 yield_mean = mean(yield$yield_bu)
 yield_sd = stdev(yield$yield_bu, unbiased = FALSE)
@@ -86,7 +86,7 @@ Now we can build our curve with a single line of code.  The plotDist function in
 
 
 
-```{r, plot_distribution}
+```{r}
 library(fastGraph)
 plotDist("dnorm", yield_mean, yield_sd)
 ```
@@ -100,7 +100,7 @@ The shade.norm function makes effort painless.  There are five arguments in this
 - the fourth value is the population standard deviation, which we have already calculated and assigned to the variable yield_sd
 - *lower.tail=FALSE* tells shade.norm to shade the area under the curve between 70 and 80 bushels and to calculate its area.
 
-```{r, shade_range}
+```{r}
 
 shadeDist(xshade=c(70,80), ddist = "dnorm", yield_mean, yield_sd, lower.tail = FALSE)
 
@@ -119,7 +119,7 @@ Let's test this.  Let's randomly sample 1000 individuals from our sample.  Then 
 - we will use the "length" function to count the number of observations
 
 
-```{r, compare_proportions}
+```{r}
 
 yield_sample = sample(yield$yield_bu, 1000)
 
@@ -140,7 +140,7 @@ We will talk more about sampling in the next unit.
 ## The Z-Distribution
 The relationship between probability and the normal distribution curve is based on the concept of the Z-distribution.  In essence, Z-distribution describes a normal distribution curve with a population mean of 0 and a standard deviation of 1.
 
-```{r, normal_distribution}
+```{r}
 plotDist("dnorm", 0, 1)
 ```
 
@@ -148,30 +148,30 @@ The Z-distribution helps us understand how probability relates to standard devia
 
 For example, the proportion of a population within one standard deviation of the mean is about 68 percent:
 
-```{r, one_sd_shaded}
+```{r}
 shadeDist(xshade=c(-1, 1), ddist = "dnorm", 0, 1, lower.tail = FALSE)
 ```
 
 Similarly, the proportion of a population within 1.96 standard deviations of the mean is about 95 percent:
 
-```{r, two_sd_shaded}
+```{r}
 shadeDist(xshade=c(-1.96, 1.96), ddist = "dnorm", 0, 1, lower.tail = FALSE)
 ```
 
 Conversely, the proportion of a population beyond 1.96 standard deviations from the mean is about 5 percent.  We can visualize this by changing the last argument of our code to "lower.tail = TRUE". 
-```{r, outside_two_sd_shaded}
+```{r}
 shadeDist(xshade=c(-1.96, 1.96), ddist = "dnorm", 0, 1, lower.tail = TRUE)
 ```
 
 We refer to the upper and lower ends of the distribution as tails.  In a normal distribution we would expect about 2.5% of observations to less than -1.96 standard deviations of the mean.  We can measure the proportion in one tail by changing our argument in the shadeDist command to "xshade = -1.96".
 
-```{r, lower_tail}
+```{r}
 shadeDist(xshade=-1.96, ddist = "dnorm", 0, 1, lower.tail = TRUE)
 ```
 
 And 2.5% of the population to be more than +1.96 above the mean:
 
-```{r, upper_tail}
+```{r}
 shadeDist(xshade=1.96, ddist = "dnorm", 0, 1, lower.tail = FALSE)
 ```
 Notice we changed the last argument back to "lower.tail = TRUE".  The causes R to shade the area above 1.96 standard deviations of the mean.  

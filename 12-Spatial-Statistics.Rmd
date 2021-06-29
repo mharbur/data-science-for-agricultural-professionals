@@ -1,18 +1,12 @@
----
-title: "Spatial Statistics"
-output:
-  prettydoc::html_pretty:
-    theme: cayman
-runtime: shiny
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
-
-library(sf)
+```{r}
+knitr::opts_chunk$set(cache = F)
+# write("TMP = './temp'", file=file.path(Sys.getenv('R_USER'), 
+# '.Renviron'))
 ```
 
-# Introduction
+
+# Spatial Statistics
+
 One of the most powerful ways I use and present data is to explain spatial patterns in our data.  How does a product perform in Ohio versus Iowa?  What might be the underlying weather or soil causes of these data?  How do they vary with geography?  
 
 Quantitative data and hard numbers are fantastic.  But as we have already seed with plots, visualizations can be much more engaging.  Our minds are evolved to recognize patterns -- in fact, we are so focused on looking for patterns that we need tools like statistics to keep us honest.  So a statistics-based plot or map is a very powerful way to convey information to your audience or customers.
@@ -25,10 +19,10 @@ Second, what is a shapefile?  How do we make sure it's projection is correct for
 
 Finally, we will study rasters.  Rasters organize data in grids of cells that are of equal dimensions.  Using point data from a shapefile, we can use tools like kriging to interpolate (predict) the value of each cell in the raster, creating another kind of map we can use to understand spatial data trends.
 
-# Projection (General)
+## Projection (General)
 One of the most challenging concepts for me when I began working with spatial data was *projection*.  To be honest, it is still is a challenging concept for me!  Projection describes how we represent points on the surface of the earth, which is spheroidal, using maps, which are flat.  
 
-![](images/437-mapping-projection-types.png)
+![](data-unit-12/images/437-mapping-projection-types.png)
 
 As we can see in the figure above, projection differ in how they are positioned relative to the earth's surface.  Some are positioned relative to the equator, others might be centered between the equator and the poles, while yet others may be positioned at the poles.  Each map will represent the center of it's geography better than the edges.  
 Each map is a compromise between the representation of boundaries (positions on the earth's surface) and the areas within those boundaries.  Maps that pursue the accurate representation of boundaries on the earth's surface are going to end up distorting the area of geographies outside the focal point of the map.  Maps that accurately represent areas are going to distort the position of geographic boundaries on the earth`s surface.  Thus, there are hundreds of differet projection systems, focused on different areas of the earth, and using different units to describe the position of boarders.
@@ -41,7 +35,7 @@ But, in working with spatial data from that field, you will encounter difference
 
 We will start in the lower corner with WGS 84.  This is the geographic system with which most of you are probably familiar.  It is also how I roll with most of my analyses.  It's simplistic, but it works just fine for point geographies -- that is, single points on the earth's surface.
 
-## WGS 84 (EPSG: 4236)
+### WGS 84 (EPSG: 4236)
 WGS 84 refers to "World Geodetic System"; 84 refers to 1984, the latest (!) revision of this system. WGS 84 uses the earth's center as its *origin*.  An origin is the reference point for any map -- each location is then geo-referenced according to its position relative to the origin.  In WGS 84, the position of each location is described by its angle, relative to the origin.  We usually refer to these angles as degrees latitude and longitude.
 
 EPSG (EPSG Geodetic Parameter Dataset) is a set of many, many systems used to describe the coordinates of points on the Earth's surface. and how they are projected onto flat maps.  The EPSG stands for "European Petroleum Survey Group" -- presumably, for the purpose of locating oil fields.  4326 is the code that EPGS uses to represent the WGS 84 system.  
@@ -110,7 +104,7 @@ origin %>%
 
 ```
   
-## Mercator (EPSG: 3857)
+### Mercator (EPSG: 3857)
 The Mercator System is commonly used to project data onto a sphere.  If you look at the map below, it is very similar (actually related) to the WGS 84 map above but you may be able to see a slight "dome illusion" to the way the map is displayed. This projection is regularly used by online mapping services.     
 
 ```{r}
@@ -132,7 +126,7 @@ head(mn)
 The origin for the Mercator projection is again the intersection of Prime Meridian and Equator, so each Minnesota border point will have a negative value for easting and a positive value for northing.     
 
 
-## US National Atlas Equal Area (EPSG: 2163)
+### US National Atlas Equal Area (EPSG: 2163)
 As the name suggests, coordinate systems like the US National Atlas Equal Area project data so that the areas of geographic objects are accurate in the map.  
 ```{r}
 usa_2163 = st_transform(usa, 2163)
@@ -169,7 +163,7 @@ origin %>%
 
 
 
-## UTM Zone 11N (EPSG: 2955)
+### UTM Zone 11N (EPSG: 2955)
 
 ```{r}
 usa_2955 = st_transform(usa, 2955)
@@ -206,22 +200,22 @@ origin %>%
 
 ```
 
-## Projection Summary
+### Projection Summary
 It is good to know some of these basic projections, but by far the most important concept of this unit is that it is important you are aware of the projection system that accompanies your spatial data. If you are assembing data from multiple shapefiles, as we will do below with soil and yield maps, you will need to account for the projections of each shapefile, to make sure they all have the same projection system.  
 
 In addition, different spatial data operations may prefer one projection system over the other. Operations that summarize areas will require projections that are based on area, not geometry.  Similarly, spatial tools like rasters (which divide an area into rectangles or squares), will prefer a system that is square.
 
 
 
-# Shape Files
+## Shape Files
 
-## Case Study: Soybean Yield in Iowa
+### Case Study: Soybean Yield in Iowa
 This is not our first encounter with shapefiles -- we plotted our first shapefile map in the beginning of our course.  Let's return to that dataset!
 ```{r}
 library(tidyverse)
 library(sf)
 
-corn_yield = st_read("data/merriweather_yield_map/merriweather_yield_map.shp", quiet=TRUE)
+corn_yield = st_read("data-unit-12/merriweather_yield_map/merriweather_yield_map.shp", quiet=TRUE)
 ```
 
 We can examine this shapefile by typing its name.
@@ -257,14 +251,10 @@ pal_yield = colorBin(palette = "RdYlGn", corn_yield$yield_bu)
 
 
 
-## SSURGO
+### SSURGO
 The Soil Survey Geographic Database (SSURGO) is maintained by the United States Department of Agriculture.  It contains extensive soil surveys: soil evaluations for properties, susceptibility to weather extremes, suitability for agriculture, recreation, and buildings.  The soil survey used to only be available in county books, which only special libraries had.  Now, you can access all these data through R in seconds and match them precisely to a given map location. 
-```{r}
-library(concaveman)
-field_poly = concaveman(corn_yield)
-```
 
-The SSURGO data is what is in a database.  A database is a series of tables, all describing different aspects of a data information.  Each table contains 1-3 columns that are keys to match the tables with each other.  Descriptions of the tables an their data can be obtained for SSURGO at:
+The SSURGO data is in a database.  A database is a series of tables, all describing different aspects of a data information.  Each table contains 1-3 columns that are keys to match the tables with each other.  Descriptions of the tables an their data can be obtained for SSURGO at:
 
 https://data.nal.usda.gov/system/files/SSURGO_Metadata_-_Table_Column_Descriptions.pdf
 
@@ -272,7 +262,9 @@ Putting all these tables together can be messy -- fortunately, you only need to 
 
 ```{r}
 library(FedData)
-soil_map = get_ssurgo(corn_yield, "example")
+
+soil_data_sp = as(corn_yield, "Spatial")
+soil_map = get_ssurgo(soil_data_sp, "example")
 soil_sf = st_as_sf(soil_map$spatial) %>%
   st_set_crs(4326)
 
@@ -355,7 +347,7 @@ complete_soil_data %>%
 
 ```
 
-Here is another map, this time with the percent clay
+Here is another map, this time with the percent clay.
 ```{r}
 pal_om = colorNumeric("RdYlGn", complete_soil_data$claytotal.r)
 
@@ -407,10 +399,10 @@ yield_and_soil %>%
 
 ```
 
-## Operations with Shapes
+### Operations with Shapes
 Above, we subsetted our yield data according to different soil properties.  In some cases, however, we may want to subset or group data by location.  
 
-### Intersection
+#### Intersection
 Say, for example, we applied a foliar fertilizer treatment to part of the field, as shown in the map below.
 
 ```{r}
@@ -469,7 +461,7 @@ field_yield_only %>%
 mean(field_yield_only$yield_bu)
 ```
 
-### Difference
+#### Difference
 What about the yields outside that area?
 ```{r}
 
@@ -492,7 +484,7 @@ field_yield_outside %>%
 mean(field_yield_outside$yield_bu)
 ```
 
-### Union
+#### Union
 What if we had two field plot areas?
 ```{r}
 plot_matrix2 = rbind(c(-93.1531821855683, 41.6676769366949),
@@ -577,7 +569,7 @@ mean(corn_yield$yield_bu)
 gardener@gardensalive.com
 service@gardensalive.com
 
-# Rasters
+## Rasters
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -585,9 +577,9 @@ library(gstat)
 library(sp)
 library(raster)
 
-point_data = st_read("data/Delzer South_grid_sample.shp", quiet=TRUE)
+point_data = st_read("data-unit-12/Delzer South_grid_sample.shp", quiet=TRUE)
 # point_data = st_transform(point_data, 3857)
-boundary = st_read("data/Delzer South_boundary.shp", quiet=TRUE)
+boundary = st_read("data-unit-12/Delzer South_boundary.shp", quiet=TRUE)
 # boundary = st_transform(boundary, 3857)
 selected_data = point_data %>%
   filter(attribute=="P_bray")
@@ -820,7 +812,7 @@ P_rec_raster_map
 Often, the cells would be colored along a given gradient (say red-yellow-green) according to their values.  This helps us to see spatial trends. 
 
 
-## Interpolation
+### Interpolation
 To create a raster that represents continuous soil trends across a field, however, we need to do a little modelling.  You see, we start out with a set of soil cores like this:
 
 ```{r}
@@ -904,7 +896,7 @@ $$ \text{weighted mean} = \frac{220.45}{13} = 17.0$$
 
 What we have just calculated is called the *inverse distance-weighted (IDW) mean* of the surrounding points.  It is a simple, elegant way to estimate the missing value.
 
-## Kriging
+### Kriging
 The inverse distance-weighted mean, however, is not as accurate as which we are capable.  We assume that the influence of points away from the empty cell decreases exponentially with distance.  We don't consider how we would optimally weight the values of the surrounding cells.
 
 We can develop a more complex, but likely accurate, estimate of the cell value using a different interpolation practice called *kriging*.  (For some reason, I always want to insert a "d" into this term so it rhymes with "bridging".  But it is pronounced KREE-ging.)  The name comes from Danie Krige, a South African geostatician who was interested in locating gold deposits.
@@ -936,7 +928,7 @@ Here is our soil phosphorus test map, interpolated by R, using kriging. The red 
 soil_p_map
 ```
 
-## Operations on Kriged Data
+### Operations on Kriged Data
 Of course, to take this example to completion, we would like to know the P-allication rate for each of the cells within our raster.  The University of Minnesota recommended application rate, based on soil P value and yield goal, is:
 
 $$ P _2 O _5 \text{ recommended rate} = [0.700 - .035 (\text{Bray P ppm})] (\text{yield goal}) $$
@@ -952,3 +944,597 @@ P_prescription_map
 ```
 
 The blue areas now have the highest recommended rates.  Yellow are intermediate.  Red areas should receive no P fertilizer.
+
+
+
+
+## Exercise: Shape Files
+If you are downloading data files from your tractor, applicator, or combine, they are probably in shape file format.  Although I will refer to shape file in the singular, a shape file is typically bundled with multiple other files, with the same file name but different extensions: .dbf, .prj, and .shx.  Of these three, the .prj is perhaps the most interesting, as it can be opened to view the projection used to georeference the records in the shape file.
+
+### Case Study
+We will work with another soil test shapefile from Minnesota.
+```{r}
+library(tidyverse)
+library(sf)
+
+soil_test_data = st_read("data-unit-12/Burnholdt_grid_sample.shp")
+head(soil_test_data)
+```
+
+It is always important to inspect datasets before we analyze them.  A particularly important objective in inspecting a shape file dataset is to see what type of *geometry* it includes: POINT, POLYGON, etc.  Some equipment will use POINT geometry -- ie a single georeference to indicate where the center of the equipment was at the time of measure.  Others will use polygons to represent the width and length of the equipment.  Personally, I find the latter format to be overkill, but I have come across it.  (If you ever run into issues with that format, please feel free to contact me.)
+
+We can confirm our measures here are referenced with POINT geometry.
+
+In this exercise, we want to look at soil organic matter (attribute = Om in this file.), so let's isolate those measures.  We can do so using the *filter()* function
+
+```{r}
+single_attribute_data = soil_test_data %>%
+  filter(attribute=="Om")
+
+```
+
+
+We are now ready to create our first map of the data.  We will use that wonderful mapping application, leaflet.  The code below consists of four lines.
+
+1) "single_attribute_data" tells R which dataset we are going to use to build the map.
+2) "leaflet()" tells R to use that app to build the map
+3) "addCircleMarkers" tells R to draw point geometries.  There are many other arguments we will add later to tell R what colors to use, marker size, and what value (if any) to show when the user clicks on a marker.
+4) "addProviderTiles" tells R what background to use.  This one (my favorite) uses satellite imagery.
+
+
+```{r}
+# library(leaflet)
+# 
+# single_attribute_data %>%   # starts with om dataset
+#   leaflet() %>%    # starts leaflet
+#   addCircleMarkers() %>%    # adds markers as points
+#   addProviderTiles(provider = providers$Esri.WorldImagery)
+```
+
+Well, that's cool, but what do the points mean?  Let's add some color to this.  To do this, we need to tie the color of the circles to the organic matter level.  We need to create a palette, which we can do with the *colorBin()* function.
+
+My favorite pallette is the red-yellow-green palette we are used to in yield maps.  We will load the *RColorBrewer* package, which defines both individual colors and palettes.  We will then tell R in the colorBin command to use this palette.
+
+```{r}
+library(RColorBrewer)
+palette_om = colorBin(palette = "RdYlGn", single_attribute_data$measure)
+```
+
+We can then color code our points by adding the *fillColor* argument to our plot code. 
+
+```{r}
+library(leaflet)
+
+single_attribute_data %>%   # starts with om dataset
+  leaflet() %>%    # starts leaflet
+  addCircleMarkers(
+    fillColor = ~palette_om(measure)
+  ) %>%    # adds markers as points
+  addProviderTiles(provider = providers$Esri.WorldImagery)
+```
+
+Let's make a few more tweaks.  First, the colors are so transparent the wash out, so let's increase their opacity using the argument of that name.
+```{r}
+single_attribute_data %>%   # starts with om dataset
+  leaflet() %>%    # starts leaflet
+  addCircleMarkers(
+    fillColor = ~palette_om(measure),
+    fillOpacity = 0.8
+  ) %>%    # adds markers as points
+  addProviderTiles(provider = providers$Esri.WorldImagery)
+```
+
+Next, the blue border detracts from the cells.  We can set its weight to zero so it disappears.
+
+```{r}
+single_attribute_data %>%   # starts with om dataset
+  leaflet() %>%    # starts leaflet
+  addCircleMarkers(
+    fillColor = ~palette_om(measure),
+    fillOpacity = 0.8,
+    weight = 0
+  ) %>%    # adds markers as points
+  addProviderTiles(provider = providers$Esri.WorldImagery)
+```
+
+Let's make the points a little smaller using the *radius* argument, so they don't so overwhelm the field.
+```{r}
+single_attribute_data %>%   # starts with om dataset
+  leaflet() %>%    # starts leaflet
+  addCircleMarkers(
+    fillColor = ~palette_om(measure),
+    fillOpacity = 0.8,
+    weight = 0,
+    radius=6
+  ) %>%    # adds markers as points
+  addProviderTiles(provider = providers$Esri.WorldImagery)
+```
+
+Finally, let's add a legend.  We provide a minimum of two arguments to it.  First *values* tells it that the legend will correspond to the values of measure in our dataset.  Second, *pal =* tells R to use the palette we developed for organic matter.  
+
+```{r}
+single_attribute_data %>%   # starts with om dataset
+  leaflet() %>%    # starts leaflet
+  addCircleMarkers(
+    fillColor = ~palette_om(measure),
+    fillOpacity = 0.8,
+    weight = 0,
+    radius=6
+  ) %>%    # adds markers as points
+  addProviderTiles(provider = providers$Esri.WorldImagery) %>%
+  addLegend(values = ~measure,
+            pal = palette_om)
+            
+```
+
+There are thousands of other ways to modify this plot, but this little bit should get you far!
+
+
+
+### Practice
+Using the code above, plot other soil variable.  Run the code below to see a list of the many different attributes you can examine. 
+```{r}
+unique(soil_test_data$attribute)
+```
+
+Experiment with plugging and playing with the above code. (There is *never* shame in re-using code!!!).  Play with the settings for fillOpacity, weight, and radius until they are to your liking.  Also, try some different palettes: "RdBu", "PRgn", or others (list available at https://www.r-graph-gallery.com/38-rcolorbrewers-palettes.html).
+
+```{r}
+
+palette_soil = colorBin(palette = "RdYlGn", single_attribute_data$measure)
+
+single_attribute_data %>%   # starts with om dataset
+  leaflet() %>%    # starts leaflet
+  addCircleMarkers(
+    fillColor = ~palette_soil(measure),
+    fillOpacity = 0.8,
+    weight = 0,
+    radius=6
+  ) %>%    # adds markers as points
+  addProviderTiles(provider = providers$Esri.WorldImagery) %>%
+  addLegend(values = ~measure,
+            pal = palette_soil)
+```
+
+
+
+
+
+## Exercise: SSURGO
+In this lesson, we saw how the Soil Survey Geographic Database (SSURGO) database can be accessed to gain further insight into fields.
+
+This isn't an exercise so much as a demonstration how those data can be obtained and plotted through R.  It is hear for your use or reference, but not a required part of this lesson.  
+
+We can load our shapefile just as we have done before.  For reasons explained below, it is important to name the dataset "field".
+
+```{r}
+library(sf)
+library(tidyverse)
+library(leaflet)
+
+field = st_read("data-unit-12/exercise_data/yield shape.shp", quiet=TRUE)
+```
+
+
+First, let's create a yield map, just as we learned to in the "shapefile" exercise.  If you have not completed that exercise, please do so before continuing.
+
+```{r}
+palette_yield = colorBin("RdYlGn", field$Yld_Vol_Dr)
+
+field %>%   # starts with om dataset
+  leaflet() %>%    # starts leaflet
+  addCircleMarkers(
+    fillColor = ~palette_yield(Yld_Vol_Dr),
+    fillOpacity = 0.8,
+    weight = 0,
+    radius=0.1
+  ) %>%    # adds markers as points
+  addProviderTiles(provider = providers$Esri.WorldImagery) %>%
+  addLegend(values = ~Yld_Vol_Dr,
+            pal = palette_yield)
+```
+
+This is the one and only time in this course when I will ask you just to run a chunk of code without explaining it line-by-line.  As long as your spatial feature object (the field shapefile) is named "field", just run this chunk as it is.
+
+```{r}
+
+##### Run this as-is: Do not modify !! #######
+
+
+
+library(FedData)
+library(sp)
+soil_data_sp = as(field, "Spatial")
+soil_map = get_ssurgo(soil_data_sp, "example")
+soil_sf = st_as_sf(soil_map$spatial) %>%
+  st_set_crs(4326)
+
+mu_point = soil_map$tabular$mapunit %>%
+  dplyr::select(musym, muname, mukey)
+
+# get measures of sand, silt, clay, etc
+horizon_diagnostics = soil_map$tabular$chorizon %>%
+  dplyr::select(hzname, sandtotal.r, silttotal.r, claytotal.r, om.r, awc.r, ksat.r, cec7.r, cokey, chkey)
+
+# soil texture class
+texture = soil_map$tabular$chtexturegrp %>%
+  filter(rvindicator=="Yes") %>%
+  dplyr::select(texdesc, chkey)
+
+# percent slope and drainage class
+slope = soil_map$tabular$component %>%
+  dplyr::select(drainagecl, slope.r, mukey, cokey)
+
+parent_material = soil_map$tabular$copm %>%
+  filter(pmorder==1 | is.na(pmorder)) %>%
+  dplyr::select(pmkind, copmgrpkey, copmkey)
+
+pm_group = soil_map$tabular$copmgrp %>%
+  dplyr::select(cokey, copmgrpkey)
+
+component = soil_map$tabular$component %>%
+  dplyr::select(mukey, cokey)
+
+all_soil_data = mu_point %>%
+  left_join(component) %>%
+  left_join(horizon_diagnostics) %>%
+  group_by(mukey) %>%
+  filter(chkey==min(chkey)) %>%
+  ungroup() %>%
+  left_join(texture) %>%
+  left_join(slope) %>%
+  left_join(pm_group) %>%
+  left_join(parent_material) %>%
+  dplyr::select(-c(copmgrpkey, copmkey, musym, cokey)) 
+
+complete_soil_data = soil_sf %>%
+  rename_all(tolower) %>%
+  mutate(mukey = as.numeric(mukey)) %>%
+  left_join(all_soil_data)
+
+
+
+```
+
+The soil variables included in the *complete_soil_data* datset are:
+
+"sandtotal.r"   -   Percent Sand
+"silttotal.r"   -   Percent Silt
+"claytotal.r"   -   Percent Clay
+"om.r"          -   Percent Organic Matter
+"awc.r"         -   Available Water Holding Capacity
+"ksat.r"        -   Saturated Hydraulic Conductivity (drainage)
+"cec7.r"        -   Cation Exchange Capacity
+"texdesc"       -   Soil Textural Class (based on percent sand, silt, anda clay)
+"drainagecl"    -   Drainage Class (based on hydraulic conductivity)
+"slope.r"       -   Slope (percent change per 100 ft travelled)
+
+
+We can plot any of the above variables by referencing them as "complete_soil_data$" plus the variable of interest.
+
+We can then create a leaflet plot as we have elsewhere in this unit.
+```{r}
+library(grDevices)
+pal_om = colorNumeric("RdYlGn", complete_soil_data$om.r)
+
+complete_soil_data %>%
+  leaflet() %>%
+  addProviderTiles(provider = providers$Esri.WorldImagery) %>%
+  addCircleMarkers(
+    radius = 4,
+    weight=0,
+    fillColor = ~ pal_om(om.r),
+    opacity = 0.8,
+    popup = as.character(complete_soil_data$om.r)
+  )
+
+```
+
+
+
+## Exercise: Rasters
+In the lecture, we learned that rasters were organized within a grid system, with each cell representing a unique value.  Cells may by colored according to which "bin" their value falls, in order to facilitate the identification of spatial patterns.
+
+### Case Study: Soil Test Data
+The following data were collected from a field in Minnesota.  We will create a lime application map.  To start , we need to load two shape files.  The first shape file contains our soil samples.
+
+
+#### Load and Filter Data
+```{r}
+library(tidyverse)
+library(gstat)
+library(sp)
+library(raster)
+library(stars)
+library(leaflet)
+library(leafem)
+
+
+point_data = st_read("data-unit-12/Folie N & SE_grid_sample.shp", quiet=TRUE)
+head(point_data)
+```
+
+We can see this dataset, much contains POINT geometries -- that is, each row of data is related to a single georeference.
+
+Our second shape file describes the field boundary.  This is very important too -- otherwise we would not know what shape and size our raster should be.
+
+```{r}
+boundary = st_read("data-unit-12/Folie N &SE_boundary.shp", quiet=TRUE)
+
+head(boundary)
+```
+
+We see the field contains POLYGON geometry and a single row of data, which mainly describes the field name.
+
+Our last step in this section is to filter the data so they only contain buffer pH data.
+
+```{r}
+selected_data = point_data %>%
+  filter(attribute=="Bph")
+```
+
+Without going through all the trouble of building out a map, we can still check the location of our points using leaflet().
+
+```{r}
+selected_data %>%
+  leaflet() %>%
+  addCircleMarkers() %>%
+  addProviderTiles(provider = providers$Esri.WorldImagery)
+```
+
+
+#### Build a Grid
+To create a raster that matches the size and shape of our field, we need need to create a frame for R to fill in.  We can do this really easily with the following few lines of code from the *stars* package.  We will name our new raster "grd" and build it from our boundary dataset.  To start, we create a rectangular grid based on the boundary box.  This box extends from the point with the lowest X and Y value in a geometry to the point with the greatest X and Y value.  We can determine these points for our boundary using the *st_bbox* function.
+
+```{r}
+library(stars)
+
+st_bbox(boundary)
+```
+
+The st_as_stars() function coverts the shapefile to a grid for us to fill in with our raster.  The last line uses the *st_crop* function to trim our rectangular raster to the shape of our field.  
+
+```{r}
+library(stars)
+
+### make grid
+grd = st_bbox(boundary) %>%
+  st_as_stars() %>%
+  st_crop(boundary) 
+
+```
+
+We can plot the grid using leaflet.  We create a generic map using the *addProviderTiles()* function.  Lastly, we add the grid using *addStarsImage()*.
+```{r}
+grd %>%
+  leaflet()  %>%
+  addProviderTiles(provider = providers$Esri.WorldImagery) %>%
+  addStarsImage()
+```
+We won't be able to see the individual cells -- they are tiny -- but we can see it matches the shape of our field. 
+
+#### Build the Semivariogram
+There are three steps to building a semivariogram:
+
+1) Define relationship between the measure and distance with the *variogram* function.  This is much like defining a linear model before we summarise it.
+2) Fit variogram model using the *fit.variogram* function from the *gstat* package.
+3) Visually confirm the model approximately fits the data, by using the *plot* function to show the individual variances (v) and the model (m).
+
+```{r}
+v = variogram(measure~1, selected_data)
+m = fit.variogram(v, vgm("Sph"))
+plot(v, model = m)
+```
+The *fit.variogram* function takes two arguments.  The first is the name of the data.frame to which the distance, variance ("gamma"), and other statistics should be saved.  
+
+The second argument, vgm("Sph"), tells R to fit the variances with a spherical model.  There are several different models that could be used, but the spherical model is perhaps the most common. 
+
+The model appears to approximately fit the data, so we move to the next step: kriging.
+
+#### Kriging
+Kriging is where the map magic happens.  We use our variogram model to predict how related each empty cell in the raster is to each filled cell in the raster, based on their distance.  The strength of that relationship is then used to weight the filled cells as they are averaged to predict the value of each empty cell.
+
+This magic happens with a single line of code, using the *krige* function of the *gstat* package.  There are four arguments to this function:
+
+1) formula: the relationship we are modelling.  "measure ~ 1" means we are modelling the relationship between our measure value and location.  The 1 indicates that the minimum measured value does not have to be equal to zero 
+2) selected_data: the data that are being kriged
+3) grd: the object we created above that contains the framework or templae for the raster we want to create
+4) model=m: tells R to use the semivariogram model, m, we created and inspected above
+
+
+```{r}
+library(gstat)
+kriged_data = gstat::krige(formula = measure~1, selected_data, grd, model=m)
+```
+
+The object that is returned is a list.  The predicted values are found in the first element of that list.  For the sake of clarity, let's extract that part of the list and rename it.
+
+```{r}
+finished_data = kriged_data[1]
+```
+
+#### Mapping Kriged Data
+We will again use leaflet to map our data.  We will start out by creating our map and adding provider tiles.
+
+```{r}
+finished_data %>%
+  leaflet() %>%
+  addProviderTiles(providers$Esri.WorldImagery)
+```
+
+We can now add our raster (stars) image to the map using addStarsImage.  We will set the opacity=0.5 so we can see both the field and the test zones.
+
+We will also set the colors to RdYlGn; we need to load the *RColorBrewer* package to use that palette.
+```{r}
+library(RColorBrewer)
+
+finished_data %>%
+  leaflet() %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addStarsImage(opacity = 0.5,
+                colors="RdYlGn")
+```
+
+Wow, that's pretty.  But are the red areas the high or low areas?  With one more line, we can add the ability to click on any part of the field and see its interpolated soil BpH test value.  *addImageQuery* only requires two arguments: the dataset, and type="Click" to tell R when to show the value in the upper right corner.
+```{r}
+
+finished_data %>%
+  leaflet() %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addStarsImage(opacity = 0.5,
+                colors="RdYlGn") %>%
+  addImageQuery(finished_data,
+                type = "click")
+
+
+
+```
+
+And, voila, click on any part of the map and the buffer pH is displayed in the upper right corner.
+
+#### Building the Recommendation
+Our recommendation only requires two more lines of code.  We will create a new column, "rec", which will consist of the predicted lime application rate based on buffer pH.  If we look at University of Minnesota recommendations, we can see that the recommended rate of 100% effective neutralizing lime is equal to;
+
+$$rate = 37000 - bpH \times 5000   $$
+
+https://extension.umn.edu/liming/lime-needs-minnesota
+
+
+So lets go ahead and do this.  We will plug "var1.pred" -- the generic raster name for the predicted variable -- into the equation above and solve for the recommended rate.
+
+```{r}
+finished_data$rec = (37000 - finished_data$var1.pred*5000)
+```
+
+One last thing: if you look at the recommendation table, however, you see the recommended rate is not given for buffer pH above 6.8.  Thus, if the recommendation is less than 3000, we should set it to zero.  Thus we need to use another function, *if_else*.
+
+The if_else function defines the valuable of a variable, based on three arguments:
+
+1) the condition to be tested
+2) the value of the variable if the condition is true
+3) the value of the variable if the condition is false
+
+```{r}
+finished_data$rec = if_else(finished_data$rec<3000, 0, finished_data$rec)
+```
+
+In the line above, we revise the value of the rec column.  If it is less than 3000, we set the rec to zero.  If it is 3000 or greater, we use it as-is.
+
+#### Mapping the Recommendation
+Finally, we can map the recommendation, similar to how we mapped the test levels above.
+
+```{r}
+leaflet(finished_data["rec"]) %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addStarsImage(opacity = 0.5,
+                colors = "RdYlGn")
+```
+
+#### Add Interactivity
+One last thing that would be nice is the ability to click in different parts of the field and see the recommended rate.  We can do that with the *AddImageQuery* function.  There are two arguments.  
+
+The first argument, *finished_data["rec"]* tells R to base values on the "rec" column of the finished_data dataset.  If instead, for example, you wanted to show the value for column named "P_bray" in a dataset named "soil_data", you would use soil_data["P_bray"] in the first line.
+
+The second argument, *type = "click"* tells R to only show the value once you have clicked on an area.
+
+```{r}
+leaflet(finished_data["rec"]) %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addStarsImage(opacity = 0.5,
+                colors = "RdYlGn") %>%
+  addImageQuery(finished_data["rec"],
+                type = "click")
+```
+
+The green areas above are the ones we should "Go" on -- lime should be applied to them.
+
+### Practice 1
+Take the map above and see if you can create soil K raster for the data above.
+
+1) change the selected data below from "Bph" to "K".
+```{r}
+selected_data = point_data %>%
+  filter(attribute=="Bph")
+```
+
+2) Create the raster framework.
+```{r}
+### make grid
+grd = st_bbox(boundary) %>%
+  st_as_stars() %>%
+  st_crop(boundary) 
+
+```
+
+3) Create and examine the variogram.  The model should roughly fit the variances.
+```{r}
+v = variogram(measure~1, selected_data)
+m = fit.variogram(v, vgm("Sph"))
+plot(v, model = m)
+```
+
+4) Krige the data and extract the predicted (or interpolated) values,
+```{r}
+kriged_data = gstat::krige(formula = measure~1, selected_data, grd, model=m)
+
+finished_data = kriged_data[1]
+```
+
+5) Create the map of soil K values!
+```{r}
+finished_data %>%
+  leaflet() %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addStarsImage(opacity = 0.5,
+                colors="RdYlGn") %>%
+  addImageQuery(finished_data,
+                type = "click")
+```
+
+6) Calculate recommended application rates, assuming a 200 bushel/acre yield target.  
+Change the code below accordingly.  The K recommendation formula is:
+
+K recommendation = (1.12 - 0.0056*finished_data$var1.pred)*200
+
+just plug that into the first line of code.  K is not recommended for locations that had a soil test greater than 200 ppm, so adjust your recommendation accordingly using the second line of code.
+
+```{r}
+finished_data$rec = (37000 - finished_data$var1.pred*5000)
+finished_data$rec = if_else(finished_data$rec<3000, 0, finished_data$rec)
+```
+
+7) Plot the recommendated rates:
+```{r}
+leaflet(finished_data["rec"]) %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addStarsImage(opacity = 0.5,
+                colors = "RdYlGn") %>%
+  addImageQuery(finished_data["rec"],
+                type = "click")
+```
+
+
+
+
+### Practice 2
+Take the map above and see if you can create soil test pH raster for the data above.  You should only need to change "selected_data" to select "Ph".  There is no recommendation rate to create.
+
+
+4) Krige the data and extract the predicted (or interpolated) values.
+```{r}
+kriged_data = gstat::krige(formula = measure~1, selected_data, grd, model=m)
+
+finished_data = kriged_data[1]
+```
+
+5) Create the map of soil K values!
+```{r}
+finished_data %>%
+  leaflet() %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addStarsImage(opacity = 0.5,
+                colors="RdYlGn") %>%
+  addImageQuery(finished_data,
+                type = "click")
+```
+
