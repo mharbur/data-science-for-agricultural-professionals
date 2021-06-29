@@ -67,7 +67,7 @@
 <script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
 <script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
 <script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script>
-<script src="libs/stars-1/data_stars_stars2a7b6c.txt"></script>
+<script src="libs/stars-1/data_stars_stars048e7c.txt"></script>
 <script src="libs/joda-0.0.1/joda.js"></script>
 <script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
 
@@ -935,7 +935,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The F-distribution is one-tailed – we are only interested in the proportion remaining in the upper tail. If we were to visualize the boundary for the areas representing <span class="math inline">\(P\ge0.05\)</span> for our example above, we would test whether F was in the following portion of the tail.</p>
 <p>As we can see, our observed F of 38.4 is much greater than what we would need for significance at <span class="math inline">\(P\ge0.05\)</span>. What about <span class="math inline">\(P\ge0.01\)</span>?</p>
 <div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="multiple-treatment-trials.html#cb401-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span></code></pre></div>
-<pre><code>## #refugeeswelcome</code></pre>
+<pre><code>## Learn more about sjPlot with &#39;browseVignettes(&quot;sjPlot&quot;)&#39;.</code></pre>
 <div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="multiple-treatment-trials.html#cb403-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dist_f</span>(<span class="at">p =</span> <span class="fl">0.01</span>, <span class="at">deg.f1 =</span> <span class="dv">3</span>, <span class="at">deg.f2 =</span> <span class="dv">12</span>, <span class="at">xmax =</span> <span class="dv">10</span>)</span></code></pre></div>
 <p><img src="06-Multiple-Treatment-Trials_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Our value is also way beyond the F-value we would need for <span class="math inline">\(P\ge0.05\)</span>.</p>

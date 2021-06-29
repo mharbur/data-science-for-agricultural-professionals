@@ -164,7 +164,7 @@ length(yield_subset)
 ```
 
 ```
-## [1] 340
+## [1] 338
 ```
 
 Is the proportion predicted by the normal distribution curve exactly that of the actual population?  Probably not.  The normal distribution curve is, after all, a model -- it is an approximation of the actual population.

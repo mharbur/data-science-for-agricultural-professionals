@@ -420,7 +420,7 @@ library(sjPlot)
 ```
 
 ```
-## #refugeeswelcome
+## Learn more about sjPlot with 'browseVignettes("sjPlot")'.
 ```
 
 ```r
