@@ -1,0 +1,655 @@
+```{r}
+# knitr::opts_chunk$set(cache = F)
+# write("TMPDIR = './temp'", file=file.path(Sys.getenv('R_USER'),
+# '.Renviron'))
+```
+
+
+# Putting it all Together
+If I have done my job properly, your head is swimming with the different possibilities for collecting and analyzing data.  Now it is time for us to back up and revisit the tests we have learned and understand how to choose a design or test for a given situation.  Furthermore, it is important we round out this semester by understanding how to report results to others.  This includes what to report and how to present it.
+
+In contrast with more general statistics courses, I have tried to build this course around a series of trials which you are are likely to conduct or from which you will use data.  These range from a simple yield map through more complex factorial trials through nonlinear data and application maps.  In this unit, we will review those scenarios and the tools we used to hack them.
+
+## Scenario 1: Yield Map (Population Summary and Z-Distribution)
+*You are presented with a yield map and wish to summarize its yields so you can compare it with other fields.  Since you have measured the entire field with you yield monitor, you are summarizing a population and therefore will calculate the population mean and standard deviation.*
+
+We started out the semester with a yield map, like this one:
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(sf)
+library(leaflet)
+library(grDevices)
+
+logan = st_read("data-unit-14/Young North Corn 20.shp", quiet=TRUE) %>%
+  filter(Yld_Vol_Dr >=50 & Yld_Vol_Dr <=350)
+
+pal = colorBin("RdYlGn", logan$Yld_Vol_Dr) 
+
+logan %>%
+  leaflet() %>%
+  addProviderTiles(provider = providers$Esri.WorldImagery) %>%
+  addCircleMarkers(
+    radius = 1,
+    fillColor = ~pal(Yld_Vol_Dr),
+    weight = 0,
+    fillOpacity = 1,
+    popup = as.character(logan$Yld_Vol_Dr)
+  )
+
+```
+
+In the map above, the higher-yielding areas are colored green, while the lower-yielding areas are orange to red.  How would we summarise the yields above for others?
+
+To start with, let's describe the center of the population.  Should we use the mean or median?  Either is appropriate if the data are normally distributed; if the data are skewed, the median will be a better measure of center.  We can check the distribution using a histogram:
+
+```{r}
+hist(logan$Yld_Vol_Dr)
+```
+We inspect the data to see if it fits a normal distribution ("bell") curve.  This histogram is admittedly ugly, but is roughly symmetrical.  We can also quickly inspect our distribution using the summary command on our yield variable.
+
+```{r}
+summary(logan$Yld_Vol_Dr)
+```
+The median and mean are similar, so it would be acceptable to use either to describe the population center. Note the median is a little larger than the mean, so our data is skewed slightly to the right.
+
+How would we describe the spread?  That's right: we would use the standard deviation:
+```{r}
+sd(logan$Yld_Vol_Dr)
+```
+
+Our standard deviation is about 54 bushels.  What is the significance of this?  We would expect 95% of the individuals (the yield measures) in this population to be within 1.96 standard deviations, or $1.96 \times 54.1 = 106.0 $, of the mean.  Rounding our mean to 211, we would expect any value less than $211 - 106 = 105$ or greater than $211 + 105 = 316$ to occur rarely in our population.
+
+
+## Scenario 2: Yield Estimate (Sampling t-Distribution)
+*We are on a "Pro-Growers" tour of the Corn Belt or we are estimating yield on our own farm in anticipation of harvest or marketing grain.*
+
+Let's take our field above and sample 20 ears from it.  After counting rows around the ear and kernels per row, we arrive at the following 20 estimates.
+
+```{r, echo=FALSE}
+set.seed(120220)
+yield_sample = sample(logan$Yld_Vol_Dr, 20)
+yield_sample = round(yield_sample, 0)
+
+yield_mean = mean(yield_sample)
+
+yield_sample
+
+```
+
+The mean of our samples is 223 bushels per acre.  We know this is probably not the actual mean yield, but how can we define a range of values that is likely to include the true mean for this field?
+
+We can calculate a 95% confidence interval for this field.  That confidence interval defines a fixed distance above and below our sample mean.  Were we to repeat our sampling 100 times, in about 95 of our samples the population mean would be within our confidence interval.  
+
+Remember, our confidence interval is calculated as: 
+
+$$ CI = \bar{x} + t_{\alpha, df}\times SE$$
+
+Where $\bar{x}$ is the sample mean, $t$ is the t-value, based on our desired level of confidence and the degrees of freedom, and $SE$ is the standard error of the mean.  In this case, we desire 95% confidence and have 19 degrees of freedom (since we have 20 samples).  The t-value to use in our calculation is therefore:
+
+```{r}
+t_value = qt(0.975, 20)
+t_value
+```
+
+Our standard error is equal to the standard deviation of our samples.
+
+```{r}
+yield_sd = sd(yield_sample)
+yield_sd
+```
+
+Our standard error of the mean is our sample standard deviation, divided by the square root of the number of observations (20 ears) in the sample:
+
+```{r}
+SE = yield_sd/sqrt(20)
+SE
+```
+
+Our confidence interval has a lower limit of $223 - 2.09*10.5 = 201.1$ and an upper limit of $223 + 2.09*10.5 = 244.9$.  We would present this confidence interval as:
+
+$$ (201.1,244.9) $$
+
+We know the combine map aboe the true population mean was 211.1, which is included in our confidence interval.  
+
+## Scenario 3: Side-By-Side (t-Test)
+*You are a sales agronomist and want to demonstrate a new product to your customer.  You arrange to conduct a side-by-side trial on their farm.*  
+
+Knowing every field has soil variations, you divide a field into 8 pairs of strips.  Each strip in a pair is treated either with the farmer's current system (the control) or the farmer's system *plus* the new product.  You create the following paired plot layout.
+
+```{r, echo=FALSE}
+library(agricolae)
+
+plot_plan = agricolae::design.rcbd(trt = c("control", "treatment"), r=8, seed=120220)
+layout = plot_plan$book
+layout$plots = as.factor(layout$plots)
+
+ggplot(layout, aes(x=1, y=plots)) +
+  geom_tile(fill="white", color="black") +
+  geom_text(aes(label = `c("control", "treatment")`)) +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+
+
+```
+
+We observe the following values in our trial:
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(kableExtra)
+
+set.seed(120320)
+yields = layout %>%
+  rename(treatment = `c("control", "treatment")`) %>%
+  mutate(mu=180) %>%
+  mutate(T = if_else(treatment=="control", -6, 6)) %>%
+  mutate(block = rep(1:8, each=2)) %>%
+  mutate(B = rep(c(-4, -3, -2, -1, 1, 2, 3,4), each=2))  %>%
+  mutate(E = round(rnorm(16,0,8),1)) %>%
+  mutate(yield = mu + B + T + E)
+
+yields %>%
+  select(block, treatment, yield) %>%
+  kableExtra::kbl()
+
+```
+
+We run a t-test, as we learned in Units 4 and 5, which calculates the probability the difference between the control and treatment is equal to zero.  Because we, as sales persons, are only interested in whether our treatment produces greater yield, we run a one-sided test.  Our null hypothesis is therefore that the treatment produces yield equal to or less than the control.  Our alternative hypothesis (the one we hope to confirm) is that the treatment yields more than the control.
+
+```{r}
+t_test = t.test(yield ~ treatment, data=yields, paired=TRUE, alternative="less")
+t_test
+
+```
+
+In the t-test above, we tested the difference when we subtracted the control yield from the treatment yield.  We hoped this difference would be less than zero, which it would be if the treatment yield exceeded the control yield.  We see the difference, -10.15, was indeed less than zero.  Was it significant?  Our p-value was 0.03, indicating a small probability that the true difference was actually zero or greater than zero.  
+
+We also see our confidence interval does not include zero or any positive values.  We can therefore report to the grower that our treatment yielded more than the control.
+
+
+
+## Scenario 4: Fungicide Trial (ANOVA CRD or RCBD)
+
+*We want to compare three or more fungicides that differ in their qualities, as opposed to their quantity.*  
+
+We design and conduct a randomized complete block design experiment in which four fungicides are compared:  
+
+```{r, echo=FALSE}
+fungicide = data.frame(fungicide = rep(c("Dead",
+                                         "Deader",
+                                         "Deadest",
+                                         "Dead Again"), each=4),
+                              yield = rep(c(170, 172, 175, 177), each=4)) 
+
+
+set.seed(120420)
+fungicide_final = fungicide %>%
+  mutate(block = rep(c(1:4), 4))%>%
+  mutate(B = rep(c(-1.1, -0.3, 0.7, 0.7), 4)) %>%
+  mutate(Error = rnorm(16, 0 , 0.7)) %>%
+  mutate(yield = yield + B + Error) %>%
+  mutate(yield = round(yield, 1)) %>%
+  mutate(random = rnorm(16,0,1)) %>%
+  arrange(block, random) %>%
+  mutate(plot = c(101:104, 201:204, 301:304, 401:404)) %>%
+  select(plot, block, fungicide, yield) %>%
+  mutate(block = as.factor(block))
+
+fungicide_final %>%
+  kableExtra::kbl()
+```
+
+We can begin our analysis of results by inspecting the distribution of observations within our treatment. We can take a quick look at our data with the boxplot we learned in Unit 9.  
+
+```{r}
+fungicide_final %>%
+        ggplot(aes(x=fungicide, y=yield)) + 
+        geom_boxplot(outlier.colour="black", outlier.shape=16,
+             outlier.size=2, notch=FALSE, fill="lightblue") +
+        coord_flip() +
+        stat_summary(fun=mean, geom="point", shape=23, size=2)
+```
+
+Hmmmm, fungicide "Dead" has an outlier.  Shoots.  Let's look more closely at our situation.  First, back to our field notes.  We check our plot notes -- nothing appeared out of the ordinary about that plot.  Second, we notice the "Dead" treatment has a tighter distribution than the other three treatments: our outlier would not be an outlier had it occurred in the distribution of Deader. Finally, we note the outlier differs from from the mean and median of "Dead" by only a few bushels -- a deviation we consider to be reasonable given our knowledge of corn production.  We conclude the outlier can be included in the dataset.  
+
+We will go ahead and run an Analysis of Variance on these data, as we learned in Unit 8.  Our linear model is:
+
+$$ Y_{ij}=\mu + B_i + T_j + BT_{ij}$$
+Where $\mu$ is the population mean, $Y$ is the yield of the $j_{th}$ treatment in the $i_{th}$ block, $B$ is the effect of the $i_{th}$ block, $T$ is the effect of the $j_{th}$ treatment, and $BT_{ij}$ is the interaction between block and treatment. This model forms the basis of our model statement to R:
+
+```{r}
+fungicide_model = aov(yield ~ block + fungicide, data=fungicide_final)
+summary(fungicide_model)
+```
+
+We see the effect of the fungicide treatment is highly significant, so we will separate the means using the LSD test we learned in Unit 8.
+
+```{r}
+library(agricolae)
+lsd = LSD.test(fungicide_model, "fungicide")
+lsd
+```
+
+Each of the fungicides produced significantly different yields, with "Dead Again" the highest-yielding.  We can plot these  results in a bar-plot.
+
+```{r}
+
+lsd_groups = lsd$groups %>%
+  rownames_to_column("fungicide")
+
+lsd_groups %>%
+  ggplot(aes(x=fungicide, y=yield)) +
+  geom_bar(stat = "identity", fill="darkolivegreen", color="black")
+
+```
+
+
+## Scenario 5: Hybrid Response to Fungicide Trial (ANOVA Factorial or Split Plot)
+*We want to test two factors within the same trial: three levels of hybrid (Hybrids "A", "B", and "C") and two levels of fungicide ("treated" and "untreated").*  
+
+The treatments are arranged in a factorial randomized complete block design, like we learned in Unit 7.
+
+```{r, echo=FALSE}
+library(tidyverse)
+fung_hyb = data.frame(hybrid=rep(c("A", "B", "C"), each = 2),
+                     fungicide=rep(c("untreated", "treated"), 3),
+                     yield=c(180, 195, 195, 205, 200, 215))
+
+set.seed(120520)
+fung_hyb_final = rbind(fung_hyb, fung_hyb, fung_hyb, fung_hyb) %>%
+  mutate(block=rep(paste0("R", c(1:4)), each=6)) %>%
+  mutate(B = rep(c(-6, -3, 2, 7), each=6)) %>%
+  mutate(error = rnorm(24, 0, 4)) %>%
+  mutate(yield = yield + B + error) %>%
+  mutate(yield = round(yield, 1)) %>%
+  mutate(random = rnorm(24,0,1)) %>%
+  arrange(block, random) %>%
+  mutate(plot = c(101:106, 201:206, 301:306, 401:406)) %>%
+  select(plot, block, fungicide, hybrid, yield)
+
+fung_hyb_final %>%
+  kableExtra::kbl()
+
+```
+
+Our linear additive model is:
+
+$$ Y_{ijk} = \mu + B_i + F_j + H_k + FH_{jk} + BFH_{ijk} $$
+
+where $Y_{ijk}$ is the yield in the $ith$ block with the $jth$ level of fungicide and the $kth$ level of hybrid, $\mu$ is the population mean, $B_i$ is the effect of the $ith$ block, $F_j$ is the effect of the $jth$ level of fungicide, $H_k$ is the effect of the $kth$ level of hybrid, $FH_{jk}$ is the interaction of the $jth level of fungicide and $kth$ level of hybrid, and $BFH_{ijk}$ is the interaction of block, fungicide, and hybrid.
+
+This translates to the following model statement and analysis of variance:
+```{r}
+fung_hyb_model = aov(yield ~ block + fungicide + hybrid + fungicide*hybrid, data = fung_hyb_final)
+summary(fung_hyb_model)
+```
+
+The Analysis of Variance results above, show that the main effects -- fungicide and hybrid -- are both highly-significant, but the interaction between fungicide and hybrid is insignificant.  The line plot below allows us to further examine that interaction.
+
+```{r message=FALSE, warning=FALSE}
+fung_hyb %>%
+  group_by(fungicide, hybrid) %>%
+  summarise(yield = mean(yield)) %>%
+  ungroup %>%
+  ggplot(aes(x=hybrid, y=yield, group=fungicide)) +
+  geom_point(aes(color=fungicide)) +
+  geom_line(aes(color=fungicide))
+```
+
+We can perform means separation on the data the same as we did for our analysis of variance in the previous example.  Since fungicide only has two levels, its significance in the analysis of variance means the two levels ("treated" and "untreated") are significant.  To separate the hybrid levels, we can use the least siginficant difference test.
+
+```{r}
+lsd_fung_hybrid = LSD.test(fung_hyb_model, "hybrid")
+lsd_fung_hybrid
+```
+
+Our means separation results suggest the three hybrids differ in yield.
+
+## Scenario 6: Foliar Rate-Response Trial (Linear or Non-Linear Regression)
+*We want to model how the the effect of a foliar product on yield increases with rate, from 1X to 4X.*  
+
+The data are below:
+
+```{r, echo=FALSE}
+
+library(tidyverse)
+
+foliar = data.frame(rate = rep(1:4, each = 4),
+                    yield = rep(c(165, 168, 169.5, 170), each = 4))
+
+set.seed(1204202)
+foliar_final = foliar %>%
+  mutate(block = rep(1:4, 4)) %>%
+  mutate(B = rep(c(-0.6, -0.3, 0.2, 0.7), 4)) %>%
+  mutate(Error = rnorm(16, 0 , 0.7)) %>%
+  mutate(yield = yield + B + Error) %>%
+  mutate(yield = round(yield, 1)) %>%
+  mutate(random = rnorm(16,0,1)) %>%
+  arrange(block, random) %>%
+  mutate(plot = c(101:104, 201:204, 301:304, 401:404)) %>%
+  select(plot, block, rate, yield) %>%
+  mutate(block = as.factor(block))
+
+foliar_final %>%
+  kableExtra::kbl()
+
+```
+
+We should start by plotting our data with a simple scatter plot so we can observe the nature of the relationship between Y and X.  Do their values appear to be associated?  Is their relationship linear or nonlinear?
+
+```{r}
+
+p = foliar_final %>%
+  ggplot(aes(x=rate, y=yield)) +
+  geom_point()
+
+p
+```
+
+The response appears to be nonlinear, but we first try to fit the relationship with simple linear regression, as we learned in Unit 10.  Our regression line is plotted with the data below:
+
+```{r message=FALSE, warning=FALSE}
+p + geom_smooth(method = "lm", se=FALSE)
+```
+
+We also run an analysis of variance on the regression, modelling yield as a function of rate, which produces the following results:
+
+```{r}
+foliar_linear_model = lm(yield~rate, data = foliar_final)
+summary(foliar_linear_model)
+```
+
+Not bad.  The slope (rate effect) is highly significant and the $R^2 = 0.75$.  To see whether the linear model was appropriate, however, we should plot the residuals.
+
+```{r}
+plot(foliar_linear_model, which = 1)
+```
+
+We see, as we might expect, the residuals are not distributed randomly around the regression line.  The middle two yields are distributed mostly above the regression line, while the highest and lowest yields are distributed mostly below the regression line.  
+
+A linear model is probably not the best way to model our data.  Lets try, instead, to fit the data with a asymptotic model as we did in Unit 11.  This model, in which the value of Y increases rapidly at lower levels of X, but then plateaus at higher levels of X, is often also referred to as a monomolecular function.
+
+```{r}
+foliar_monomolecular = stats::nls(yield ~ SSasymp(rate,init,m,plateau), data=foliar_final)
+
+summary(foliar_monomolecular)
+```
+
+We are successful in fitting our nonlinear model.  To plot it with our data, however, we have to build a new dataset that models yield as a function of rate, using our new model.
+
+To do this, we first create a dataset with values of rate from 1X and 4X, in increments of tenths.
+```{r}
+foliar_predicted = data.frame(            # this tells R to create a new data frame called foliar_predicted 
+  rate =                                  # this tells R to create a new column named "rate"
+    seq(from=1,to=4,by=0.1)               # this creates a sequence of numbers from 1 to 4, in increments of 0.1
+  )
+```
+
+We then can predict yield as a function of rate, using the new model.
+```{r}
+foliar_predicted$yield = predict(foliar_monomolecular, foliar_predicted)
+```
+
+Finally, we can plot our curve and visually confirm it fits the data better than our linear model.
+```{r}
+p + geom_line(data = foliar_predicted, aes(x=rate, y=yield), color="tomato")
+```
+
+
+
+## Scenario 7: Application Map (Shapefiles and Rasters)
+*We grid sample our field and want to visualize the results. We are particularly interested in our soil potassium results.  We want to first visualize the point values, then create a raster map to predict potassium values throughout the field.*     
+
+We start by reading in the shapefile with our results.
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+folie = st_read("data-unit-14/Folie N & SE_grid_sample.shp", quiet=TRUE)
+
+head(folie) %>%
+  kableExtra::kbl()
+```
+Our next step is to filter our results to potassium ("K") only.
+```{r}
+k_only = folie %>%
+  filter(attribute=="K")
+
+```
+
+We want to color-code our results with green for the greatest values, yellow for intermediate values, and red for the lowest values.  We can do this using the colorBin function.
+```{r}
+library(leaflet)
+library(grDevices)
+
+pal_k = colorBin("RdYlGn", k_only$measure)
+```
+
+We then create our map using the leaflet() function, just as we learned in Unit 12.
+```{r}
+k_only %>%
+  leaflet() %>%
+  addProviderTiles(provider = providers$Esri.WorldImagery) %>%
+  addCircleMarkers(
+    fillColor = ~pal_k(measure),
+    radius = 6,
+    weight = 0,
+    fillOpacity = 0.8
+  ) %>%
+  addLegend(values = ~measure,
+            pal = pal_k)
+```
+
+Next, we want to create a raster map that predicts soil potassium levels throughout our field.  We first need to define the field boundary, which we do by loading a shapefile that defines a single polygon that outlines our field.
+
+```{r}
+boundary = st_read("data-unit-14/Folie N &SE_boundary.shp", quiet=TRUE)
+```
+
+
+We then use that boundary polygon to create a grid.  Each cell of this grid will be filled in when we create our raster.
+```{r message=FALSE, warning=FALSE}
+library(stars)
+
+### make grid
+grd = st_bbox(boundary) %>%
+  st_as_stars() %>%
+  st_crop(boundary) 
+
+
+```
+
+
+Each cell in our raster that does not coincide with a test value will be predicted as the mean of the values of other soil test points.  Since soils that are closer together are more alike than those that are farther apart, soil test points that are closer to the estimated cell will be weighted more heavily in calculating the mean than those more distant.  How should they be weighted? 
+
+To answer this, we fit a variogram to the data.  The variogram describes how the correlation between points changes with distance.  
+```{r message=FALSE, warning=FALSE}
+library(gstat)
+
+v = variogram(measure~1, k_only)
+m = fit.variogram(v, vgm("Sph"))
+plot(v, model = m)
+```
+
+We are now able to interpolate our data with krigining, which incorporates the results of our variogram in weighting the effect of sample points in the estimate of a cell value.
+```{r message=FALSE, warning=FALSE}
+
+kriged_data = gstat::krige(formula = measure~1, k_only, grd, model=m)
+
+```
+
+We finish by plotting our kriged data using leaflet().
+```{r message=FALSE, warning=FALSE}
+library(RColorBrewer)
+library(leafem)
+
+kriged_data %>%
+  leaflet() %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addStarsImage(opacity = 0.5,
+                colors="RdYlGn") 
+```
+
+
+## Scenario 8: Yield Prediction (Multiple Linear Regression and other Predictive Models)
+*We want to predict the yield for a particular hybrid across 676 midwestern counties, based on over 300 observations of that hybrid.* 
+
+We start by reading in the shapefile with our hybrid data.  
+```{r, echo=FALSE}
+library(grDevices)
+library(leaflet)
+
+hybrid = st_read("data-unit-14/hybrid_data.shp")
+head(hybrid)
+```
+
+The attributes are organized in the long form so we will want to "spread" or pivot them to the wide form first.
+```{r}
+hybrid_wide = hybrid %>%
+  spread(attribute, value)
+head(hybrid_wide)
+```
+
+Similarly, lets load in the county data.  Like the hybrid dataset, it is in long form, so lets again spread or pivot it to the long form so that the attributes each have their own column.
+
+```{r}
+county_climates = st_read("data-unit-14/county_climates.shp")
+
+county_climates_wide = county_climates %>%
+  spread(attribt, value)
+
+head(county_climates_wide)
+```
+
+
+First, lets plot the locations of our hybrid trials:
+
+```{r, echo=FALSE}
+pal_yld = colorBin("RdYlGn", hybrid_wide$bu_acre)
+
+hybrid_wide %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircleMarkers(
+    radius = 4,
+    fillColor = ~pal_yld(bu_acre),
+    weight=0,
+    fillOpacity = 1
+  )
+```
+We see our trials were conducted mostly in northern Iowa and southern Minnesota, but also in several other states.  We will want to constrain our predictions to counties in this general area.  That requires a few steps that we didn't cover this semester (the very curious can look up "convex hulls").  Our county dataset has been limited to the appropriate counties for our predictions:
+
+```{r, echo=FALSE}
+
+county_climates_wide %>%
+  leaflet() %>%
+  addTiles() %>%
+  addPolygons(
+    color="black",
+    weight=1
+  )
+```
+
+Our next step is to develop our random forest model to predict yield.  Recall that the predictor variables in a random forest model are called features.  Our data has the following features:
+
+```{r, echo=FALSE}
+
+feature_names = hybrid_wide %>%
+  st_drop_geometry() %>%
+  select(-c(book_name, year, bu_acre)) %>%
+  gather(attribute, value) %>%
+  select(-value) %>%
+  distinct() %>%
+  mutate(description = c("% clay",
+                         "% organic matter",
+                         "precip from 0 to 500 GDD",
+                         "precip from 1001 to 1500 GDD",
+                         "precip from 1501 to 2000 GDD",
+                         "precip from 501 to 1000 GDD",
+                         "% sand",
+                         "% silt",
+                         "mean temp from 0 to 500 GDD",
+                         "mean temp from 1001 to 1500 GDD",
+                         "mean temp from 1501 to 2000 GDD",
+                         "mean temp from 501 to 1000 GDD",
+                         "water holding capacity"))
+
+feature_names %>%
+  kableExtra::kbl()
+
+```
+
+GDD are growing degree days accumulated from the historical average date at which 50% of the corn crop has been planted in each county.  For example, prcp_0_500 is the cumulative precipitation from 0 to 500 GDD after planting.  This would correspond with germination and seedling emergence.
+
+We run our random forest the same as we learned in Unit 13.  We have a couple of extraneous columns (book_name and year) in our hybrid_wide dataset.  It is also a shapefile; we need to drop the geometry column and convert it into a dataframe before using it.  We will do that first.
+
+```{r message=FALSE, warning=FALSE}
+hybrid_df = hybrid_wide %>%
+  st_drop_geometry() %>%
+  select(-c(book_name, year))
+```
+
+We will use 10-fold cross validation (indicated by the "repeatedcv" option in our trainControl() function below.)  
+
+```{r message=FALSE, warning=FALSE}
+library(caret)
+library(randomForest)
+
+ctrl = trainControl(method="repeatedcv", number=10, repeats = 1)
+```
+
+We can now fit our random forest model to the data.
+```{r message=FALSE, warning=FALSE}
+hybridFit = train(bu_acre ~ .,
+                data = hybrid_df,
+                method = "rf",
+                trControl = ctrl)
+
+hybridFit
+```
+
+These values aren't great.  The $R^2$ of the optimal model (top line, mtry = 2) is only about 0.16 and the root mean square error is above 33 bushels.  For simplicity in this example, we left out several additional environmental features.  We might consider adding those back in and re-running the model.
+
+Nonetheless, lets' use our fit random forest model to predict yield across each county in our prediction space.
+```{r}
+county_climates_wide$yield = predict(hybridFit, county_climates_wide)
+```
+
+Finally, we can plot the results.  We will again use a red-yellow-gree scheme to code counties by yield.
+```{r}
+pal_yield = colorBin("RdYlGn", county_climates_wide$yield)
+
+county_climates_wide %>%
+  leaflet() %>%
+  addTiles() %>%
+  addPolygons(
+    color = "black",
+    fillColor=~pal_yield(yield),
+    weight=1,
+    fillOpacity = 0.8,
+    popup = paste(county_climates_wide$cnty_nm, "<br>",
+                  "Yield =", as.character(round(county_climates_wide$yield,1)))) %>%
+  addLegend(values = ~yield,
+            pal = pal_yield)
+      
+  
+
+
+```
+Our hybrid is predicted to yield best in northern Iowa, southern Minnesota, Wisconsin, and Northern Illinois.  It is predicted to perform less well in Western Ohio and Kansas.
+
+One last question: of our features, which had the greatest effect on the yield of this hybrid?  We can answer that by running the vip() function with our model.
+
+```{r message=FALSE, warning=FALSE}
+library(vip)
+vip(hybridFit)
+```
+
+We see that mean temperature during later-vegetative (1001-1500 GDD) and reproductive (1501-2000 GDD) phases had the most effect in our model, followed by clay content.
+
+## Summary
+And that is it for our whirlwind review of *Data Science for Agricultural Professionals*.  While each scenario is discussed briefly, it is my hope that seeing the major tools we have learned side-by-side will give you a better sense where to start with your analyses.  
+
+For the sake of brevity, we didn't cover every possible combination of these tools (for example, you should also inspect data distributions and perform means separation when working with factorial trials as well as simpler, single-factor trials).  Once you have identified the general analysis to use, I encourage you to go back to the individual units for a more complete "recipe" how to conduct your analysis.
+
+In fact, feel free to as a "cookbook" (in fact, several R texts label themselves as such), returning to it as needed to whip up a quick serving of t-tests, LSDs, or yield maps.  Few of us ever memorize more than a small amount of material.  Better to remember where to look it up in a hurry.
+
+I hope you have enjoyed this text or, at least, found several pieces of it that can support you in your  future efforts.  I welcome your feedback and suggestions how it might be improved.  Thank you.

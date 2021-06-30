@@ -1,26 +1,9 @@
----
-title: Machine Learning
-output: 
-  prettydoc::html_pretty:
-    theme: cayman
----
-
-<style>
-.math {
-  font-size: medium;
-}
-</style>
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
-```
-
-# Introduction
-The last original material we will cover in Agronomy 513 is *Machine Learning*.  I have struggled over whether to include this topic.  On the one hand, it is not generally considered part of classical statistics.  In addition, unless your plans include becoming a data analyst, you are unlikely to run these analyses on your own.  On the other hand, machine learning is playing an increasing role in agricultural (and all areas of) data.  It is a topic in which I have been immersed during the past couple of years.  
-
-Most importantly, if you are using tools to select hybrids, adjust nitrogen rates, or predict yield, those tools likely incorporate aspects of machine learning.  In your daily lives, machine learning determines what advertisements you see, your social media feed, even the results from your search engines.   This lesson will emphasize literacy about machine learning but, yes, we will build a few simple models as well so you can appreciate just how powerful machine learning can be.  
-
 # Machine Learning
+Machine Learning is an advanced data science topic that I have struggled over whether to include in this text.  On the one hand, it is not generally considered part of classical statistics.  In addition, unless your plans include becoming a data analyst, you are unlikely to run these analyses on your own.  On the other hand, machine learning is playing an increasing role in agricultural (and all areas of) data.  It is a topic in which I have been immersed during the past couple of years.  
+
+Most importantly, if you are using tools to select hybrids, adjust nitrogen rates, or predict yield, those tools likely incorporate aspects of machine learning.  In your daily lives, machine learning determines what advertisements you see, your social media feed, even the results from your search engines.   This lesson emphasizes literacy about machine learning -- there are no coding exercises included. 
+
+## Machine Learning
 To start with, why is it called "machine learning"?  It sounds like statistics-meets-steampunk. To answer this, think about a machine that learns.  In other words: a robot.  In machine learning, we use complex algoritms that, in theory, could be used by artificial intelligence to learn about their environment.  There is a strong predictive component to this: the machine could learn to predict the outcomes of future events by building models based on data it has already obtained.  Hello, Skynet.
 
 This sword, however, is also a plowshare.  Machine learning can help us understand how many variables can simultaneously predict outcomes, in agriculture, medicine, and climate.  Furthermore, machine learning takes a different approach to models than the methods we have learned earlier.  In previous units, we have learned testing methods that were *parameteric*.  We defined a linear model, then used our tests (which were all variations of regression) to parameterize it.  Parameteric => parameter.
@@ -36,7 +19,7 @@ This unit will be more focused on what I call "data literacy" than execution.  I
 That said, just a few years ago, neither did I.  Awareness and curiosity in data science are always good -- there is always a more powerful way to address our questions.
 
 
-# Cluster Analyses 
+## Cluster Analyses 
 Cluster analysis takes a set of individuals (sometimes called examples in this analyses) and divides it into a set number of groups, based on the similarities between the individuals.  These groups are defined such that the individuals within a group are very similar to each other, but very different from individuals in other groups.  
 
 By itself, clustering doesn't answer any questions about the values of the individuals in our data set.  Unlike a classification tree or a k-Nearest Neighbor analysis, it cannot be used to interpolate values between data points, or predict the value of a future observation.
@@ -45,7 +28,7 @@ To further illustrate cluster analysis, it is described in the data science comm
 
 Why would we want to cluster data?  The reason is that sometimes, when we are dealing with many variables, our analyses may become more intuitive if there are ways to break data down into groups.  Clustering is a way of reducing or categorizing our data so it becomes less-overwhelming for us to deal with.
 
-## Case Study: Grouping Midwestern Environments
+### Case Study: Grouping Midwestern Environments
 For example, anytime we are working with environmental data, we have potentially enormous datasets.  Rather than try juggle the meanings of all these quantitative variables in our heads, we may want to desrcibe the data as a series of groups.  For example, we might say that a county in South Dakota is cold and dry, a county in northern Illinois is moderate temperature and moderate wetness, and a farm in western Ohio is warm and rainy.  Great, we now have three groups.  But how would other counties in the midwest sort into these three categories?
 
 For an agronomic testing program, this is a very important question.  If the intent is to address the individual needs of three different environments, we need to define those regions so that a sufficient, but not excessive, number of research locations can be designated within each environment.
@@ -61,7 +44,7 @@ library(sf)
 library(leaflet)
 library(RColorBrewer)
 
-county_env_sf = st_read("data/complete_county_data.shp", quiet=TRUE) 
+county_env_sf = st_read("data-unit-13/complete_county_data.shp", quiet=TRUE) 
 
 county_wide_df = county_env_sf %>%
   st_drop_geometry() %>%
@@ -126,7 +109,7 @@ We can continue looking at different variables, and through that process might a
 
 But where do these boundaries end?  Say you have a product, like pyraclostrobin, that may reduce heat, and you want to test it across a range of environments that differ in temperature, precipitation and soil courseness.  How would you sort your counties into three groups?  This is where cluster analysis becomes very handy.  
 
-## Scaling
+### Scaling
 When we conduct a cluster analysis, we must remember to scale the data first.  Clustering works by evaluating the distance between points.  The distance between points $p$ and $q$ is calculated as:
 
 $$dist(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 ... (p_n - q_n)^2} $$
@@ -162,7 +145,7 @@ cluster_ready_data %>%
   select(cum_gdd, ppt, clay)
 ```
 
-## Clustering Animation
+### Clustering Animation
 ```{r}
 library(animation)
 km_animation_data = cluster_ready_data %>%
@@ -184,7 +167,7 @@ saveGIF(
 
 Using two variable, cum_gdd and silt and the animation below, lets walk through how clustering works.  
 
-![](kmeans_cluster_gdd_silt.gif)
+![](data-unit-13/kmeans_cluster_gdd_silt.gif)
 
 In the plot above, cum_gdd is on the X-axis and silt is on the Y-axis.  The clustering process consists of three major steps:
 
@@ -207,7 +190,7 @@ kmean_silt_gdd$centers %>%
 ```
 The table above contains the final center estimates from the cluster algorithm.  Cluster 1 is warmer and has siltier soil.  Cluster 2 has medium numbers of growing degree days and silt.  Cluster 3 is cooler and has soils lower in clay.
 
-## County Cluster Analysis
+### County Cluster Analysis
 Now, let's run the cluster analysis with all of our variables.  The cluster enters within each variable are shown below.
 
 ```{r}
@@ -287,10 +270,10 @@ classified_data_w_geo %>%
 
 
 
-# k-Nearest-Neighbors
+## k-Nearest-Neighbors
 In *k-Nearest-Neighbors* (kNN) analyses, we again use the Euclidian distance between points.  This time, however, we are not trying to cluster points, but to guess the value of a variable one observation, based on how similar it is to other observations.  
 
-## Case Study: Guessing County Yields based on Environmental Similarity
+### Case Study: Guessing County Yields based on Environmental Similarity
 For this example, we will continue to work with our county environmental dataset.  This dataset includes yields for corn, soybean, and, where applicable, wheat and cotton.  What if, however, our corn yield data were incomplete: that is, not every county had a recorded yield for corn.  How might we go about guessing/estimating/predicting what that corn yield might be?
 
 Well, if you are a farmer and you are interested in a new product -- what might you do?  You might ask around (at least the farmers who aren't bidding against you for rented land) and see whether any of them have used the product and what response they observed.  
@@ -339,14 +322,14 @@ trainPartition %>%
   )
 ```
 
-## Scaling
+### Scaling
 Remember, kNN analysis is like cluster analysis in that it is based on the *distance* between observations.  kNN seeks to identify $k$ neighbors that are most similar to the individual for whom we are trying to predict the missing value.  
 
 Variables with a greater range of values will be more heavily weighted in distance calculations, giving them excessive influence in how we measure distance (similarity). 
 
 The solution to this is to scale the data the same as we did for cluster analysis.
 
-## k-Nearest-Neighbor Animation
+### k-Nearest-Neighbor Animation
 
 ```{r eval=FALSE, include=FALSE}
 
@@ -386,7 +369,7 @@ The known yields, referred to as the training set, are colored blue.  The indivi
 
 This example uses $k$=5.  That is, the missing values of individuals will be calculated based on the most frequent yield classification of their 5 nearest neighbors.  
 
-![](knn_gdd_silt.gif)
+![](data-unit-13/knn_gdd_silt.gif)
   
 For each question mark, the nearest-neighbors process undergoes three steps.  
 
@@ -395,7 +378,7 @@ For each question mark, the nearest-neighbors process undergoes three steps.
 3) Set the missing value equal to the mode of the neighbors.  For example, if most neighbors are triangles (indicating their yields were between 100 and 120), the question mark becomes a triangle.
 
 
-## Choosing $k$
+### Choosing $k$
 In the example above, a value of 5 chosen arbitrarily to keep the illustation from becomming too muddled.  How should we choose $k$ in actual analyses?
 
 Your first instinct might be to select a large $k$.  Why?  Because we have learned throughout this course that larger sample sizes reduce the influences of outliers on our predictions.  By choosing a larger k, we reduce the likelihood an extreme value (a bad neighbor?) will unduly skew our prediction.  We reduce the potential for bias.
@@ -404,7 +387,7 @@ The flip side of this is: the more neighbors we include, the less "near" they wi
 
 A general rule of thumb is to choose a $k$ equal to the square root of the total number of individuals in the population.  We had 50 individuals in the population above, so we could have set our $k$ equal to 7.
 
-## Model Cross-Validation
+### Model Cross-Validation
 When we fit a kNN model, we should also cross-validate it.  In cross-validation, the data are portioned into two groups: a training group and a testing group.  The model is fit using the training group.  It is then used to make predictions for the testing group.  
 ```{r eval=FALSE, include=FALSE}
 library(animation)
@@ -426,7 +409,7 @@ The animation below illustrates a common cross-validation method, k-fold cross v
 
 A linear regression of the predicted test values on the actual test values is then conducted and the regresison coefficient, $R^2$, is calculated.  The Root Mean Square Error is also calculated during the regression.  You will recall the Root MSE is a measure of the standard deviation of the difference between the predicted and actual values.   
 
-## Yield Prediction with Nearest Neighbor Analysis
+### Yield Prediction with Nearest Neighbor Analysis
 As mentioned above, nearest neighbor analysis also works with qualitative data.  In this case, the values of the nearest neighbors are averaged for the variable of interest.  In R, there are various functions for running a nearest-neighbor analysis.  The output below was generated using the *caret* package, a very powerful tool which fits and cross-validates models at once.  
 
 ```{r}
@@ -516,21 +499,21 @@ complete_dataset %>%
 
 
 
-# Classification Trees
+## Classification Trees
 The last data science tool we will learn in this unit the classification tree.  The classification tree uses a "divide and conquer" or sorting approach to predict the value of a response variable, based on the levels of its predictor variables.
 
 The best way to understand how a classification tree works is to play the game Plinko.
 
-![](GoodnaturedVastCero-size_restricted.gif)
+![](data-unit-13/GoodnaturedVastCero-size_restricted.gif)
 
 Each level of the decision tree can be thought of as having pins.  Each pin is a division point along variable of interest.  If an observation has a value for that variable which is greater than the division point, it is classified one way and moves to the next pin.  If less, it moves the other way where it encounters a different pin.     
 
-## Features
+### Features
 Classification trees are different from cluster and nearest neighbor analyses in that they identify the relative imporance of *features*.  Features include every predictor variable in the dataset.  The higher a feature occurs in a classification tree, the more important they are are in predicting the final value.  
 
 Classification trees therefore shed a unique and valuable insight into the importance of variables, distinct from all other analyses we have learned. They provide insight into *feature importance*, not just their significance as a predictor.
 
-## Quantitative (Categorical) Data
+### Quantitative (Categorical) Data
 A classification tree predicts the category of the response variable.  We will start with yield categories, just as we did with the nearest neighbors section, because the results are intuitively easier to visualize and understand.
 
 The classification process begins with the selection of a root.  This is the feature that, when split, is the best single predictor of the response variable.  The algorithm not only selects the root; it also determines where within the range (the threshold) of that feature to divide the populations.
@@ -591,7 +574,7 @@ plot(fit)
 
 
 
-## Quanatitiative (Continuous) Data
+### Quanatitiative (Continuous) Data
 The same process above can be used with quantitative data -- in this example, the actual yields.  When we use yield, the root of our tree is not cumulative growing degree days, but total precipitation. Instead of a bar plot showing us the number of individuals in each class, we get a boxplot showing the distribution of the observations in each node.  When we work with quantitative data, R identifies the feature and split that minimizes the variance in each node.  
 
 
@@ -613,7 +596,7 @@ plot(fit)
 
 Like before, we can continue adding branches, although our virtual interpretation of the data will become more challenging.
 
-## Overfitting
+### Overfitting
 In nearest-neighbors analysis, we learned the size of k (the number of neighbors) was a tradeoff: too few neighbors, and the risk of an outlier skewing the prediction increased.  Too many neighbors, and the model prediction approached the mean of the entire population.  The secret was to solve for the optimum value of k.
 
 There is a similar tradeoff with classification trees.  We can continue adding layers to our decision tree until only one observation is left in each node.  At that point, we will perfectly predict each individual in the population.  Sounds great, huh?
@@ -622,7 +605,7 @@ Yeah, but what about when you use the classification model (with its exact set o
 
 Just as a bush around your house can become messing and overgrown, so can a classification tree become so branched it loses its value.  The solution in each case is to prune, so that the bush regains its shape, and the classification tree approaches a useful combination of general application and accurate predictions.
 
-## Cross Validation
+### Cross Validation
 Just as with nearest-neighbors, the answer to overfitting classification trees is cross-validation.  Using the same cross-validation technique (10-fold cross-validation) we used above, let's fit our classification tree.
 
 ```{r}
@@ -668,7 +651,7 @@ glance(model) %>%
 
 We see the model strongly predicts yield, but not as strongly as $k$-Nearest Neighbors.
 
-## Random Forest
+### Random Forest
 There is one last problem with our classification tree.  What if the feature selected as the root of our model is the best for the dataset to which we will apply the trained model?  In that case, our model may not be accurate.  In addition, once a feature is chosen as the root of a classification model, the features and splits in the remainder of the model also become constrained.
 
 This not only limits model performance, but also gives us an incomplete sense of how each feature truly effected the response variable.  What if we started with a different root feature?  What kind of model would we get?
@@ -706,7 +689,7 @@ glance(model) %>%
 
 
 
-## Feature Importance
+### Feature Importance
 When we use random forest analysis, there is no one tree to review -- the forest, after all, is a collection of many hundreds or thousands of trees.  There is also no longer one set of rules to explain the predicted values, since all trees were used to predict corn yield.
 
 Random forest analysis, however, allows us to rank the features by importance.  Feature importance is calculated from the number of times a feature occurs in the top branches of tree and the most frequent level at which a feature first occurs in the model.  
@@ -721,7 +704,7 @@ vip(rfFit)
 After that, we might wonder whether soil biology or texture might be the next most important feature.  Our feature importance ranking suggests that organic matter is slightly more important than clay, followed by water holding capacity.  We might infer that soil fertility which increases with organic matter and clay, was more important than drainage, which would be predicted by water holding capacity and our last variable, sand.
 
 
-# Summary
+## Summary
 With that, you have been introduced to three (four, if we include random forest) powerful machine learning tools.  I don't expect that you will personally use these tools on a regular basis; thus, this lesson is not hands-on like other lessons.  It is most important that you are aware there is a whole world of statistics beyond what we have learned this semester, beyond designed experiments and the testing of treatments one-plot-at-a-time.  
 
 This is not to disparage or minimize the statistics we learned earlier in this course.  Controlled, designed-experiments will always be key in testing new practices or products.  They will be how products are screened in the greenhouse, in the test plot, in the side-by-side trial on-farm.  They are critical.
