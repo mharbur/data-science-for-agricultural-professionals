@@ -254,7 +254,7 @@ plot_plan
 ## [1] 2
 ## 
 ## $parameters$seed
-## [1] 2127282914
+## [1] 893792349
 ## 
 ## $parameters$kinds
 ## [1] "Super-Duper"
@@ -268,7 +268,7 @@ plot_plan
 ## [1,] "B"  "A" 
 ## [2,] "B"  "A" 
 ## [3,] "A"  "B" 
-## [4,] "A"  "B" 
+## [4,] "B"  "A" 
 ## 
 ## $book
 ##   plots block treatment_name
@@ -278,8 +278,8 @@ plot_plan
 ## 4   202     2              A
 ## 5   301     3              A
 ## 6   302     3              B
-## 7   401     4              A
-## 8   402     4              B
+## 7   401     4              B
+## 8   402     4              A
 ```
 
 We can access this information more directly.  If we type "plot_plan$sketch", we get a plot map of sorts.
@@ -294,7 +294,7 @@ plot_plan$sketch
 ## [1,] "B"  "A" 
 ## [2,] "B"  "A" 
 ## [3,] "A"  "B" 
-## [4,] "A"  "B"
+## [4,] "B"  "A"
 ```
 
 If we type "plot_plan$book", we get a data frame with the plots, block, and treatment_names.
@@ -312,8 +312,8 @@ plot_plan$book
 ## 4   202     2              A
 ## 5   301     3              A
 ## 6   302     3              B
-## 7   401     4              A
-## 8   402     4              B
+## 7   401     4              B
+## 8   402     4              A
 ```
 
 ### Example 2
@@ -335,12 +335,12 @@ hemp_plot_plan$sketch
 ```
 ##       [,1]    [,2]   
 ##  [1,] "Jerry" "Bob"  
-##  [2,] "Bob"   "Jerry"
+##  [2,] "Jerry" "Bob"  
 ##  [3,] "Bob"   "Jerry"
-##  [4,] "Bob"   "Jerry"
-##  [5,] "Jerry" "Bob"  
+##  [4,] "Jerry" "Bob"  
+##  [5,] "Bob"   "Jerry"
 ##  [6,] "Jerry" "Bob"  
-##  [7,] "Bob"   "Jerry"
+##  [7,] "Jerry" "Bob"  
 ##  [8,] "Bob"   "Jerry"
 ##  [9,] "Bob"   "Jerry"
 ## [10,] "Bob"   "Jerry"
@@ -356,18 +356,18 @@ hemp_plot_plan$book
 ##    plots block hemp_variety
 ## 1    101     1        Jerry
 ## 2    102     1          Bob
-## 3    201     2          Bob
-## 4    202     2        Jerry
+## 3    201     2        Jerry
+## 4    202     2          Bob
 ## 5    301     3          Bob
 ## 6    302     3        Jerry
-## 7    401     4          Bob
-## 8    402     4        Jerry
-## 9    501     5        Jerry
-## 10   502     5          Bob
+## 7    401     4        Jerry
+## 8    402     4          Bob
+## 9    501     5          Bob
+## 10   502     5        Jerry
 ## 11   601     6        Jerry
 ## 12   602     6          Bob
-## 13   701     7          Bob
-## 14   702     7        Jerry
+## 13   701     7        Jerry
+## 14   702     7          Bob
 ## 15   801     8          Bob
 ## 16   802     8        Jerry
 ## 17   901     9          Bob
