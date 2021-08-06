@@ -141,7 +141,9 @@ ggplot(data=yield, aes(x=yield_bu)) +
 
 <img src="01-Introduction-and-Population-Statistics_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
-Varying the bin width provides us with different perspectives on our distribution.  Please click on the link below to open an application where you can vary the bin width and see how it changes your perspective.
+Varying the bin width provides us with different perspectives on our distribution.  Please click on the link below to open an application where you can vary the bin width and see how it changes your perspective:
+
+https://marin-harbur.shinyapps.io/01-app-histogram/
 
 
 
@@ -318,10 +320,10 @@ sample(yield_residuals, 20)
 ```
 
 ```
-##  [1]  -0.7694433 -13.7520431   4.0756037  -8.8679894   2.3009067  -8.5946459
-##  [7]   0.2853772  -8.5784752   3.8757938  -2.9725658  13.4816314   2.1197056
-## [13]  -5.9121438  -0.7802239   9.7407320   9.2074741  -1.2003108   5.1739230
-## [19]   2.0526319  -7.1785060
+##  [1]   5.5967987   2.9145302  -3.5224643   0.6159305  -4.9374465   9.4167434
+##  [7]   2.7942854   0.7307329   5.3305642 -21.6470034  -1.3799047  10.7754015
+## [13]   5.1454101   1.9217072  -4.9137916  14.8670740   6.5101787  -9.4256414
+## [19]  -9.8927412 -24.1503653
 ```
 
 If we sum up all the yield residuals, what number do we get?  Any guesses before you click "Run Code"?

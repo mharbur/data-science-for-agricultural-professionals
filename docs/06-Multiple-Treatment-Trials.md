@@ -417,13 +417,7 @@ As we can see, our observed F of 38.4 is much greater than what we would need fo
 
 ```r
 library(sjPlot)
-```
 
-```
-## Install package "strengejacke" from GitHub (`devtools::install_github("strengejacke/strengejacke")`) to load all sj-packages at once!
-```
-
-```r
 dist_f(p = 0.01, deg.f1 = 3, deg.f2 = 12, xmax = 10)
 ```
 

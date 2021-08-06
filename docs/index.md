@@ -1,7 +1,7 @@
 --- 
 title: "Data Science for Agricultural Professionals"
 author: "Marin L. Harbur"
-date: "2021-06-30"
+date: "2021-08-06"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib]
