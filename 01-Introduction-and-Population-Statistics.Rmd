@@ -103,7 +103,9 @@ ggplot(data=yield, aes(x=yield_bu)) +
   geom_histogram(breaks=seq(50, 110, 10), fill="tomato", color="black")
 ```
 
-Varying the bin width provides us with different perspectives on our distribution.  Please click on the link below to open an application where you can vary the bin width and see how it changes your perspective.
+Varying the bin width provides us with different perspectives on our distribution.  Please click on the link below to open an application where you can vary the bin width and see how it changes your perspective:
+
+https://marin-harbur.shinyapps.io/01-app-histogram/
 
 
 
