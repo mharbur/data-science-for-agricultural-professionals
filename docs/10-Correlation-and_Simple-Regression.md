@@ -88,6 +88,9 @@ Correlation doesn't measure *causation*.  Instead, it measures *association*. Th
 
 Experiment with the application found at the following link:
 
+https://marin-harbur.shinyapps.io/10-correlation/
+
+
 What happens as you adjust the value of r using the slider control?
 
 For the cucumber datasets above, the correlations are shown below:
@@ -423,6 +426,9 @@ ggplot(data=nitrogen_final, aes(x=nitro, y=yield)) +
 In the plot above, the distances of each the four points to the regression line are highlighted by arrows.  The arrows are staggered ("jittered", in plot lingo) so you can see them more easily.  Note how the line falls closely to the middle of the points at each level of R.
 
 Follow the link below to an appl that will allow you to adjust the slope of a regression line and observe the change in the error sum of squares, which measures the sums of the differences between observed values and the value predicted by the regression line. 
+
+https://marin-harbur.shinyapps.io/10-least-squares/
+
 
 You should have observed the position of the regression line that minimizes the sum of squares is identical to that fit using the least squares regression technique.  
 
