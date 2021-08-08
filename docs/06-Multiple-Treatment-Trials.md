@@ -406,7 +406,7 @@ To calculate the probability our F-value could be the product of chance, we use 
 
 Please click the link below to access an app where you will be able to adjust the number of treatments and number of replications:
 
-[link]
+https://marin-harbur.shinyapps.io/06-f-distribution/
 
 Adjust those two inputs and observe the change in the response curve.  In addition, adjust the desired level of significance and obsere how the shaded area changes.  Please ignore the different color ranges under the curve when you see them: any shaded area under the curve indicates significance.
 
@@ -417,13 +417,7 @@ As we can see, our observed F of 38.4 is much greater than what we would need fo
 
 ```r
 library(sjPlot)
-```
 
-```
-## Learn more about sjPlot with 'browseVignettes("sjPlot")'.
-```
-
-```r
 dist_f(p = 0.01, deg.f1 = 3, deg.f2 = 12, xmax = 10)
 ```
 
@@ -436,7 +430,7 @@ Our value is also way beyond the F-value we would need for $P\ge0.05$.
 
 Please follow the following link to an app that will allow you to simulate a corn trial with three treatments:
 
-[link]
+https://marin-harbur.shinyapps.io/06-anova-variances/
 
 Use your observations to address the following four questions in Discussion 6.1:
 
