@@ -254,7 +254,7 @@ plot_plan
 ## [1] 2
 ## 
 ## $parameters$seed
-## [1] -1628700008
+## [1] 923243201
 ## 
 ## $parameters$kinds
 ## [1] "Super-Duper"
@@ -265,21 +265,21 @@ plot_plan
 ## 
 ## $sketch
 ##      [,1] [,2]
-## [1,] "A"  "B" 
+## [1,] "B"  "A" 
 ## [2,] "A"  "B" 
-## [3,] "B"  "A" 
-## [4,] "A"  "B" 
+## [3,] "A"  "B" 
+## [4,] "B"  "A" 
 ## 
 ## $book
 ##   plots block treatment_name
-## 1   101     1              A
-## 2   102     1              B
+## 1   101     1              B
+## 2   102     1              A
 ## 3   201     2              A
 ## 4   202     2              B
-## 5   301     3              B
-## 6   302     3              A
-## 7   401     4              A
-## 8   402     4              B
+## 5   301     3              A
+## 6   302     3              B
+## 7   401     4              B
+## 8   402     4              A
 ```
 
 We can access this information more directly.  If we type "plot_plan$sketch", we get a plot map of sorts.
@@ -291,10 +291,10 @@ plot_plan$sketch
 
 ```
 ##      [,1] [,2]
-## [1,] "A"  "B" 
+## [1,] "B"  "A" 
 ## [2,] "A"  "B" 
-## [3,] "B"  "A" 
-## [4,] "A"  "B"
+## [3,] "A"  "B" 
+## [4,] "B"  "A"
 ```
 
 If we type "plot_plan$book", we get a data frame with the plots, block, and treatment_names.
@@ -306,14 +306,14 @@ plot_plan$book
 
 ```
 ##   plots block treatment_name
-## 1   101     1              A
-## 2   102     1              B
+## 1   101     1              B
+## 2   102     1              A
 ## 3   201     2              A
 ## 4   202     2              B
-## 5   301     3              B
-## 6   302     3              A
-## 7   401     4              A
-## 8   402     4              B
+## 5   301     3              A
+## 6   302     3              B
+## 7   401     4              B
+## 8   402     4              A
 ```
 
 ### Example 2
@@ -338,12 +338,12 @@ hemp_plot_plan$sketch
 ##  [2,] "Bob"   "Jerry"
 ##  [3,] "Jerry" "Bob"  
 ##  [4,] "Jerry" "Bob"  
-##  [5,] "Jerry" "Bob"  
+##  [5,] "Bob"   "Jerry"
 ##  [6,] "Bob"   "Jerry"
-##  [7,] "Bob"   "Jerry"
+##  [7,] "Jerry" "Bob"  
 ##  [8,] "Bob"   "Jerry"
-##  [9,] "Jerry" "Bob"  
-## [10,] "Bob"   "Jerry"
+##  [9,] "Bob"   "Jerry"
+## [10,] "Jerry" "Bob"
 ```
 
 And here is the table we can cut and paste into our spreadsheet:
@@ -362,18 +362,18 @@ hemp_plot_plan$book
 ## 6    302     3          Bob
 ## 7    401     4        Jerry
 ## 8    402     4          Bob
-## 9    501     5        Jerry
-## 10   502     5          Bob
+## 9    501     5          Bob
+## 10   502     5        Jerry
 ## 11   601     6          Bob
 ## 12   602     6        Jerry
-## 13   701     7          Bob
-## 14   702     7        Jerry
+## 13   701     7        Jerry
+## 14   702     7          Bob
 ## 15   801     8          Bob
 ## 16   802     8        Jerry
-## 17   901     9        Jerry
-## 18   902     9          Bob
-## 19  1001    10          Bob
-## 20  1002    10        Jerry
+## 17   901     9          Bob
+## 18   902     9        Jerry
+## 19  1001    10        Jerry
+## 20  1002    10          Bob
 ```
 
 
