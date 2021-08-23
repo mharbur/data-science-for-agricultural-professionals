@@ -10,7 +10,6 @@ measures-of-dispersion
 sum-of-squares
 variance
 standard-deviation
-section
 distributions-and-probability
 case-study
 the-normal-distribution-model

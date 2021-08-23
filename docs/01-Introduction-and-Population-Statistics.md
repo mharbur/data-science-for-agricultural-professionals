@@ -981,9 +981,8 @@ $$\sigma^2 = \frac{957.29}{10} = 9.57 \text{ bushels}^2 \text{ / acre}^2$$
 
 Our sum of squares is :
 
-$ \sqrt{9.57 \text{ bushels}^2 \text{ / acre}^2} = 3.09 \text{ bushels / acre }$$
+\$ \sqrt{9.57 \text{ bushels}^2 \text{ / acre}^2} = 3.09
+\text{ bushels / acre }\$\$
 
 That is enough theory for this first week of class. The remainder of
 this lesson will focus on introducing you to **RStudioCloud**.
-
-## 

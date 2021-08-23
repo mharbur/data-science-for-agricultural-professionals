@@ -69,7 +69,7 @@
 <script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
 <script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
 <script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script>
-<script src="libs/stars-1/data_stars_stars3db918.txt"></script>
+<script src="libs/stars-1/data_stars_starsf0cb2a.txt"></script>
 <script src="libs/joda-0.0.1/joda.js"></script>
 <script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
 
@@ -172,7 +172,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.4" data-path="population-statistics.html"><a href="population-statistics.html#measures-of-center"><i class="fa fa-check"></i><b>1.3.4</b> Measures of Center</a></li>
 <li class="chapter" data-level="1.3.5" data-path="population-statistics.html"><a href="population-statistics.html#measures-of-dispersion"><i class="fa fa-check"></i><b>1.3.5</b> Measures of Dispersion</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="population-statistics.html"><a href="population-statistics.html#section"><i class="fa fa-check"></i><b>1.4</b> </a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html"><i class="fa fa-check"></i><b>2</b> Distributions and Probability</a>
 <ul>
@@ -645,7 +644,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">10.1.1</span> Case Study: Cucumber</h3>
 <p>In this study, cucumbers were grown the their number of leaves, branches, early fruits, and total fruits were measured.</p>
 <p>First, let’s load the data and look at its structure.</p>
-<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="correlation-and-simple-regression.html#cb666-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="correlation-and-simple-regression.html#cb668-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
 <pre><code>## v ggplot2 3.3.3     v purrr   0.3.4
 ## v tibble  3.1.0     v dplyr   1.0.5
@@ -654,9 +653,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="correlation-and-simple-regression.html#cb670-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb670-2"><a href="correlation-and-simple-regression.html#cb670-2" aria-hidden="true" tabindex="-1"></a>cucumber <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/cucumber_traits.csv&quot;</span>)</span>
-<span id="cb670-3"><a href="correlation-and-simple-regression.html#cb670-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cucumber)</span></code></pre></div>
+<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="correlation-and-simple-regression.html#cb672-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb672-2"><a href="correlation-and-simple-regression.html#cb672-2" aria-hidden="true" tabindex="-1"></a>cucumber <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/cucumber_traits.csv&quot;</span>)</span>
+<span id="cb672-3"><a href="correlation-and-simple-regression.html#cb672-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cucumber)</span></code></pre></div>
 <pre><code>##   cycle rep plants flowers branches leaves totalfruit culledfruit earlyfruit
 ## 1     1   1     29      22       40    240          1           0          0
 ## 2     1   2     21      17       34    120         17           2          1
@@ -665,13 +664,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5     1   5     28      88      140   1315         58          13         27
 ## 6     1   6     28     162      105    986         39           9         14</code></pre>
 <p>What is the relationship between branches and leaves? Let’s plot the data.</p>
-<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="correlation-and-simple-regression.html#cb672-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cucumber, <span class="fu">aes</span>(<span class="at">x=</span>branches, <span class="at">y =</span> leaves)) <span class="sc">+</span></span>
-<span id="cb672-2"><a href="correlation-and-simple-regression.html#cb672-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="correlation-and-simple-regression.html#cb674-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cucumber, <span class="fu">aes</span>(<span class="at">x=</span>branches, <span class="at">y =</span> leaves)) <span class="sc">+</span></span>
+<span id="cb674-2"><a href="correlation-and-simple-regression.html#cb674-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>We don’t know whether leaves cause more branches. You might argue that more branches provide more places for leaves to form. But you could equally argue that the number of leaves affects the production of photosynthates for additional branching.</p>
 <p>Similarly, what is the relationship between earlyfruit and the number of branches?</p>
-<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="correlation-and-simple-regression.html#cb673-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cucumber, <span class="fu">aes</span>(<span class="at">x=</span>branches, <span class="at">y=</span>earlyfruit)) <span class="sc">+</span></span>
-<span id="cb673-2"><a href="correlation-and-simple-regression.html#cb673-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb675-1"><a href="correlation-and-simple-regression.html#cb675-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cucumber, <span class="fu">aes</span>(<span class="at">x=</span>branches, <span class="at">y=</span>earlyfruit)) <span class="sc">+</span></span>
+<span id="cb675-2"><a href="correlation-and-simple-regression.html#cb675-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>In both cases, we can see that as one variable increases, so does the other. But we don’t know whether the increase in one causes the increase in the other, or whether there is another variable (measured or unmeasured, that causes both to increase).`</p>
 </div>
@@ -683,27 +682,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><a href="https://marin-harbur.shinyapps.io/10-correlation/" class="uri">https://marin-harbur.shinyapps.io/10-correlation/</a></p>
 <p>What happens as you adjust the value of r using the slider control?</p>
 <p>For the cucumber datasets above, the correlations are shown below:</p>
-<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="correlation-and-simple-regression.html#cb674-1" aria-hidden="true" tabindex="-1"></a>cor_branches_leaves <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">cor</span>(cucumber<span class="sc">$</span>branches, cucumber<span class="sc">$</span>leaves),<span class="dv">2</span>)</span>
-<span id="cb674-2"><a href="correlation-and-simple-regression.html#cb674-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb674-3"><a href="correlation-and-simple-regression.html#cb674-3" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">=</span> <span class="fu">ggplot</span>(cucumber, <span class="fu">aes</span>(<span class="at">x=</span>branches, <span class="at">y =</span> leaves)) <span class="sc">+</span></span>
-<span id="cb674-4"><a href="correlation-and-simple-regression.html#cb674-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb674-5"><a href="correlation-and-simple-regression.html#cb674-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="dv">140</span>, <span class="at">y=</span><span class="fl">0.9</span><span class="sc">*</span><span class="fu">max</span>(cucumber<span class="sc">$</span>leaves), <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">&quot;r = &quot;</span>, cor_branches_leaves))</span>
-<span id="cb674-6"><a href="correlation-and-simple-regression.html#cb674-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb674-7"><a href="correlation-and-simple-regression.html#cb674-7" aria-hidden="true" tabindex="-1"></a>cor_branches_earlyfruit <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">cor</span>(cucumber<span class="sc">$</span>branches, cucumber<span class="sc">$</span>earlyfruit),<span class="dv">2</span>)</span>
-<span id="cb674-8"><a href="correlation-and-simple-regression.html#cb674-8" aria-hidden="true" tabindex="-1"></a>max_earlyfruit <span class="ot">=</span> <span class="fu">max</span>(cucumber<span class="sc">$</span>earlyfruit)</span>
-<span id="cb674-9"><a href="correlation-and-simple-regression.html#cb674-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb674-10"><a href="correlation-and-simple-regression.html#cb674-10" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">=</span> <span class="fu">ggplot</span>(cucumber, <span class="fu">aes</span>(<span class="at">x=</span>branches, <span class="at">y =</span> earlyfruit)) <span class="sc">+</span></span>
-<span id="cb674-11"><a href="correlation-and-simple-regression.html#cb674-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb674-12"><a href="correlation-and-simple-regression.html#cb674-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>cucumber, <span class="at">x=</span><span class="dv">140</span>, <span class="at">y=</span><span class="fl">0.9</span><span class="sc">*</span><span class="fu">max</span>(cucumber<span class="sc">$</span>earlyfruit), <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">&quot;r = &quot;</span>, cor_branches_earlyfruit))</span>
-<span id="cb674-13"><a href="correlation-and-simple-regression.html#cb674-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb674-14"><a href="correlation-and-simple-regression.html#cb674-14" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(gridExtra)</span></code></pre></div>
+<div class="sourceCode" id="cb676"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb676-1"><a href="correlation-and-simple-regression.html#cb676-1" aria-hidden="true" tabindex="-1"></a>cor_branches_leaves <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">cor</span>(cucumber<span class="sc">$</span>branches, cucumber<span class="sc">$</span>leaves),<span class="dv">2</span>)</span>
+<span id="cb676-2"><a href="correlation-and-simple-regression.html#cb676-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb676-3"><a href="correlation-and-simple-regression.html#cb676-3" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">=</span> <span class="fu">ggplot</span>(cucumber, <span class="fu">aes</span>(<span class="at">x=</span>branches, <span class="at">y =</span> leaves)) <span class="sc">+</span></span>
+<span id="cb676-4"><a href="correlation-and-simple-regression.html#cb676-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb676-5"><a href="correlation-and-simple-regression.html#cb676-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="dv">140</span>, <span class="at">y=</span><span class="fl">0.9</span><span class="sc">*</span><span class="fu">max</span>(cucumber<span class="sc">$</span>leaves), <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">&quot;r = &quot;</span>, cor_branches_leaves))</span>
+<span id="cb676-6"><a href="correlation-and-simple-regression.html#cb676-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb676-7"><a href="correlation-and-simple-regression.html#cb676-7" aria-hidden="true" tabindex="-1"></a>cor_branches_earlyfruit <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">cor</span>(cucumber<span class="sc">$</span>branches, cucumber<span class="sc">$</span>earlyfruit),<span class="dv">2</span>)</span>
+<span id="cb676-8"><a href="correlation-and-simple-regression.html#cb676-8" aria-hidden="true" tabindex="-1"></a>max_earlyfruit <span class="ot">=</span> <span class="fu">max</span>(cucumber<span class="sc">$</span>earlyfruit)</span>
+<span id="cb676-9"><a href="correlation-and-simple-regression.html#cb676-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb676-10"><a href="correlation-and-simple-regression.html#cb676-10" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">=</span> <span class="fu">ggplot</span>(cucumber, <span class="fu">aes</span>(<span class="at">x=</span>branches, <span class="at">y =</span> earlyfruit)) <span class="sc">+</span></span>
+<span id="cb676-11"><a href="correlation-and-simple-regression.html#cb676-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb676-12"><a href="correlation-and-simple-regression.html#cb676-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>cucumber, <span class="at">x=</span><span class="dv">140</span>, <span class="at">y=</span><span class="fl">0.9</span><span class="sc">*</span><span class="fu">max</span>(cucumber<span class="sc">$</span>earlyfruit), <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">&quot;r = &quot;</span>, cor_branches_earlyfruit))</span>
+<span id="cb676-13"><a href="correlation-and-simple-regression.html#cb676-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb676-14"><a href="correlation-and-simple-regression.html#cb676-14" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(gridExtra)</span></code></pre></div>
 <pre><code>## Loading required package: gridExtra</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;gridExtra&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:dplyr&#39;:
 ## 
 ##     combine</code></pre>
-<div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb678-1"><a href="correlation-and-simple-regression.html#cb678-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(plot1, plot2, <span class="at">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="correlation-and-simple-regression.html#cb680-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(plot1, plot2, <span class="at">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <div id="how-is-r-calcuated-optional-reading" class="section level3" number="10.2.1">
 <h3><span class="header-section-number">10.2.1</span> How Is r Calcuated (optional reading)</h3>
@@ -721,81 +720,81 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Now what if we were simply driving from Marshalltown to Ames? Would the Euclidian distance and the Manhattan distance be so different? No, because both Marshalltown and Ames are roughly on the x-axis? Similarly, what if we drove from Ames to Des Moines? The Euclidian distance and Manhattan distance would again be similar, because we were travelling across the x-axis.</p>
 <p>The difference between the Euclidian distance and the Manhattan distance is greatest when we must travel at a 45 degree angle from the X axis. We can demonstrate this with the following plot. Every point below is four units from the origin (<span class="math inline">\(x=0,y=0\)</span>). Notice that when the point is on the x or y axis, the Euclidian distance and Manhattan distance are equal. But as the angle increases to zero, the Euclidian distance decreases, reaching its lowest value when x=y and the angle from the axis is 45 degrees.</p>
 <p>In the plot below, each point has a Manhattan distance (<span class="math inline">\(x+y\)</span>) of 4. The Euclidian distance is shown beside each point. We can see the Euclidian distance is least when <span class="math inline">\(y=x=2\)</span>.</p>
-<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="correlation-and-simple-regression.html#cb679-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
-<span id="cb679-2"><a href="correlation-and-simple-regression.html#cb679-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)</span>
-<span id="cb679-3"><a href="correlation-and-simple-regression.html#cb679-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb679-4"><a href="correlation-and-simple-regression.html#cb679-4" aria-hidden="true" tabindex="-1"></a>distance_example <span class="ot">=</span> <span class="fu">cbind</span>(x,y) <span class="sc">%&gt;%</span></span>
-<span id="cb679-5"><a href="correlation-and-simple-regression.html#cb679-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb679-6"><a href="correlation-and-simple-regression.html#cb679-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">euclidian_distance =</span> <span class="fu">sqrt</span>(x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> y<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb679-7"><a href="correlation-and-simple-regression.html#cb679-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">manhattan_distance =</span> x<span class="sc">+</span>y,</span>
-<span id="cb679-8"><a href="correlation-and-simple-regression.html#cb679-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">id =</span> <span class="fu">row_number</span>(),</span>
-<span id="cb679-9"><a href="correlation-and-simple-regression.html#cb679-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">id =</span> <span class="fu">as.factor</span>(id),</span>
-<span id="cb679-10"><a href="correlation-and-simple-regression.html#cb679-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">euclidian_distance =</span> <span class="fu">round</span>(euclidian_distance, <span class="dv">1</span>))</span>
-<span id="cb679-11"><a href="correlation-and-simple-regression.html#cb679-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb679-12"><a href="correlation-and-simple-regression.html#cb679-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(distance_example, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">group=</span>id, <span class="at">label =</span> euclidian_distance)) <span class="sc">+</span></span>
-<span id="cb679-13"><a href="correlation-and-simple-regression.html#cb679-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>id), <span class="at">size=</span><span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb679-14"><a href="correlation-and-simple-regression.html#cb679-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> x, <span class="at">yend =</span> y, <span class="at">color=</span>id), <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">7</span>, <span class="st">&quot;mm&quot;</span>)), <span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb679-15"><a href="correlation-and-simple-regression.html#cb679-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x =</span> x <span class="sc">+</span> <span class="fl">0.3</span>, <span class="at">y=</span> y <span class="sc">+</span> <span class="fl">0.3</span>, <span class="at">color =</span> id), <span class="at">size=</span><span class="dv">6</span>) <span class="sc">+</span> </span>
-<span id="cb679-16"><a href="correlation-and-simple-regression.html#cb679-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span> </span>
-<span id="cb679-17"><a href="correlation-and-simple-regression.html#cb679-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">4.5</span>), <span class="at">y=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">4.5</span>)) <span class="sc">+</span> </span>
-<span id="cb679-18"><a href="correlation-and-simple-regression.html#cb679-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb681"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb681-1"><a href="correlation-and-simple-regression.html#cb681-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb681-2"><a href="correlation-and-simple-regression.html#cb681-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)</span>
+<span id="cb681-3"><a href="correlation-and-simple-regression.html#cb681-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb681-4"><a href="correlation-and-simple-regression.html#cb681-4" aria-hidden="true" tabindex="-1"></a>distance_example <span class="ot">=</span> <span class="fu">cbind</span>(x,y) <span class="sc">%&gt;%</span></span>
+<span id="cb681-5"><a href="correlation-and-simple-regression.html#cb681-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb681-6"><a href="correlation-and-simple-regression.html#cb681-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">euclidian_distance =</span> <span class="fu">sqrt</span>(x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> y<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb681-7"><a href="correlation-and-simple-regression.html#cb681-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">manhattan_distance =</span> x<span class="sc">+</span>y,</span>
+<span id="cb681-8"><a href="correlation-and-simple-regression.html#cb681-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">id =</span> <span class="fu">row_number</span>(),</span>
+<span id="cb681-9"><a href="correlation-and-simple-regression.html#cb681-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">id =</span> <span class="fu">as.factor</span>(id),</span>
+<span id="cb681-10"><a href="correlation-and-simple-regression.html#cb681-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">euclidian_distance =</span> <span class="fu">round</span>(euclidian_distance, <span class="dv">1</span>))</span>
+<span id="cb681-11"><a href="correlation-and-simple-regression.html#cb681-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb681-12"><a href="correlation-and-simple-regression.html#cb681-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(distance_example, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">group=</span>id, <span class="at">label =</span> euclidian_distance)) <span class="sc">+</span></span>
+<span id="cb681-13"><a href="correlation-and-simple-regression.html#cb681-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>id), <span class="at">size=</span><span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb681-14"><a href="correlation-and-simple-regression.html#cb681-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> x, <span class="at">yend =</span> y, <span class="at">color=</span>id), <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">7</span>, <span class="st">&quot;mm&quot;</span>)), <span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb681-15"><a href="correlation-and-simple-regression.html#cb681-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x =</span> x <span class="sc">+</span> <span class="fl">0.3</span>, <span class="at">y=</span> y <span class="sc">+</span> <span class="fl">0.3</span>, <span class="at">color =</span> id), <span class="at">size=</span><span class="dv">6</span>) <span class="sc">+</span> </span>
+<span id="cb681-16"><a href="correlation-and-simple-regression.html#cb681-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span> </span>
+<span id="cb681-17"><a href="correlation-and-simple-regression.html#cb681-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">4.5</span>), <span class="at">y=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">4.5</span>)) <span class="sc">+</span> </span>
+<span id="cb681-18"><a href="correlation-and-simple-regression.html#cb681-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Conversely, in the plot below, each point is the same Euclidean distance (4 units) from the origin (<span class="math inline">\(x=0,y=0\)</span>). The Manhattan distance is shown beside each point. We can see the Manhattan distance is greatest when the point is at a 45 degree angle from the origin.</p>
-<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="correlation-and-simple-regression.html#cb680-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="fl">3.85</span>,<span class="fl">3.4</span>, <span class="fl">2.83</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
-<span id="cb680-2"><a href="correlation-and-simple-regression.html#cb680-2" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> <span class="dv">4</span></span>
-<span id="cb680-3"><a href="correlation-and-simple-regression.html#cb680-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb680-4"><a href="correlation-and-simple-regression.html#cb680-4" aria-hidden="true" tabindex="-1"></a>distance_example_2 <span class="ot">=</span> <span class="fu">cbind</span>(x,z) <span class="sc">%&gt;%</span></span>
-<span id="cb680-5"><a href="correlation-and-simple-regression.html#cb680-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb680-6"><a href="correlation-and-simple-regression.html#cb680-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">euclidian_distance =</span> z,</span>
-<span id="cb680-7"><a href="correlation-and-simple-regression.html#cb680-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">y=</span> <span class="fu">sqrt</span>(z<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span>  x<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb680-8"><a href="correlation-and-simple-regression.html#cb680-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">manhattan_distance =</span> x<span class="sc">+</span>y,</span>
-<span id="cb680-9"><a href="correlation-and-simple-regression.html#cb680-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">id =</span> <span class="fu">row_number</span>(),</span>
-<span id="cb680-10"><a href="correlation-and-simple-regression.html#cb680-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">id =</span> <span class="fu">as.factor</span>(id),</span>
-<span id="cb680-11"><a href="correlation-and-simple-regression.html#cb680-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">manhattan_distance =</span> <span class="fu">round</span>(manhattan_distance, <span class="dv">1</span>))</span>
-<span id="cb680-12"><a href="correlation-and-simple-regression.html#cb680-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb680-13"><a href="correlation-and-simple-regression.html#cb680-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(distance_example_2, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">group=</span>id, <span class="at">label =</span> manhattan_distance)) <span class="sc">+</span></span>
-<span id="cb680-14"><a href="correlation-and-simple-regression.html#cb680-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>id), <span class="at">size=</span><span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb680-15"><a href="correlation-and-simple-regression.html#cb680-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> x, <span class="at">yend =</span> y, <span class="at">color=</span>id), <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">7</span>, <span class="st">&quot;mm&quot;</span>)), <span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb680-16"><a href="correlation-and-simple-regression.html#cb680-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x =</span> x <span class="sc">+</span> <span class="fl">0.3</span>, <span class="at">y=</span> y <span class="sc">+</span> <span class="fl">0.3</span>, <span class="at">color =</span> id), <span class="at">size=</span><span class="dv">6</span>) <span class="sc">+</span> </span>
-<span id="cb680-17"><a href="correlation-and-simple-regression.html#cb680-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span></span>
-<span id="cb680-18"><a href="correlation-and-simple-regression.html#cb680-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">4.5</span>), <span class="at">y=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">4.5</span>)) <span class="sc">+</span> </span>
-<span id="cb680-19"><a href="correlation-and-simple-regression.html#cb680-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="correlation-and-simple-regression.html#cb682-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="fl">3.85</span>,<span class="fl">3.4</span>, <span class="fl">2.83</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb682-2"><a href="correlation-and-simple-regression.html#cb682-2" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> <span class="dv">4</span></span>
+<span id="cb682-3"><a href="correlation-and-simple-regression.html#cb682-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb682-4"><a href="correlation-and-simple-regression.html#cb682-4" aria-hidden="true" tabindex="-1"></a>distance_example_2 <span class="ot">=</span> <span class="fu">cbind</span>(x,z) <span class="sc">%&gt;%</span></span>
+<span id="cb682-5"><a href="correlation-and-simple-regression.html#cb682-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb682-6"><a href="correlation-and-simple-regression.html#cb682-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">euclidian_distance =</span> z,</span>
+<span id="cb682-7"><a href="correlation-and-simple-regression.html#cb682-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">y=</span> <span class="fu">sqrt</span>(z<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span>  x<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb682-8"><a href="correlation-and-simple-regression.html#cb682-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">manhattan_distance =</span> x<span class="sc">+</span>y,</span>
+<span id="cb682-9"><a href="correlation-and-simple-regression.html#cb682-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">id =</span> <span class="fu">row_number</span>(),</span>
+<span id="cb682-10"><a href="correlation-and-simple-regression.html#cb682-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">id =</span> <span class="fu">as.factor</span>(id),</span>
+<span id="cb682-11"><a href="correlation-and-simple-regression.html#cb682-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">manhattan_distance =</span> <span class="fu">round</span>(manhattan_distance, <span class="dv">1</span>))</span>
+<span id="cb682-12"><a href="correlation-and-simple-regression.html#cb682-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb682-13"><a href="correlation-and-simple-regression.html#cb682-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(distance_example_2, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">group=</span>id, <span class="at">label =</span> manhattan_distance)) <span class="sc">+</span></span>
+<span id="cb682-14"><a href="correlation-and-simple-regression.html#cb682-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>id), <span class="at">size=</span><span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb682-15"><a href="correlation-and-simple-regression.html#cb682-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> x, <span class="at">yend =</span> y, <span class="at">color=</span>id), <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">7</span>, <span class="st">&quot;mm&quot;</span>)), <span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb682-16"><a href="correlation-and-simple-regression.html#cb682-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x =</span> x <span class="sc">+</span> <span class="fl">0.3</span>, <span class="at">y=</span> y <span class="sc">+</span> <span class="fl">0.3</span>, <span class="at">color =</span> id), <span class="at">size=</span><span class="dv">6</span>) <span class="sc">+</span> </span>
+<span id="cb682-17"><a href="correlation-and-simple-regression.html#cb682-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span></span>
+<span id="cb682-18"><a href="correlation-and-simple-regression.html#cb682-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">4.5</span>), <span class="at">y=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">4.5</span>)) <span class="sc">+</span> </span>
+<span id="cb682-19"><a href="correlation-and-simple-regression.html#cb682-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>The calculation of the correlation coefficient, <span class="math inline">\(r\)</span>, depends on this concept of <em>covariance</em> between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. The covariance is calculated as:</p>
 <p><span class="math display">\[S_{xy} = \sum(x_i - \bar{x})(y_i-\bar{y}) \]</span></p>
 <p>Let’s go back to our cucumber data. We will calculate the difference of each point from the <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(\bar{y}\)</span>. The points are plotted below.</p>
-<div class="sourceCode" id="cb681"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb681-1"><a href="correlation-and-simple-regression.html#cb681-1" aria-hidden="true" tabindex="-1"></a>cucumber_cov <span class="ot">=</span> cucumber <span class="sc">%&gt;%</span></span>
-<span id="cb681-2"><a href="correlation-and-simple-regression.html#cb681-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">branches_delta =</span> branches <span class="sc">-</span> <span class="fu">mean</span>(branches),</span>
-<span id="cb681-3"><a href="correlation-and-simple-regression.html#cb681-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">leaves_delta =</span> leaves <span class="sc">-</span> <span class="fu">mean</span>(leaves),</span>
-<span id="cb681-4"><a href="correlation-and-simple-regression.html#cb681-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">cov =</span> branches_delta <span class="sc">*</span> leaves_delta)</span>
-<span id="cb681-5"><a href="correlation-and-simple-regression.html#cb681-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb681-6"><a href="correlation-and-simple-regression.html#cb681-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cucumber_cov, <span class="fu">aes</span>(<span class="at">x=</span> branches_delta, <span class="at">y=</span>leaves_delta)) <span class="sc">+</span></span>
-<span id="cb681-7"><a href="correlation-and-simple-regression.html#cb681-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb681-8"><a href="correlation-and-simple-regression.html#cb681-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb681-9"><a href="correlation-and-simple-regression.html#cb681-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb681-10"><a href="correlation-and-simple-regression.html#cb681-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">100</span>, <span class="dv">100</span>), <span class="at">y=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">700</span>, <span class="dv">700</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="correlation-and-simple-regression.html#cb683-1" aria-hidden="true" tabindex="-1"></a>cucumber_cov <span class="ot">=</span> cucumber <span class="sc">%&gt;%</span></span>
+<span id="cb683-2"><a href="correlation-and-simple-regression.html#cb683-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">branches_delta =</span> branches <span class="sc">-</span> <span class="fu">mean</span>(branches),</span>
+<span id="cb683-3"><a href="correlation-and-simple-regression.html#cb683-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">leaves_delta =</span> leaves <span class="sc">-</span> <span class="fu">mean</span>(leaves),</span>
+<span id="cb683-4"><a href="correlation-and-simple-regression.html#cb683-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">cov =</span> branches_delta <span class="sc">*</span> leaves_delta)</span>
+<span id="cb683-5"><a href="correlation-and-simple-regression.html#cb683-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb683-6"><a href="correlation-and-simple-regression.html#cb683-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cucumber_cov, <span class="fu">aes</span>(<span class="at">x=</span> branches_delta, <span class="at">y=</span>leaves_delta)) <span class="sc">+</span></span>
+<span id="cb683-7"><a href="correlation-and-simple-regression.html#cb683-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb683-8"><a href="correlation-and-simple-regression.html#cb683-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb683-9"><a href="correlation-and-simple-regression.html#cb683-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb683-10"><a href="correlation-and-simple-regression.html#cb683-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">100</span>, <span class="dv">100</span>), <span class="at">y=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">700</span>, <span class="dv">700</span>))</span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>What we have now are four quandrants. The differences between them are important important because they affect the <em>sign</em> of the covariance. Remember, the covariance of each point is the product of the x-distance and the y-distance of each point.</p>
-<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="correlation-and-simple-regression.html#cb682-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cucumber_cov, <span class="fu">aes</span>(<span class="at">x=</span> branches_delta, <span class="at">y=</span>leaves_delta)) <span class="sc">+</span></span>
-<span id="cb682-2"><a href="correlation-and-simple-regression.html#cb682-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb682-3"><a href="correlation-and-simple-regression.html#cb682-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb682-4"><a href="correlation-and-simple-regression.html#cb682-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb682-5"><a href="correlation-and-simple-regression.html#cb682-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="dv">50</span>, <span class="at">y=</span><span class="dv">400</span>, <span class="at">label=</span><span class="st">&quot;I&quot;</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>, ) <span class="sc">+</span></span>
-<span id="cb682-6"><a href="correlation-and-simple-regression.html#cb682-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="dv">50</span>, <span class="at">y=</span><span class="sc">-</span><span class="dv">400</span>, <span class="at">label=</span><span class="st">&quot;II&quot;</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span></span>
-<span id="cb682-7"><a href="correlation-and-simple-regression.html#cb682-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="sc">-</span><span class="dv">50</span>, <span class="at">y=</span><span class="sc">-</span><span class="dv">400</span>, <span class="at">label=</span><span class="st">&quot;III&quot;</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span></span>
-<span id="cb682-8"><a href="correlation-and-simple-regression.html#cb682-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="sc">-</span><span class="dv">50</span>, <span class="at">y=</span><span class="dv">400</span>, <span class="at">label=</span><span class="st">&quot;IV&quot;</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span></span>
-<span id="cb682-9"><a href="correlation-and-simple-regression.html#cb682-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">100</span>, <span class="dv">100</span>), <span class="at">y=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">700</span>, <span class="dv">700</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="correlation-and-simple-regression.html#cb684-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cucumber_cov, <span class="fu">aes</span>(<span class="at">x=</span> branches_delta, <span class="at">y=</span>leaves_delta)) <span class="sc">+</span></span>
+<span id="cb684-2"><a href="correlation-and-simple-regression.html#cb684-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb684-3"><a href="correlation-and-simple-regression.html#cb684-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb684-4"><a href="correlation-and-simple-regression.html#cb684-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb684-5"><a href="correlation-and-simple-regression.html#cb684-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="dv">50</span>, <span class="at">y=</span><span class="dv">400</span>, <span class="at">label=</span><span class="st">&quot;I&quot;</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>, ) <span class="sc">+</span></span>
+<span id="cb684-6"><a href="correlation-and-simple-regression.html#cb684-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="dv">50</span>, <span class="at">y=</span><span class="sc">-</span><span class="dv">400</span>, <span class="at">label=</span><span class="st">&quot;II&quot;</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span></span>
+<span id="cb684-7"><a href="correlation-and-simple-regression.html#cb684-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="sc">-</span><span class="dv">50</span>, <span class="at">y=</span><span class="sc">-</span><span class="dv">400</span>, <span class="at">label=</span><span class="st">&quot;III&quot;</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span></span>
+<span id="cb684-8"><a href="correlation-and-simple-regression.html#cb684-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="sc">-</span><span class="dv">50</span>, <span class="at">y=</span><span class="dv">400</span>, <span class="at">label=</span><span class="st">&quot;IV&quot;</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span></span>
+<span id="cb684-9"><a href="correlation-and-simple-regression.html#cb684-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">100</span>, <span class="dv">100</span>), <span class="at">y=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">700</span>, <span class="dv">700</span>))</span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>In quadrant I, both the x-distance and y-distance are positive, so their product will be positive. In quadrant II, the x-distance is still positive but the y-distance is negative, so their product will be negative. In quadrant III, both x-distance and y-distance are negative, so their negatives will cancel each other and the product will be positive. Finally, quadrant IV, will have a positve x-distance and negative y-distance and have a negative sign.</p>
-<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="correlation-and-simple-regression.html#cb683-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cucumber_cov, <span class="fu">aes</span>(<span class="at">x=</span> branches_delta, <span class="at">y=</span>leaves_delta)) <span class="sc">+</span></span>
-<span id="cb683-2"><a href="correlation-and-simple-regression.html#cb683-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb683-3"><a href="correlation-and-simple-regression.html#cb683-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb683-4"><a href="correlation-and-simple-regression.html#cb683-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb683-5"><a href="correlation-and-simple-regression.html#cb683-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="dv">50</span>, <span class="at">y=</span><span class="dv">400</span>, <span class="at">label=</span><span class="st">&quot;+&quot;</span>, <span class="at">size =</span> <span class="dv">25</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>, ) <span class="sc">+</span></span>
-<span id="cb683-6"><a href="correlation-and-simple-regression.html#cb683-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="dv">50</span>, <span class="at">y=</span><span class="sc">-</span><span class="dv">355</span>, <span class="at">label=</span><span class="st">&quot;-&quot;</span>, <span class="at">size =</span> <span class="dv">25</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span></span>
-<span id="cb683-7"><a href="correlation-and-simple-regression.html#cb683-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="sc">-</span><span class="dv">50</span>, <span class="at">y=</span><span class="sc">-</span><span class="dv">400</span>, <span class="at">label=</span><span class="st">&quot;+&quot;</span>, <span class="at">size =</span> <span class="dv">25</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span></span>
-<span id="cb683-8"><a href="correlation-and-simple-regression.html#cb683-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="sc">-</span><span class="dv">50</span>, <span class="at">y=</span><span class="dv">445</span>, <span class="at">label=</span><span class="st">&quot;-&quot;</span>, <span class="at">size =</span> <span class="dv">25</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span></span>
-<span id="cb683-9"><a href="correlation-and-simple-regression.html#cb683-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">100</span>, <span class="dv">100</span>), <span class="at">y=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">700</span>, <span class="dv">700</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="correlation-and-simple-regression.html#cb685-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cucumber_cov, <span class="fu">aes</span>(<span class="at">x=</span> branches_delta, <span class="at">y=</span>leaves_delta)) <span class="sc">+</span></span>
+<span id="cb685-2"><a href="correlation-and-simple-regression.html#cb685-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb685-3"><a href="correlation-and-simple-regression.html#cb685-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb685-4"><a href="correlation-and-simple-regression.html#cb685-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb685-5"><a href="correlation-and-simple-regression.html#cb685-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="dv">50</span>, <span class="at">y=</span><span class="dv">400</span>, <span class="at">label=</span><span class="st">&quot;+&quot;</span>, <span class="at">size =</span> <span class="dv">25</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>, ) <span class="sc">+</span></span>
+<span id="cb685-6"><a href="correlation-and-simple-regression.html#cb685-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="dv">50</span>, <span class="at">y=</span><span class="sc">-</span><span class="dv">355</span>, <span class="at">label=</span><span class="st">&quot;-&quot;</span>, <span class="at">size =</span> <span class="dv">25</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span></span>
+<span id="cb685-7"><a href="correlation-and-simple-regression.html#cb685-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="sc">-</span><span class="dv">50</span>, <span class="at">y=</span><span class="sc">-</span><span class="dv">400</span>, <span class="at">label=</span><span class="st">&quot;+&quot;</span>, <span class="at">size =</span> <span class="dv">25</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span></span>
+<span id="cb685-8"><a href="correlation-and-simple-regression.html#cb685-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x=</span><span class="sc">-</span><span class="dv">50</span>, <span class="at">y=</span><span class="dv">445</span>, <span class="at">label=</span><span class="st">&quot;-&quot;</span>, <span class="at">size =</span> <span class="dv">25</span>, <span class="at">color=</span><span class="st">&quot;darkgrey&quot;</span>) <span class="sc">+</span></span>
+<span id="cb685-9"><a href="correlation-and-simple-regression.html#cb685-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lims</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">100</span>, <span class="dv">100</span>), <span class="at">y=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">700</span>, <span class="dv">700</span>))</span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Enough already! How does all this determine r? It’s simple – the stronger the association between x and y, the more linear the arrangement of the observations in the plot above. The more linear the arrangement, the more the points will be in diagonal quadrants. In the plot above, any observations that fall in quadrant I or III will contribute to the positive value of r. Any points that fall in quadrants II or IV will subtract from the value or r.</p>
 <p>In that way, a loose distribution of points around all four quadrants, which would indicate x and y are weakly associated, would be penalized with an r score close to zero. A distribution concentrated in quadrants I and III would have a positive r value closer to 1, indicating a <em>positive</em> association between x and y. Conversely, a distribution concentrated in quadrants II and IV would have a negative r value closer to -1, and a <em>negative</em> association between x and y.</p>
@@ -818,8 +817,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="case-study-6" class="section level3" number="10.3.1">
 <h3><span class="header-section-number">10.3.1</span> Case Study</h3>
 <p>A trial was conducted in Waseca, Minnesota, to model corn response to nitrogen. Yields are per plot, not per acre.</p>
-<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="correlation-and-simple-regression.html#cb684-1" aria-hidden="true" tabindex="-1"></a>nitrogen <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/nitrogen_waseca.csv&quot;</span>)</span>
-<span id="cb684-2"><a href="correlation-and-simple-regression.html#cb684-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nitrogen)</span></code></pre></div>
+<div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb686-1"><a href="correlation-and-simple-regression.html#cb686-1" aria-hidden="true" tabindex="-1"></a>nitrogen <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/nitrogen_waseca.csv&quot;</span>)</span>
+<span id="cb686-2"><a href="correlation-and-simple-regression.html#cb686-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nitrogen)</span></code></pre></div>
 <pre><code>##   site     loc rep nitro    yield
 ## 1   S3 Waseca1  R1   0.0  9.49895
 ## 2   S3 Waseca1  R2   0.0 10.05715
@@ -828,11 +827,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5   S3 Waseca1  R1  33.6 10.01547
 ## 6   S3 Waseca1  R2  33.6 11.03366</code></pre>
 <p>The first thing we should do with any data, but especially data we plan to fit with a linear regression model, is to visually examine the data. Here, we will create a scatterplot with yield on the Y-axis and nitro (the nitrogen rate) on the X-axis.</p>
-<div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb686-1"><a href="correlation-and-simple-regression.html#cb686-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>nitrogen, <span class="fu">aes</span>(<span class="at">x=</span>nitro, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
-<span id="cb686-2"><a href="correlation-and-simple-regression.html#cb686-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb688-1"><a href="correlation-and-simple-regression.html#cb688-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>nitrogen, <span class="fu">aes</span>(<span class="at">x=</span>nitro, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
+<span id="cb688-2"><a href="correlation-and-simple-regression.html#cb688-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>We can see that nitrogen waw applied at three rates. It is easy to check these five rates using the unique command in R.</p>
-<div class="sourceCode" id="cb687"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb687-1"><a href="correlation-and-simple-regression.html#cb687-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(nitrogen<span class="sc">$</span>nitro)</span></code></pre></div>
+<div class="sourceCode" id="cb689"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb689-1"><a href="correlation-and-simple-regression.html#cb689-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(nitrogen<span class="sc">$</span>nitro)</span></code></pre></div>
 <pre><code>## [1]  0.0 33.6 67.2</code></pre>
 <p>We can see that the centers of the distribution appear to fall in a straight line, so we are confident we can model the data with simple linear regression.</p>
 </div>
@@ -848,14 +847,14 @@ Where <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)
 <div id="calculating-the-regression-equation" class="section level3" number="10.3.3">
 <h3><span class="header-section-number">10.3.3</span> Calculating the Regression Equation</h3>
 <p>We can easily add a regression line to our scatter plot.</p>
-<div class="sourceCode" id="cb689"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb689-1"><a href="correlation-and-simple-regression.html#cb689-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>nitrogen, <span class="fu">aes</span>(<span class="at">x=</span>nitro, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
-<span id="cb689-2"><a href="correlation-and-simple-regression.html#cb689-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb689-3"><a href="correlation-and-simple-regression.html#cb689-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm, <span class="at">se=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb691"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb691-1"><a href="correlation-and-simple-regression.html#cb691-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>nitrogen, <span class="fu">aes</span>(<span class="at">x=</span>nitro, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
+<span id="cb691-2"><a href="correlation-and-simple-regression.html#cb691-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb691-3"><a href="correlation-and-simple-regression.html#cb691-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm, <span class="at">se=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>The blue line represents the regression model for the relationship between yield and nitro. Of course, it would be nice to see the linear equation as well, which we can estimate using the <em>lm()</em> function of R.</p>
-<div class="sourceCode" id="cb691"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb691-1"><a href="correlation-and-simple-regression.html#cb691-1" aria-hidden="true" tabindex="-1"></a>regression_model <span class="ot">=</span> <span class="fu">lm</span>(yield<span class="sc">~</span>nitro, nitrogen)</span>
-<span id="cb691-2"><a href="correlation-and-simple-regression.html#cb691-2" aria-hidden="true" tabindex="-1"></a>regression_model</span></code></pre></div>
+<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb693-1"><a href="correlation-and-simple-regression.html#cb693-1" aria-hidden="true" tabindex="-1"></a>regression_model <span class="ot">=</span> <span class="fu">lm</span>(yield<span class="sc">~</span>nitro, nitrogen)</span>
+<span id="cb693-2"><a href="correlation-and-simple-regression.html#cb693-2" aria-hidden="true" tabindex="-1"></a>regression_model</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = yield ~ nitro, data = nitrogen)
@@ -876,18 +875,18 @@ Where <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)
 <div id="least-squares-estimate" class="section level3" number="10.3.4">
 <h3><span class="header-section-number">10.3.4</span> Least-Squares Estimate</h3>
 <p>The regression line is fit to the data using a method known as the least-squares estimate. To understand this concept we must recognize the goal of a regression equation is to make the most precise estimate for Y as possible. We are not estimating X, which is already known. Thus, the regression line crosses the data cloud in a way that minimizes the vertical distance (Y-distance) of observations from the regression line. The horizontal distance (X-distance) is not fit by the line.</p>
-<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb693-1"><a href="correlation-and-simple-regression.html#cb693-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Sample data</span></span>
-<span id="cb693-2"><a href="correlation-and-simple-regression.html#cb693-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb693-3"><a href="correlation-and-simple-regression.html#cb693-3" aria-hidden="true" tabindex="-1"></a>nitrogen<span class="sc">$</span>res <span class="ot">&lt;-</span> <span class="fu">residuals</span>(<span class="fu">lm</span>(yield <span class="sc">~</span> nitro, <span class="at">data=</span>nitrogen))</span>
-<span id="cb693-4"><a href="correlation-and-simple-regression.html#cb693-4" aria-hidden="true" tabindex="-1"></a>nitrogen<span class="sc">$</span>pred <span class="ot">=</span> <span class="fu">predict</span>(<span class="fu">lm</span>(yield <span class="sc">~</span> nitro, <span class="at">data=</span>nitrogen))</span>
-<span id="cb693-5"><a href="correlation-and-simple-regression.html#cb693-5" aria-hidden="true" tabindex="-1"></a>nitrogen_final <span class="ot">=</span> nitrogen <span class="sc">%&gt;%</span></span>
-<span id="cb693-6"><a href="correlation-and-simple-regression.html#cb693-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rep2 =</span> <span class="fu">gsub</span>(<span class="st">&quot;R&quot;</span>, <span class="st">&quot;&quot;</span>, rep)) <span class="sc">%&gt;%</span></span>
-<span id="cb693-7"><a href="correlation-and-simple-regression.html#cb693-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rep2 =</span> <span class="fu">as.numeric</span>(rep2)) <span class="sc">%&gt;%</span></span>
-<span id="cb693-8"><a href="correlation-and-simple-regression.html#cb693-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">xpos =</span> nitro <span class="sc">+</span> ((rep2<span class="dv">-2</span>)<span class="sc">*</span><span class="fl">0.8</span>))</span>
-<span id="cb693-9"><a href="correlation-and-simple-regression.html#cb693-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>nitrogen_final, <span class="fu">aes</span>(<span class="at">x=</span>nitro, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
-<span id="cb693-10"><a href="correlation-and-simple-regression.html#cb693-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb693-11"><a href="correlation-and-simple-regression.html#cb693-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb693-12"><a href="correlation-and-simple-regression.html#cb693-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x=</span>xpos, <span class="at">xend=</span>xpos, <span class="at">y=</span>yield, <span class="at">yend=</span>pred, <span class="at">color=</span>rep), <span class="at">size=</span><span class="fl">1.5</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.01</span>, <span class="st">&quot;npc&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb695-1"><a href="correlation-and-simple-regression.html#cb695-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Sample data</span></span>
+<span id="cb695-2"><a href="correlation-and-simple-regression.html#cb695-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb695-3"><a href="correlation-and-simple-regression.html#cb695-3" aria-hidden="true" tabindex="-1"></a>nitrogen<span class="sc">$</span>res <span class="ot">&lt;-</span> <span class="fu">residuals</span>(<span class="fu">lm</span>(yield <span class="sc">~</span> nitro, <span class="at">data=</span>nitrogen))</span>
+<span id="cb695-4"><a href="correlation-and-simple-regression.html#cb695-4" aria-hidden="true" tabindex="-1"></a>nitrogen<span class="sc">$</span>pred <span class="ot">=</span> <span class="fu">predict</span>(<span class="fu">lm</span>(yield <span class="sc">~</span> nitro, <span class="at">data=</span>nitrogen))</span>
+<span id="cb695-5"><a href="correlation-and-simple-regression.html#cb695-5" aria-hidden="true" tabindex="-1"></a>nitrogen_final <span class="ot">=</span> nitrogen <span class="sc">%&gt;%</span></span>
+<span id="cb695-6"><a href="correlation-and-simple-regression.html#cb695-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rep2 =</span> <span class="fu">gsub</span>(<span class="st">&quot;R&quot;</span>, <span class="st">&quot;&quot;</span>, rep)) <span class="sc">%&gt;%</span></span>
+<span id="cb695-7"><a href="correlation-and-simple-regression.html#cb695-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rep2 =</span> <span class="fu">as.numeric</span>(rep2)) <span class="sc">%&gt;%</span></span>
+<span id="cb695-8"><a href="correlation-and-simple-regression.html#cb695-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">xpos =</span> nitro <span class="sc">+</span> ((rep2<span class="dv">-2</span>)<span class="sc">*</span><span class="fl">0.8</span>))</span>
+<span id="cb695-9"><a href="correlation-and-simple-regression.html#cb695-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>nitrogen_final, <span class="fu">aes</span>(<span class="at">x=</span>nitro, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
+<span id="cb695-10"><a href="correlation-and-simple-regression.html#cb695-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb695-11"><a href="correlation-and-simple-regression.html#cb695-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb695-12"><a href="correlation-and-simple-regression.html#cb695-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x=</span>xpos, <span class="at">xend=</span>xpos, <span class="at">y=</span>yield, <span class="at">yend=</span>pred, <span class="at">color=</span>rep), <span class="at">size=</span><span class="fl">1.5</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.01</span>, <span class="st">&quot;npc&quot;</span>)))</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-16-1.png" width="768" /></p>
 <p>In the plot above, the distances of each the four points to the regression line are highlighted by arrows. The arrows are staggered (“jittered,” in plot lingo) so you can see them more easily. Note how the line falls closely to the middle of the points at each level of R.</p>
@@ -911,7 +910,7 @@ In other words, the change in y over the change in y.</p>
 <div id="significance-of-coefficients" class="section level3" number="10.3.5">
 <h3><span class="header-section-number">10.3.5</span> Significance of Coefficients</h3>
 <p>What else can we learn from our linear model? We can use the <em>summary()</em> command in R to get additional information.</p>
-<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb695-1"><a href="correlation-and-simple-regression.html#cb695-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(regression_model)</span></code></pre></div>
+<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb697-1"><a href="correlation-and-simple-regression.html#cb697-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(regression_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = yield ~ nitro, data = nitrogen)
@@ -943,7 +942,7 @@ In other words, the change in y over the change in y.</p>
 <div id="analysis-of-variance-6" class="section level3" number="10.3.6">
 <h3><span class="header-section-number">10.3.6</span> Analysis of Variance</h3>
 <p>Similarly, we can use the <em>summary.aov()</em> command in R to generate an analysis of variance of our results.</p>
-<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb697-1"><a href="correlation-and-simple-regression.html#cb697-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary.aov</span>(regression_model)</span></code></pre></div>
+<div class="sourceCode" id="cb699"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb699-1"><a href="correlation-and-simple-regression.html#cb699-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary.aov</span>(regression_model)</span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value  Pr(&gt;F)   
 ## nitro        1  21.71  21.713   18.08 0.00168 **
 ## Residuals   10  12.01   1.201                   
@@ -956,7 +955,7 @@ In other words, the change in y over the change in y.</p>
 <div id="measuring-model-fit-with-r-square" class="section level3" number="10.3.7">
 <h3><span class="header-section-number">10.3.7</span> Measuring Model Fit with R-Square</h3>
 <p>Let’s return to the summary of the regression model.</p>
-<div class="sourceCode" id="cb699"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb699-1"><a href="correlation-and-simple-regression.html#cb699-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(regression_model)</span></code></pre></div>
+<div class="sourceCode" id="cb701"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb701-1"><a href="correlation-and-simple-regression.html#cb701-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(regression_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = yield ~ nitro, data = nitrogen)
@@ -983,27 +982,27 @@ In other words, the change in y over the change in y.</p>
 <h3><span class="header-section-number">10.3.8</span> Checking whether the Linear Model is Appropriate</h3>
 <p>As stated earlier, the simple linear regression model is a predictive model – that is, it is not only useful for establishing a linear relationship between Y and X – it can also be used under the correct circumstances to predict Y given a known value of X. But while a model can be generated in seconds, there are a couple of cautions we must observe.</p>
 <p>First, we must be sure it was appropriate to fit our data with a linear model. We can do this by plotting the residuals around the regression line. The <em>ggResidpanel</em> package in R allows us to quickly inspect residuals. All we do use run <em>resid_panel()</em> function with two arguments: the name of our model (“regression_model”) and the plot we want (plots = “resid”).</p>
-<div class="sourceCode" id="cb701"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb701-1"><a href="correlation-and-simple-regression.html#cb701-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggResidpanel)</span>
-<span id="cb701-2"><a href="correlation-and-simple-regression.html#cb701-2" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(regression_model, <span class="at">plots =</span> <span class="st">&quot;resid&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb703-1"><a href="correlation-and-simple-regression.html#cb703-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggResidpanel)</span>
+<span id="cb703-2"><a href="correlation-and-simple-regression.html#cb703-2" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(regression_model, <span class="at">plots =</span> <span class="st">&quot;resid&quot;</span>)</span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>In my mind, the residual plot is roughly equivalent to taking the regression plot above and shifting it so the regression line is horizontal. There are a few more differences, however. The horizontal axis is the y-value predicted by the model for each value of x. The vertical axis is the standardized difference (the actual difference divided by the mean standard deviation across all observations) of each observed value from that predicted for it. The better the regression model fits the observations the closer the points will fall to the blue line.</p>
 <p>The key thing we are checking is whether there is any pattern to how the regression line fits the data. Does it tend to overpredict or underpredict the observed values of x? Are the points randomly scattered about the line, or do they seem to form a curve?</p>
 <p>In this example, we only modelled a subset of the nitrogen study data. I intentionally left out the higher rates. Why? Let’s plot the complete dataset.</p>
-<div class="sourceCode" id="cb702"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb702-1"><a href="correlation-and-simple-regression.html#cb702-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agridat)</span>
-<span id="cb702-2"><a href="correlation-and-simple-regression.html#cb702-2" aria-hidden="true" tabindex="-1"></a>complete_nitrogen <span class="ot">=</span> hernandez.nitrogen</span>
-<span id="cb702-3"><a href="correlation-and-simple-regression.html#cb702-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(complete_nitrogen, <span class="fu">aes</span>(<span class="at">x=</span>nitro, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
-<span id="cb702-4"><a href="correlation-and-simple-regression.html#cb702-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb704-1"><a href="correlation-and-simple-regression.html#cb704-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agridat)</span>
+<span id="cb704-2"><a href="correlation-and-simple-regression.html#cb704-2" aria-hidden="true" tabindex="-1"></a>complete_nitrogen <span class="ot">=</span> hernandez.nitrogen</span>
+<span id="cb704-3"><a href="correlation-and-simple-regression.html#cb704-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(complete_nitrogen, <span class="fu">aes</span>(<span class="at">x=</span>nitro, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
+<span id="cb704-4"><a href="correlation-and-simple-regression.html#cb704-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>We can see the complete dataset does not follow a linear pattern. What would a regression line, fit to this data, look like?</p>
-<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb703-1"><a href="correlation-and-simple-regression.html#cb703-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(complete_nitrogen, <span class="fu">aes</span>(<span class="at">x=</span>nitro, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
-<span id="cb703-2"><a href="correlation-and-simple-regression.html#cb703-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb703-3"><a href="correlation-and-simple-regression.html#cb703-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="correlation-and-simple-regression.html#cb705-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(complete_nitrogen, <span class="fu">aes</span>(<span class="at">x=</span>nitro, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
+<span id="cb705-2"><a href="correlation-and-simple-regression.html#cb705-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb705-3"><a href="correlation-and-simple-regression.html#cb705-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>We can see how the regression line appears seems to overpredict the observed values for at low and high values of nitrogen and underpredict the intermediat values.</p>
 <p>What does our regression model look like?</p>
-<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="correlation-and-simple-regression.html#cb705-1" aria-hidden="true" tabindex="-1"></a>bad_model <span class="ot">=</span> <span class="fu">lm</span>(yield<span class="sc">~</span>nitro, <span class="at">data =</span> complete_nitrogen)</span>
-<span id="cb705-2"><a href="correlation-and-simple-regression.html#cb705-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bad_model)</span></code></pre></div>
+<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb707-1"><a href="correlation-and-simple-regression.html#cb707-1" aria-hidden="true" tabindex="-1"></a>bad_model <span class="ot">=</span> <span class="fu">lm</span>(yield<span class="sc">~</span>nitro, <span class="at">data =</span> complete_nitrogen)</span>
+<span id="cb707-2"><a href="correlation-and-simple-regression.html#cb707-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bad_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = yield ~ nitro, data = complete_nitrogen)
@@ -1022,14 +1021,14 @@ In other words, the change in y over the change in y.</p>
 ## Residual standard error: 1.674 on 134 degrees of freedom
 ## Multiple R-squared:  0.5126, Adjusted R-squared:  0.5089 
 ## F-statistic: 140.9 on 1 and 134 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb707-1"><a href="correlation-and-simple-regression.html#cb707-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary.aov</span>(bad_model)</span></code></pre></div>
+<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb709-1"><a href="correlation-and-simple-regression.html#cb709-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary.aov</span>(bad_model)</span></code></pre></div>
 <pre><code>##              Df Sum Sq Mean Sq F value Pr(&gt;F)    
 ## nitro         1  395.1   395.1   140.9 &lt;2e-16 ***
 ## Residuals   134  375.7     2.8                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>The model is still highly significant, even though it is obvious it doesn’t fit the data! Why? Because the simple linear regression model only tests whether the slope is different from zero. Let’s look at the residuals:</p>
-<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb709-1"><a href="correlation-and-simple-regression.html#cb709-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(bad_model, <span class="at">plots=</span><span class="st">&quot;resid&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb711-1"><a href="correlation-and-simple-regression.html#cb711-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(bad_model, <span class="at">plots=</span><span class="st">&quot;resid&quot;</span>)</span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 <p>As we expect, there is a clear pattern to the data. It curves over the regression line and back down again. If we want to model the complete nitrogen response curve, we will need to use a nonlinear model, which we will learn in the next unit.</p>
 </div>
@@ -1038,9 +1037,9 @@ In other words, the change in y over the change in y.</p>
 <h2><span class="header-section-number">10.4</span> Extrapolation</h2>
 <p>The above example also illustrates why we should not extrapolate: because we do not know how the relationship between x and y may change. In addition, the accuracy of the regression model decreases as one moves away from the middle of the regression line.</p>
 <p>Given the uncertainty of the estimated intercept, the entire true regression line may be higher or lower – i.e. every point on the line might be one unit higher or lower than estimated by our estimated regression model. There is also uncertainty in our estimate of slope – the true regression line may have greater or less slope than our estimate. When we combine the two sources of uncertainty, we end up with a plot like this:</p>
-<div class="sourceCode" id="cb710"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb710-1"><a href="correlation-and-simple-regression.html#cb710-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(regression_model, <span class="fu">aes</span>(<span class="at">x=</span>nitro, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
-<span id="cb710-2"><a href="correlation-and-simple-regression.html#cb710-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb710-3"><a href="correlation-and-simple-regression.html#cb710-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb712-1"><a href="correlation-and-simple-regression.html#cb712-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(regression_model, <span class="fu">aes</span>(<span class="at">x=</span>nitro, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
+<span id="cb712-2"><a href="correlation-and-simple-regression.html#cb712-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb712-3"><a href="correlation-and-simple-regression.html#cb712-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <p>The dark grey area around the line represents the standard error of the prediction. The least error in our estimated regression line – and the error in any prediction made from it occurs closer at <span class="math inline">\(\bar{x}\)</span>. As the distance from <span class="math inline">\(\bar{x}\)</span> increases, so does the uncertainty of the Y-value predicted from it. At first, that increase in uncertainty is small, but it increases rapidly as we approach the outer data points fit with the model.</p>
@@ -1055,10 +1054,10 @@ In other words, the change in y over the change in y.</p>
 <h3><span class="header-section-number">10.5.1</span> Case Study: Corn Data</h3>
 <p><em>Allometry</em> is the study of the different parts of an organism an how their sizes are related. In the the word allometry, we can see the root of the word “allocate.” Thus, allometry seeks to understand how the allocation of biomass to one part of an organism may be related to the allocation of biomass to another part. In agronomy, this can provide valuable insight into the relative importance of bigger leaves, taller plants, or larger stalks to grain yield.</p>
 <p>Let’s begin by loading our data. This dataset is a simulated based on statistics published by Fred Warren and Robert Fenley in 1970.</p>
-<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb712-1"><a href="correlation-and-simple-regression.html#cb712-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb712-2"><a href="correlation-and-simple-regression.html#cb712-2" aria-hidden="true" tabindex="-1"></a>allometry <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_allometry.csv&quot;</span>)</span>
-<span id="cb712-3"><a href="correlation-and-simple-regression.html#cb712-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb712-4"><a href="correlation-and-simple-regression.html#cb712-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(allometry)</span></code></pre></div>
+<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="correlation-and-simple-regression.html#cb714-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb714-2"><a href="correlation-and-simple-regression.html#cb714-2" aria-hidden="true" tabindex="-1"></a>allometry <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_allometry.csv&quot;</span>)</span>
+<span id="cb714-3"><a href="correlation-and-simple-regression.html#cb714-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb714-4"><a href="correlation-and-simple-regression.html#cb714-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(allometry)</span></code></pre></div>
 <pre><code>##      yield total_leaves total_leaf_area   height stalk_circ area_highest_leaf
 ## 1 166.0838     76.58265        964.9109 69.57771   2.750763          1219.800
 ## 2 162.2875     79.71361        533.3816 12.48882   2.984688          1051.207
@@ -1067,17 +1066,17 @@ In other words, the change in y over the change in y.</p>
 ## 5 173.1781     82.62165       1258.3317 32.27236   3.755847          1696.366
 ## 6 168.4464     77.50940       1110.5993 25.46963   2.917688          1259.125</code></pre>
 <p>The first thing we want to do is to examine our data with a scatterplot. The quickest way to do this is with the <em>plot()</em> command. This will give us a matrix (a grid) with all possible scatterplots, based on our dataset.</p>
-<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="correlation-and-simple-regression.html#cb714-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(allometry)</span></code></pre></div>
+<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="correlation-and-simple-regression.html#cb716-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(allometry)</span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <p>This is called a <em>scatterplot matrix</em>. The variable listed in each column defines the position of the points on the X axis for every plot in that column. The variable listed in each row defines the position of the points on the Y axis for every plot in that row. So if we look at the plot directly to the right of yield second plot from left in top column column, its Y-axis is yield and its X axis is total leaves (total leaf biomass).</p>
 <p>Of course, this matrix is crowded. If we want to highlight a single scatterplot, we can use ggplot.</p>
-<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb715-1"><a href="correlation-and-simple-regression.html#cb715-1" aria-hidden="true" tabindex="-1"></a>allometry <span class="sc">%&gt;%</span>                                 <span class="co"># the data frame to feed to ggplot</span></span>
-<span id="cb715-2"><a href="correlation-and-simple-regression.html#cb715-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>total_leaves, <span class="at">y=</span>yield)) <span class="sc">+</span>      <span class="co"># tells R where to locate each point</span></span>
-<span id="cb715-3"><a href="correlation-and-simple-regression.html#cb715-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()                                <span class="co"># tells ggplot to plot points instead of another shape (geom)</span></span></code></pre></div>
+<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb717-1"><a href="correlation-and-simple-regression.html#cb717-1" aria-hidden="true" tabindex="-1"></a>allometry <span class="sc">%&gt;%</span>                                 <span class="co"># the data frame to feed to ggplot</span></span>
+<span id="cb717-2"><a href="correlation-and-simple-regression.html#cb717-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>total_leaves, <span class="at">y=</span>yield)) <span class="sc">+</span>      <span class="co"># tells R where to locate each point</span></span>
+<span id="cb717-3"><a href="correlation-and-simple-regression.html#cb717-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()                                <span class="co"># tells ggplot to plot points instead of another shape (geom)</span></span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <p>What can we see in this plot? Yield and total leaves seel to be correlated. As total_leaves increased, so did yield.</p>
 <p>We can quantify the correlation between yield and total leaves using the <em>cor.test()</em> function and the two variables.</p>
-<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="correlation-and-simple-regression.html#cb716-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(allometry<span class="sc">$</span>yield, allometry<span class="sc">$</span>total_leaves)</span></code></pre></div>
+<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb718-1"><a href="correlation-and-simple-regression.html#cb718-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(allometry<span class="sc">$</span>yield, allometry<span class="sc">$</span>total_leaves)</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s product-moment correlation
 ## 
@@ -1091,7 +1090,7 @@ In other words, the change in y over the change in y.</p>
 ## 0.55</code></pre>
 <p>The output looks very similar to the t-test we learned earlier. It lists the measured value for t. It includes the probability that t is zero, which is also the probability that the correlation we measured is equal to zero. It also includes, at the bottom, the correlation coefficient (cor), which in this case is 0.55.</p>
 <p>What if we have a lot of variables? As we did with the scatter plot matrix, we can buid a correlation matrix that shows all the correlations among variables. Again, the code is very simple.</p>
-<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb718-1"><a href="correlation-and-simple-regression.html#cb718-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(allometry)</span></code></pre></div>
+<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="correlation-and-simple-regression.html#cb720-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(allometry)</span></code></pre></div>
 <pre><code>##                   yield total_leaves total_leaf_area    height stalk_circ
 ## yield              1.00    0.5500000       0.7100000 0.5500000  0.4900000
 ## total_leaves       0.55    1.0000000       0.4033716 0.2032565  0.3146973
@@ -1116,7 +1115,7 @@ In other words, the change in y over the change in y.</p>
 <div id="practice-2-2" class="section level3" number="10.5.3">
 <h3><span class="header-section-number">10.5.3</span> Practice 2</h3>
 <p>Using the above dataset, calculate the correlation between height and yield using the cor.test() function. Your estimate for the correlation coefficient (the number at the bottom of the output) should be 0.49.</p>
-<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="correlation-and-simple-regression.html#cb720-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(allometry<span class="sc">$</span>stalk_circ, allometry<span class="sc">$</span>yield)</span></code></pre></div>
+<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="correlation-and-simple-regression.html#cb722-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(allometry<span class="sc">$</span>stalk_circ, allometry<span class="sc">$</span>yield)</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s product-moment correlation
 ## 
@@ -1132,8 +1131,8 @@ In other words, the change in y over the change in y.</p>
 <div id="practice-3-1" class="section level3" number="10.5.4">
 <h3><span class="header-section-number">10.5.4</span> Practice 3</h3>
 <p>Load the dataset “data/corn_fertility.csv.” These data evaluate the response of yield to corn fertility characteristics.</p>
-<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="correlation-and-simple-regression.html#cb722-1" aria-hidden="true" tabindex="-1"></a>fertility <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_fertility.csv&quot;</span>)</span>
-<span id="cb722-2"><a href="correlation-and-simple-regression.html#cb722-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fertility)</span></code></pre></div>
+<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="correlation-and-simple-regression.html#cb724-1" aria-hidden="true" tabindex="-1"></a>fertility <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_fertility.csv&quot;</span>)</span>
+<span id="cb724-2"><a href="correlation-and-simple-regression.html#cb724-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fertility)</span></code></pre></div>
 <pre><code>##      yield organic_matter magnesium     potash phosphorus       pH
 ## 1 166.0838       2.007710 101.87145   7.214161  105.57985 6.287836
 ## 2 162.2875       2.001714 122.71640 163.097239   42.50915 7.304132
@@ -1154,9 +1153,9 @@ In other words, the change in y over the change in y.</p>
 <div id="case-study-corn-allometry" class="section level3" number="10.6.1">
 <h3><span class="header-section-number">10.6.1</span> Case Study: Corn Allometry</h3>
 <p>Using our data from the scatterplots and correlation exercise, we will construct simple linear regression models, evaluate their significance, and write the linear model from its coefficients.</p>
-<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="correlation-and-simple-regression.html#cb724-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb724-2"><a href="correlation-and-simple-regression.html#cb724-2" aria-hidden="true" tabindex="-1"></a>allometry <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_allometry.csv&quot;</span>)</span>
-<span id="cb724-3"><a href="correlation-and-simple-regression.html#cb724-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(allometry)</span></code></pre></div>
+<div class="sourceCode" id="cb726"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb726-1"><a href="correlation-and-simple-regression.html#cb726-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb726-2"><a href="correlation-and-simple-regression.html#cb726-2" aria-hidden="true" tabindex="-1"></a>allometry <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_allometry.csv&quot;</span>)</span>
+<span id="cb726-3"><a href="correlation-and-simple-regression.html#cb726-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(allometry)</span></code></pre></div>
 <pre><code>##      yield total_leaves total_leaf_area   height stalk_circ area_highest_leaf
 ## 1 166.0838     76.58265        964.9109 69.57771   2.750763          1219.800
 ## 2 162.2875     79.71361        533.3816 12.48882   2.984688          1051.207
@@ -1168,20 +1167,20 @@ In other words, the change in y over the change in y.</p>
 <div id="fitting-the-regression-model" class="section level3" number="10.6.2">
 <h3><span class="header-section-number">10.6.2</span> Fitting the regression model</h3>
 <p>The regression model is fit using a very similar approach to that used for the analysis of variance. In fact, the only thing that is different is that we use <em>lm()</em> to define the linear model, instead of <em>aov()</em>. We will model yield as a function of total_leaves (total leaf dry matter).</p>
-<div class="sourceCode" id="cb726"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb726-1"><a href="correlation-and-simple-regression.html#cb726-1" aria-hidden="true" tabindex="-1"></a>model_yield_total_leaves <span class="ot">=</span> <span class="fu">lm</span>(yield <span class="sc">~</span> total_leaves, <span class="at">data=</span>allometry)</span></code></pre></div>
+<div class="sourceCode" id="cb728"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb728-1"><a href="correlation-and-simple-regression.html#cb728-1" aria-hidden="true" tabindex="-1"></a>model_yield_total_leaves <span class="ot">=</span> <span class="fu">lm</span>(yield <span class="sc">~</span> total_leaves, <span class="at">data=</span>allometry)</span></code></pre></div>
 </div>
 <div id="examining-the-residuals" class="section level3" number="10.6.3">
 <h3><span class="header-section-number">10.6.3</span> Examining the residuals</h3>
 <p>An important step that is easy to forget (in fact, I almost did just now) is to plot the residuals. The residuals are the differences between the values predicted by the regression model and the observed values. We observe the residuals to make sure they are randomly distributed around the regression line, represented by the dotted line at Y=0 below. We can use the the <em>plot()</em> function with our model to get the residual plot.</p>
-<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="correlation-and-simple-regression.html#cb727-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_yield_total_leaves, <span class="at">which=</span><span class="dv">1</span>)  <span class="co"># the &quot;which=1&quot; argument tells R to plot the residuals</span></span></code></pre></div>
+<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="correlation-and-simple-regression.html#cb729-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_yield_total_leaves, <span class="at">which=</span><span class="dv">1</span>)  <span class="co"># the &quot;which=1&quot; argument tells R to plot the residuals</span></span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 <p>The red line is not a linear regression line, but a LOESS (locally estimated scatterplot smoothing) – a nonlinear model that can bend to fit the data more closely. If a linear model is appropriate to fit the relationship between Y and X, the red line will be close to (but rarely exactly) linear. The above plot suggests linear regression is appropriate. What we want to beware of is a red line that rises way above zero on either end and dips way below zero in the middle, or vice versa. Those scenarios suggest the relationship between Y and X may be curvedinstead of linear.</p>
 </div>
 <div id="viewing-the-model-coefficients" class="section level3" number="10.6.4">
 <h3><span class="header-section-number">10.6.4</span> Viewing the Model Coefficients</h3>
 <p>A lot of information is included in the linear model output. Rather than wade through it in one big chunck, we will use a package called <em>broom</em> to break it into more digestible pieces. We can use the <em>tidy()</em> format to summarise the coefficients.</p>
-<div class="sourceCode" id="cb728"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb728-1"><a href="correlation-and-simple-regression.html#cb728-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb728-2"><a href="correlation-and-simple-regression.html#cb728-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model_yield_total_leaves)</span></code></pre></div>
+<div class="sourceCode" id="cb730"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb730-1"><a href="correlation-and-simple-regression.html#cb730-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb730-2"><a href="correlation-and-simple-regression.html#cb730-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model_yield_total_leaves)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 5
 ##   term         estimate std.error statistic       p.value
 ##   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
@@ -1194,7 +1193,7 @@ In other words, the change in y over the change in y.</p>
 <div id="more-measures-of-model-fit" class="section level3" number="10.6.5">
 <h3><span class="header-section-number">10.6.5</span> More measures of model fit</h3>
 <p>The <em>anova()</em> function will generate an ANOVA table for our results. We interpret this model the same as we have done previously.</p>
-<div class="sourceCode" id="cb730"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb730-1"><a href="correlation-and-simple-regression.html#cb730-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_yield_total_leaves)</span></code></pre></div>
+<div class="sourceCode" id="cb732"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb732-1"><a href="correlation-and-simple-regression.html#cb732-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_yield_total_leaves)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: yield
@@ -1206,7 +1205,7 @@ In other words, the change in y over the change in y.</p>
 <p>The F-value is the ratio of the variance explained by our model to the variance explained by random variation among individuals. In this case, total_leaves is our independent variable. Since our model is based on a regression line, it only has one degree of freedom. This is because if we know the slope and any one point on that line, we can predict its y-value of any point as long as we know its x value. Don’t get hung up on this – just know that the linear model is supposed to have 1 degree of freedom.</p>
 <p>Our F-value is large and the probability of encountering that an F-value that large by chance is given by Pr(&gt;F). That value is very low, so we conclude our model explains a significant amount of the observed variation. You may also not that the p.value for the slope of the regression model and the Pr(&gt;F) above are identical – 3.083-09. This is because the significance of the model is based entirely on the significance of the slope.</p>
 <p>One other important statistic can be gotten from the <em>glance()</em> function. We are interested in the statistic all the way to the left: r.squared.</p>
-<div class="sourceCode" id="cb732"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb732-1"><a href="correlation-and-simple-regression.html#cb732-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(model_yield_total_leaves)</span></code></pre></div>
+<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="correlation-and-simple-regression.html#cb734-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(model_yield_total_leaves)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 12
 ##   r.squared adj.r.squared sigma statistic       p.value    df logLik   AIC   BIC
 ##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1228,8 +1227,8 @@ In other words, the change in y over the change in y.</p>
 <div id="practice-2-3" class="section level3" number="10.6.7">
 <h3><span class="header-section-number">10.6.7</span> Practice 2</h3>
 <p>Now lets work with our corn fertility data.</p>
-<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="correlation-and-simple-regression.html#cb734-1" aria-hidden="true" tabindex="-1"></a>fertility <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_fertility.csv&quot;</span>)</span>
-<span id="cb734-2"><a href="correlation-and-simple-regression.html#cb734-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fertility)</span></code></pre></div>
+<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="correlation-and-simple-regression.html#cb736-1" aria-hidden="true" tabindex="-1"></a>fertility <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_fertility.csv&quot;</span>)</span>
+<span id="cb736-2"><a href="correlation-and-simple-regression.html#cb736-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fertility)</span></code></pre></div>
 <pre><code>##      yield organic_matter magnesium     potash phosphorus       pH
 ## 1 166.0838       2.007710 101.87145   7.214161  105.57985 6.287836
 ## 2 162.2875       2.001714 122.71640 163.097239   42.50915 7.304132
@@ -1242,7 +1241,7 @@ In other words, the change in y over the change in y.</p>
 <p><img src="data-unit-10/exercise_images/organic_matter_residuals.png" /></p>
 <p>What do you notice about the residuals? Is there strong indiciation that a linear model might be inappropriate?</p>
 <p>Next, let’s view the model coefficients</p>
-<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="correlation-and-simple-regression.html#cb736-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
+<div class="sourceCode" id="cb738"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb738-1"><a href="correlation-and-simple-regression.html#cb738-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
 <p>What do you notice about the relationship between yield and organic matter? Is it significant? Does yield increase or decrease with organic matter?</p>
 <p>Using the coefficients above, write the regression model.</p>
 <p>Use the glance() function to develop additional model fit statistics.</p>
@@ -1255,9 +1254,9 @@ In other words, the change in y over the change in y.</p>
 <div id="case-study-7" class="section level3" number="10.7.1">
 <h3><span class="header-section-number">10.7.1</span> Case Study</h3>
 <p>We will continue to work with our corn allometry dataset.</p>
-<div class="sourceCode" id="cb737"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb737-1"><a href="correlation-and-simple-regression.html#cb737-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb737-2"><a href="correlation-and-simple-regression.html#cb737-2" aria-hidden="true" tabindex="-1"></a>allometry <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_allometry.csv&quot;</span>)</span>
-<span id="cb737-3"><a href="correlation-and-simple-regression.html#cb737-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(allometry)</span></code></pre></div>
+<div class="sourceCode" id="cb739"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb739-1"><a href="correlation-and-simple-regression.html#cb739-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb739-2"><a href="correlation-and-simple-regression.html#cb739-2" aria-hidden="true" tabindex="-1"></a>allometry <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_allometry.csv&quot;</span>)</span>
+<span id="cb739-3"><a href="correlation-and-simple-regression.html#cb739-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(allometry)</span></code></pre></div>
 <pre><code>##      yield total_leaves total_leaf_area   height stalk_circ area_highest_leaf
 ## 1 166.0838     76.58265        964.9109 69.57771   2.750763          1219.800
 ## 2 162.2875     79.71361        533.3816 12.48882   2.984688          1051.207
@@ -1269,17 +1268,17 @@ In other words, the change in y over the change in y.</p>
 <div id="creating-and-testing-our-model" class="section level3" number="10.7.2">
 <h3><span class="header-section-number">10.7.2</span> Creating and Testing our Model</h3>
 <p>What effect does stalk circumference have on yield? Let’s find out.</p>
-<div class="sourceCode" id="cb739"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb739-1"><a href="correlation-and-simple-regression.html#cb739-1" aria-hidden="true" tabindex="-1"></a>model_circumference <span class="ot">=</span> <span class="fu">lm</span>(yield <span class="sc">~</span> stalk_circ, <span class="at">data=</span>allometry)</span></code></pre></div>
+<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="correlation-and-simple-regression.html#cb741-1" aria-hidden="true" tabindex="-1"></a>model_circumference <span class="ot">=</span> <span class="fu">lm</span>(yield <span class="sc">~</span> stalk_circ, <span class="at">data=</span>allometry)</span></code></pre></div>
 <p>We will again us tools from the <em>broom()</em> package to present clear results. First, we examine our coefficients.</p>
-<div class="sourceCode" id="cb740"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb740-1"><a href="correlation-and-simple-regression.html#cb740-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb740-2"><a href="correlation-and-simple-regression.html#cb740-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model_circumference)</span></code></pre></div>
+<div class="sourceCode" id="cb742"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb742-1"><a href="correlation-and-simple-regression.html#cb742-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb742-2"><a href="correlation-and-simple-regression.html#cb742-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model_circumference)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 5
 ##   term        estimate std.error statistic  p.value
 ##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 (Intercept)   157.       1.60      97.9  1.52e-99
 ## 2 stalk_circ      3.20     0.575      5.56 2.29e- 7</code></pre>
 <p>We see the slope of our model is significantly different than zero. There is a significant relationship between stalk circumference and yield. How strong is this relationship?</p>
-<div class="sourceCode" id="cb742"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb742-1"><a href="correlation-and-simple-regression.html#cb742-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(model_circumference)</span></code></pre></div>
+<div class="sourceCode" id="cb744"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb744-1"><a href="correlation-and-simple-regression.html#cb744-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(model_circumference)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 12
 ##   r.squared adj.r.squared sigma statistic     p.value    df logLik   AIC   BIC
 ##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1290,10 +1289,10 @@ In other words, the change in y over the change in y.</p>
 <div id="visualizing-the-regression-model" class="section level3" number="10.7.3">
 <h3><span class="header-section-number">10.7.3</span> Visualizing the Regression Model</h3>
 <p>Let’s visualize this relationship using <em>ggplot()</em>.</p>
-<div class="sourceCode" id="cb744"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb744-1"><a href="correlation-and-simple-regression.html#cb744-1" aria-hidden="true" tabindex="-1"></a>model_circumference <span class="sc">%&gt;%</span></span>
-<span id="cb744-2"><a href="correlation-and-simple-regression.html#cb744-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>stalk_circ, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
-<span id="cb744-3"><a href="correlation-and-simple-regression.html#cb744-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb744-4"><a href="correlation-and-simple-regression.html#cb744-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="correlation-and-simple-regression.html#cb746-1" aria-hidden="true" tabindex="-1"></a>model_circumference <span class="sc">%&gt;%</span></span>
+<span id="cb746-2"><a href="correlation-and-simple-regression.html#cb746-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>stalk_circ, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
+<span id="cb746-3"><a href="correlation-and-simple-regression.html#cb746-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb746-4"><a href="correlation-and-simple-regression.html#cb746-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
 <p>Above, we first created a scatter plot, based on the stalk circumference and yield associated with each observation. The first two lines of plot creation, ggplot() and geom_point() shoud be increasingly familiar to you.</p>
@@ -1304,14 +1303,14 @@ In other words, the change in y over the change in y.</p>
 <h3><span class="header-section-number">10.7.4</span> Making Predictions with the Regression Model</h3>
 <p>Once we have defined a simple linear regression model, it is easy to make predictions with it.</p>
 <p>First, we need to create a new data frame with the values of stalk circumference for which we want to make predictions. We use the <em>data.frame()</em> function to create the data.frame. Next, we define the first column of the data.frame, stalk_circ. We define it as having 5 values, from 1.5 to 3.5</p>
-<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="correlation-and-simple-regression.html#cb746-1" aria-hidden="true" tabindex="-1"></a>new_stalk_data <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
-<span id="cb746-2"><a href="correlation-and-simple-regression.html#cb746-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">stalk_circ=</span><span class="fu">c</span>(<span class="fl">1.5</span>,</span>
-<span id="cb746-3"><a href="correlation-and-simple-regression.html#cb746-3" aria-hidden="true" tabindex="-1"></a>               <span class="fl">2.0</span>,</span>
-<span id="cb746-4"><a href="correlation-and-simple-regression.html#cb746-4" aria-hidden="true" tabindex="-1"></a>               <span class="fl">2.5</span>,</span>
-<span id="cb746-5"><a href="correlation-and-simple-regression.html#cb746-5" aria-hidden="true" tabindex="-1"></a>               <span class="fl">3.0</span>,</span>
-<span id="cb746-6"><a href="correlation-and-simple-regression.html#cb746-6" aria-hidden="true" tabindex="-1"></a>               <span class="fl">3.5</span>))</span>
-<span id="cb746-7"><a href="correlation-and-simple-regression.html#cb746-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb746-8"><a href="correlation-and-simple-regression.html#cb746-8" aria-hidden="true" tabindex="-1"></a>new_stalk_data</span></code></pre></div>
+<div class="sourceCode" id="cb748"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb748-1"><a href="correlation-and-simple-regression.html#cb748-1" aria-hidden="true" tabindex="-1"></a>new_stalk_data <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb748-2"><a href="correlation-and-simple-regression.html#cb748-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">stalk_circ=</span><span class="fu">c</span>(<span class="fl">1.5</span>,</span>
+<span id="cb748-3"><a href="correlation-and-simple-regression.html#cb748-3" aria-hidden="true" tabindex="-1"></a>               <span class="fl">2.0</span>,</span>
+<span id="cb748-4"><a href="correlation-and-simple-regression.html#cb748-4" aria-hidden="true" tabindex="-1"></a>               <span class="fl">2.5</span>,</span>
+<span id="cb748-5"><a href="correlation-and-simple-regression.html#cb748-5" aria-hidden="true" tabindex="-1"></a>               <span class="fl">3.0</span>,</span>
+<span id="cb748-6"><a href="correlation-and-simple-regression.html#cb748-6" aria-hidden="true" tabindex="-1"></a>               <span class="fl">3.5</span>))</span>
+<span id="cb748-7"><a href="correlation-and-simple-regression.html#cb748-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb748-8"><a href="correlation-and-simple-regression.html#cb748-8" aria-hidden="true" tabindex="-1"></a>new_stalk_data</span></code></pre></div>
 <pre><code>##   stalk_circ
 ## 1        1.5
 ## 2        2.0
@@ -1319,13 +1318,13 @@ In other words, the change in y over the change in y.</p>
 ## 4        3.0
 ## 5        3.5</code></pre>
 <p>That was probably the hardest part of the prediction. Now, all we need to do is run the <em>predict()</em> function. This function takes two arguments: 1) the name of the linear model we have developed, and 2) the name of the data.frame with the new values of stalk_circ.</p>
-<div class="sourceCode" id="cb748"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb748-1"><a href="correlation-and-simple-regression.html#cb748-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model_circumference, new_stalk_data)</span></code></pre></div>
+<div class="sourceCode" id="cb750"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb750-1"><a href="correlation-and-simple-regression.html#cb750-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model_circumference, new_stalk_data)</span></code></pre></div>
 <pre><code>##        1        2        3        4        5 
 ## 161.6444 163.2436 164.8429 166.4422 168.0415</code></pre>
 <p>We can also assign these values to a new column in our new_stalk_data dataframe.</p>
-<div class="sourceCode" id="cb750"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb750-1"><a href="correlation-and-simple-regression.html#cb750-1" aria-hidden="true" tabindex="-1"></a>new_stalk_data<span class="sc">$</span>yield <span class="ot">=</span> <span class="fu">predict</span>(model_circumference, new_stalk_data)</span>
-<span id="cb750-2"><a href="correlation-and-simple-regression.html#cb750-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb750-3"><a href="correlation-and-simple-regression.html#cb750-3" aria-hidden="true" tabindex="-1"></a>new_stalk_data</span></code></pre></div>
+<div class="sourceCode" id="cb752"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb752-1"><a href="correlation-and-simple-regression.html#cb752-1" aria-hidden="true" tabindex="-1"></a>new_stalk_data<span class="sc">$</span>yield <span class="ot">=</span> <span class="fu">predict</span>(model_circumference, new_stalk_data)</span>
+<span id="cb752-2"><a href="correlation-and-simple-regression.html#cb752-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb752-3"><a href="correlation-and-simple-regression.html#cb752-3" aria-hidden="true" tabindex="-1"></a>new_stalk_data</span></code></pre></div>
 <pre><code>##   stalk_circ    yield
 ## 1        1.5 161.6444
 ## 2        2.0 163.2436
@@ -1333,9 +1332,9 @@ In other words, the change in y over the change in y.</p>
 ## 4        3.0 166.4422
 ## 5        3.5 168.0415</code></pre>
 <p>Finally, we can plot these new values using <em>ggplot()</em></p>
-<div class="sourceCode" id="cb752"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb752-1"><a href="correlation-and-simple-regression.html#cb752-1" aria-hidden="true" tabindex="-1"></a>new_stalk_data <span class="sc">%&gt;%</span></span>
-<span id="cb752-2"><a href="correlation-and-simple-regression.html#cb752-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>stalk_circ, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
-<span id="cb752-3"><a href="correlation-and-simple-regression.html#cb752-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb754"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb754-1"><a href="correlation-and-simple-regression.html#cb754-1" aria-hidden="true" tabindex="-1"></a>new_stalk_data <span class="sc">%&gt;%</span></span>
+<span id="cb754-2"><a href="correlation-and-simple-regression.html#cb754-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>stalk_circ, <span class="at">y=</span>yield)) <span class="sc">+</span></span>
+<span id="cb754-3"><a href="correlation-and-simple-regression.html#cb754-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="10-Correlation-and_Simple-Regression_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
 </div>
 <div id="practice-1-4" class="section level3" number="10.7.5">
@@ -1351,29 +1350,29 @@ In other words, the change in y over the change in y.</p>
 <ol start="4" style="list-style-type: decimal">
 <li>Make predictions for the five new leaf area values in the new_leaf_area data.frame</li>
 </ol>
-<div class="sourceCode" id="cb753"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb753-1"><a href="correlation-and-simple-regression.html#cb753-1" aria-hidden="true" tabindex="-1"></a>new_leaf_area <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
-<span id="cb753-2"><a href="correlation-and-simple-regression.html#cb753-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">area_highest_leaf =</span> <span class="fu">c</span>(<span class="dv">900</span>,</span>
-<span id="cb753-3"><a href="correlation-and-simple-regression.html#cb753-3" aria-hidden="true" tabindex="-1"></a>                        <span class="dv">1000</span>,</span>
-<span id="cb753-4"><a href="correlation-and-simple-regression.html#cb753-4" aria-hidden="true" tabindex="-1"></a>                        <span class="dv">1100</span>,</span>
-<span id="cb753-5"><a href="correlation-and-simple-regression.html#cb753-5" aria-hidden="true" tabindex="-1"></a>                        <span class="dv">1200</span>,</span>
-<span id="cb753-6"><a href="correlation-and-simple-regression.html#cb753-6" aria-hidden="true" tabindex="-1"></a>                        <span class="dv">1300</span></span>
-<span id="cb753-7"><a href="correlation-and-simple-regression.html#cb753-7" aria-hidden="true" tabindex="-1"></a>                        )</span>
-<span id="cb753-8"><a href="correlation-and-simple-regression.html#cb753-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb753-9"><a href="correlation-and-simple-regression.html#cb753-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb753-10"><a href="correlation-and-simple-regression.html#cb753-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Your new table should look like:</span></span>
-<span id="cb753-11"><a href="correlation-and-simple-regression.html#cb753-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
-<span id="cb753-12"><a href="correlation-and-simple-regression.html#cb753-12" aria-hidden="true" tabindex="-1"></a><span class="co"># area_highest_leaf yield</span></span>
-<span id="cb753-13"><a href="correlation-and-simple-regression.html#cb753-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 900   159.2116</span></span>
-<span id="cb753-14"><a href="correlation-and-simple-regression.html#cb753-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 1000  160.7872</span></span>
-<span id="cb753-15"><a href="correlation-and-simple-regression.html#cb753-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 1100  162.3629</span></span>
-<span id="cb753-16"><a href="correlation-and-simple-regression.html#cb753-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 1200  163.9385</span></span>
-<span id="cb753-17"><a href="correlation-and-simple-regression.html#cb753-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 1300  165.5141  </span></span></code></pre></div>
+<div class="sourceCode" id="cb755"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb755-1"><a href="correlation-and-simple-regression.html#cb755-1" aria-hidden="true" tabindex="-1"></a>new_leaf_area <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb755-2"><a href="correlation-and-simple-regression.html#cb755-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">area_highest_leaf =</span> <span class="fu">c</span>(<span class="dv">900</span>,</span>
+<span id="cb755-3"><a href="correlation-and-simple-regression.html#cb755-3" aria-hidden="true" tabindex="-1"></a>                        <span class="dv">1000</span>,</span>
+<span id="cb755-4"><a href="correlation-and-simple-regression.html#cb755-4" aria-hidden="true" tabindex="-1"></a>                        <span class="dv">1100</span>,</span>
+<span id="cb755-5"><a href="correlation-and-simple-regression.html#cb755-5" aria-hidden="true" tabindex="-1"></a>                        <span class="dv">1200</span>,</span>
+<span id="cb755-6"><a href="correlation-and-simple-regression.html#cb755-6" aria-hidden="true" tabindex="-1"></a>                        <span class="dv">1300</span></span>
+<span id="cb755-7"><a href="correlation-and-simple-regression.html#cb755-7" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb755-8"><a href="correlation-and-simple-regression.html#cb755-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb755-9"><a href="correlation-and-simple-regression.html#cb755-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb755-10"><a href="correlation-and-simple-regression.html#cb755-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Your new table should look like:</span></span>
+<span id="cb755-11"><a href="correlation-and-simple-regression.html#cb755-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
+<span id="cb755-12"><a href="correlation-and-simple-regression.html#cb755-12" aria-hidden="true" tabindex="-1"></a><span class="co"># area_highest_leaf yield</span></span>
+<span id="cb755-13"><a href="correlation-and-simple-regression.html#cb755-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 900   159.2116</span></span>
+<span id="cb755-14"><a href="correlation-and-simple-regression.html#cb755-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 1000  160.7872</span></span>
+<span id="cb755-15"><a href="correlation-and-simple-regression.html#cb755-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 1100  162.3629</span></span>
+<span id="cb755-16"><a href="correlation-and-simple-regression.html#cb755-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 1200  163.9385</span></span>
+<span id="cb755-17"><a href="correlation-and-simple-regression.html#cb755-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 1300  165.5141  </span></span></code></pre></div>
 </div>
 <div id="practice-2-4" class="section level3" number="10.7.6">
 <h3><span class="header-section-number">10.7.6</span> Practice 2</h3>
 <p>We will work with the corn fertility dataset once more.</p>
-<div class="sourceCode" id="cb754"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb754-1"><a href="correlation-and-simple-regression.html#cb754-1" aria-hidden="true" tabindex="-1"></a>fertility <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_fertility.csv&quot;</span>)</span>
-<span id="cb754-2"><a href="correlation-and-simple-regression.html#cb754-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fertility)</span></code></pre></div>
+<div class="sourceCode" id="cb756"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb756-1"><a href="correlation-and-simple-regression.html#cb756-1" aria-hidden="true" tabindex="-1"></a>fertility <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-10/exercise_data/corn_fertility.csv&quot;</span>)</span>
+<span id="cb756-2"><a href="correlation-and-simple-regression.html#cb756-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fertility)</span></code></pre></div>
 <pre><code>##      yield organic_matter magnesium     potash phosphorus       pH
 ## 1 166.0838       2.007710 101.87145   7.214161  105.57985 6.287836
 ## 2 162.2875       2.001714 122.71640 163.097239   42.50915 7.304132
@@ -1391,26 +1390,26 @@ In other words, the change in y over the change in y.</p>
 <ol start="4" style="list-style-type: decimal">
 <li>Make predictions for the five new organic matter values in the new_om data.frame</li>
 </ol>
-<div class="sourceCode" id="cb756"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb756-1"><a href="correlation-and-simple-regression.html#cb756-1" aria-hidden="true" tabindex="-1"></a>new_om <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
-<span id="cb756-2"><a href="correlation-and-simple-regression.html#cb756-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">organic_matter =</span> <span class="fu">c</span>(<span class="fl">1.5</span>,</span>
-<span id="cb756-3"><a href="correlation-and-simple-regression.html#cb756-3" aria-hidden="true" tabindex="-1"></a>                     <span class="fl">1.8</span>,</span>
-<span id="cb756-4"><a href="correlation-and-simple-regression.html#cb756-4" aria-hidden="true" tabindex="-1"></a>                     <span class="fl">2.1</span>,</span>
-<span id="cb756-5"><a href="correlation-and-simple-regression.html#cb756-5" aria-hidden="true" tabindex="-1"></a>                     <span class="fl">2.4</span>,</span>
-<span id="cb756-6"><a href="correlation-and-simple-regression.html#cb756-6" aria-hidden="true" tabindex="-1"></a>                     <span class="fl">2.7</span></span>
-<span id="cb756-7"><a href="correlation-and-simple-regression.html#cb756-7" aria-hidden="true" tabindex="-1"></a>                     )</span>
-<span id="cb756-8"><a href="correlation-and-simple-regression.html#cb756-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb756-9"><a href="correlation-and-simple-regression.html#cb756-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb756-10"><a href="correlation-and-simple-regression.html#cb756-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb756-11"><a href="correlation-and-simple-regression.html#cb756-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb756-12"><a href="correlation-and-simple-regression.html#cb756-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Your new table should look like:</span></span>
-<span id="cb756-13"><a href="correlation-and-simple-regression.html#cb756-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
-<span id="cb756-14"><a href="correlation-and-simple-regression.html#cb756-14" aria-hidden="true" tabindex="-1"></a><span class="co"># organic_matter    yield</span></span>
-<span id="cb756-15"><a href="correlation-and-simple-regression.html#cb756-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 1.5   168.2745</span></span>
-<span id="cb756-16"><a href="correlation-and-simple-regression.html#cb756-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 1.8   166.4925</span></span>
-<span id="cb756-17"><a href="correlation-and-simple-regression.html#cb756-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.1   164.7104</span></span>
-<span id="cb756-18"><a href="correlation-and-simple-regression.html#cb756-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.4   162.9283</span></span>
-<span id="cb756-19"><a href="correlation-and-simple-regression.html#cb756-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.7   161.1463  </span></span>
-<span id="cb756-20"><a href="correlation-and-simple-regression.html#cb756-20" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span></code></pre></div>
+<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb758-1"><a href="correlation-and-simple-regression.html#cb758-1" aria-hidden="true" tabindex="-1"></a>new_om <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb758-2"><a href="correlation-and-simple-regression.html#cb758-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">organic_matter =</span> <span class="fu">c</span>(<span class="fl">1.5</span>,</span>
+<span id="cb758-3"><a href="correlation-and-simple-regression.html#cb758-3" aria-hidden="true" tabindex="-1"></a>                     <span class="fl">1.8</span>,</span>
+<span id="cb758-4"><a href="correlation-and-simple-regression.html#cb758-4" aria-hidden="true" tabindex="-1"></a>                     <span class="fl">2.1</span>,</span>
+<span id="cb758-5"><a href="correlation-and-simple-regression.html#cb758-5" aria-hidden="true" tabindex="-1"></a>                     <span class="fl">2.4</span>,</span>
+<span id="cb758-6"><a href="correlation-and-simple-regression.html#cb758-6" aria-hidden="true" tabindex="-1"></a>                     <span class="fl">2.7</span></span>
+<span id="cb758-7"><a href="correlation-and-simple-regression.html#cb758-7" aria-hidden="true" tabindex="-1"></a>                     )</span>
+<span id="cb758-8"><a href="correlation-and-simple-regression.html#cb758-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb758-9"><a href="correlation-and-simple-regression.html#cb758-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb758-10"><a href="correlation-and-simple-regression.html#cb758-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb758-11"><a href="correlation-and-simple-regression.html#cb758-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb758-12"><a href="correlation-and-simple-regression.html#cb758-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Your new table should look like:</span></span>
+<span id="cb758-13"><a href="correlation-and-simple-regression.html#cb758-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
+<span id="cb758-14"><a href="correlation-and-simple-regression.html#cb758-14" aria-hidden="true" tabindex="-1"></a><span class="co"># organic_matter    yield</span></span>
+<span id="cb758-15"><a href="correlation-and-simple-regression.html#cb758-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 1.5   168.2745</span></span>
+<span id="cb758-16"><a href="correlation-and-simple-regression.html#cb758-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 1.8   166.4925</span></span>
+<span id="cb758-17"><a href="correlation-and-simple-regression.html#cb758-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.1   164.7104</span></span>
+<span id="cb758-18"><a href="correlation-and-simple-regression.html#cb758-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.4   162.9283</span></span>
+<span id="cb758-19"><a href="correlation-and-simple-regression.html#cb758-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.7   161.1463  </span></span>
+<span id="cb758-20"><a href="correlation-and-simple-regression.html#cb758-20" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span></code></pre></div>
 
 </div>
 </div>

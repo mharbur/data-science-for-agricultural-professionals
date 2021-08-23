@@ -69,7 +69,7 @@
 <script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
 <script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
 <script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script>
-<script src="libs/stars-1/data_stars_stars3db918.txt"></script>
+<script src="libs/stars-1/data_stars_starsf0cb2a.txt"></script>
 <script src="libs/joda-0.0.1/joda.js"></script>
 <script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
 
@@ -172,7 +172,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.4" data-path="population-statistics.html"><a href="population-statistics.html#measures-of-center"><i class="fa fa-check"></i><b>1.3.4</b> Measures of Center</a></li>
 <li class="chapter" data-level="1.3.5" data-path="population-statistics.html"><a href="population-statistics.html#measures-of-dispersion"><i class="fa fa-check"></i><b>1.3.5</b> Measures of Dispersion</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="population-statistics.html"><a href="population-statistics.html#section"><i class="fa fa-check"></i><b>1.4</b> </a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html"><i class="fa fa-check"></i><b>2</b> Distributions and Probability</a>
 <ul>
@@ -924,9 +923,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Adjust those two inputs and observe the change in the response curve. In addition, adjust the desired level of significance and obsere how the shaded area changes. Please ignore the different color ranges under the curve when you see them: any shaded area under the curve indicates significance.</p>
 <p>The F-distribution is one-tailed – we are only interested in the proportion remaining in the upper tail. If we were to visualize the boundary for the areas representing <span class="math inline">\(P\ge0.05\)</span> for our example above, we would test whether F was in the following portion of the tail.</p>
 <p>As we can see, our observed F of 38.4 is much greater than what we would need for significance at <span class="math inline">\(P\ge0.05\)</span>. What about <span class="math inline">\(P\ge0.01\)</span>?</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="multiple-treatment-trials.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span>
-<span id="cb207-2"><a href="multiple-treatment-trials.html#cb207-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb207-3"><a href="multiple-treatment-trials.html#cb207-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dist_f</span>(<span class="at">p =</span> <span class="fl">0.01</span>, <span class="at">deg.f1 =</span> <span class="dv">3</span>, <span class="at">deg.f2 =</span> <span class="dv">12</span>, <span class="at">xmax =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="multiple-treatment-trials.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span></code></pre></div>
+<pre><code>## Install package &quot;strengejacke&quot; from GitHub (`devtools::install_github(&quot;strengejacke/strengejacke&quot;)`) to load all sj-packages at once!</code></pre>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="multiple-treatment-trials.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dist_f</span>(<span class="at">p =</span> <span class="fl">0.01</span>, <span class="at">deg.f1 =</span> <span class="dv">3</span>, <span class="at">deg.f2 =</span> <span class="dv">12</span>, <span class="at">xmax =</span> <span class="dv">10</span>)</span></code></pre></div>
 <p><img src="06-Multiple-Treatment-Trials_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Our value is also way beyond the F-value we would need for <span class="math inline">\(P\ge0.05\)</span>.</p>
 </div>
@@ -946,8 +945,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 In this unit we were introduced to the Analysis of Variance (ANOVA) and the most basic experimental design, the Completely Randomized Design. Running an analysis of variance for this trial is very easy, as we will now see.</p>
 <div id="case-study-barley" class="section level3" number="6.6.1">
 <h3><span class="header-section-number">6.6.1</span> Case Study: Barley</h3>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="multiple-treatment-trials.html#cb208-1" aria-hidden="true" tabindex="-1"></a>barley_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-6/exercise_data/barley_crd.csv&quot;</span>)</span>
-<span id="cb208-2"><a href="multiple-treatment-trials.html#cb208-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(barley_data)</span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="multiple-treatment-trials.html#cb210-1" aria-hidden="true" tabindex="-1"></a>barley_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-6/exercise_data/barley_crd.csv&quot;</span>)</span>
+<span id="cb210-2"><a href="multiple-treatment-trials.html#cb210-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(barley_data)</span></code></pre></div>
 <pre><code>##   rep gen yield
 ## 1  S1 G01  0.05
 ## 2  S1 G02  0.00
@@ -959,9 +958,9 @@ In this unit we were introduced to the Analysis of Variance (ANOVA) and the most
 <div id="anova" class="section level3" number="6.6.2">
 <h3><span class="header-section-number">6.6.2</span> ANOVA</h3>
 <p>There are two steps to conducting a basic ANOVA analysis. First, define the model. We will use the <em>lm()</em> function to create a linear model. We need to provide two arguments to lm(). First, the model itself. We are going to model yield as a function of gen, that is, that yield differs among levels of gen. We express this as “yield~gen” The second argument is simply the dataset in which these variables are located: “barley.”</p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="multiple-treatment-trials.html#cb210-1" aria-hidden="true" tabindex="-1"></a>barley_model <span class="ot">=</span> <span class="fu">lm</span>(yield<span class="sc">~</span>gen, <span class="at">data =</span> barley_data)</span></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="multiple-treatment-trials.html#cb212-1" aria-hidden="true" tabindex="-1"></a>barley_model <span class="ot">=</span> <span class="fu">lm</span>(yield<span class="sc">~</span>gen, <span class="at">data =</span> barley_data)</span></code></pre></div>
 <p>The second step is to use the command <em>anova()</em> to generate an ANOVA table from the model.</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="multiple-treatment-trials.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(barley_model)</span></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="multiple-treatment-trials.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(barley_model)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: yield
@@ -981,15 +980,15 @@ In this unit we were introduced to the Analysis of Variance (ANOVA) and the most
 <p>So the CV is equal to:
 <span class="math display">\[CV = \frac{\sqrt{605.2}}{20.71} = \frac{24.60}{20.71} = 118.75 \]</span>
 We can quickly calculate this for any model we create using the <em>cv.model()</em> function in the <em>agricolae</em> package.</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="multiple-treatment-trials.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
-<span id="cb213-2"><a href="multiple-treatment-trials.html#cb213-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cv.model</span>(barley_model)</span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="multiple-treatment-trials.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
+<span id="cb215-2"><a href="multiple-treatment-trials.html#cb215-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cv.model</span>(barley_model)</span></code></pre></div>
 <pre><code>## [1] 118.7551</code></pre>
 <p>This is a really, really large CV. In fact, I checked my math a few times before I accepted it was correct. In corn research, I like to see a CV below 10. For soybean I prefer a CV below 5. Any greater than that, and a trial will be closely examined and potentially excluded from analysis. Before using a CV to evaluate the quality of a trial, however, you should be familiar with CVs experienced by previous researchers in your discipline.</p>
 </div>
 <div id="practice-beet-data" class="section level3" number="6.6.4">
 <h3><span class="header-section-number">6.6.4</span> Practice: Beet Data</h3>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="multiple-treatment-trials.html#cb215-1" aria-hidden="true" tabindex="-1"></a>beet_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-6/exercise_data/beets_crd.csv&quot;</span>)</span>
-<span id="cb215-2"><a href="multiple-treatment-trials.html#cb215-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(beet_data)</span></code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="multiple-treatment-trials.html#cb217-1" aria-hidden="true" tabindex="-1"></a>beet_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-6/exercise_data/beets_crd.csv&quot;</span>)</span>
+<span id="cb217-2"><a href="multiple-treatment-trials.html#cb217-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(beet_data)</span></code></pre></div>
 <pre><code>##   plot fert yield
 ## 1    1 None  2.45
 ## 2    2    P  6.71
@@ -998,15 +997,15 @@ We can quickly calculate this for any model we create using the <em>cv.model()</
 ## 5    5   PN  6.48
 ## 6    6   KN  3.70</code></pre>
 <p>Model the relationship of yield and fert by completing the analysis of variance below. Your Pr(&gt;F) for fert should be 1.299e-10. You will need to “uncomment” (delete the hashtags) to run this code.</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="multiple-treatment-trials.html#cb217-1" aria-hidden="true" tabindex="-1"></a><span class="co"># beet_model = lm( , data = )</span></span>
-<span id="cb217-2"><a href="multiple-treatment-trials.html#cb217-2" aria-hidden="true" tabindex="-1"></a><span class="co"># summary.aov(beet_model)</span></span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="multiple-treatment-trials.html#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="co"># beet_model = lm( , data = )</span></span>
+<span id="cb219-2"><a href="multiple-treatment-trials.html#cb219-2" aria-hidden="true" tabindex="-1"></a><span class="co"># summary.aov(beet_model)</span></span></code></pre></div>
 <p>Calculate the Coefficient of Variance (CV) using the cv.model() function. Your CV should be 17.38.</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="multiple-treatment-trials.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cv.model()</span></span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="multiple-treatment-trials.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cv.model()</span></span></code></pre></div>
 </div>
 <div id="practice-potato-data" class="section level3" number="6.6.5">
 <h3><span class="header-section-number">6.6.5</span> Practice: Potato Data</h3>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="multiple-treatment-trials.html#cb219-1" aria-hidden="true" tabindex="-1"></a>potato_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-6/exercise_data/potato_crd.csv&quot;</span>)</span>
-<span id="cb219-2"><a href="multiple-treatment-trials.html#cb219-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(potato_data)</span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="multiple-treatment-trials.html#cb221-1" aria-hidden="true" tabindex="-1"></a>potato_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-6/exercise_data/potato_crd.csv&quot;</span>)</span>
+<span id="cb221-2"><a href="multiple-treatment-trials.html#cb221-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(potato_data)</span></code></pre></div>
 <pre><code>##   inf trt row col
 ## 1   9  F3   4   1
 ## 2  12   O   4   2
@@ -1024,9 +1023,9 @@ We can quickly calculate this for any model we create using the <em>cv.model()</
 <div id="case-study-barley-1" class="section level3" number="6.7.1">
 <h3><span class="header-section-number">6.7.1</span> Case Study: Barley</h3>
 <p>This is the same dataset we used in the previous exercise.</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="multiple-treatment-trials.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb221-2"><a href="multiple-treatment-trials.html#cb221-2" aria-hidden="true" tabindex="-1"></a>barley_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-6/exercise_data/barley_crd.csv&quot;</span>)</span>
-<span id="cb221-3"><a href="multiple-treatment-trials.html#cb221-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(barley_data)</span></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="multiple-treatment-trials.html#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb223-2"><a href="multiple-treatment-trials.html#cb223-2" aria-hidden="true" tabindex="-1"></a>barley_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-6/exercise_data/barley_crd.csv&quot;</span>)</span>
+<span id="cb223-3"><a href="multiple-treatment-trials.html#cb223-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(barley_data)</span></code></pre></div>
 <pre><code>##   rep gen yield
 ## 1  S1 G01  0.05
 ## 2  S1 G02  0.00
@@ -1039,11 +1038,11 @@ We can quickly calculate this for any model we create using the <em>cv.model()</
 <h3><span class="header-section-number">6.7.2</span> Calculating Treatment Means</h3>
 <p>We can create a new dataset, containing treatment means, using another couple of functions from the <em>tidyverse</em> package: <em>group_by()</em> and <em>summarise()</em>. We will also use the “pipe,” %&gt;%, to feed the results of one line to the next.</p>
 <p>We start with “barley %&gt;%,” which feeds the barley dataset to the next line. There, we use the group_by() command to tell R we want to group the observations by gen (genetics). This means any summary calculations on the data will be done separately by level for the gen factor. Finally, we tell the data which variables to summarise. We use the summarise command to tell R to create a new variable, yield_mean, which is equal to the mean of observed yield values for each level of gen.</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="multiple-treatment-trials.html#cb223-1" aria-hidden="true" tabindex="-1"></a>barley_means <span class="ot">=</span> barley_data <span class="sc">%&gt;%</span></span>
-<span id="cb223-2"><a href="multiple-treatment-trials.html#cb223-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gen) <span class="sc">%&gt;%</span></span>
-<span id="cb223-3"><a href="multiple-treatment-trials.html#cb223-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">yield_mean=</span><span class="fu">mean</span>(yield))</span>
-<span id="cb223-4"><a href="multiple-treatment-trials.html#cb223-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb223-5"><a href="multiple-treatment-trials.html#cb223-5" aria-hidden="true" tabindex="-1"></a>barley_means</span></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="multiple-treatment-trials.html#cb225-1" aria-hidden="true" tabindex="-1"></a>barley_means <span class="ot">=</span> barley_data <span class="sc">%&gt;%</span></span>
+<span id="cb225-2"><a href="multiple-treatment-trials.html#cb225-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gen) <span class="sc">%&gt;%</span></span>
+<span id="cb225-3"><a href="multiple-treatment-trials.html#cb225-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">yield_mean=</span><span class="fu">mean</span>(yield))</span>
+<span id="cb225-4"><a href="multiple-treatment-trials.html#cb225-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb225-5"><a href="multiple-treatment-trials.html#cb225-5" aria-hidden="true" tabindex="-1"></a>barley_means</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 2
 ##    gen   yield_mean
 ##    &lt;chr&gt;      &lt;dbl&gt;
@@ -1058,12 +1057,12 @@ We can quickly calculate this for any model we create using the <em>cv.model()</
 ##  9 G09        37.2 
 ## 10 G10        49.3</code></pre>
 <p>We can see now that our values range from 4.20 to 49.33. Since the original data only had two decimal places, we should probably round these results. We can do that quickly using the <em>mutate()</em> and <em>round()</em> commands to our code. mutate tells R to create a new column. The round() function takes two arguments: the variable to round, and the number of decimal places to round to. In this case, we will create a new variable with the same name, yield_mean, as the old variable. The value of the new yield mean will be equal to the old yield mean, rounded to two decimal places.</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="multiple-treatment-trials.html#cb225-1" aria-hidden="true" tabindex="-1"></a>barley_means <span class="ot">=</span> barley_data <span class="sc">%&gt;%</span></span>
-<span id="cb225-2"><a href="multiple-treatment-trials.html#cb225-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gen) <span class="sc">%&gt;%</span></span>
-<span id="cb225-3"><a href="multiple-treatment-trials.html#cb225-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">yield_mean=</span><span class="fu">mean</span>(yield)) <span class="sc">%&gt;%</span></span>
-<span id="cb225-4"><a href="multiple-treatment-trials.html#cb225-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">yield_mean =</span> <span class="fu">round</span>(yield_mean, <span class="dv">2</span>))</span>
-<span id="cb225-5"><a href="multiple-treatment-trials.html#cb225-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb225-6"><a href="multiple-treatment-trials.html#cb225-6" aria-hidden="true" tabindex="-1"></a>barley_means</span></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="multiple-treatment-trials.html#cb227-1" aria-hidden="true" tabindex="-1"></a>barley_means <span class="ot">=</span> barley_data <span class="sc">%&gt;%</span></span>
+<span id="cb227-2"><a href="multiple-treatment-trials.html#cb227-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gen) <span class="sc">%&gt;%</span></span>
+<span id="cb227-3"><a href="multiple-treatment-trials.html#cb227-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">yield_mean=</span><span class="fu">mean</span>(yield)) <span class="sc">%&gt;%</span></span>
+<span id="cb227-4"><a href="multiple-treatment-trials.html#cb227-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">yield_mean =</span> <span class="fu">round</span>(yield_mean, <span class="dv">2</span>))</span>
+<span id="cb227-5"><a href="multiple-treatment-trials.html#cb227-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb227-6"><a href="multiple-treatment-trials.html#cb227-6" aria-hidden="true" tabindex="-1"></a>barley_means</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 2
 ##    gen   yield_mean
 ##    &lt;chr&gt;      &lt;dbl&gt;
@@ -1082,30 +1081,30 @@ We can quickly calculate this for any model we create using the <em>cv.model()</
 <h3><span class="header-section-number">6.7.3</span> Plotting the Means</h3>
 <p>We can use the <em>ggplot()</em> function in R to plot our results. The first line, the ggplot() statement, uses “data =” to define the data frame, and the aes() argument to declare the aesthetics to be plotted. Aesthetics are any information in the chart whose position or appearance are dependent on variables from the dataset. In other words, anything in the chart that might change with the value of an observation. In this case, the x-position of our data to be plotted will be defined by gen. The y-position will be defined by yield.</p>
 <p>The second line defines a “geom,” the type of geometry that will be used to represent the data. In this case, we will use geom_bar() to contstruct a bar plot. The final thing we need to do is to tell R whether the height of each bar should be determined by the number of observations, another statistical summary, or the value for y we declared in the initial ggplot statement. In this case, we want to use the value we declared above, yield_mean, to determine the top of the bars. The stats=“identity” tells R to do just that.</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="multiple-treatment-trials.html#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>barley_means, <span class="fu">aes</span>(<span class="at">x=</span>gen, <span class="at">y=</span>yield_mean)) <span class="sc">+</span></span>
-<span id="cb227-2"><a href="multiple-treatment-trials.html#cb227-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="multiple-treatment-trials.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>barley_means, <span class="fu">aes</span>(<span class="at">x=</span>gen, <span class="at">y=</span>yield_mean)) <span class="sc">+</span></span>
+<span id="cb229-2"><a href="multiple-treatment-trials.html#cb229-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
 <p><img src="06-Multiple-Treatment-Trials_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <p>There are all sorts of things we can do in R with our plots. Say we wanted to change the labels on the x or y axes. We just add those using the “labs()” option:</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="multiple-treatment-trials.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>barley_means, <span class="fu">aes</span>(<span class="at">x=</span>gen, <span class="at">y=</span>yield_mean)) <span class="sc">+</span></span>
-<span id="cb228-2"><a href="multiple-treatment-trials.html#cb228-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
-<span id="cb228-3"><a href="multiple-treatment-trials.html#cb228-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Genotype&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Yield Mean&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="multiple-treatment-trials.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>barley_means, <span class="fu">aes</span>(<span class="at">x=</span>gen, <span class="at">y=</span>yield_mean)) <span class="sc">+</span></span>
+<span id="cb230-2"><a href="multiple-treatment-trials.html#cb230-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb230-3"><a href="multiple-treatment-trials.html#cb230-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Genotype&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Yield Mean&quot;</span>)</span></code></pre></div>
 <p><img src="06-Multiple-Treatment-Trials_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <p>We can change the bar color by adding the <em>fill()</em> command to geom_bar.</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="multiple-treatment-trials.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>barley_means, <span class="fu">aes</span>(<span class="at">x=</span>gen, <span class="at">y=</span>yield_mean)) <span class="sc">+</span></span>
-<span id="cb229-2"><a href="multiple-treatment-trials.html#cb229-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">fill=</span><span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span></span>
-<span id="cb229-3"><a href="multiple-treatment-trials.html#cb229-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Genotype&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Yield Mean&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="multiple-treatment-trials.html#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>barley_means, <span class="fu">aes</span>(<span class="at">x=</span>gen, <span class="at">y=</span>yield_mean)) <span class="sc">+</span></span>
+<span id="cb231-2"><a href="multiple-treatment-trials.html#cb231-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">fill=</span><span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb231-3"><a href="multiple-treatment-trials.html#cb231-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Genotype&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Yield Mean&quot;</span>) </span></code></pre></div>
 <p><img src="06-Multiple-Treatment-Trials_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <p>We can include the actual value above each bar by adding a second geometry, geom_text. The aes() argument to geom_text tells it what variable to use as the label (it also tells it where to place the label). In addition to the aes() argument, “vjust=-0.03” tells R to adjust the label upward a few points so it doesn’t touch the bar. The font size is increased with “size = 3.5.”</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="multiple-treatment-trials.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>barley_means, <span class="fu">aes</span>(<span class="at">x=</span>gen, <span class="at">y=</span>yield_mean)) <span class="sc">+</span></span>
-<span id="cb230-2"><a href="multiple-treatment-trials.html#cb230-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">fill=</span><span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span></span>
-<span id="cb230-3"><a href="multiple-treatment-trials.html#cb230-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Genotype&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Yield Mean&quot;</span>) <span class="sc">+</span></span>
-<span id="cb230-4"><a href="multiple-treatment-trials.html#cb230-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>yield_mean), <span class="at">vjust=</span><span class="sc">-</span><span class="fl">0.3</span>, <span class="at">size=</span><span class="fl">3.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="multiple-treatment-trials.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>barley_means, <span class="fu">aes</span>(<span class="at">x=</span>gen, <span class="at">y=</span>yield_mean)) <span class="sc">+</span></span>
+<span id="cb232-2"><a href="multiple-treatment-trials.html#cb232-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">fill=</span><span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb232-3"><a href="multiple-treatment-trials.html#cb232-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Genotype&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Yield Mean&quot;</span>) <span class="sc">+</span></span>
+<span id="cb232-4"><a href="multiple-treatment-trials.html#cb232-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>yield_mean), <span class="at">vjust=</span><span class="sc">-</span><span class="fl">0.3</span>, <span class="at">size=</span><span class="fl">3.5</span>)</span></code></pre></div>
 <p><img src="06-Multiple-Treatment-Trials_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 </div>
 <div id="practice-beet-data-1" class="section level3" number="6.7.4">
 <h3><span class="header-section-number">6.7.4</span> Practice: Beet Data</h3>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="multiple-treatment-trials.html#cb231-1" aria-hidden="true" tabindex="-1"></a>beet_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-6/exercise_data/beets_crd.csv&quot;</span>)</span>
-<span id="cb231-2"><a href="multiple-treatment-trials.html#cb231-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(beet_data)</span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="multiple-treatment-trials.html#cb233-1" aria-hidden="true" tabindex="-1"></a>beet_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-6/exercise_data/beets_crd.csv&quot;</span>)</span>
+<span id="cb233-2"><a href="multiple-treatment-trials.html#cb233-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(beet_data)</span></code></pre></div>
 <pre><code>##   plot fert yield
 ## 1    1 None  2.45
 ## 2    2    P  6.71
@@ -1114,17 +1113,17 @@ We can quickly calculate this for any model we create using the <em>cv.model()</
 ## 5    5   PN  6.48
 ## 6    6   KN  3.70</code></pre>
 <p>Calculate the yield mean by fertilizer level by completing the code below. Remember, you will need to uncomment (remove hashtags from) the code before you can run it. (Hint: you can add or remove multiple lines of comments by highlighting those lines and typing CTRL-SHIFT-C.)</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="multiple-treatment-trials.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="co"># beet_means = beet_data %&gt;%</span></span>
-<span id="cb233-2"><a href="multiple-treatment-trials.html#cb233-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by() %&gt;%</span></span>
-<span id="cb233-3"><a href="multiple-treatment-trials.html#cb233-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarise()</span></span></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="multiple-treatment-trials.html#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="co"># beet_means = beet_data %&gt;%</span></span>
+<span id="cb235-2"><a href="multiple-treatment-trials.html#cb235-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by() %&gt;%</span></span>
+<span id="cb235-3"><a href="multiple-treatment-trials.html#cb235-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarise()</span></span></code></pre></div>
 <p>Create a simple bar plot using ggplot() and geom_bar().</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="multiple-treatment-trials.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(data=beet_means, aes(x= , y= )) +</span></span>
-<span id="cb234-2"><a href="multiple-treatment-trials.html#cb234-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_bar(stat = )</span></span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="multiple-treatment-trials.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(data=beet_means, aes(x= , y= )) +</span></span>
+<span id="cb236-2"><a href="multiple-treatment-trials.html#cb236-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_bar(stat = )</span></span></code></pre></div>
 </div>
 <div id="practice-potato-data-1" class="section level3" number="6.7.5">
 <h3><span class="header-section-number">6.7.5</span> Practice: Potato Data</h3>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="multiple-treatment-trials.html#cb235-1" aria-hidden="true" tabindex="-1"></a>potato_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-6/exercise_data/potato_crd.csv&quot;</span>)</span>
-<span id="cb235-2"><a href="multiple-treatment-trials.html#cb235-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(potato_data)</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="multiple-treatment-trials.html#cb237-1" aria-hidden="true" tabindex="-1"></a>potato_data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data-unit-6/exercise_data/potato_crd.csv&quot;</span>)</span>
+<span id="cb237-2"><a href="multiple-treatment-trials.html#cb237-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(potato_data)</span></code></pre></div>
 <pre><code>##   inf trt row col
 ## 1   9  F3   4   1
 ## 2  12   O   4   2

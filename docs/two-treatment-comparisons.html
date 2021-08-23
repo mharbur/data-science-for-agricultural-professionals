@@ -69,7 +69,7 @@
 <script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
 <script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
 <script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script>
-<script src="libs/stars-1/data_stars_stars3db918.txt"></script>
+<script src="libs/stars-1/data_stars_starsf0cb2a.txt"></script>
 <script src="libs/joda-0.0.1/joda.js"></script>
 <script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
 
@@ -172,7 +172,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.4" data-path="population-statistics.html"><a href="population-statistics.html#measures-of-center"><i class="fa fa-check"></i><b>1.3.4</b> Measures of Center</a></li>
 <li class="chapter" data-level="1.3.5" data-path="population-statistics.html"><a href="population-statistics.html#measures-of-dispersion"><i class="fa fa-check"></i><b>1.3.5</b> Measures of Dispersion</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="population-statistics.html"><a href="population-statistics.html#section"><i class="fa fa-check"></i><b>1.4</b> </a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="distributions-and-probability.html"><a href="distributions-and-probability.html"><i class="fa fa-check"></i><b>2</b> Distributions and Probability</a>
 <ul>
@@ -771,7 +770,7 @@ Where <span class="math inline">\(\bar{x}\)</span> is the observed population me
 ## [1] 2
 ## 
 ## $parameters$seed
-## [1] 1180078120
+## [1] -74522394
 ## 
 ## $parameters$kinds
 ## [1] &quot;Super-Duper&quot;
@@ -782,39 +781,39 @@ Where <span class="math inline">\(\bar{x}\)</span> is the observed population me
 ## 
 ## $sketch
 ##      [,1] [,2]
-## [1,] &quot;B&quot;  &quot;A&quot; 
+## [1,] &quot;A&quot;  &quot;B&quot; 
 ## [2,] &quot;B&quot;  &quot;A&quot; 
-## [3,] &quot;B&quot;  &quot;A&quot; 
-## [4,] &quot;A&quot;  &quot;B&quot; 
+## [3,] &quot;A&quot;  &quot;B&quot; 
+## [4,] &quot;B&quot;  &quot;A&quot; 
 ## 
 ## $book
 ##   plots block treatment_name
-## 1   101     1              B
-## 2   102     1              A
+## 1   101     1              A
+## 2   102     1              B
 ## 3   201     2              B
 ## 4   202     2              A
-## 5   301     3              B
-## 6   302     3              A
-## 7   401     4              A
-## 8   402     4              B</code></pre>
+## 5   301     3              A
+## 6   302     3              B
+## 7   401     4              B
+## 8   402     4              A</code></pre>
 <p>We can access this information more directly. If we type “plot_plan$sketch,” we get a plot map of sorts.</p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="two-treatment-comparisons.html#cb61-1" aria-hidden="true" tabindex="-1"></a>plot_plan<span class="sc">$</span>sketch</span></code></pre></div>
 <pre><code>##      [,1] [,2]
-## [1,] &quot;B&quot;  &quot;A&quot; 
+## [1,] &quot;A&quot;  &quot;B&quot; 
 ## [2,] &quot;B&quot;  &quot;A&quot; 
-## [3,] &quot;B&quot;  &quot;A&quot; 
-## [4,] &quot;A&quot;  &quot;B&quot;</code></pre>
+## [3,] &quot;A&quot;  &quot;B&quot; 
+## [4,] &quot;B&quot;  &quot;A&quot;</code></pre>
 <p>If we type “plot_plan$book,” we get a data frame with the plots, block, and treatment_names.</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="two-treatment-comparisons.html#cb63-1" aria-hidden="true" tabindex="-1"></a>plot_plan<span class="sc">$</span>book</span></code></pre></div>
 <pre><code>##   plots block treatment_name
-## 1   101     1              B
-## 2   102     1              A
+## 1   101     1              A
+## 2   102     1              B
 ## 3   201     2              B
 ## 4   202     2              A
-## 5   301     3              B
-## 6   302     3              A
-## 7   401     4              A
-## 8   402     4              B</code></pre>
+## 5   301     3              A
+## 6   302     3              B
+## 7   401     4              B
+## 8   402     4              A</code></pre>
 </div>
 <div id="example-2" class="section level3" number="4.6.5">
 <h3><span class="header-section-number">4.6.5</span> Example 2</h3>
@@ -825,39 +824,39 @@ Where <span class="math inline">\(\bar{x}\)</span> is the observed population me
 <p>Here is the plot layout:</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="two-treatment-comparisons.html#cb66-1" aria-hidden="true" tabindex="-1"></a>hemp_plot_plan<span class="sc">$</span>sketch</span></code></pre></div>
 <pre><code>##       [,1]    [,2]   
-##  [1,] &quot;Bob&quot;   &quot;Jerry&quot;
-##  [2,] &quot;Bob&quot;   &quot;Jerry&quot;
+##  [1,] &quot;Jerry&quot; &quot;Bob&quot;  
+##  [2,] &quot;Jerry&quot; &quot;Bob&quot;  
 ##  [3,] &quot;Bob&quot;   &quot;Jerry&quot;
 ##  [4,] &quot;Bob&quot;   &quot;Jerry&quot;
 ##  [5,] &quot;Bob&quot;   &quot;Jerry&quot;
-##  [6,] &quot;Jerry&quot; &quot;Bob&quot;  
+##  [6,] &quot;Bob&quot;   &quot;Jerry&quot;
 ##  [7,] &quot;Jerry&quot; &quot;Bob&quot;  
-##  [8,] &quot;Jerry&quot; &quot;Bob&quot;  
-##  [9,] &quot;Bob&quot;   &quot;Jerry&quot;
-## [10,] &quot;Jerry&quot; &quot;Bob&quot;</code></pre>
+##  [8,] &quot;Bob&quot;   &quot;Jerry&quot;
+##  [9,] &quot;Jerry&quot; &quot;Bob&quot;  
+## [10,] &quot;Bob&quot;   &quot;Jerry&quot;</code></pre>
 <p>And here is the table we can cut and paste into our spreadsheet:</p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="two-treatment-comparisons.html#cb68-1" aria-hidden="true" tabindex="-1"></a>hemp_plot_plan<span class="sc">$</span>book</span></code></pre></div>
 <pre><code>##    plots block hemp_variety
-## 1    101     1          Bob
-## 2    102     1        Jerry
-## 3    201     2          Bob
-## 4    202     2        Jerry
+## 1    101     1        Jerry
+## 2    102     1          Bob
+## 3    201     2        Jerry
+## 4    202     2          Bob
 ## 5    301     3          Bob
 ## 6    302     3        Jerry
 ## 7    401     4          Bob
 ## 8    402     4        Jerry
 ## 9    501     5          Bob
 ## 10   502     5        Jerry
-## 11   601     6        Jerry
-## 12   602     6          Bob
+## 11   601     6          Bob
+## 12   602     6        Jerry
 ## 13   701     7        Jerry
 ## 14   702     7          Bob
-## 15   801     8        Jerry
-## 16   802     8          Bob
-## 17   901     9          Bob
-## 18   902     9        Jerry
-## 19  1001    10        Jerry
-## 20  1002    10          Bob</code></pre>
+## 15   801     8          Bob
+## 16   802     8        Jerry
+## 17   901     9        Jerry
+## 18   902     9          Bob
+## 19  1001    10          Bob
+## 20  1002    10        Jerry</code></pre>
 </div>
 </div>
 <div id="exercise-restructuring-columns-and-rows" class="section level2" number="4.7">
