@@ -6,13 +6,11 @@ output:
 runtime: shiny
 ---
 
-```{r, message=FALSE, include=FALSE, echo=FALSE}
-library(sf)
-library(tidyverse)
-library(rcompanion)
-library(plotly)
 
-yield = st_read("data/merriweather_yield_map/merriweather_yield_map.shp", quiet=TRUE)
+```{r message=FALSE, include=FALSE}
+library(tidyverse)
+
+yield = read.csv("data/yield_df.csv")
 ```
 
 
@@ -23,7 +21,7 @@ The middle plot features a histogram that shows the distribution of our sample v
 The histogram in the middle plot is overlaid with two vertical reference lines.  The red line is $\sigma$, the population mean.  This line is fixed at about 80.1.  The blue line is $\bar{x}$, the sample mean.  The sample mean changes with the number of samples.  It never permanently converges on the population mean, but their distance generally decreases as the number of samples increases.
 
 
-```{r echo=FALSE, message=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(shiny)
 
 ui = fluidPage(

@@ -1,0 +1,82 @@
+---
+title: "Sample Size and Confidence Interval"
+output: 
+  prettydoc::html_pretty:
+    theme: default
+runtime: shiny
+---
+
+Increase the number of samples and observe the change in the width of the confidence interval (the black bracket).  Does it increase or decrease?  Does the confidence interval continue to include the population mean (represented by the blue line) even as its width changes?  
+
+What does the change in the confidence interval tell you about how sample size affects our estimate of the population mean? 
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(shiny)
+library(sf)
+library(tidyverse)
+
+
+
+yield = st_read("data/merriweather_yield_map/merriweather_yield_map.shp", quiet=TRUE)
+
+set.seed(1776)
+i=2
+hist_list = list()
+for(i in c(2:100)){
+  yield_sample = sample(yield$yield_bu, i) %>%
+      as.data.frame()
+  plot_data = data.frame(no_of_samples = i)
+  plot_data$sample_mean = mean(yield_sample$.)
+  plot_data$std_dev = sd(yield_sample$.)
+  plot_data$std_err = plot_data$std_dev/sqrt(i)
+  plot_data$pop_mean = mean(yield$yield_bu)
+  hist_list[[i]] = plot_data
+  i = i+1
+}
+  
+hist_df = do.call(rbind.data.frame, hist_list) %>%
+  group_by(no_of_samples) %>%
+  summarise(sample_mean = mean(sample_mean),
+            std_err = mean(std_err)) %>%
+  ungroup() %>% 
+  mutate(df = no_of_samples - 1) %>%
+  mutate(t_value = qt(0.975,df)) %>%
+  mutate(upper_limit = sample_mean + t_value*std_err) %>%
+  mutate(lower_limit = sample_mean - t_value*std_err) %>%
+  mutate(error_bar_length = t_value*std_err) %>%
+  mutate(pop_mean = mean(yield$yield_bu)) %>%
+  mutate(color_name = if_else(upper_limit<pop_mean | lower_limit>pop_mean, "red", "black"))
+
+
+
+
+ui = fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("no_samples", "Select number of samples", min = 2, max = 100, step=1, value = 2, 
+                  animate = animationOptions(interval = 200))
+    ),
+    mainPanel(
+      plotOutput("plot", height="300px")
+    )
+  )
+)
+
+server = function(input, output ){
+  output$plot = renderPlot({
+    hist_df %>%
+      filter(no_of_samples == input$no_samples) %>%
+      ggplot(aes(x=0, y=sample_mean, group=color_name)) +
+        geom_point(size = 6) +
+      geom_hline(aes(yintercept=mean(yield$yield_bu)), color="blue", size=2, alpha=0.3) +
+      geom_errorbar(aes(x=0, ymin=lower_limit, ymax=upper_limit, color=color_name), width=0.2, size=2) +
+      # scale_color_manual(values = c("red", "black")) +
+      scale_color_identity() +
+      lims(x=c(-1, 1), y=c(0, 160)) + 
+      coord_flip()
+  })
+}
+
+shinyApp(ui, server)
+
+```
+

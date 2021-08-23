@@ -1,0 +1,129 @@
+---
+title: "R Notebook"
+output: 
+  prettydoc::html_pretty:
+    theme: default
+runtime: shiny
+---
+
+The app below allows you to simulate a corn trial with three treatments.  You can adjust the three treatment means, as well as the standard deviation within the treatments (the "Pooled Standard Deviation") with the slider controls.  The observed values of the three treatments are represented by dots: treatment 1 (red), treatment 2 (green), and treatment 3 (blue).  Each *treatment* is fit with a distribution curve that is identically colored.  Their widths are based on their variances, which are identical across treatments.  The distribution of *treatment means* is fit with a black curve, which is similarly based on its variance.
+
+The analysis of variance table for the trial, based on the values you select, is shown below.    
+
+Experiment with increasing and decreasing the differences among treatment means.  Observe how increasing and decreasing the differences among treatment means affects the treatment (trt) and residual (error) mean squares.  Also observe how the F-value (labelled "statistic" in the table) and p-value (labelled "p.value") change.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(shiny)
+library(broom)
+library(tidyverse)
+
+set.seed(1)
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("trtmean1", "Select Treatment Mean", min = 150, max=250, step=1, value=c(184)),
+      sliderInput("trtmean2", "Select Treatment Mean", min = 150, max=250, step=1, value=c(185)),
+      sliderInput("trtmean3", "Select Treatment Mean", min = 150, max=250, step=1, value=c(189)),
+      sliderInput("pooledsd", "Select Pooled Standard Deviation", min = 0, max=30, step=1, value=15)
+    ),
+    mainPanel(
+      plotOutput("plot"),
+      tableOutput("anovaTable")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  obsData = reactive({
+    set.seed(1)
+    rnorm2 <- function(n,mean,sd) { mean+sd*scale(rnorm(n)) }
+    trtmean1 = input$trtmean1
+    trtmean2 = input$trtmean2
+    trtmean3 = input$trtmean3
+    sd = input$pooledsd
+    trt_1_data = data.frame(trt=rep("trt1", 6))
+    trt_1_data$yield = rnorm2(6, mean=trtmean1, sd = sd)
+    trt_2_data = data.frame(trt=rep("trt2", 6))
+    trt_2_data$yield = rnorm2(6, mean=trtmean2, sd = sd)
+    trt_3_data = data.frame(trt=rep("trt3", 6))
+    trt_3_data$yield = rnorm2(6, mean=trtmean3, sd = sd)
+    obs_data = rbind(trt_1_data, trt_2_data, trt_3_data) 
+  })
+  
+  anovaData = reactive({
+    obs_data = obsData()
+    anova_data = tidy(aov(yield~trt, data=obs_data))
+    })
+  
+  distCurve = reactive({
+    obs_data = obsData()
+    anova_data = anovaData()
+    root_mse = anova_data %>%
+      filter(term=="Residuals") %>%
+      mutate(root_mse=sqrt(meansq)) %>%
+      select(root_mse) %>%
+      as.numeric()
+    root_tse = anova_data %>%
+      filter(term=="trt") %>%
+      mutate(root_mse=sqrt(meansq)) %>%
+      select(root_mse) %>%
+      as.numeric()
+    
+    
+    within_stats = obs_data %>%
+      group_by(trt) %>%
+      summarise(mean=mean(yield)) %>%
+      mutate(sd = root_mse) %>%
+      ungroup()
+    
+    between_stats = obs_data %>%
+      mutate(trt="trt_dist") %>%
+      group_by(trt) %>%
+      summarise(mean = mean(yield)) %>%
+      mutate(sd = root_tse) %>%
+      select(trt, mean, sd)
+    
+    overall_stats = rbind(within_stats, between_stats) %>%
+      rename(group = trt)
+    
+    library(purrr)
+    dist_curve = overall_stats %>%
+      group_by(group) %>%
+      mutate(min = mean - 3.5*sd) %>%
+      mutate(max = mean + 3.5*sd) %>%
+      mutate(yield = map2(min, max, seq, by=0.1)) %>%
+      unnest(yield) %>%
+      mutate(prob = scale(dnorm(yield, mean = mean, sd = sd))) %>%
+      ungroup()
+  })
+  
+  output$plot = renderPlot({
+    obs_data = obsData()
+    dist_curve = distCurve()
+    within_data = dist_curve %>%
+      filter(!group=="trt_dist")
+    between_data = dist_curve %>%
+      filter(group=="trt_dist")
+    ggplot(within_data, aes(x=yield, y=prob)) +
+      geom_point(aes(color=group)) +
+      geom_point(data = between_data, aes(x=yield, y=prob), color="black") +
+      geom_point(data=obs_data, aes(x = yield, y=-0.001, color=trt), size=3) +
+      theme(axis.ticks.y = element_blank(),
+            axis.text.y = element_blank())
+  })
+  
+  output$anovaTable = renderTable({
+    anova_data = anovaData()
+  })
+   
+}
+
+shinyApp(ui, server, options = list(height="450px"))
+
+```
+
+1) What do you observe when distance between the trt means increases?
+2) what do you observe when the pooled standard deviation decreases?
+3) Set the treatment means to treatment 1 = 180, treatment 2 = 188, and treatment 3 = 192.  What do you observe about the shapes of the distribution curve for the treatment means (black curve) and treatment 2 (green curve)?
+4) What does an F-value of 1 mean?

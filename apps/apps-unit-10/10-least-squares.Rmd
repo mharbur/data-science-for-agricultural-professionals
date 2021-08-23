@@ -1,11 +1,14 @@
 ---
 title: "Least Squares Regression Line"
-output: html_notebook
+output: 
+  prettydoc::html_pretty:
+    theme: default
+runtime: shiny
 ---
 
 Use the slider to the left to observe the change in the regression line and error sum of squares, which measures the sums of the differences between observed values and the value predicted by the regression line.  Try to minimize the sum of squares.
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 nitrogen = read.csv("data/nitrogen_waseca.csv")
 
 library(tidyverse)

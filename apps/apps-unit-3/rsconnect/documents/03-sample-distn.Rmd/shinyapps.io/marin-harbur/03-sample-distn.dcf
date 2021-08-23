@@ -1,0 +1,12 @@
+name: 03-sample-distn
+title: 03-sample-distn
+username:
+account: marin-harbur
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4354923
+bundleId: 4789785
+url: https://marin-harbur.shinyapps.io/03-sample-distn/
+when: 1625519174.11668
+asMultiple: FALSE
+asStatic: FALSE

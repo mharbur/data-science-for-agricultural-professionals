@@ -7,12 +7,9 @@ runtime: shiny
 ---
 
 ```{r, message=FALSE, include=FALSE, echo=FALSE}
-library(sf)
 library(tidyverse)
-library(rcompanion)
-library(plotly)
 
-yield = st_read("data/merriweather_yield_map/merriweather_yield_map.shp", quiet=TRUE)
+yield = read.csv("data/yield_df.csv")
 ```
 
 What is even more powerful about the Central Limit Theorem is that our sample means are likely to be normally distributed, even if the population does not follow a perfect normal distribution.
@@ -21,7 +18,8 @@ Let's take this concept to the extreme.  Suppose we had a population where every
 
 
 
-```{r, message=FALSE, echo=FALSE }
+```{r message=FALSE, echo=FALSE }
+library(shiny)
 yield_uni = rep(seq(from=60, to=99.9, by=0.1), 15)
 yield_uni_df = yield_uni %>%
   as.data.frame

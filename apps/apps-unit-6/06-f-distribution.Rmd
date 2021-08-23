@@ -1,0 +1,57 @@
+---
+title: "F Distribution"
+output: 
+  prettydoc::html_pretty:
+    theme: default
+runtime: shiny
+---
+
+To calculate the probability our F-value could be the product of chance, we use the F-distribution.  The shape of the F-distribution, like the t-distribution, changes with the number of replications (which changes the Error degrees of freedom).  It also changes with the treatment degrees of freedom.
+
+Play with the application below.  You are able to adjust the number of treatments and number of replications.  Adjust those two inputs and observe the change in the response curve.  In addition, adjust the desired level of significance and obsere how the shaded area changes.  Please ignore the different color ranges under the curve when you see them: any shaded area under the curve indicates significance.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+library(sjPlot)
+library(shiny)
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("treatmentNo", "Select number of treatments", min=2, max=10, step=1, value=4),
+      sliderInput("repNo", "Select number of replications", min=2, max=10, step=1, value=4),
+      sliderInput("pLevel", "Select desired level of significance (%)", min = 0.01, max= 0.2, 
+                  step = 0.01, value = 0.05)
+    ),
+    mainPanel(
+      plotOutput("plot"),
+      textOutput("dfText")
+      
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  output$plot = renderPlot({
+    dist_f(p = input$pLevel, deg.f1 = input$treatmentNo, deg.f2 = input$repNo, xmax = 10)
+
+  })
+  
+  output$dfText = renderText({
+    paste0("Treatment DF: ", input$treatmentNo-1,
+           "\nError DF: ", (input$treatmentNo * (input$repNo-1 )))
+    
+  })
+}
+
+shinyApp(ui, server)
+
+
+
+
+```
+
+
+As you can see, the distribution changes, though not as dramatically, with the number of error degrees of freedom.  In this case, for every 4 degree of freedom increase, the number of replicates increases by one, since the the degrees of freedom is equal to the the number of treatments $\times$ n-1 reps.
+
+The F-distribution is one-tailed -- we are only interested in the proportion remaining in the upper tail.  If we were to visualize the boundary for the areas representing $P\ge0.05$ for our example above, we would test whether F was in the following portion of the tail.

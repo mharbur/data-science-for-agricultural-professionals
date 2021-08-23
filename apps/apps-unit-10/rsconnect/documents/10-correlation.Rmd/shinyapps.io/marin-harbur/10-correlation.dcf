@@ -1,0 +1,12 @@
+name: 10-correlation
+title: 10-correlation
+username:
+account: marin-harbur
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4355297
+bundleId: 4790054
+url: https://marin-harbur.shinyapps.io/10-correlation/
+when: 1625527771.83054
+asMultiple: FALSE
+asStatic: FALSE

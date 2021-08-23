@@ -1,11 +1,14 @@
 ---
 title: "Correlation App"
-output: html_notebook
+output: 
+  prettydoc::html_pretty:
+    theme: default
+runtime: shiny
 ---
 
-Experiment with the appliciation below.  What happens as you adjust the value of r using the slider control?
+Experiment with the application below.  What happens as you adjust the value of r using the slider control?
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(plotly)
 
@@ -49,7 +52,7 @@ server <- function(input, output, session) {
     
 }
 
-shinyApp(ui, server, options = list(height="800px"))
+shinyApp(ui, server, options = list(height="600px", width="1000px"))
 ```
 
 When r is close to zero, the “cloud” of data in the scatter plot will appear circular.  As r increases positively, the data will start to look like a football – with its nose pointed up and right and its tail pointed down and left.  As r gets closer to 1, the data may represent a cigar – or an under-inflated football (yes, I’m talking to you, Brady).  And as r gets very close to 1, the data cloud will resemble a straight line.  As r increases negatively, the same patterns occur, only with the data points converging on a diagonal line that slopes up and to the left.

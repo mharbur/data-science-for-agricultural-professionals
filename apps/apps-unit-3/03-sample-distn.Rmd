@@ -7,12 +7,9 @@ runtime: shiny
 ---
 
 ```{r, message=FALSE, include=FALSE, echo=FALSE}
-library(sf)
 library(tidyverse)
-library(rcompanion)
-library(plotly)
 
-yield = st_read("data/merriweather_yield_map/merriweather_yield_map.shp", quiet=TRUE)
+yield = read.csv("data/yield_df.csv")
 ```
 
 

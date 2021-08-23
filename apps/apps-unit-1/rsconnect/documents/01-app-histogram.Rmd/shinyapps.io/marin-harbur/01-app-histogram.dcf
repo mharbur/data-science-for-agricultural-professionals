@@ -1,0 +1,12 @@
+name: 01-app-histogram
+title: 01-app-histogram
+username:
+account: marin-harbur
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4339453
+bundleId: 4789760
+url: https://marin-harbur.shinyapps.io/01-app-histogram/
+when: 1625518352.87144
+asMultiple: FALSE
+asStatic: FALSE
