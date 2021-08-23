@@ -254,7 +254,7 @@ plot_plan
 ## [1] 2
 ## 
 ## $parameters$seed
-## [1] 923243201
+## [1] -246187929
 ## 
 ## $parameters$kinds
 ## [1] "Super-Duper"
@@ -265,17 +265,17 @@ plot_plan
 ## 
 ## $sketch
 ##      [,1] [,2]
-## [1,] "B"  "A" 
-## [2,] "A"  "B" 
+## [1,] "A"  "B" 
+## [2,] "B"  "A" 
 ## [3,] "A"  "B" 
 ## [4,] "B"  "A" 
 ## 
 ## $book
 ##   plots block treatment_name
-## 1   101     1              B
-## 2   102     1              A
-## 3   201     2              A
-## 4   202     2              B
+## 1   101     1              A
+## 2   102     1              B
+## 3   201     2              B
+## 4   202     2              A
 ## 5   301     3              A
 ## 6   302     3              B
 ## 7   401     4              B
@@ -291,8 +291,8 @@ plot_plan$sketch
 
 ```
 ##      [,1] [,2]
-## [1,] "B"  "A" 
-## [2,] "A"  "B" 
+## [1,] "A"  "B" 
+## [2,] "B"  "A" 
 ## [3,] "A"  "B" 
 ## [4,] "B"  "A"
 ```
@@ -306,10 +306,10 @@ plot_plan$book
 
 ```
 ##   plots block treatment_name
-## 1   101     1              B
-## 2   102     1              A
-## 3   201     2              A
-## 4   202     2              B
+## 1   101     1              A
+## 2   102     1              B
+## 3   201     2              B
+## 4   202     2              A
 ## 5   301     3              A
 ## 6   302     3              B
 ## 7   401     4              B
@@ -334,15 +334,15 @@ hemp_plot_plan$sketch
 
 ```
 ##       [,1]    [,2]   
-##  [1,] "Jerry" "Bob"  
-##  [2,] "Bob"   "Jerry"
+##  [1,] "Bob"   "Jerry"
+##  [2,] "Jerry" "Bob"  
 ##  [3,] "Jerry" "Bob"  
 ##  [4,] "Jerry" "Bob"  
-##  [5,] "Bob"   "Jerry"
+##  [5,] "Jerry" "Bob"  
 ##  [6,] "Bob"   "Jerry"
-##  [7,] "Jerry" "Bob"  
-##  [8,] "Bob"   "Jerry"
-##  [9,] "Bob"   "Jerry"
+##  [7,] "Bob"   "Jerry"
+##  [8,] "Jerry" "Bob"  
+##  [9,] "Jerry" "Bob"  
 ## [10,] "Jerry" "Bob"
 ```
 
@@ -354,24 +354,24 @@ hemp_plot_plan$book
 
 ```
 ##    plots block hemp_variety
-## 1    101     1        Jerry
-## 2    102     1          Bob
-## 3    201     2          Bob
-## 4    202     2        Jerry
+## 1    101     1          Bob
+## 2    102     1        Jerry
+## 3    201     2        Jerry
+## 4    202     2          Bob
 ## 5    301     3        Jerry
 ## 6    302     3          Bob
 ## 7    401     4        Jerry
 ## 8    402     4          Bob
-## 9    501     5          Bob
-## 10   502     5        Jerry
+## 9    501     5        Jerry
+## 10   502     5          Bob
 ## 11   601     6          Bob
 ## 12   602     6        Jerry
-## 13   701     7        Jerry
-## 14   702     7          Bob
-## 15   801     8          Bob
-## 16   802     8        Jerry
-## 17   901     9          Bob
-## 18   902     9        Jerry
+## 13   701     7          Bob
+## 14   702     7        Jerry
+## 15   801     8        Jerry
+## 16   802     8          Bob
+## 17   901     9        Jerry
+## 18   902     9          Bob
 ## 19  1001    10        Jerry
 ## 20  1002    10          Bob
 ```
