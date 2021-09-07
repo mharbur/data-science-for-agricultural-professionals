@@ -1,12 +1,46 @@
-# Two-Treatment Comparisons
-Until now, we have worked with a single population.  To recap our progress:
-- In Unit 1, we defined a population.  We learned it was the complete group of individuals which we wanted to describe or for which we wanted to make a prediction.  We learned how to describe the center of this population with the population mean, and how to describe its spread using the sum of squares, variance, and standard deviation.
-- In Unit 2, used the normal distributionto describe the pattern with which individuals are spread in many populations: individuals with values closer to the population mean were expected to be observed much more frequently that individuals with values that were more extreme.  We learned to use probability toe quantify the likelihood of encountering an invididual within a particular range of values.
-- In Unit 3, we used samples, subsets from a population, in place of measuring each individual in that population.  We saw how sample means were distributed normally, from both normally- and non-normally distributed populations.  The standard error was used to describe the spread of individual samples around the sample mean.  The distribution of sample means was described by the t-distribution, which was shorter and wider when the number of samples was low, and taller and narrower when the number of samples was greater.
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
 
+# Two-Treatment Comparisons
+
+Until now, we have worked with a single population. To recap our
+progress: -
+
+-   In Unit 1, we learned a **population** is a complete group of
+    individuals for which we wanted to develop a summary or prediction.
+    We learned to describe the center of this population with the
+    population mean and its spread using the sum of squares, variance,
+    and standard deviation.
+
+-   In Unit 2, we used the **normal distribution** model to describe the
+    pattern with which individuals in many populations are spread around
+    the mean. Individuals closer in value to the population mean were
+    predicted to occur more frequently that that were further in value.
+    Based on the frequency with which values were predicted to occur, we
+    calculated the probability an individual from that population would
+    fall within a given range of values.
+
+-   In Unit 3, we worked with **samples**, subsets drawn from a
+    population. We saw how sample means are normally distributed,
+    regardless of the population distribution from which they come. The
+    standard error describes the spread of individual samples around the
+    sample mean. This distribution was modeled with the t-distribution,
+    which is wider when the number of samples is low and taller when the
+    number of samples was greater.
 
 ## Side-by-Side Trials
-In this unit, we will finally put our statistical knowledge to work to test treatment differences.  We will work with a simple but important experimental design -- the two-treatment comparison.  Here in Ohio, this is referred to as a "side-by-side" trial, but you may have a different term for it where you work.  If you work for or in support of an agronomy retailer, you have probably conducted these trials.  Typically, you would split one or more fields into treated and untreated fields.  For example, you might "stripe" and individual field with treated and untreated areas: 
+
+In this unit, we will finally put our statistical knowledge to work to
+test treatment differences. We will work with a simple but important
+experimental design -- the two-treatment comparison. Here in Ohio, this
+is referred to as a side-by-side trial, but you may have a different
+term for it where you work. If you work in retail agronomy, you have
+probably conducted these trials. Typically, you would split one or more
+fields into treated and untreated fields. For example, you might
+"stripe" an individual field with treated and untreated areas:
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -27,7 +61,6 @@ dataset %>%
 
 
 ```
-
 
 Or, you might divide multiple fields in half like this:
 
@@ -51,26 +84,45 @@ dataset %>%
 
 ```
 
-
-In either case, however, a side-by-side deals with two treatments and can be easily analyzed using a t-test.  In these next two units we will compare different designs for side-by-side (or paired) trials, use Excel and R to randomly assign treatments, understand how the t-distribution allows us to test for significance, and run these tests in R.
-
+In either case, a side-by-side trial deals with two treatments and can
+be analyzed using a t-test. In these next two units we will compare
+different designs for side-by-side (or paired) trials, use R to randomly
+assign treatments, understand how the t-distribution allows us to test
+for significance, and run these tests in R.
 
 ## Blocked Design
-In Unit 1 we learned the hallmarks of a designed trial are the randomzation and replication of treatments.  Each treatment should be observed several times in different experimental units.  Often in our work "experimental unit" is a fancy word for a plot, half a field, or a pot.  
 
-Observing the treatment several times has two benefits.  First, the average of those observations – the sample average – wil likely be closer to the true population average for that treatment than the individual observations.  Second, variation among the observations can be used to give us a sense how much environmental factors outside, in contrast with our treatment, cause our observations to vary.
+In Unit 1 we learned the hallmarks of a designed trial are the
+**randomization** and **replication** of treatments. Each treatment
+should be observed several times in different experimental units. In our
+work, often **experimental unit** is a fancy termfor a plot, half a
+field, or a pot.
 
-It is also important to randomize treatments in order to avoid intentional or unintentional biases that might skew our interpretation of results.  For example, one treatment might be biased by always putting it to the north of another treatment or, more insiduously, always putting it in the better half of a field.  Deliberate randomization reduces the probability of either scenario.
+Observing the treatment several times has two benefits. First, the
+average of those observations -- the sample mean -- will likely be
+closer to the true population average for that treatment than the
+individual observations. Second, variation among the observations can be
+used to give us a sense how much environmental factors -- in contrast
+with our treatment -- cause our observations to vary.
 
-That said, reality often intervenes intervenes.  Soil types change across a field, as do microclimates around field edges, management histories, etc.  Though randomization will reduce the likelihood that treatments are concentrated in one of these areas, it may not result in as even a distribution of treatments across the experimental area as we would like.  Even with randomization, we could conceivably with all the treatments in one half of the field:
+It is also important to randomize treatments in order to reduce
+intentional or unintentional biases that might skew our interpretation
+of results. For example, one treatment might be biased by always putting
+it to the north of another treatment or, more insidiously, in the better
+half of a field. Deliberate randomization reduces the probability of
+either scenario.
+
+That said, reality sometimes intervenes intervenes. Soil types change
+across a field, as do microclimates around field edges and management
+histories (e.g. an old feedlot). Though randomization reduces the
+likelihood that treatments are concentrated in one areas, it may not
+produce as even a distribution of treatments across the experimental
+area as we would like. We could conceivably end up with all replicates
+of a treatment level concentrated in one half of the field:
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 library(tidyverse)
-```
 
-
-
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
 x = c(1:8)
 y = 1
 trt = c(1,1,1,1,2,2,2,2)
@@ -87,29 +139,8 @@ dataset %>%
   labs(x=NULL, y=NULL)
 ```
 
-
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
-x = c(1,2,1,2,1,2,1,2)
-y = 1
-trt = c(1,2,1,2,2,1,1,2)
-field=(c(1,1,2,2,3,3,4,4))
-dataset = cbind(x,y, trt, field) %>%
-  as.data.frame() %>%
-  mutate(trt = as.factor(trt))
-
-dataset %>%
-  ggplot(aes(x=y, y=x, group=trt)) +
-  geom_tile(aes(fill=trt), color="grey", size=2) +
-  geom_text(aes(x=y, y=x, label=paste("treatment", trt)), size=10) +
-  scale_fill_manual(values=c("white", "grey")) +
-  theme(legend.position = "none") +
-  labs(x=NULL, y=NULL) + 
-  facet_wrap(field ~ .)
-
-```
-
-
-Or, if we are using multiple fields, both halves of a field could receive the same treatment in a randomized design
+Similarly, if we are using multiple fields, both halves of a field could
+receive the same treatment in a randomized design
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 x = c(1,2,1,2,1,2,1,2)
@@ -130,20 +161,41 @@ dataset %>%
   facet_wrap(field ~ .)
 
 ```
- 
-Blocked experimental designs, place a restriction on the random assignment of treatments to plots.  Instead of assigning treatments randomly within a field or across a state.  We instead force both treatments to occur within a field section or in the same field, so that our treatment maps look more those we showed in the first two figures of this unit.
 
-Here is another way to think about this.  Our statistical test this week is based on comparing two populations.  Each population will receive a different treatment.  We want to design our experiment so that aside from the treatment, the two populations are as identical as possible.  The blocked approach, in general, helps create two populations that are similar.  
- 
+**Blocked** experimental designs place a restriction on the random
+assignment of treatments to plots. Instead of assigning treatments
+randomly within a field or across a state. We instead force both
+treatments to occur within a field section or in the same field, so that
+our treatment maps look more those we showed in the first two figures of
+this unit.
+
+Here is another way to think about this:
+
+-   Our statistical test this week is based on comparing samples from
+    two populations, the control population and the population receiving
+    starter.
+
+-   We want to design our experiment so that aside from the effect of
+    the treatment, the two populations are as identical as possible.
+
+The blocked approach, in general, helps create two populations that are
+similar.
+
+In the exercise **exercise_randomizing_plots** in R, you will learn how
+to design your own blocked two-treatment trial.
 
 ## Case Study
-An in-furrow corn starter (6-24-6 plus proprietary micronutrients) was tested against a control (no -starter) in a trial in western Ohio.  Treatments were blocked (paired) so that each treatment occurred once per block.  Plot numbers are given on the x-axis of the map below.  There were 10 blocks. The data are in a data.frame named "corn_starter".
+
+An in-furrow corn starter (*6-24-6 plus micronutrients*) was tested
+against a control (*no starter*) in a trial in western Ohio. Treatments
+were blocked (paired) so that each treatment occurred once per block.
+Plot numbers are given on the x-axis of the map below. There were 10
+blocks. The data are in a data.frame named "corn_starter".
 
 ```{r}
 corn_starter = read.csv("data-unit-4/corn_starter.csv")
 
 ```
-
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 corn_starter %>%
@@ -158,28 +210,29 @@ corn_starter %>%
         axis.ticks = NULL)
 ```
 
+Here are the first six rows of our dataset.
 
-Examine the corn_starter data.frame using the "head" function.
 ```{r}
 head(corn_starter)
 ```
-Note the column headings: "trt" refers to the treatment level (Control or Starter) and "value" refers to the measured yield.
 
+Note the column headings: *treatment* refers to the treatment level
+(Control or Starter) and *yield* refers to the measured yield.
 
-Let's make a quick histogram plot of the data using ggplot.  For the first time, in this unit, we are working with two populations: one which received no starter (the control), and another which received starter.  So we will have separate histograms for both populations.
+Let's make a quick histogram plot of the data using ggplot. For the
+first time, in this unit, we are working with samples from two
+populations: the control and treatment populations. We will have
+separate histograms for each set of samples.
+
 ```{r, corn_starter_bar_plot}
 ggplot(data = corn_starter, aes(x=yield)) +
   geom_histogram() +
   facet_grid(~treatment)
 ```
 
-In the above code, ggplot launches the function to plot our data.  Also on the first line, "aes" specifies the "aesthetics" to be plotted -- these are the variable(s) that define where objects are positioned in the plot.  In this case, yield determines which bin an observation is placed into, so x=value.
-
-The next line tells R to draw a histogram.
-
-The last line tells R to construct a series of plots, one for each level of treatment.  This way, we can compare the distribution of the Control population with that of the Starter population.
-
-The mean yield of the population that population that received starter is greater than the center of the population that received the control (no starter).
+The mean yield of the sample from the population that received starter
+is greater than the mean yield of the sample of the population that
+received the control (no starter).
 
 ```{r}
 corn_starter %>%
@@ -187,7 +240,25 @@ corn_starter %>%
   summarise(yield = mean(yield))
 ```
 
-Another way to look at this would be to create a new population from the differences between starter and control within each pair.
+Instead of studying the control and treatment sample sets independently,
+however, we can restructure our dataset to analyze it another way. Data
+set structure describes how our columns and rows are organized. Do our
+treatment levels, for example, differ down rows or across columns? In
+the dataset above, for example, our two treatment levels (*control* and
+*starter)* vary among rows in the *treatment* column.
+
+When we **restructure** a dataset, we rearrange it so that values that
+formally varied among rows vary across columns, or vice versa. If you
+have every used a *PivotTable* in *Excel*, you have restructured data.
+In **exercise_restructuring_data** in RStudio, you will learn how to
+similarly restructure data in R.
+
+In our case study, we will restructure the treatment column by
+separating its values among two new columns, *control* and *starter*. We
+will create a new *difference* column by subtracting the yield of the
+control plot from the yield of the starter plot in each block. By doing
+this, each block is now summarized by one value, the difference between
+treatments.
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 corn_differences = corn_starter %>%
@@ -195,64 +266,181 @@ corn_differences = corn_starter %>%
   spread(treatment, yield) %>%
   mutate(difference = Starter - Control)
 
+corn_differences
+```
+
+In this new population, individuals with a positive value indicate a
+block where the starter out-yielded the control. Negative differences
+indicate the control out-yielded the starter. We can plot these
+differences in a histogram, also.
+
+```{r, echo=FALSE}
 ggplot(data = corn_differences, aes(x=difference)) +
   geom_histogram(binwidth = 1) +
-  lims(x=c(-15, 15))
+  lims(x=c(-15, 15)) +
+  geom_vline(xintercept = mean(corn_differences$difference),
+             color = "red", size = 1.5)
+
 ```
 
-This can be confusing, so let's slow it down.  We created a new population by subtracting the yield of the control plot from the yield of the starter plot in each pair.  In this new population, individuals with a positive value indicate a block where the starter outyielded the control.  Individuals with a negative value indicate a block where the control outyielded the starter.  We will now work with this new population of differences. 
+Most of the individuals in this new population are greater than 0. The
+population mean, indicated by the vertical red line, is 5.6
+bushels/acre. So far, our starter shows promise: a 5.6 bushel/acre mean
+*increase* in yield. Of course, this immediately raises the next
+questions:
 
-We see most of the individuals in this new population are greater than 0.  The population mean is 5.6 bushels/acre.  What we want to know is: given the mean we observed (5.59 bushels/acre) and the distribution of this population, what is the probability, were we to repeat the trial, that the population mean would be zero.  
+-   How consistently is there a positive response to this starter
+    product?
 
-A population mean of zero would mean the starter yield and control yield were the same, i.e. there is no difference between the starter and control.
+-   If we repeated this experiment, would we likely see a difference
+    equal to zero or -- even worse -- one less than zero*,* in which
+    case, yield actually *decreased* with the use of starter fertilizer?
 
-
+We can use the t-distribution to answer this question, either by
+calculating the confidence interval of the mean difference, 5.6
+bushels/acre, or testing the difference between the control and
+treatment means using a t-test.
 
 ## Confidence Interval
-We can use a confidence interval to determine whether the range of values we are likely to observe includes zero.  Recall, to calculate the confidence interval we need two values: the minimal t-value that is associated with our degrees of freedom and encompases 95% of our population, and the standard error of the difference.
 
-We calculate the minimal t-value using the qt function in R.  
+In Unit 3, we worked with the sample mean, which is based on individual
+samples from an individual population. We defined the confidence
+interval around a sample mean, based on the variation in sample values
+around that sample mean.
+
+We can use the same approach now on our sample differences: we will
+calculate the confidence interval around the mean difference between our
+control and treatment. If that interval contains zero or negative
+values, that means it is possible that control and treatment yields are
+the same, or even that the control yields more than the treatment.
+
+Recall that to calculate the confidence interval we need two values:
+
+-   the minimal t-value that: is associated with our degrees of freedom
+    and is expected to encompasses 95% of the distribution of sample
+    means
+
+-   the standard error of the difference.
+
+We calculate the minimal t-value using the `qt()` function in R.
+
 ```{r}
 min_t = qt(0.975, df=9)
+min_t
 ```
 
-Remember, degrees of freedom is equal to n-1.  Our new population has 10 degrees of freedom, thereofre, df equals 9 above.
+Remember, degrees of freedom is equal to n-1. Our new population has 10
+degrees of freedom, therefore, df equals 9 above. The minimal t-value is
+about 2.26 .
 
-We also need to know the standard error of the population.  Given our population is composed of treatment differences, we will call this statistic the *standard error of the difference*.  
+We also need to know the standard error of the population. We will
+calculate that the same as we did for a single variable in Unit 3. Given
+our sample set is composed of treatment differences, though, we will
+call this statistic the *standard error of the difference*.
+
+First, we calculate the standard deviation of the treatment differences
+using the `sd()` function:
 
 ```{r}
 sd = sd(corn_differences$difference)
+sd
+```
+
+Next, we divide the standard deviation by the square root of the number
+of differences. This is equal to the number of blocks.
+
+Then we divide the standard deviation by the square root of the number
+of observations (10) to get the standard error of the difference:
+
+```{r}
 sed = sd/sqrt(10)
-pop_mean = mean(corn_differences$difference)
+sed
 
 ```
 
-In the code above, we first calculated the standard deviation, sd, of of our differences. We divided the standard deviation by the square root of the number of observations to get the standard error of the difference.  Our population mean is 5.59 and the standard error of the difference is about 1.71 We additionally calculated pop_mean, the mean of our population. 
+Finally, since the confidence interval is constructed with the sample
+mean as its center, we calculate the sample mean:
 
-We can now calculate the confidence interval, using min_t and sed:
 ```{r}
-upper_limit = pop_mean + (min_t * sed)
-lower_limit = pop_mean - (min_t * sed)
-CI = paste(lower_limit, upper_limit, sep=",")
+sample_mean = mean(corn_differences$difference)
+```
+
+Our sample mean is 5.59 and the standard error of the difference is
+about 1.71 We additionally calculated pop_mean, the mean of our
+population.
+
+We can now calculate the confidence interval, using `sample mean`,
+`min_t`, and `sed`. To calculate the lower limit, we subtract the
+product of `min_t` and `sed` from the sample mean:
+
+```{r}
+lower_limit = sample_mean - (min_t * sed)
+lower_limit
+
+```
+
+Similarly, the upper limit is calculated by adding the product of
+`min_t` and `sed` to the sample mean:
+
+```{r}
+upper_limit = sample_mean + (min_t * sed)
+upper_limit
+
+```
+
+It is common practice to present this confidence interval in
+parentheses, with the lower and upper limits separated by commas.
+
+```{r, eval=FALSE}
+CI = paste0("(", lower_limit, ",", upper_limit, ")")
 CI
 ```
 
-The 95% confidence interval ranges from 1.72 to 9.46 bushels per acre and, notably, does not include zero.  Since zero is outside the 95% confidence interval, there is greater than a 95% probability the population mean is not equal to zero.  Another way of saying this is there is less than a 5% probability that the population mean is equal to zero.  Or, finally, the population mean is significantly different from zero at the 5% (or 0.05) level.
+It is also good practice to round your final results so that your
+answers have either the same number of decimal places as the original
+measures. By doing this, we more fairly the precision of the original
+measurements.
 
-Going our population was composed of the difference of starter and control, we can say the starter effect is significantly different from the control at the 5% level. 
+```{r, eval=FALSE}
+CI = paste0("(", round(lower_limit,1), ",", 
+            round(upper_limit,1), ")")
+CI
+```
 
+The 95% confidence interval ranges from 1.7 to 9.5 bushels/acre and,
+notably, does not include zero. Since zero is outside the 95% confidence
+interval, there is greater than a 95% probability the population mean is
+not equal to zero. Another way of saying this is there is less than a 5%
+probability that the population mean is equal to zero. Or, finally, the
+population mean is significantly different from zero at the 5% (or 0.05)
+level.
 
-## T-Test 
-An alternative to the confidence interval is the t-test.  The first step of the t-test is to calculate our observed t-value:
+Going our population was composed of the difference of starter and
+control, we can say the starter effect is significantly different from
+the control at the 5% level.
 
-$$ t = \frac{\bar{x} - \mu}{SED} $$
-Where $\bar{x}$ is the observed population mean, $\mu$ is the hypothesized population mean (usually 0, meaning no treatment difference), and $SED$ is the standard error of the difference.
+Learn how to construct your own confidence interval in
+**exercise_confidence_interval** in RStudio.
+
+## T-Test
+
+An alternative to the confidence interval is the t-test. The first step
+of the t-test is to calculate our observed t-value:
+
+$$ t = \frac{\bar{x} - \mu}{SED} $$ Where $\bar{x}$ is the observed
+population mean, $\mu$ is the hypothesized population mean (usually 0,
+meaning no treatment difference), and $SED$ is the standard error of the
+difference.
 
 In our example above:
 
 $$ t = \frac{5.59 - 0}{1.71} = 3.27$$
 
-Our observed t-value is about 3.27.  If there were no difference between the starter and the control, of course, t would be equal to zero.  So there is a difference between our observed mean and zero of $t=3.27$.  Using R, we can quickly calculate the probability of observing a value $t=3.27$ above -- or below our population mean of 5.59.  
+Our observed t-value is about 3.27. If there were no difference between
+the starter and the control, of course, t would be equal to zero. So
+there is a difference between our observed mean and zero of $t=3.27$.
+Using R, we can quickly calculate the probability of observing a value
+$t=3.27$ above -- or below our population mean of 5.59.
 
 ```{r}
 library(fastGraph)
@@ -262,531 +450,30 @@ shadeDist(xshade=c(-3.27, 3.27), "dt", parm2 = 9, lower.tail = TRUE)
 
 ```
 
-Note that this time with this function we used the argument "lower.tail=TRUE".  This tells R to calculate the probability of values futher than $t=3.27$ both above and below the mean.
-
-Again there were 10 observed differences in our population, so there were 9 degrees of freedom.  The value that is returned is the probability the population mean is actually zero, given the population mean.  The probability of this t-value (sometimes abbreviated as $Pr \ge \lvert t \lvert$) is very low, less tan 0.01, or 1%.
-
-
-
-
-
-
-
-
-
-## Exercise: Randomizing Plots
-Plot randomzation is a very important -- and very easy to do with R.  Below we will learn how to randomize plots for side-by-side trials in which plots are paired.
-
-
-### Example 1
-For our first example, we create an experimental design with 4 replications of treatments "A" and "B".  We will use the agricolae package to do this.  The agricolae package is 
-
-### The Agricolae Package
-To randomize two-treatment trials with paired treatments, we will use the "agricolae" package of R.  
-
-```{r}
-library(agricolae)
-```
-
-### Randomizing the Plot
-We will use the "design.rcbd" function from the agricolae package.  We need to supply the following arguments to this function:
-- trt: a vector with treatment names
-- r: the number of replications
-
-We will create a vector called "treatment_names", containing treatments "A" and "B".  We will use the argument r=4 to tell R to generate 4 blocks.
-
-```{r}
-treatment_name=c("A", "B")
-
-plot_plan = design.rcbd(trt = treatment_name, r=4)
-
-```
-
-### Working with Lists
-The code above created an object called "plot_plan".  So far in R we have dealt with two kinds of objects: a data frame, which is basically a table of values, and a vector, which can be thought of as a single column of numbers.  "treatment_names" above is an example of a vector.
-
-"plot_plan" is a third type of R object, called a "list".  A list is a collection of other R objects.  It can contain multiple data frames, vectors, single values, etc.  A list is a very useful way to bundle up information, but they can be a little tricky to unpack.
-
-If we just run plot_plan below, we will get two windows.  One will list all of the objects in the list.  The second window will show the plot plan.
-
-```{r}
-plot_plan
-```
-
-We can access this information more directly.  If we type "plot_plan$sketch", we get a plot map of sorts.
-
-```{r}
-plot_plan$sketch
-
-
-```
-
-If we type "plot_plan$book", we get a data frame with the plots, block, and treatment_names.
-
-```{r}
-plot_plan$book
-```
-
-### Example 2
-In a field trial, we wish to compare the biomass of two fiber hemp varieties, "Jerry" and "Bob".  We wish to design a paired experimental design with 10 replications.
-
-```{r}
-hemp_variety = c("Jerry", "Bob")
-
-hemp_plot_plan = design.rcbd(trt = hemp_variety, r=10)
-```
-
-Here is the plot layout:
-```{r}
-hemp_plot_plan$sketch
-```
-
-And here is the table we can cut and paste into our spreadsheet:
-```{r}
-hemp_plot_plan$book
-```
-
-
-
-
-
-
-
-
-
-## Exercise: Restructuring Columns and Rows
-As we move into the treatment comparisons part of our course, it is a good time to talk about how datasets are structured.  Datasets can have a "wide structure, in which the values for different treatments are listed side by side:
-
-```{r}
-library(tidyverse)
-Trt_A = c(1:4)
-Trt_B = c(5:8)
-Rep = c(1:4)
-wide_df = cbind(Rep, Trt_A, Trt_B) %>%
-  as.data.frame()
-
-wide_df
-```
-
-In general, however, we prefer data be in the long form, so that each observation has its own row in the dataset.  In the long form, the data above would be in three columns, the first listing the rep, the second listing the treatment, and the third listing the observed value for that treatment.
-
-To get the data into the correct form, we need to pivot or transpose it: that is, certain columns will become rows, or vice versa.  Fortunately, this is easy to do with the "tidyverse" package in R.  The "tidyverse" and "tidy" data concept are yet another product from Hadley Wickham, who is an alumnus of Iowa State.
-
-Let's run the tidyverse package:
-
-```{r}
-
-library(tidyverse)
-```
-
-The tidyverse package introduces us to a new feature in R: pipes.  Pipes are connections between lines of code that allow us to work on the same dataset with several lines of code at once.  Pipes are signified with the "%>%" string of code.
-
-To make our dataset into the long format, we use the "gather" function to collect the four treatment rows into two rows, one identifying the treatment and the other with the value.  "gather" requires three arguments: 1) the name of the column that will identify the data (often called a key), 2) the observed values, and 3) the columns to be reorganized in the key and value columns.
-
-```{r}
-long_df = wide_df %>%
-  gather(Treatment, Value, Trt_A:Trt_B)
-
-long_df
-```
-
-In the code above, we created a new data frame, "long_df", from the "wide_df" data frame.  We used the "gather" function to create two new columns, "Treatment" and "Value", to contain the treatment name and value associated with each observation.  The pipe ("%>%") told the "gather" function to work with the "wide_df" data.
-
-What if we had a long dataset that we wanted to be wide, so that each treatment had its own column?  Then we would use the "spread" function.  Spread takes two arguments: the column used to identify the values, and the column with the value.  Again, the pipe connects the two lines of code.
-
-```{r}
-
-wide_again_df = long_df %>%
-  spread(Treatment, Value)
-
-wide_again_df
-```
-
-
-### Operations on Data
-One of the reasons we may want to restructure data in the wide format is so we can conduct a new statistic from the original values.  For example, as we learn this week, we may want to model the distribution of the differences between Trt A and Trt B.  Once the data is in the wide format above, we calculcate these differences very quickly.
-
-In R, we use the "mutate" function to build new columns.  The argument to "mutate" is usually a mathematical formula.  Say we want to cacluate the differences, row by row, between Trt A and Trt B.  We would use the following mutate command.
-
-
-```{r}
-trt_differences = wide_again_df %>%
-  mutate(Trt_Diff = Trt_A - Trt_B)
-trt_differences
-
-```
-
-We now have a new column of the differences between Trt_A and Trt_B.
-
-
-### Case Study: Soybean Fungicide
-Soybean treated with fungicide applied at R3 was compared with soybean that was untreated.  Data are in the soybean_funcicide.csv
-```{r}
-soybean = read.csv("data-unit-4/exercise_data/soybean_fungicide.csv")
-soybean
-```
-
-This dataset is currently in the long form.  To calculate the differenced between Treatments A and B, we need need to convert it to the wide form.
-
-```{r}
-soybean_wide = soybean %>%
-  spread(Treatment, Yield)
-soybean_wide
-```
-
-We now have the two treatments in columns A and B.  We can then calculate the difference betwee Treatment A and Treatment B using the mutate function..
-
-```{r}
-diffs = soybean_wide %>%
-  mutate(diff = A-B)
-diffs
-```
-
-### Practice 1
-
-The dataset "darwin.csv" is from a trial by Charles Darwin in which he compared the heights of progeny of corn plants that were self-fertilized and cross-fertilized. Three pairs of plants were grown per pot.  Measurements are in inches.
-
-```{r}
-darwin = read.csv("data-unit-4/exercise_data/darwin.csv")
-
-head(darwin)
-```
-
-The data are currently in the long format.  We want to convert it to the wide format, where each treatment has its heights in a separate column.  Re-structure the type and height columns using the spread_function.
-
-```{r}
-
-
-```
-
-The first few rows of the resulting dataset should look like:
-
-I	a	23.500	17.375	
-I	b	12.000	20.375	
-I	c	21.000	20.000	
-II	d	22.000	20.000	
-
-
-### Practice 2
-These data are from a trial that compared apple genotypes.
-
-```{r}
-
-```
-
-Calculate the difference between the two apple genotypes (Golden and Redspur) by completing the "mutate" function below.
-
-```{r}
-
-```
-The first two rows should look like:
-
-R1	121.7750	127.5900	-5.81500	
-R2	146.7222	126.7625	19.95972	
-
-
-### Practice 3
-Manganese was applied to soybean at the V5 stage near New Baltimore, Ohio.  
-
-```{r}
-manganese = read.csv("data-unit-4/exercise_data/soybean_manganese.csv")
-head(manganese)
-```
-
-Convert the data to wide format so the two treatments are in separate columns
-```{r}
-
-```
-The first two rows of the resulting dataset should look like:
-
-1	78.9	81.7		
-2	80.9	84.3	
-
-Then calculate the difference between treatments A and B by subtracting treatment B from treatment A.
-
-```{r}
-
-```
-
-The first couple of rows of the final dataset should look like:
-
-1	78.9	81.7	-2.8	
-2	80.9	84.3	-3.4	
-
-
-### Practice 4
-
-Data are from a wheat trial where fungicide was applied during flag leaf stage.
-```{r}
-wheat = read.csv("data-unit-4/exercise_data/wheat_fungicide.csv")
-head(wheat)
-
-```
-
-Convert the data to wide format.  The first few rows should look like:
-
-1	93.8	95.9		
-2	92.3	97.5		
-3	98.7	98.8	
-
-```{r}
-
-```
-
-
-Calculate the difference between treatments by subtracting Treatment A from Treatment B.  The first few rows should look like:
-
-1	93.8	95.9	-2.1	
-2	92.3	97.5	-5.2	
-3	98.7	98.8	-0.1	
-
-
-
-```{r}
-
-
-```
-
-
-
-
-## Exercise: Confidence Interval of Difference"
-
-In this unit, we learned that, in the case of two-treatment experiments, we can test whether the populations that receive each treatment are different from each other by testing whether their difference is different from zero. While we will often use the t.test to calculate the probability the two populations are equal, given their measured values, there are times when we may want to report the confidence interval around their difference.  
-
-These confidence intervals also be can be gained from the "t.test", but calculating them manually in these exercises is a good opportunity to sharpen your R skills and hopefully will give you are greater conceptual sense of how the confidence interval works.  
-
-To create the confidence interval for the difference between two populations, there are the following steps:
-- calculate the differences between the populations in each pair or block
-- calculate the overall mean difference between the two populations
-- calculate the standard deviation and standard error of the difference
-- look up the appropriate t-value based on the desired level of confidence and degrees of freedom
-- add and subtract the product of standard error and t-value from the mean difference.
-
-### Example 1
-We will work with the soybean fungicide data from the previous exercise
-```{r}
-library(tidyverse)
-soybean = read.csv("data-unit-4/exercise_data/soybean_fungicide.csv")
-head(soybean)
-
-```
-
-#### Calculate Differences
-We will use the "spread" and "mutate" functions from the previous exercises to calculate a the population difference within each block.
-
-```{r}
-soybean_wide = soybean %>%
-  spread(Treatment, Yield)
-
-soybean_diff = soybean_wide %>%
-  mutate(diff = A-B)
-
-soybean_diff
-```
-
-#### Calculate the Mean Difference
-This is the mean for the new column, diff.  As a reminder, soybean_diff$diff tells R to use the diff column of the soybean_diff data frame.
-```{r}
-diff_mean = mean(soybean_diff$diff)
-diff_mean
-```
-
-#### Calculate the Standard Deviation and Standard Error
-We can calculte the standard deviation using the "sd" function.
-```{r}
-diff_sd = sd(soybean_diff$diff)
-diff_sd
-```
-
-The standard error is the standard deviation, divided by the square root of the number of observations, n.  In this example, n=10.  We can verify this using the "length" function of R.  We can then calculate the standard error, which we will call "diff_se".
-
-```{r}
-diff_N = length(soybean_diff$diff)
-
-diff_se = diff_sd / sqrt(diff_N)
-```
-
-diff_se is the standard error.  The formula we used is equal to 2.35 / sqrt(10).  We just used the variables to save retyping.
-
-#### Calculate the t-value
-We calcuate the t-value to use in our confidence interval by using the "qt" function of R.  Remember, the qt function uses two arguments.  The first is the desired level of confidence.  We want a 95% confidence interval, so we will use 0.975.  That will leave 0.025, or 2.5%, beyond the upper and lower limits of our confidence interval.  
-
-The second argument is the degrees of freedom.  Since we have observed ten differences, we have nine degrees of freedom. 
-
-```{r}
-t_value = qt(0.975, 9)
-t_value
-```
-Our t_value is approximately 2.26.
-
-#### Calculate the Confidence Interval
-The confidence interval is bound by upper and lower confidence limits.  The lower limit is equal to the mean difference minus the product of the standard error of the difference and t-value.  The upper limit is the mean difference plus the product of the standard error of the difference.
-
-```{r}
-lower_limit = diff_mean - (diff_se * t_value)
-upper_limit = diff_mean + (diff_se * t_value)
-
-lower_limit
-upper_limit
-```
-
-The 95% confidence interval, with 9 df, for the difference is (-5.21, -1.85).  Note the confidence interval does not include zero, therefore the two populations (and, thus, the treatments they received) are significantly different at the P<0.05 level.
-
-Which treatment was greater? Since we subtracted B from A, the negative confidence interval indicates B was greater.
-
-### Example 2
-We will work with the Darwin corn data.
-```{r}
-darwin = read.csv("data-unit-4/exercise_data/darwin.csv")
-head(darwin)
-```
-
-
-#### Calcuate Differences
-```{r}
-darwin_wide = darwin %>%
-  spread(type, height)
-head(darwin_wide)
-```
-
-```{r}
-darwin_diff = darwin_wide %>%
-  mutate(diff = cross - self)
-head(darwin_diff)
-
-```
-
-
-#### Calculate Mean Difference
-```{r}
-darwin_diff_mean = mean(darwin_diff$diff) 
-darwin_diff_mean
-```
-
-#### Calculate Standard Deviation and Standard Error
-
-```{r}
-darwin_diff_sd = sd(darwin_diff$diff)
-darwin_diff_N = length(darwin_diff$diff)
-
-darwin_diff_se = darwin_diff_sd / sqrt(darwin_diff_N)
-darwin_diff_se
-
-```
-
-#### Calculate the t-value
-There were 15 pairs, so there are 14 degrees of freedom.  We will again calculate the t-value for the 95% confidence interval.
-
-```{r}
-darwin_t_value = qt(0.975, 14)
-darwin_t_value
-```
-
-#### Calculate the Confidence Interval
-```{r}
-darwin_lower_limit = darwin_diff_mean - (darwin_diff_se * darwin_t_value)
-darwin_upper_limit = darwin_diff_mean + (darwin_diff_se * darwin_t_value)
-
-darwin_lower_limit
-darwin_upper_limit
-```
-
-The confidence interval was (0.004, 5.229).  It does not include zero, so the difference is significant.  Since we subtracted the self-pollinated values from the cross-pollinated values, the positive difference means the cross-pollinated plants were taller than the self-pollinated plants.
-
-
-
-
-
-
-
-## Exercise: T-Test
-
-The t-test is used to test the probability that two populations are different.  In a two-treatment trial, each population will receive a different treatment (an input or management practice).  In R, we can use the "t.test" function to quickly determine the probability that two treatments are different.
-
-### Case Study 1: Wheat Fungicide
-Let's start by loading the data and using the "head" command to examine its structure.  Treatment B was a fungicide applied at flag leaf.  Treatment A is the untreated control.
-```{r}
-wheat = read.csv("data-unit-4/exercise_data/wheat_fungicide.csv")
-head(wheat)
-```
-
-### T-Test
-The t.test function in R requires at least three arguments.  The first is a model statement.  In testing whether populations that receive different treatments have different yields, we are modelling yield as a function of treatment.
-
-We can express this in the following statement:
-```{r}
-model = Yield ~ Treatment
-```
-
-We can then plug the model statement into our t.test.  The second argument to the t.test, "data=wheat", tells R which data frame to analyze.  The third, "paired=TRUE", tells R the treatments were paired (blocked) in our experiment.  
-```{r}
-wheat_t_test = t.test(model, data=wheat, paired=TRUE)
-
-wheat_t_test
-
-```
-
-What would happen if we left out the "paired=TRUE" argument?
-
-```{r}
-wheat_t_test_independent = t.test(model, data=wheat)
-
-wheat_t_test_independent
-```
-
-We notice, that the t-value, degrees of freedom, and p-value are all different.  This is because R analyzes the two treatments as independent populations with their own variances -- instead of analyzing the differences between each pair of treatments.  The df of 17.91 is not a whole number -- this also tells us that R is treating the variances differently and using algorithms it would not use with a paired design.
-
-Lets look at the correct analysis again.
-```{r}
-wheat_t_test
-```
-
-Highlights of the output include the p-value, and the 95% confidence interval.  The p-value tells us there is about a 0.005, or 0.5% probability that the difference between the treatments is actually zero, give the actual observed difference.  The 95% confidence interval is a range around the measured difference, -3.65, that is likely to include the true difference between the populations.  That the confidence interval does not include zero is a reminder that the difference between the two populations is significant.  
-
-There are a couple of other arguments we may include in the "t.test" function.  Remember that the t-test tests whether the measured difference between populations is different from a hypothetical difference.  Usually, this hypothetical difference is zero, as we can see in the output above where it says "true difference in means is not equal to 0".  But it is good to extra-careful and specify this by including the argument "mu=0" in our t.test function.
-
-```{r}
-wheat_t_test_mu_zero = t.test(model, data=wheat, paired=TRUE, mu=0)
-
-wheat_t_test_mu_zero
-```
-
-Occassionally, we might want to test whether the observed difference between populations is something other than 0.  What if in our wheat trial we wanted to test whether the observed difference between populations was different than -1?  In that case, we would specify mu=-1 in our code.
-
-```{r}
-wheat_t_test_mu_1 = t.test(model, data=wheat, paired=TRUE, mu=-1)
-
-wheat_t_test_mu_1
-```
-
-We can see that our p-value has changed, as has the "alternative hypothesis" statement.
-
-
-### Case Study 2: Apple Variety
-Lets look at our apple data:
-```{r}
-apple = read.csv("data-unit-4/exercise_data/apple_genotype.csv")
-head(apple)
-```
-
-Our model is now that yield is a function of gen (genotype).  Our model statement is therefore:
-```{r}
-apple_model = yield ~ gen
-```
-
-And our t-test is as follows:
-```{r}
-apple_t_test = t.test(apple_model, data=apple, paired = TRUE, mu=0)
-
-apple_t_test
-```
-
-We can see from above that our p-value is about 0.70.  Sometimes it snows in April.  And sometimes our treatments aren't significantly different.  If we look at our confidence interval, we can confirm that it includes zero.
-
-### Practice
-
-What is the t-test value for the "data-unit-4/exercise_soybean_fungicide.csv" trial?  Assume the treatments are paired.  Your t-test should reveal a p-value of 0.001048.
-
-What is the t-test value for the "data-unit-4/exercise_soybean_manganese.csv" trial?  Assume the treatments are paired.  Your t-test should reveal a p-value of 0.005143.
-
+Note that this time with this function we used the argument
+"lower.tail=TRUE". This tells R to calculate the probability of values
+futher than $t=3.27$ both above and below the mean.
+
+Again there were 10 observed differences in our population, so there
+were 9 degrees of freedom. The value that is returned is the probability
+the population mean is actually zero, given the population mean. The
+probability of this t-value (sometimes abbreviated as
+$Pr \ge \lvert t \lvert$) is very low, less tan 0.01, or 1%.
+
+Learn how to conduct your own t-test in **exercise_t\_test** in RStudio.
+
+# Conclusion
+
+In this unit, we learned to create the experimental design for a
+two-treatment test and compare two treatments using the confidence
+interval of the treatment differences and the t-test.
+
+Before the first plot is planned, however, we must consider what is the
+objective of the experiment. Specifically, what question is it designed
+to address? What are the potential answers to that question, and how
+should they be tested to determine which answer is most probably
+correct?
+
+In Unit 5, we will learn about the nuances of developing research
+questions and expressing them in hypotheses we can then test with
+experimental data.
